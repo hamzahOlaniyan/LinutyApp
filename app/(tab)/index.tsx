@@ -7,10 +7,10 @@ export default function Index() {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "blue",
+            backgroundColor: "orange",
          }}
       >
-         <Text style={{ fontSize: 25, color: "white" }}>Edit app/index.tsx to edit this screen.</Text>
+         <Text style={{ fontSize: 50, color: "white", textAlign: "center", fontWeight: "800" }}>Development</Text>
       </View>
    );
 }
