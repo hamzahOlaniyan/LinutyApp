@@ -4,7 +4,7 @@
       "slug": "LinutyApp",
       "version": "1.0.0",
       "orientation": "portrait",
-      "icon": "./assets/images/icon.png",
+      "icon": "./assets/images/ios-dark.png",
       "scheme": "linutyapp",
       "userInterfaceStyle": "automatic",
       "newArchEnabled": true,
@@ -13,16 +13,16 @@
       },
       "android": {
          "adaptiveIcon": {
-            "foregroundImage": "./assets/images/adaptive-icon.png",
-            "backgroundColor": "#ffffff"
+            "foregroundImage": "./assets/images/ios-dark.png",
+            "backgroundColor": "#000000",
+            "monochromeImage": "./assets/images/ios-dark.png"
          },
          "edgeToEdgeEnabled": true,
          "package": "com.hamzaholaniyan.LinutyApp"
       },
       "web": {
          "bundler": "metro",
-         "output": "static",
-         "favicon": "./assets/images/favicon.png"
+         "output": "static"
       },
       "plugins": [
          "expo-router",
