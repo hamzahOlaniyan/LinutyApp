@@ -7,10 +7,18 @@ export default function Index() {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "orange",
+            backgroundColor: "white",
          }}
       >
-         <Text style={{ fontSize: 50, color: "white", textAlign: "center", fontWeight: "800" }}>Development</Text>
+         <Text
+            style={{
+               fontSize: 50,
+               color: "black",
+               textAlign: "center",
+            }}
+         >
+            home
+         </Text>
       </View>
    );
 }
