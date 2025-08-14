@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import "../../global.css";
 
 import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
+import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,15 +42,17 @@ export default function RootLayout() {
    }
 
    return (
-      <SafeAreaProvider
-         style={{
-            // paddingTop,
-            paddingBottom: bottom,
-            backgroundColor: "white",
-         }}
-      >
-         <StatusBar style="auto" />
-         <Stack screenOptions={{ headerShown: false }} />;
-      </SafeAreaProvider>
+      <GluestackUIProvider>
+         <SafeAreaProvider
+            style={{
+               // paddingTop,
+               paddingBottom: bottom,
+               backgroundColor: "white",
+            }}
+         >
+            <StatusBar style="auto" />
+            <Stack screenOptions={{ headerShown: false }} />;
+         </SafeAreaProvider>
+      </GluestackUIProvider>
    );
 }
