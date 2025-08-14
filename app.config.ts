@@ -9,7 +9,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       slug: "LinutyApp",
       version: "1.0.1",
       orientation: "portrait",
-      icon: "./assets/images/ios-dark.png",
+      icon: "./src/assets/images/ios-dark.png",
       scheme: "linutyapp",
       userInterfaceStyle: "automatic",
       newArchEnabled: true,

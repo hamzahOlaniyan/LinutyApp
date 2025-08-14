@@ -5,6 +5,10 @@ export const colors = {
    whitesmoke: "#f5f5f5",
    white: "#fff",
    placeholder: "#a3a3a3",
+   focus: "#202020",
+   error: "#b70000",
+   warring: "#",
+   success: "#",
 
    dark: {
       background: "#171717",

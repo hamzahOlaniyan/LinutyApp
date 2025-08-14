@@ -4,14 +4,18 @@ import { hp } from "@/src/constant/common";
 import { Ionicons } from "@expo/vector-icons";
 import React, { FC, useState } from "react";
 import { KeyboardAvoidingView, Platform, Text, TextInput, TextInputProps, View } from "react-native";
+import AppText from "./AppText";
 
 type InputProps = TextInputProps & {
    icon?: React.ReactNode;
    label?: string;
    isPassword?: boolean;
+   error?: boolean;
+   errorMessage?: string;
+   [key: string]: any;
 };
 
-export const Input: FC<InputProps> = ({ isPassword, icon, label, ...props }) => {
+export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMessage, ...props }) => {
    const [isFocused, setIsFocused] = useState(false);
    const [showPassword, setShowPassword] = useState(true);
 
@@ -20,7 +24,7 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, ...props }) => 
          behavior={Platform.OS === "ios" ? "padding" : "height"}
          keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 0}
       >
-         <View className={`${label ? "gap-1" : "gap-0"}`}>
+         <View className={`${label ? "gap-1" : "gap-0"} gap-2`}>
             {label && (
                <Text style={{ fontSize: hp(1.7) }} className="text-text font-SansMed capitalize">
                   {label}
@@ -28,10 +32,13 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, ...props }) => 
             )}
 
             <View
-               style={{ height: hp(7) }}
-               className={`w-full flex-row items-center justify-center border p-4 rounded-2xl border-neutral-200 gap-2 ${
-                  isFocused && "border-neutral-500"
-               }`}
+               style={{
+                  height: hp(7),
+                  borderWidth: 1,
+                  marginBottom: 3,
+                  borderColor: isFocused ? colors.focus : error ? colors.error : colors.placeholder,
+               }}
+               className={`w-full flex-row items-center justify-center p-4 rounded-2xl gap-2 `}
             >
                {icon && <View className="relative top-[1px]">{icon}</View>}
                <TextInput
@@ -50,13 +57,18 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, ...props }) => 
                   <View>
                      <Ionicons
                         onPress={() => setShowPassword(!showPassword)}
-                        name={showPassword ? "eye" : "eye-off"}
+                        name={showPassword ? "eye-off-outline" : "eye-outline"}
                         size={24}
-                        color={colors.gray}
+                        color={colors.placeholder}
                      />
                   </View>
                )}
             </View>
+            {error && errorMessage ? (
+               <AppText color={colors.error} size="sm">
+                  {errorMessage}
+               </AppText>
+            ) : null}
          </View>
       </KeyboardAvoidingView>
    );

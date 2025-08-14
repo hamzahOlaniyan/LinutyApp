@@ -12,7 +12,7 @@ type ButtonProps = {
    className?: string;
    disabled?: boolean;
    size?: "lg" | "md" | "sm" | "xs";
-   variant?: "default" | "outline";
+   variant?: "default" | "outline" | "plain";
 };
 
 export default function Button({
@@ -30,9 +30,10 @@ export default function Button({
             borderRadius: 100,
             width: "100%",
             borderColor: colors.primary,
-            borderWidth: 1,
+            borderWidth: variant === "outline" ? 1 : 0,
             justifyContent: "center",
-            backgroundColor: variant === "outline" ? "transparent" : colors.primary,
+            backgroundColor:
+               variant === "outline" ? colors.white : variant === "plain" ? "transparent" : colors.primary,
             height:
                size === "lg"
                   ? hp(5.5)
@@ -50,8 +51,8 @@ export default function Button({
          <Text
             style={{
                fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.5) : size === "xs" ? hp(1.3) : hp(1.7),
-               fontFamily: TiktokFont.TiktokSemiBold,
-               color: variant === "outline" ? colors.primary : "white",
+               fontFamily: TiktokFont.TiktokMedium,
+               color: variant === "outline" ? colors.primary : variant === "plain" ? colors.primary : "white",
                textAlign: "center",
             }}
          >

@@ -1,7 +1,8 @@
 import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
-import { Link, useRouter } from "expo-router";
+import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 
@@ -13,15 +14,27 @@ export default function NewUser() {
             <AppText size="xxxl" weight="bold">
                Join Linuty
             </AppText>
-            <AppText size="lg" weight="semi">
-               Create an account too connect with friends, family and communicaties of people who share you interests
+            <Image
+               source={require("../../../assets/images/tree.svg")}
+               style={{
+                  width: "100%",
+                  height: "40%",
+                  alignSelf: "center",
+                  zIndex: 0,
+                  backgroundColor: "whitesmoke",
+                  borderRadius: 20,
+               }}
+            />
+            <AppText size="xl" weight="bold">
+               🚀 Let’s Get You Set Up!
             </AppText>
-         </View>
-         <View className="gap-2 my-6">
-            <Link href={"/(auth)/(new-user)/step-1"} asChild>
-               <Button title="Get started" size="lg" />
-            </Link>
-            <Button onPress={() => router.back()} title="Already have an account" size="lg" variant="outline" />
+            <AppText size="xl" weight="med">
+               To connect, share, and explore — we need a little more info from you.
+            </AppText>
+            <View className="gap-2 my-6">
+               <Button onPress={() => router.push("/(auth)/(new-user)/step-1")} title="Get started" size="lg" />
+               <Button onPress={() => router.back()} title="Already have an account" size="lg" variant="outline" />
+            </View>
          </View>
       </ScreenWrapper>
    );

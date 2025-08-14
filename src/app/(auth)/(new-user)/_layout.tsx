@@ -27,6 +27,7 @@ export default function NewUserLayout() {
          <Stack.Screen name="step-4" />
          <Stack.Screen name="step-5" />
          <Stack.Screen name="step-6" />
+         <Stack.Screen name="step-7" />
       </Stack>
    );
 }

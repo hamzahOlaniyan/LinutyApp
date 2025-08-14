@@ -11,14 +11,14 @@ import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-cont
 SplashScreen.preventAutoHideAsync();
 
 SplashScreen.setOptions({
-   duration: 2000,
+   duration: 200,
    fade: true,
 });
 
 export default function RootLayout() {
    const { top, bottom } = useSafeAreaInsets();
 
-   const paddingTop = top > 0 ? top + 5 : 30;
+   // const paddingTop = top > 0 ? top + 5 : 30;
 
    const [loaded] = useFonts({
       [TiktokFont.TiktokBlack]: require("../assets/fonts/TikTokSans-Black.ttf"),
