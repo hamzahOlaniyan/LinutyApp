@@ -3,6 +3,7 @@ export const colors = {
    secondary: "",
    gray: "#7e7e7e",
    whitesmoke: "#f5f5f5",
+   offwhite: '#f2f2f2',
    white: "#fff",
    placeholder: "#a3a3a3",
    focus: "#202020",

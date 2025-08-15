@@ -12,14 +12,17 @@ export default function StepContainer({
    paragraph: string;
 }) {
    return (
+      
       <View className="gap-4">
-         <AppText size="xxl" weight="bold">
-            {heading}
-         </AppText>
-         <AppText size="lg" weight="med">
-            {paragraph}
-         </AppText>
-         <View className="flex-1 mt-5">{children}</View>
+         <View>
+            <AppText size="xxl" weight="bold">
+               {heading}
+            </AppText>
+            <AppText size="lg" weight="med">
+               {paragraph}
+            </AppText>
+         </View>
+         <View className="mt-5">{children}</View>
       </View>
    );
 }
