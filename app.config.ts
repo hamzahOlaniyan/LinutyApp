@@ -18,8 +18,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       },
       android: {
          adaptiveIcon: {
-            foregroundImage: "./assets/images/ios-dark.png",
-            monochromeImage: "./assets/images/ios-dark.png",
+            foregroundImage: "./src/assets/images/ios-dark.png",
+            monochromeImage: "./src/assets/images/ios-dark.png",
          },
          edgeToEdgeEnabled: true,
       },
@@ -32,7 +32,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          [
             "expo-splash-screen",
             {
-               image: "./assets/images/splash-icon.png",
+               image: "./src/assets/images/splash-icon.png",
                imageWidth: 200,
                resizeMode: "contain",
                backgroundColor: "#ffffff",
