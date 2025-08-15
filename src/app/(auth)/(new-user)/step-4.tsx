@@ -2,38 +2,40 @@ import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
+import { colors } from "@/src/constant/colors";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import React from "react";
-import { View } from "react-native";
+import React, { useState } from "react";
+import { Pressable, View } from "react-native";
 
 export default function Step4() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
+   const [onSelect , setOnSelect] = useState("")
+
    const router = useRouter();
 
    const handleNext = async () => {
       let valid = true;
 
-      // if (!form.firstName) {
-      //    setError("firstName", "first name is required");
-      //    valid = false;
-      // }
-      // if (!form.surname) {
-      //    setError("surname", "surname is required");
-      //    valid = false;
-      // }
-
-      // if (!form.username) {
-      //    setError("username", "password is required");
-      //    valid = false;
-      // }
-
-      // if (!valid) return;
+      if (!form.gender) {
+         setError("gender", "Please select your gender");
+         valid = false;
+      }
       if (valid) {
          nextStep();
          router.push("/(auth)/(new-user)/step-5");
       }
    };
+
+const RadioSelection = ( {select,field}:{select:string,field:any})=>{
+   return (
+      <Pressable  onPress={()=>{ setOnSelect(select),updateField(field, select) }} className=" flex-row py-4 justify-between">
+         <AppText size="lg" weight="semi"> {select}</AppText>
+         <Ionicons name={onSelect === select ? "radio-button-on":"radio-button-off"} size={24} color="black" />
+      </Pressable>)
+}
+
    return (
       <ScreenWrapper>
          <StepContainer
@@ -41,13 +43,11 @@ export default function Step4() {
             paragraph="Tell us your gender to help personalize your experience on Linuty. This information can make your profile more complete and help others connect with you in a way that feels authentic."
          >
             <View className="gap-4">
-               <AppText size="lg" weight="semi">
-                  Male
-               </AppText>
-               <AppText size="lg" weight="semi">
-                  Female
-               </AppText>
+               <RadioSelection select="male" field={'gender'}/>
+               <RadioSelection select="female" field={'gender'}/>
+               <RadioSelection select="other" field={'gender'}/>
             </View>
+            {errors.gender && <AppText color={colors.error} size="sm"> {errors.gender}</AppText>}
          </StepContainer>
          <View className="gap-2 my-6">
             <Button onPress={handleNext} title="Next" size="lg" />

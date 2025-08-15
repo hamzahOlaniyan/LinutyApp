@@ -15,7 +15,7 @@ export default function NewUser() {
                Join Linuty
             </AppText>
             <Image
-               source={require("../../../assets/images/tree.svg")}
+               source={require("@/assets/images/tree.svg")}
                style={{
                   width: "100%",
                   height: "40%",

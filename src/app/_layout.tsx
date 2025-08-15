@@ -1,12 +1,11 @@
-import { TiktokFont } from "@/src/assets/fonts/FontFamily";
+import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import "../../global.css";
-
 import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
+import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
 
 SplashScreen.preventAutoHideAsync();
@@ -22,13 +21,13 @@ export default function RootLayout() {
    // const paddingTop = top > 0 ? top + 5 : 30;
 
    const [loaded] = useFonts({
-      [TiktokFont.TiktokBlack]: require("../assets/fonts/TikTokSans-Black.ttf"),
-      [TiktokFont.TiktokExtraBold]: require("../assets/fonts/TikTokSans-ExtraBold.ttf"),
-      [TiktokFont.TiktokBold]: require("../assets/fonts/TikTokSans-Bold.ttf"),
-      [TiktokFont.TiktokSemiBold]: require("../assets/fonts/TikTokSans-SemiBold.ttf"),
-      [TiktokFont.TiktokMedium]: require("../assets/fonts/TikTokSans-Medium.ttf"),
-      [TiktokFont.TiktokRegular]: require("../assets/fonts/TikTokSans-Regular.ttf"),
-      [TiktokFont.TiktokLight]: require("../assets/fonts/TikTokSans-Light.ttf"),
+      [TiktokFont.TiktokBlack]: require("@/assets/fonts/TikTokSans-Black.ttf"),
+      [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/TikTokSans-ExtraBold.ttf"),
+      [TiktokFont.TiktokBold]: require("@/assets/fonts/TikTokSans-Bold.ttf"),
+      [TiktokFont.TiktokSemiBold]: require("@/assets/fonts/TikTokSans-SemiBold.ttf"),
+      [TiktokFont.TiktokMedium]: require("@/assets/fonts/TikTokSans-Medium.ttf"),
+      [TiktokFont.TiktokRegular]: require("@/assets/fonts/TikTokSans-Regular.ttf"),
+      [TiktokFont.TiktokLight]: require("@/assets/fonts/TikTokSans-Light.ttf"),
    });
 
    useEffect(() => {
@@ -51,7 +50,7 @@ export default function RootLayout() {
             }}
          >
             <StatusBar style="auto" />
-            <Stack screenOptions={{ headerShown: false }} />;
+            <Stack screenOptions={{ headerShown: false }} />
          </SafeAreaProvider>
       </GluestackUIProvider>
    );

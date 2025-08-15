@@ -1,4 +1,4 @@
-import { TiktokFont } from "@/src/assets/fonts/FontFamily";
+import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { hp } from "@/src/constant/common";
 // import { useThemeStore } from "@/src/context/themeStore";
 import React from "react";

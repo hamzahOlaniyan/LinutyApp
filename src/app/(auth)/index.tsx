@@ -17,7 +17,7 @@ export default function index() {
       <ScreenWrapper>
          <View style={{ position: "relative", marginTop: hp(18) }}>
             <Image
-               source={require("../../assets/images/logo_1.svg")}
+               source={require("@/assets/images/logo_1.svg")}
                style={{ width: 100, height: 36, objectFit: "contain", alignSelf: "center" }}
             />
          </View>
@@ -47,16 +47,17 @@ export default function index() {
                      </AppText>
                   </Pressable>
                </View>
-               <Button
+               {/* <Button
                   title="Sign in"
                   // onPress={handleSignIn}
                   // isLoading={loading}
                   disabled={!email || !password}
                   size="lg"
-               />
+               /> */}
+              
             </View>
             <View className="gap-6 absolute bottom-5">
-               <Link href={"/(auth)/(new-user)"} asChild>
+               <Link href={"/(auth)/(new-user)/step-5"} asChild>
                   <Button title="Create new account" size="lg" variant="outline" />
                </Link>
                <View className="flex-row items-center justify-center flex-wrap">

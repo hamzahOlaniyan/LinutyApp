@@ -19,7 +19,7 @@ export default function StepContainer({
          <AppText size="lg" weight="med">
             {paragraph}
          </AppText>
-         <View className="mt-5">{children}</View>
+         <View className="flex-1 mt-5">{children}</View>
       </View>
    );
 }

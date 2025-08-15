@@ -1,7 +1,7 @@
 // stores/useRegistrationStore.ts
 import { create } from "zustand";
 
-type RegistrationState = {
+export type RegistrationState = {
    step: number;
    form: {
       firstName: string;
@@ -9,6 +9,7 @@ type RegistrationState = {
       email: string;
       password: string;
       username: string;
+      gender: 'male'|'female'|"other"|""
       age: string;
       address: string;
    };
@@ -29,6 +30,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
       email: "",
       password: "",
       username: "",
+      gender:"",
       age: "",
       address: "",
    },
@@ -45,7 +47,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
    reset: () =>
       set({
          step: 0,
-         form: { firstName: "", surname: "", username: "", email: "", password: "", age: "", address: "" },
+         form: { firstName: "", surname: "", username: "", email: "", password: "", gender:"", age: "", address: "" },
          errors: {},
       }),
 }));

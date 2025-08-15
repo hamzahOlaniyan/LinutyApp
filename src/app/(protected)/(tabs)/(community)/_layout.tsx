@@ -1,4 +1,4 @@
-import { TiktokFont } from "@/src/assets/fonts/FontFamily";
+import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { Stack } from "expo-router";
 
 export default function CommunityLayout() {

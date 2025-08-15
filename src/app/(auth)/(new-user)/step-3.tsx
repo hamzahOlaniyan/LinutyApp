@@ -7,7 +7,7 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 
-export default function Step2() {
+export default function Step3() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
    const router = useRouter();
 

@@ -19,7 +19,7 @@ type BottomSheetProps = {
    heading?: string;
 };
 
-export default function Modal({ height = 95, preventScroll, children, isOpen, onClose, heading }: BottomSheetProps) {
+export default function Modal({ height = 50, preventScroll, children, isOpen, onClose, heading }: BottomSheetProps) {
    //    const { currentTheme } = useThemeStore();
 
    const handleClose = () => {
@@ -27,7 +27,14 @@ export default function Modal({ height = 95, preventScroll, children, isOpen, on
    };
 
    return (
-      <Actionsheet isOpen={isOpen} onClose={handleClose} preventScroll={preventScroll} snapPoints={[height]}>
+      <Actionsheet
+         isOpen={isOpen}
+         onClose={handleClose}
+         preventScroll={preventScroll}
+         closeOnOverlayClick={true}
+         snapPoints={[height]}
+         trapFocus={true}
+      >
          <ActionsheetBackdrop
             style={
                {

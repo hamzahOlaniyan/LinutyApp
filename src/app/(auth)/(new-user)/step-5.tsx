@@ -1,17 +1,17 @@
-import AppText from "@/src/components/AppText";
-import Button from "@/src/components/Button";
-import Modal from "@/src/components/Modal";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
+import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { View } from "react-native";
 
-export default function Step4() {
+export default function Step5() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
    const router = useRouter();
    const [modalVisible, setModalVisible] = useState(false);
+   console.log(form);
+
 
    const handleNext = async () => {
       let valid = true;
@@ -32,8 +32,8 @@ export default function Step4() {
 
       // if (!valid) return;
       if (valid) {
-         nextStep();
-         router.push("/(auth)/(new-user)/step-5");
+         nextStep()
+         router.push("/(auth)/(new-user)/step-6");
       }
    };
    return (
@@ -42,29 +42,19 @@ export default function Step4() {
             heading="Background Information"
             paragraph="Share your nationality and country of birth to help us build meaningful connections through lineage and community."
          >
-            <View className="gap-4">
-               <AppText size="lg" weight="semi">
-                  Male
-               </AppText>
-               <AppText size="lg" weight="semi">
-                  Female
-               </AppText>
+            <View className="flex-1 bg-purple-600 h-full">
+     <Select options={null} placeholder="Nationality" onSelect={()=>setModalVisible(true) }/> 
+               <Select options={null} placeholder="Nationality" onSelect={()=>setModalVisible(true) }/>
+               <Select options={null} placeholder="Nationality" onSelect={()=>setModalVisible(true) }/> 
+
             </View>
+
          </StepContainer>
-         <View className="gap-2 my-6">
-            <Button onPress={handleNext} title="Next" size="lg" />
-         </View>
-          <Button onPress={()=>setModalVisible(true)} title="show modal" size="lg" />
+        
+            {/* <Button onPress={handleNext} title="Next" size="lg" /> */}
          
-         <Modal isOpen={modalVisible}>
-             <View className="gap-4">
-               <AppText size="lg" weight="semi">
-                  Male
-               </AppText>
-               <AppText size="lg" weight="semi">
-                  Female
-               </AppText>
-            </View></Modal> 
+         {/* <Modal isOpen={modalVisible}>''
+            </Modal>  */}
       </ScreenWrapper>
    );
 }
