@@ -179,7 +179,7 @@ export const COUNTRIES = [
    "Yemen",
 ];
 
-export const ETHNICITIES = [
+const ETHNICITIES = [
    // Africa
    "Yoruba",
    "Hausa",

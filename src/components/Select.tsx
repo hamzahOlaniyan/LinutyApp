@@ -15,7 +15,7 @@ import {
 
 interface SelectButtonProps {
    options: string[] | [] | null;
-   onSelect: (value: string) => void;
+   onSelect: (value: any) => void;
    placeholder: string;
    modalTitle?: string;
    label?: string;

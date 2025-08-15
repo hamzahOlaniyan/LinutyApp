@@ -54,10 +54,9 @@ export default function index() {
                   disabled={!email || !password}
                   size="lg"
                /> */}
-              
             </View>
             <View className="gap-6 absolute bottom-5">
-               <Link href={"/(auth)/(new-user)/step-5"} asChild>
+               <Link href={"/(auth)/(new-user)/step-6"} asChild>
                   <Button title="Create new account" size="lg" variant="outline" />
                </Link>
                <View className="flex-row items-center justify-center flex-wrap">

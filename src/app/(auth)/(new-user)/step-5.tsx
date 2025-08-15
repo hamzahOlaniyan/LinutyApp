@@ -2,7 +2,7 @@ import Button from "@/src/components/Button";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
-import { COUNTRIES, ETHNICITIES, NATIONALITIES } from "@/src/data/ProfileData";
+import { COUNTRIES, NATIONALITIES } from "@/src/data/ProfileData";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -25,12 +25,12 @@ export default function Step5() {
          setError("cob", "country of birth is required");
          valid = false;
       }
-      if (!form.ethnicity) {
-         setError("ethnicity", "ethnicity is required");
-         valid = false;
-      }
+      // if (!form.ethnicity) {
+      //    setError("ethnicity", "ethnicity is required");
+      //    valid = false;
+      // }
 
-      if (!valid) return;
+      // if (!valid) return;
 
       if (valid) {
          nextStep();
@@ -64,15 +64,7 @@ export default function Step5() {
                   error={!!errors.cob}
                   errorMessage={errors.cob}
                />
-               <Select
-                  height={90}
-                  options={ETHNICITIES}
-                  searchable
-                  placeholder="Ethnicity"
-                  onSelect={(ethnicity) => updateField("ethnicity", ethnicity)}
-                  error={!!errors.ethnicity}
-                  errorMessage={errors.ethnicity}
-               />
+
                <View className="gap-2 my-6">
                   <Button onPress={handleNext} title="Next" size="lg" />
                </View>
