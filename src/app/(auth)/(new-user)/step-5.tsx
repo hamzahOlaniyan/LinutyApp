@@ -2,7 +2,7 @@ import Button from "@/src/components/Button";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
-import { COUNTRIES, NATIONALITIES } from "@/src/data/ProfileData";
+import { COUNTRIES, ETHNICITIES, NATIONALITIES } from "@/src/data/ProfileData";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -11,7 +11,6 @@ import { View } from "react-native";
 export default function Step5() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
    const router = useRouter();
-   // const [modalVisible, setModalVisible] = useState(false);
 
    console.log(form);
 
@@ -47,25 +46,30 @@ export default function Step5() {
          >
             <View className="relative gap-20">
                <Select
+                  height={90}
                   modalTitle="Nationality"
                   options={NATIONALITIES}
+                  searchable
                   placeholder="Nationality"
-                  onSelect={(value) => updateField("nationality", value)}
-                  height={80}
+                  onSelect={(nationality) => updateField("nationality", nationality)}
                   error={!!errors.nationality}
                   errorMessage={errors.nationality}
                />
                <Select
+                  height={90}
                   options={COUNTRIES}
+                  searchable
                   placeholder="Country of Birth"
                   onSelect={(cob) => updateField("cob", cob)}
                   error={!!errors.cob}
                   errorMessage={errors.cob}
                />
                <Select
-                  options={NATIONALITIES}
+                  height={90}
+                  options={ETHNICITIES}
+                  searchable
                   placeholder="Ethnicity"
-                  onSelect={(ethnicity) => updateField("nationality", ethnicity)}
+                  onSelect={(ethnicity) => updateField("ethnicity", ethnicity)}
                   error={!!errors.ethnicity}
                   errorMessage={errors.ethnicity}
                />

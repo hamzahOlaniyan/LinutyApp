@@ -41,17 +41,17 @@ export default function RootLayout() {
    }
 
    return (
-      <GluestackUIProvider>
-         <SafeAreaProvider
-            style={{
-               // paddingTop,
-               paddingBottom: bottom,
-               backgroundColor: "white",
-            }}
-         >
+      <SafeAreaProvider
+         style={{
+            // paddingTop,
+            paddingBottom: bottom,
+            backgroundColor: "white",
+         }}
+      >
+         <GluestackUIProvider>
             <StatusBar style="auto" />
             <Stack screenOptions={{ headerShown: false }} />
-         </SafeAreaProvider>
-      </GluestackUIProvider>
+         </GluestackUIProvider>
+      </SafeAreaProvider>
    );
 }

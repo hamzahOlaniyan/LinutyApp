@@ -180,13 +180,91 @@ export const COUNTRIES = [
 ];
 
 export const ETHNICITIES = [
-   "White",
-   "Black / African / Caribbean",
-   "Asian",
-   "Mixed / Multiple Ethnic Groups",
+   // Africa
+   "Yoruba",
+   "Hausa",
+   "Igbo",
+   "Amhara",
+   "Somali",
+   "Zulu",
+   "Shona",
+   "Oromo",
+   "Fulani",
+   "Berber",
+
+   // Europe
+   "English",
+   "Irish",
+   "Scottish",
+   "Welsh",
+   "German",
+   "French",
+   "Italian",
+   "Spanish",
+   "Polish",
+   "Russian",
+   "Ukrainian",
+   "Albanians",
+   "Roma",
+
+   // Middle East & North Africa
    "Arab",
-   "Hispanic / Latino",
-   "Indigenous",
+   "Persian",
+   "Kurdish",
+   "Turkish",
+   "Armenian",
+   "Assyrian",
+   "Druze",
+   "Bedouin",
+
+   // Asia
+   "Han Chinese",
+   "Tibetan",
+   "Mongol",
+   "Uyghur",
+   "Korean",
+   "Japanese",
+   "Thai",
+   "Khmer",
+   "Hmong",
+   "Malay",
+   "Malay-Indonesian",
+   "Filipino",
+   "Punjabi",
+   "Tamil",
+   "Bengali",
+   "Gujarati",
+   "Marathi",
+
+   // Indigenous / Native peoples
+   "Native American",
+   "Inuit",
+   "Māori",
+   "Aboriginal Australian",
+   "Sámi",
+   "Quechua",
+   "Aymara",
+   "Mapuche",
+
+   // Latin America & Caribbean
+   "Mestizo",
+   "Afro-Caribbean",
+   "Garifuna",
+   "Creole",
+   "Pardo",
+   "Mulatto",
+
+   // Nigeria (popular groups)
+   "Ijaw",
+   "Ibibio",
+   "Edo",
+   "Tiv",
+
+   // Country-specific/global categories
+   "White",
+   "Black or African",
+   "Asian",
+   "Mixed",
    "Other",
 ];
 

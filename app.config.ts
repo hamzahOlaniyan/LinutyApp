@@ -13,7 +13,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       scheme: "linutyapp",
       userInterfaceStyle: "automatic",
       newArchEnabled: true,
-      
+
       ios: {
          supportsTablet: true,
       },
@@ -21,7 +21,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          adaptiveIcon: {
             // foregroundImage: "./assets/images/ios-dark.png",
             // monochromeImage: "./assets/images/ios-dark.png",
-            backgroundImage:"./assets/images/splash-icon-dark.png"
+            backgroundImage: "./assets/images/splash-icon-dark.png",
          },
          edgeToEdgeEnabled: true,
       },
@@ -38,8 +38,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                // imageWidth: 200,
                // resizeMode: "contain",
                // backgroundColor: "#000",
-            backgroundImage:"./assets/images/splash-icon-dark.png"
-
+               backgroundImage: "./assets/images/splash-icon-dark.png",
             },
          ],
       ],

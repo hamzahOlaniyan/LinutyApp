@@ -19,10 +19,11 @@ interface SelectButtonProps {
    placeholder: string;
    modalTitle?: string;
    label?: string;
-   height?:number;
-    error?: boolean;
+   height?: number;
+   error?: boolean;
    errorMessage?: string;
    [key: string]: any;
+   searchable?: boolean;
 }
 
 export default function Select({
@@ -31,9 +32,10 @@ export default function Select({
    placeholder = "Select option",
    modalTitle,
    label,
-   height=50,
-    error,
-   errorMessage
+   height = 50,
+   error,
+   errorMessage,
+   searchable = false,
 }: SelectButtonProps) {
    const [selected, setSelected] = useState<string | null>(null);
    const [showActionsheet, setShowActionsheet] = React.useState(false);
@@ -59,14 +61,14 @@ export default function Select({
             <TouchableOpacity
                onPress={() => setShowActionsheet(true)}
                onFocus={() => setIsFocused(true)}
-                     onBlur={() => setIsFocused(false)}
+               onBlur={() => setIsFocused(false)}
                style={{
-                     height: hp(7),
-                     padding: 10,
-                     borderWidth: 1,
-                     marginBottom: 3,
-                      borderColor: isFocused ? colors.focus : error ? colors.error : colors.placeholder,
-                  }}
+                  height: hp(7),
+                  padding: 10,
+                  borderWidth: 1,
+                  marginBottom: 3,
+                  borderColor: isFocused ? colors.focus : error ? colors.error : colors.placeholder,
+               }}
                className="w-full flex-row justify-between items-center rounded-2xl"
             >
                {selected ? (
@@ -80,12 +82,11 @@ export default function Select({
                )}
                <MaterialCommunityIcons name="chevron-down" size={26} color={colors.placeholder} />
             </TouchableOpacity>
-             {error && errorMessage ? (
-                           <AppText color={colors.error} size="sm">
-                              {errorMessage}
-                           </AppText>
-                        ) : null}
-
+            {error && errorMessage ? (
+               <AppText color={colors.error} size="sm">
+                  {errorMessage}
+               </AppText>
+            ) : null}
          </View>
 
          <Actionsheet isOpen={showActionsheet} onClose={handleClose} preventScroll={true} snapPoints={[height]}>
@@ -96,19 +97,20 @@ export default function Select({
                </ActionsheetDragIndicatorWrapper>
                <View className="flex-1 w-full">
                   <View className="py-5 gap-3">
-                     {
-                        modalTitle &&  <AppText weight="semi" align="center" size="lg"  className="font-SansBold text-center">
-                        {modalTitle}
-                     </AppText>
-                     }
-                    
-                  <Searchbar value={searchText} onChangeText={setSearchText} onPress={() => setSearchText("")} />
+                     {modalTitle && (
+                        <AppText weight="semi" align="center" size="lg" className="font-SansBold text-center">
+                           {modalTitle}
+                        </AppText>
+                     )}
 
+                     {searchable && (
+                        <Searchbar value={searchText} onChangeText={setSearchText} onPress={() => setSearchText("")} />
+                     )}
                   </View>
                   <View className="">
                      <Pressable onPress={handleClose}>
                         <FlatList
-                           data={options?.filter((search)=>search.toLowerCase().includes(searchText.toLowerCase()))}
+                           data={options?.filter((search) => search.toLowerCase().includes(searchText.toLowerCase()))}
                            keyExtractor={(item) => item}
                            renderItem={({ item }) => (
                               <TouchableOpacity onPress={() => handleSelect(item)} style={{ paddingVertical: 12 }}>
