@@ -6,9 +6,10 @@ import StepContainer from "@/src/components/StepContainer";
 import { colors } from "@/src/constant/colors";
 import { ClanNode, ETHNICITIES, Ethnicity } from "@/src/data/ClanTree";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
+import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 
 export default function Step6() {
    const { form, errors, updateField, nextStep } = useRegistrationStore();
@@ -82,69 +83,72 @@ export default function Step6() {
 
    return (
       <ScreenWrapper>
-         <StepContainer heading="What is your lineage" paragraph="Share your nationality and country of birth to help.">
-            <View className="gap-28">
-               <Select
-                  height={90}
-                  options={ETHNICITIES.map((item) => item.name)}
-                  placeholder="Ethnicity"
-                  searchable
-                  selectedValue={selectedEthnicityName ?? undefined} // ✅ use selectedValue
-                  onSelect={(ethnicityName) => {
-                     const ethnicity = ETHNICITIES.find((e) => e.name === ethnicityName);
-                     if (ethnicity) handleEthnicitySelect(ethnicity);
-                  }}
-                  error={!!errors.ethnicity}
-                  errorMessage={errors.ethnicity}
-               />
-               <View className="gap-4">
-                  {selectedEthnicityName && (
-                     <View
-                        className="gap-4 p-6"
-                        style={{
-                           padding: atLeaf ? 16 : 0,
-                           borderRadius: 10,
-                           backgroundColor: atLeaf ? colors.darkWhite : "",
-                        }}
-                     >
-                        {!atLeaf ? (
-                           <AppText size="xl" weight="bold">
-                              Select your clans
-                           </AppText>
-                        ) : (
-                           <AppText weight="semi">Your selected clans</AppText>
-                        )}
-
-                        {path.length > 0 && (
-                           <View
-                              style={{
-                                 backgroundColor: colors.offwhite,
-                                 padding: 10,
-                                 borderRadius: 10,
-                                 paddingHorizontal: 10,
-                              }}
-                           >
-                              <AppText size="xl" weight="semi" cap="capitalize">
-                                 {path.map((p) => `${p.name}   `).join("")}
+         <ScrollView>
+            <StepContainer
+               heading="What is your lineage"
+               paragraph="Share your nationality and country of birth to help."
+            >
+               <View className="flex-1 gap-4">
+                  <Select
+                     height={90}
+                     options={ETHNICITIES.map((item) => item.name)}
+                     placeholder="Ethnicity"
+                     searchable
+                     selectedValue={selectedEthnicityName ?? undefined} // ✅ use selectedValue
+                     onSelect={(ethnicityName) => {
+                        const ethnicity = ETHNICITIES.find((e) => e.name === ethnicityName);
+                        if (ethnicity) handleEthnicitySelect(ethnicity);
+                     }}
+                     error={!!errors.ethnicity}
+                     errorMessage={errors.ethnicity}
+                  />
+                  <View className="gap-2">
+                     {selectedEthnicityName && (
+                        <View
+                           className="gap-4 p-6"
+                           style={{
+                              padding: atLeaf ? 16 : 0,
+                              borderRadius: 10,
+                              backgroundColor: atLeaf ? colors.darkWhite : "",
+                           }}
+                        >
+                           {!atLeaf ? (
+                              <AppText size="xl" weight="bold">
+                                 Select your clans
                               </AppText>
-                           </View>
-                        )}
-                     </View>
-                  )}
+                           ) : (
+                              <AppText weight="semi">Your selected clans</AppText>
+                           )}
 
-                  <View className="gap-4 my-2">
-                     <View className="flex-row flex-wrap gap-4">
+                           {path.length > 0 && (
+                              <View
+                                 style={{
+                                    backgroundColor: colors.offwhite,
+                                    padding: 10,
+                                    borderRadius: 10,
+                                    paddingHorizontal: 10,
+                                 }}
+                              >
+                                 <AppText size="lg" weight="semi" cap="capitalize">
+                                    {path.map((p) => `${p.name}   `).join("")}
+                                 </AppText>
+                              </View>
+                           )}
+                        </View>
+                     )}
+
+                     <View className="gap-2 mt-4">
                         {currentLevel.map((clan) => (
                            <TouchableOpacity
                               key={clan.id}
                               onPress={() => handleClanSelect(clan)}
                               style={{
-                                 backgroundColor: colors.offwhite,
-                                 flex: 1,
                                  alignItems: "center",
-                                 padding: 10,
+                                 padding: 8,
                                  borderRadius: 20,
                                  width: "100%",
+                                 borderWidth: 1,
+                                 borderColor: colors.placeholder,
                               }}
                            >
                               <AppText weight="med" cap="capitalize">
@@ -154,35 +158,18 @@ export default function Step6() {
                         ))}
                      </View>
 
-                     {path.length > 0 && <Button title="back on step" onPress={handleBack} variant="plain" />}
+                     {path.length > 0 && (
+                        <View className="flex-row items-center gap-2 justify-center">
+                           <AntDesign name="back" size={14} color="black" />
+                           <Button title="back one step" onPress={handleBack} variant="plain" />
+                        </View>
+                     )}
 
                      {atLeaf && <Button title="Next" onPress={handleNext} />}
                   </View>
                </View>
-            </View>
-         </StepContainer>
+            </StepContainer>
+         </ScrollView>
       </ScreenWrapper>
    );
 }
-
-const styles = StyleSheet.create({
-   container: { flex: 1, padding: 20 },
-   title: { fontSize: 20, marginBottom: 10, fontWeight: "600" },
-   listItem: {
-      padding: 15,
-      backgroundColor: "#f2f2f2",
-      marginBottom: 10,
-      borderRadius: 8,
-   },
-   listText: { fontSize: 18 },
-   backBtn: { fontSize: 16, color: "blue", marginBottom: 10 },
-   pathText: { marginBottom: 15, fontStyle: "italic" },
-   optionsContainer: { gap: 10 },
-   optionBtn: {
-      padding: 15,
-      backgroundColor: "#e0f7fa",
-      borderRadius: 8,
-      marginBottom: 10,
-   },
-   optionText: { fontSize: 18, textAlign: "center" },
-});

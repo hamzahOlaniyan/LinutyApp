@@ -4,7 +4,7 @@ export const colors = {
    gray: "#7e7e7e",
    darkWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",
-   offwhite: "#f2f2f2",
+   offwhite: "#f1f1f1",
    white: "#fff",
    placeholder: "#a3a3a3",
    focus: "#202020",

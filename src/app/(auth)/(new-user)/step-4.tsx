@@ -11,7 +11,7 @@ import { Pressable, View } from "react-native";
 
 export default function Step4() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
-   const [onSelect , setOnSelect] = useState("")
+   const [onSelect, setOnSelect] = useState("");
 
    const router = useRouter();
 
@@ -28,13 +28,22 @@ export default function Step4() {
       }
    };
 
-const RadioSelection = ( {select,field}:{select:string,field:any})=>{
-   return (
-      <Pressable  onPress={()=>{ setOnSelect(select),updateField(field, select) }} className=" flex-row py-4 justify-between">
-         <AppText size="lg" weight="semi"> {select}</AppText>
-         <Ionicons name={onSelect === select ? "radio-button-on":"radio-button-off"} size={24} color="black" />
-      </Pressable>)
-}
+   const RadioSelection = ({ select, field }: { select: string; field: any }) => {
+      return (
+         <Pressable
+            onPress={() => {
+               setOnSelect(select), updateField(field, select);
+            }}
+            className=" flex-row py-4 justify-between"
+         >
+            <AppText size="lg" weight="semi">
+               {" "}
+               {select}
+            </AppText>
+            <Ionicons name={onSelect === select ? "radio-button-on" : "radio-button-off"} size={24} color="black" />
+         </Pressable>
+      );
+   };
 
    return (
       <ScreenWrapper>
@@ -43,11 +52,16 @@ const RadioSelection = ( {select,field}:{select:string,field:any})=>{
             paragraph="Tell us your gender to help personalize your experience on Linuty. This information can make your profile more complete and help others connect with you in a way that feels authentic."
          >
             <View className="gap-4">
-               <RadioSelection select="male" field={'gender'}/>
-               <RadioSelection select="female" field={'gender'}/>
-               <RadioSelection select="other" field={'gender'}/>
+               <RadioSelection select="Male" field={"gender"} />
+               <RadioSelection select="Female" field={"gender"} />
+               <RadioSelection select="Other" field={"gender"} />
             </View>
-            {errors.gender && <AppText color={colors.error} size="sm"> {errors.gender}</AppText>}
+            {errors.gender && (
+               <AppText color={colors.error} size="sm">
+                  {" "}
+                  {errors.gender}
+               </AppText>
+            )}
          </StepContainer>
          <View className="gap-2 my-6">
             <Button onPress={handleNext} title="Next" size="lg" />

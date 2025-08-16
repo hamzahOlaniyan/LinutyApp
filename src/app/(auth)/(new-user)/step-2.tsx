@@ -1,7 +1,7 @@
-import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
+import StepContainer from "@/src/components/StepContainer";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -41,13 +41,10 @@ export default function Step2() {
 
    return (
       <ScreenWrapper>
-         <View className="gap-6">
-            <AppText size="xxl" weight="bold">
-               Create a password
-            </AppText>
-            <AppText size="lg" weight="med">
-               Your password should be at least 8 characters long. Avoid using easily guessed information.
-            </AppText>
+         <StepContainer
+            heading="Create a password"
+            paragraph="Your password should be at least 8 characters long. Avoid using easily guessed information."
+         >
             <View className="gap-2">
                <Input
                   placeholder="Password"
@@ -73,7 +70,7 @@ export default function Step2() {
             <View className="gap-2 my-6">
                <Button onPress={handleNext} title="Next" size="lg" />
             </View>
-         </View>
+         </StepContainer>
       </ScreenWrapper>
    );
 }

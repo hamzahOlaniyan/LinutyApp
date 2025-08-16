@@ -37,10 +37,10 @@ export default function Step3() {
 
    return (
       <ScreenWrapper>
-         <View className="gap-8">
+         <View className="gap-6">
             <StepContainer
-               heading=" Whats your name?"
-               paragraph=" This helps your friends, family, and community easily recognize and connect. Use the name you’re most
+               heading="Whats your name?"
+               paragraph="This helps your friends, family, and community easily recognize and connect. Use the name you’re most
                commonly known by, so others can find you without confusion."
             >
                <View className="gap-2">
@@ -75,10 +75,9 @@ export default function Step3() {
                   errorMessage={errors.username}
                />
             </StepContainer>
-         </View>
-
-         <View className="gap-2 my-6">
-            <Button onPress={handleNext} title="Next" size="lg" />
+            <View className="gap-2">
+               <Button onPress={handleNext} title="Next" size="lg" />
+            </View>
          </View>
       </ScreenWrapper>
    );

@@ -1,7 +1,7 @@
-import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
+import StepContainer from "@/src/components/StepContainer";
 // import { supabase } from "@/src/lib/supabase";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { router } from "expo-router";
@@ -57,14 +57,11 @@ export default function Step1() {
 
    return (
       <ScreenWrapper>
-         <View className="gap-6">
-            <AppText size="xxl" weight="bold">
-               What is your email address?
-            </AppText>
-            <AppText size="lg" weight="semi">
-               Enter a valid email address to continue. We’ll use this email to verify your identity and send important
-               updates about your Linuty account.
-            </AppText>
+         <StepContainer
+            heading="What is your email address?"
+            paragraph="Enter a valid email address to continue. We’ll use this email to verify your identity and send important
+               updates about your Linuty account."
+         >
             <Input
                placeholder="Email address"
                value={form.email}
@@ -76,9 +73,8 @@ export default function Step1() {
             />
             <View className="gap-2 my-6">
                <Button onPress={handleNext} title="Next" size="lg" />
-               <Button onPress={() => router.back()} title="Already have an account" size="lg" variant="plain" />
             </View>
-         </View>
+         </StepContainer>
       </ScreenWrapper>
    );
 }
