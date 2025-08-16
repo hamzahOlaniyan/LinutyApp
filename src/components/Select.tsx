@@ -1,6 +1,6 @@
 import { colors } from "@/src/constant/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { hp } from "../constant/common";
 import AppText from "./AppText";
@@ -24,6 +24,7 @@ interface SelectButtonProps {
    errorMessage?: string;
    [key: string]: any;
    searchable?: boolean;
+   selectedValue?: any;
 }
 
 export default function Select({
@@ -35,6 +36,7 @@ export default function Select({
    height = 50,
    error,
    errorMessage,
+   selectedValue,
    searchable = false,
 }: SelectButtonProps) {
    const [selected, setSelected] = useState<string | null>(null);
@@ -43,6 +45,12 @@ export default function Select({
    const [isFocused, setIsFocused] = useState(false);
 
    const handleClose = () => setShowActionsheet(false);
+
+   useEffect(() => {
+      if (typeof selectedValue !== "undefined") {
+         setSelected(selectedValue ?? null);
+      }
+   }, [selectedValue]);
 
    const handleSelect = (option: string) => {
       setSelected(option);
@@ -72,7 +80,7 @@ export default function Select({
                className="w-full flex-row justify-between items-center rounded-2xl"
             >
                {selected ? (
-                  <AppText weight="med" size="md" cap="capitalize">
+                  <AppText weight="med" size="lg" cap="capitalize">
                      {selected}
                   </AppText>
                ) : (

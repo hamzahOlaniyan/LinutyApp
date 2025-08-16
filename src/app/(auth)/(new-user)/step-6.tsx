@@ -1,125 +1,165 @@
+import AppText from "@/src/components/AppText";
+import Button from "@/src/components/Button";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
-import { ClanNode, ETHNICITIES } from "@/src/data/ClanTree";
+import { colors } from "@/src/constant/colors";
+import { ClanNode, ETHNICITIES, Ethnicity } from "@/src/data/ClanTree";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function Step6() {
-   const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
+   const { form, errors, updateField, nextStep } = useRegistrationStore();
 
-   const [selectedEthnicity, setSelectedEthnicity] = useState<string>("");
+   const [selectedEthnicityId, setSelectedEthnicityId] = useState<string | null>(null);
+   const [selectedEthnicityName, setSelectedEthnicityName] = useState<string | null>(null);
+
    const [path, setPath] = useState<ClanNode[]>([]);
-   const [options, setOptions] = useState<ClanNode[]>([]);
+   const [currentLevel, setCurrentLevel] = useState<ClanNode[]>([]);
 
-   // Select Ethnicity
-   const handleEthnicitySelect = (ethnicity: string) => {
-      const selected = ETHNICITIES.find((e) => e.id === ethnicity) as any;
-      setSelectedEthnicity(ethnicity);
-      setOptions(selected.clans);
-      setPath([]);
+   const router = useRouter();
+
+   console.log({ form });
+
+   // pick ethnicity (Select stays visible because we always render it)
+   const handleEthnicitySelect = (ethnicity: Ethnicity) => {
+      setSelectedEthnicityId(ethnicity.id);
+      setSelectedEthnicityName(ethnicity.name);
+      updateField("ethnicity", ethnicity.id); // store id in your form
+      setPath([]); // reset lineage path
+      setCurrentLevel(ethnicity.clans); // show top-level clans
    };
 
-   console.log(
-      "options clans",
-      JSON.stringify(
-         options.map((c) => c?.name),
-         null,
-         2
-      )
-   );
+   // pick clan/subclan
+   const handleClanSelect = (clan: ClanNode) => {
+      const newPath = [...path, clan];
+      setPath(newPath);
 
-   // find the full object
+      // Update form with the chain of selected clans
+      updateField("lineage_ids", newPath.map((p) => p.id) as any);
+      updateField("lineage_names", newPath.map((p) => p.name) as any);
 
-   // Select Clan/Subclan
-   // const handleSelect = (node: ClanNode) => {
-   //    setPath([...path, node]);
-   //    if (node.children && node.children.length > 0) {
-   //       setOptions(node.children);
-   //    } else {
-   //       console.log(
-   //          "✅ Final lineage:",
-   //          [...path, node].map((n) => n.name)
-   //       );
-   //    }
-   // };
+      if (clan.children && clan.children.length > 0) {
+         setCurrentLevel(clan.children);
+      } else {
+         // no more children = end of tree
+         setCurrentLevel([]);
+      }
+   };
 
-   // Go Back
-   // const handleBack = () => {
-   //    if (path.length === 0) {
-   //       // back to ethnicity screen
-   //       setSelectedEthnicity(null);
-   //       setOptions([]);
-   //       return;
-   //    }
+   const handleBack = () => {
+      if (path.length > 0) {
+         const newPath = [...path];
+         newPath.pop();
+         setPath(newPath);
 
-   //    const newPath = [...path];
-   //    newPath.pop();
-   //    setPath(newPath);
+         // Update form when going back
+         updateField("lineage_ids", newPath.map((p) => p.id) as any);
+         updateField("lineage_names", newPath.map((p) => p.name) as any);
 
-   //    if (newPath.length === 0) {
-   //       setOptions(selectedEthnicity?.clans || []);
-   //    } else {
-   //       const lastNode = newPath[newPath.length - 1];
-   //       setOptions(lastNode.children || []);
-   //    }
-   // };
+         if (newPath.length > 0) {
+            setCurrentLevel(newPath[newPath.length - 1].children || []);
+         } else {
+            // back to root clans of selected ethnicity
+            const ethnicity = ETHNICITIES.find((e) => e.id === selectedEthnicityId);
+            setCurrentLevel(ethnicity?.clans || []);
+         }
+      }
+   };
+
+   const atLeaf = currentLevel.length === 0 && path.length > 0;
+
+   // what to save when user is done
+   const handleNext = () => {
+      // store both ids and names if you like
+      updateField("lineage_ids", path.map((n) => n.id) as any);
+      updateField("lineage_names", [selectedEthnicityName, ...path.map((n) => n.name)].filter(Boolean) as any);
+      nextStep();
+      router.push("/(auth)/(new-user)/step-7");
+   };
 
    return (
       <ScreenWrapper>
-         <StepContainer heading="What is your linage" paragraph="Share your nationality and country of birth to help.">
-            <>
+         <StepContainer heading="What is your lineage" paragraph="Share your nationality and country of birth to help.">
+            <View className="gap-28">
                <Select
                   height={90}
-                  options={ETHNICITIES.map((item) => item.id)}
-                  searchable
+                  options={ETHNICITIES.map((item) => item.name)}
                   placeholder="Ethnicity"
-                  onSelect={(ethnicity) => {
-                     updateField("ethnicity", ethnicity);
-                     handleEthnicitySelect(ethnicity);
+                  searchable
+                  selectedValue={selectedEthnicityName ?? undefined} // ✅ use selectedValue
+                  onSelect={(ethnicityName) => {
+                     const ethnicity = ETHNICITIES.find((e) => e.name === ethnicityName);
+                     if (ethnicity) handleEthnicitySelect(ethnicity);
                   }}
                   error={!!errors.ethnicity}
                   errorMessage={errors.ethnicity}
                />
-               {/* {
-                  options.map((clan)=> <AppText>{clan.}</AppText>)
-               } */}
+               <View className="gap-4">
+                  {selectedEthnicityName && (
+                     <View
+                        className="gap-4 p-6"
+                        style={{
+                           padding: atLeaf ? 16 : 0,
+                           borderRadius: 10,
+                           backgroundColor: atLeaf ? colors.darkWhite : "",
+                        }}
+                     >
+                        {!atLeaf ? (
+                           <AppText size="xl" weight="bold">
+                              Select your clans
+                           </AppText>
+                        ) : (
+                           <AppText weight="semi">Your selected clans</AppText>
+                        )}
 
-               {/* <FlatList
-                  data={ETHNICITIES}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item }) => (
-                     <TouchableOpacity style={styles.listItem} onPress={() => handleEthnicitySelect(item)}>
-                        <Text>{item.name}</Text>
-                     </TouchableOpacity>
+                        {path.length > 0 && (
+                           <View
+                              style={{
+                                 backgroundColor: colors.offwhite,
+                                 padding: 10,
+                                 borderRadius: 10,
+                                 paddingHorizontal: 10,
+                              }}
+                           >
+                              <AppText size="xl" weight="semi" cap="capitalize">
+                                 {path.map((p) => `${p.name}   `).join("")}
+                              </AppText>
+                           </View>
+                        )}
+                     </View>
                   )}
-               /> */}
-            </>
-            {/* {options.map((opt) => (
-               // <TouchableOpacity key={opt.id} style={styles.optionBtn} onPress={() => handleSelect(opt)}>
-               <AppText>{opt.name}</AppText>
-               // </TouchableOpacity>
-            ))} */}
-            {/* {!selectedEthnicity ? (
-               <AppText>hello</AppText>
-            ) : (
-               <> */}
-            {/* <TouchableOpacity onPress={handleBack}> */}
-            {/* <Text style={styles.backBtn}>◀ Back</Text> */}
-            {/* </TouchableOpacity> */}
 
-            {/* <Text style={styles.pathText}>Path: {path.map((p) => p.name).join(" → ")}</Text> */}
+                  <View className="gap-4 my-2">
+                     <View className="flex-row flex-wrap gap-4">
+                        {currentLevel.map((clan) => (
+                           <TouchableOpacity
+                              key={clan.id}
+                              onPress={() => handleClanSelect(clan)}
+                              style={{
+                                 backgroundColor: colors.offwhite,
+                                 flex: 1,
+                                 alignItems: "center",
+                                 padding: 10,
+                                 borderRadius: 20,
+                                 width: "100%",
+                              }}
+                           >
+                              <AppText weight="med" cap="capitalize">
+                                 {clan.name}
+                              </AppText>
+                           </TouchableOpacity>
+                        ))}
+                     </View>
 
-            {/* <View style={styles.optionsContainer}>
-                  {options.map((opt) => (
-                     // <TouchableOpacity key={opt.id} style={styles.optionBtn} onPress={() => handleSelect(opt)}>
-                     <Text style={styles.optionText}>{opt.name}</Text>
-                     // </TouchableOpacity>
-                  ))}
-               </View> */}
-            {/* </> */}
-            {/* )} */}
+                     {path.length > 0 && <Button title="back on step" onPress={handleBack} variant="plain" />}
+
+                     {atLeaf && <Button title="Next" onPress={handleNext} />}
+                  </View>
+               </View>
+            </View>
          </StepContainer>
       </ScreenWrapper>
    );

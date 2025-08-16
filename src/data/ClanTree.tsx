@@ -21,8 +21,8 @@ export const ETHNICITIES: Ethnicity[] = [
             children: [
                { id: "yusuf", name: "Yusuf" },
                { id: "kablalah", name: "Kablalah" },
-               { id: "cisse", name: "Harti" },
-               { id: "sade", name: "Cisse" },
+               { id: "cisse", name: "cisse" },
+               { id: "sade", name: "sade" },
                {
                   id: "tenade",
                   name: "tenade",

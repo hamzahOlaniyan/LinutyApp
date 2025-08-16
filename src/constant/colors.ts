@@ -2,14 +2,15 @@ export const colors = {
    primary: "#000",
    secondary: "",
    gray: "#7e7e7e",
+   darkWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",
-   offwhite: '#f2f2f2',
+   offwhite: "#f2f2f2",
    white: "#fff",
    placeholder: "#a3a3a3",
    focus: "#202020",
    error: "#b70000",
    warring: "#",
-   success: "#",
+   success: "#3677b2",
 
    dark: {
       background: "#171717",

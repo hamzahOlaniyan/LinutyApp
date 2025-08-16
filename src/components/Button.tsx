@@ -28,7 +28,7 @@ export default function Button({
       <Pressable
          style={{
             borderRadius: 100,
-            width: "100%",
+            // width: "100%",
             borderColor: colors.primary,
             borderWidth: variant === "outline" ? 1 : 0,
             justifyContent: "center",
@@ -38,12 +38,12 @@ export default function Button({
                size === "lg"
                   ? hp(5.5)
                   : size === "md"
-                    ? hp(5)
-                    : size === "sm"
-                      ? hp(4.5)
-                      : size === "xs"
-                        ? hp(4)
-                        : hp(5),
+                  ? hp(5)
+                  : size === "sm"
+                  ? hp(4.5)
+                  : size === "xs"
+                  ? hp(4)
+                  : hp(5),
          }}
          onPress={onPress}
          disabled={disabled}

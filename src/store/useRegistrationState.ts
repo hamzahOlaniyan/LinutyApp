@@ -9,11 +9,12 @@ export type RegistrationState = {
       email: string;
       password: string;
       username: string;
-      gender: 'male'|'female'|"other"|""
-      nationality:string;
-      cob:string;
-      ethnicity:string;
-      address: string;
+      gender: "male" | "female" | "other" | "";
+      nationality: string;
+      cob: string;
+      ethnicity: string;
+      lineage_ids: string[];
+      lineage_names: string[];
    };
    errors: Partial<Record<keyof RegistrationState["form"], string>>;
    nextStep: () => void;
@@ -32,11 +33,12 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
       email: "",
       password: "",
       username: "",
-      gender:"",
-      nationality:"",
-      cob:"",
-      ethnicity:"",
-      address: "",
+      gender: "",
+      nationality: "",
+      cob: "",
+      ethnicity: "",
+      lineage_ids: [],
+      lineage_names: [],
    },
    errors: {},
    nextStep: () => set((s) => ({ step: s.step + 1 })),
@@ -51,8 +53,19 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
    reset: () =>
       set({
          step: 0,
-         form: { firstName: "", surname: "", username: "", email: "", password: "", gender:"", nationality:"",
-      cob:"", ethnicity:"", address: "" },
+         form: {
+            firstName: "",
+            surname: "",
+            username: "",
+            email: "",
+            password: "",
+            gender: "",
+            nationality: "",
+            cob: "",
+            ethnicity: "",
+            lineage_ids: [],
+            lineage_names: [],
+         },
          errors: {},
       }),
 }));
