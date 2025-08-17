@@ -47,13 +47,13 @@ export default function index() {
                      </AppText>
                   </Pressable>
                </View>
-               {/* <Button
+               <Button
                   title="Sign in"
                   // onPress={handleSignIn}
                   // isLoading={loading}
                   disabled={!email || !password}
                   size="lg"
-               /> */}
+               />
             </View>
             <View className="gap-6 absolute bottom-5">
                <Link href={"/(auth)/(new-user)"} asChild>

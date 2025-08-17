@@ -22,6 +22,7 @@ export type RegistrationState = {
    updateField: (field: keyof RegistrationState["form"], value: string) => void;
    setError: (field: keyof RegistrationState["form"], message: string) => void;
    clearError: (field: keyof RegistrationState["form"]) => void;
+   resetErrors: () => void;
    reset: () => void;
 };
 
@@ -50,6 +51,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
       })),
    setError: (field, message) => set((s) => ({ errors: { ...s.errors, [field]: message } })),
    clearError: (field) => set((s) => ({ errors: { ...s.errors, [field]: "" } })),
+   resetErrors: () => set({ errors: {} }),
    reset: () =>
       set({
          step: 0,
