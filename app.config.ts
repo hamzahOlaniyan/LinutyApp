@@ -32,7 +32,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          [
             "expo-splash-screen",
             {
-               backgroundColor: "#000",
+               backgroundColor: "#000000",
             },
          ],
       ],
