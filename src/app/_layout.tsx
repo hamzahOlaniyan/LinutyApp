@@ -4,22 +4,18 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
 
 SplashScreen.preventAutoHideAsync();
 
 SplashScreen.setOptions({
-   duration: 200,
+   duration: 400,
    fade: true,
 });
 
 export default function RootLayout() {
-   const { top, bottom } = useSafeAreaInsets();
-
-   // const paddingTop = top > 0 ? top + 5 : 30;
-
    const [loaded] = useFonts({
       [TiktokFont.TiktokBlack]: require("@/assets/fonts/TikTokSans-Black.ttf"),
       [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/TikTokSans-ExtraBold.ttf"),
@@ -41,13 +37,7 @@ export default function RootLayout() {
    }
 
    return (
-      <SafeAreaProvider
-         style={{
-            // paddingTop,
-            paddingBottom: bottom,
-            backgroundColor: "white",
-         }}
-      >
+      <SafeAreaProvider>
          <GluestackUIProvider>
             <StatusBar style="auto" />
             <Stack screenOptions={{ headerShown: false }} />

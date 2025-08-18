@@ -6,13 +6,15 @@ import { colors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, View } from "react-native";
 
 export default function index() {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
+
+   const router = useRouter();
    return (
       <ScreenWrapper>
          <View style={{ position: "relative", marginTop: hp(18) }}>
@@ -56,7 +58,7 @@ export default function index() {
                />
             </View>
             <View className="gap-6 absolute bottom-5">
-               <Link href={"/(auth)/(new-user)"} asChild>
+               <Link href={"/(auth)/(new-user)/step-1"} asChild>
                   <Button title="Create new account" size="lg" variant="outline" />
                </Link>
                <View className="flex-row items-center justify-center flex-wrap">

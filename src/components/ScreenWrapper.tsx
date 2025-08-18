@@ -1,7 +1,7 @@
 import { wp } from "@/src/constant/common";
-import { GLOBAL_STYLES } from "@/src/constant/globalStyles";
 import React from "react";
 import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function ScreenWrapper({
    children,
@@ -12,16 +12,17 @@ export default function ScreenWrapper({
    paddingHorizontal?: number;
    bg?: string;
 }) {
+   const { top, bottom } = useSafeAreaInsets();
+
    return (
       <View
-         style={[
-            GLOBAL_STYLES.flex,
-
-            {
-               paddingHorizontal: wp(paddingHorizontal),
-               backgroundColor: bg,
-            },
-         ]}
+         style={{
+            paddingBottom: bottom,
+            // paddingTop: top,
+            flex: 1,
+            paddingHorizontal: wp(paddingHorizontal),
+            backgroundColor: bg,
+         }}
       >
          {children}
       </View>

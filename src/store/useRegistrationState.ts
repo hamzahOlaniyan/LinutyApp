@@ -15,6 +15,7 @@ export type RegistrationState = {
       ethnicity: string;
       lineage_ids: string[];
       lineage_names: string[];
+      profilePic: string;
    };
    errors: Partial<Record<keyof RegistrationState["form"], string>>;
    nextStep: () => void;
@@ -40,6 +41,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
       ethnicity: "",
       lineage_ids: [],
       lineage_names: [],
+      profilePic: "",
    },
    errors: {},
    nextStep: () => set((s) => ({ step: s.step + 1 })),
@@ -67,6 +69,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
             ethnicity: "",
             lineage_ids: [],
             lineage_names: [],
+            profilePic: "",
          },
          errors: {},
       }),
