@@ -78,7 +78,7 @@ export default function Step6() {
       updateField("lineage_ids", path.map((n) => n.id) as any);
       updateField("lineage_names", [selectedEthnicityName, ...path.map((n) => n.name)].filter(Boolean) as any);
       nextStep();
-      router.push("/(auth)/(new-user)/step-7");
+      router.push("/step-7");
    };
 
    return (

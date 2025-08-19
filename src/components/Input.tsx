@@ -12,10 +12,11 @@ type InputProps = TextInputProps & {
    isPassword?: boolean;
    error?: boolean;
    errorMessage?: string;
+   clearValue?: boolean;
    [key: string]: any;
 };
 
-export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMessage, ...props }) => {
+export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMessage, clearValue, ...props }) => {
    const [isFocused, setIsFocused] = useState(false);
    const [showPassword, setShowPassword] = useState(true);
 
@@ -53,6 +54,7 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
                   selectionHandleColor={"#38704f"}
                   secureTextEntry={isPassword && showPassword}
                />
+               {/* {clearValue && <Fontisto name="close-a" size={20} color="#a3a3a3" onPress={() => setResetValue("")} />} */}
                {isPassword && (
                   <View>
                      <Ionicons

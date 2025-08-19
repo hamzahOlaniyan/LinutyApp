@@ -4,11 +4,12 @@ import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 
 export default function Step3() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
+   const [loading, setLoading] = useState(false);
    const router = useRouter();
 
    const handleNext = async () => {
@@ -18,20 +19,19 @@ export default function Step3() {
          setError("firstName", "first name is required");
          valid = false;
       }
-      if (!form.surname) {
-         setError("surname", "surname is required");
-         valid = false;
-      }
 
-      if (!form.username) {
-         setError("username", "password is required");
+      if (!form.surname) {
+         setError("surname", "password is required");
          valid = false;
+         3;
       }
+      setLoading(true);
 
       if (!valid) return;
       if (valid) {
          nextStep();
-         router.push("/(auth)/(new-user)/step-4");
+         router.push("/step-3.2");
+         setLoading(false);
       }
    };
 
@@ -62,21 +62,8 @@ export default function Step3() {
                   />
                </View>
             </StepContainer>
-            <StepContainer
-               heading="Create a username"
-               paragraph="Pick a unique username that represents you on Linuty. This will be your identity across the app, making it easy for others to find and connect with you."
-            >
-               <Input
-                  placeholder="Username"
-                  value={form.username}
-                  onChangeText={(username) => updateField("username", username)}
-                  inputMode="text"
-                  error={!!errors.username}
-                  errorMessage={errors.username}
-               />
-            </StepContainer>
             <View className="gap-2">
-               <Button onPress={handleNext} title="Next" size="lg" />
+               <Button onPress={handleNext} title="Next" size="lg" isLoading={loading} />
             </View>
          </View>
       </ScreenWrapper>

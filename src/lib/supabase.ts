@@ -1,6 +1,18 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createClient } from "@supabase/supabase-js";
 import { AppState } from "react-native";
+
+// Use lazy require so AsyncStorage is only loaded in React Native
+let storage: any = undefined;
+
+try {
+   // Dynamically import react-native APIs only if available
+   const { Platform } = require("react-native");
+   if (Platform?.OS !== "web") {
+      storage = require("@react-native-async-storage/async-storage").default;
+   }
+} catch {
+   // We're in Node.js (no react-native available), keep storage = undefined
+}
 
 const supabaseUrl = "https://kttxalavymeiicyrwefq.supabase.co";
 const supabaseAnonKey =
@@ -8,18 +20,7 @@ const supabaseAnonKey =
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
    auth: {
-      storage: {
-         async getItem(key) {
-            return AsyncStorage.getItem(key);
-         },
-         async setItem(key, value) {
-            await AsyncStorage.setItem(key, value);
-         },
-         async removeItem(key) {
-            await AsyncStorage.removeItem(key);
-         },
-      },
-
+      storage,
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: false,

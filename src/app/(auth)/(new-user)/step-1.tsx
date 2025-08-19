@@ -61,7 +61,7 @@ export default function Step1() {
 
       if (valid) {
          nextStep();
-         router.push("/(auth)/(new-user)/step-2");
+         router.push("/step-2");
          setLoading(false);
       }
    };

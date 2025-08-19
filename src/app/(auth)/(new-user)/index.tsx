@@ -32,7 +32,7 @@ export default function NewUser() {
                To connect, share, and explore — we need a little more info from you.
             </AppText>
             <View className="gap-2 my-6">
-               <Button onPress={() => router.push("/(auth)/(new-user)/step-1")} title="Get started" size="lg" />
+               <Button onPress={() => router.push("/step-1")} title="Get started" size="lg" />
                <Button onPress={() => router.back()} title="Already have an account" size="lg" variant="outline" />
             </View>
          </View>

@@ -12,8 +12,6 @@ export default function Step5() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
    const router = useRouter();
 
-   console.log(form);
-
    const handleNext = async () => {
       let valid = true;
 
@@ -25,16 +23,12 @@ export default function Step5() {
          setError("cob", "country of birth is required");
          valid = false;
       }
-      // if (!form.ethnicity) {
-      //    setError("ethnicity", "ethnicity is required");
-      //    valid = false;
-      // }
 
-      // if (!valid) return;
+      if (!valid) return;
 
       if (valid) {
          nextStep();
-         router.push("/(auth)/(new-user)/step-6");
+         router.push("/step-6");
       }
    };
 

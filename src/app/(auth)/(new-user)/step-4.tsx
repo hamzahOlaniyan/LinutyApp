@@ -24,7 +24,7 @@ export default function Step4() {
       }
       if (valid) {
          nextStep();
-         router.push("/(auth)/(new-user)/step-5");
+         router.push("/step-5");
       }
    };
 

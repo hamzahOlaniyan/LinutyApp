@@ -12,7 +12,7 @@ export default function StepContainer({
 }: {
    children: React.ReactNode;
    heading: string;
-   paragraph: string;
+   paragraph?: string;
    footer?: boolean;
 }) {
    const router = useRouter();
@@ -20,12 +20,16 @@ export default function StepContainer({
       <View className="gap-4">
          <View>
             <View className="gap-3">
-               <AppText size="xxl" weight="bold">
-                  {heading}
-               </AppText>
-               <AppText size="lg" weight="med">
-                  {paragraph}
-               </AppText>
+               {heading && (
+                  <AppText size="xxl" weight="semi">
+                     {heading}
+                  </AppText>
+               )}
+               {paragraph && (
+                  <AppText size="lg" weight="med">
+                     {paragraph}
+                  </AppText>
+               )}
             </View>
             <View className="mt-5">{children}</View>
          </View>

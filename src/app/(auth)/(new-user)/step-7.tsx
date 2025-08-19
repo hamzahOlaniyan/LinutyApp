@@ -37,7 +37,7 @@ export default function Step3() {
 
       if (valid) {
          nextStep();
-         router.push("/(auth)/(new-user)/step-8");
+         router.push("/step-8");
       }
    };
 
