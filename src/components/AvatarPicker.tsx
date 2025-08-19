@@ -1,6 +1,7 @@
+import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import { Alert, Image, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import Button from "./Button";
 
 interface Props {
@@ -13,7 +14,6 @@ interface Props {
 export default function AvatarPicker({ url, size = 150, onPickLocal }: Props) {
    const [uploading, setUploading] = useState(false);
    const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-   // const [localImage, setLocalImage] = useState("");
    const avatarSize = { height: size, width: size };
 
    // useEffect(() => {
@@ -43,23 +43,23 @@ export default function AvatarPicker({ url, size = 150, onPickLocal }: Props) {
    async function pickAvatar() {
       try {
          setUploading(true);
-         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsMultipleSelection: false,
+         let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ["images", "videos"],
             allowsEditing: true,
+            aspect: [4, 3],
             quality: 1,
-            exif: false,
          });
          if (result.canceled || !result.assets || result.assets.length === 0) {
             console.log("User cancelled image picker.");
             return;
          }
-         const image = result.assets[0];
-         setAvatarUrl(image?.uri);
-         onPickLocal?.(image.uri);
 
-         if (!image.uri) {
-            throw new Error("No image uri!");
+         console.log(result);
+
+         if (!result.canceled) {
+            const image = result.assets[0].uri;
+            setAvatarUrl(image);
+            onPickLocal?.(image);
          }
       } catch (error) {
          if (error instanceof Error) {

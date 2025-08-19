@@ -3,7 +3,7 @@ import Button from "@/src/components/Button";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { View } from "react-native";
 
@@ -13,31 +13,32 @@ export default function Step3() {
 
    const router = useRouter();
 
-   useFocusEffect(
-      React.useCallback(() => {
-         return () => resetErrors();
-      }, [resetErrors])
-   );
+   // useFocusEffect(
+   //    React.useCallback(() => {
+   //       return () => resetErrors();
+   //    }, [resetErrors])
+   // );
 
-   console.log("step-7", JSON.stringify(avatarUrl, null, 2));
-   console.log("form-7", JSON.stringify(form, null, 2));
+   // console.log("step-7", JSON.stringify(avatarUrl, null, 2));
 
    const onUpload = (value: any) => {
       setAvatarUrl(value);
-      updateField("profilePic", value.uri);
+      updateField("profilePic", value);
    };
 
    const handleNext = async () => {
+      console.log("next");
+
       let valid = true;
 
       if (!form.profilePic) {
          setError("profilePic", "please upload an image");
-         valid = false;
+         return;
       }
 
       if (valid) {
          nextStep();
-         router.push("/step-8");
+         router.replace("/step-8");
       }
    };
 
@@ -45,11 +46,9 @@ export default function Step3() {
       <ScreenWrapper>
          <StepContainer
             heading="Add a profile picture"
-            paragraph="Add a profile picture so that friends know it's you. wvweryogne will be able to see your picture"
+            paragraph="Add a profile picture so that friends know it's you. Everyone will be able to see your picture."
          >
-            <View>
-               <AvatarPicker size={200} url={""} onPickLocal={(uri: string) => onUpload(uri as any)} />
-            </View>
+            <AvatarPicker size={200} url={""} onPickLocal={(uri: string) => onUpload(uri as any)} />
             {avatarUrl && (
                <View className="gap-2 my-6">
                   <Button onPress={handleNext} title="Next" size="lg" />

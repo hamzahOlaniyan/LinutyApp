@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
+import { supabase } from "../lib/supabase";
+import { useAuthStore } from "../store/authStore";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -16,6 +18,8 @@ SplashScreen.setOptions({
 });
 
 export default function RootLayout() {
+   const { setSession } = useAuthStore();
+
    const [loaded] = useFonts({
       [TiktokFont.TiktokBlack]: require("@/assets/fonts/TikTokSans-Black.ttf"),
       [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/TikTokSans-ExtraBold.ttf"),
@@ -31,6 +35,16 @@ export default function RootLayout() {
          SplashScreen.hide();
       }
    }, [loaded]);
+
+   useEffect(() => {
+      const checkSession = async () => {
+         const { data } = await supabase.auth.getSession();
+         if (data?.session) {
+            setSession(data?.session);
+         }
+      };
+      checkSession();
+   }, []);
 
    if (!loaded) {
       return null;
