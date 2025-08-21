@@ -3,6 +3,7 @@ import Button from "@/src/components/Button";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import { colors } from "@/src/constant/colors";
+import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -11,9 +12,13 @@ import { Pressable, View } from "react-native";
 
 export default function Step4() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
+   const { profile } = useAuthStore();
+
    const [onSelect, setOnSelect] = useState("");
 
    const router = useRouter();
+
+   console.log("Gender Page", JSON.stringify(profile, null, 2));
 
    const handleNext = async () => {
       let valid = true;
@@ -21,10 +26,11 @@ export default function Step4() {
       if (!form.gender) {
          setError("gender", "Please select your gender");
          valid = false;
+         return;
       }
       if (valid) {
          nextStep();
-         router.push("/step-5");
+         router.push("/PartTwo/step-5");
       }
    };
 

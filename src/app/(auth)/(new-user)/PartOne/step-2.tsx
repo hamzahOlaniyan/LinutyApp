@@ -34,7 +34,7 @@ export default function Step2() {
       if (!valid) return;
       if (valid) {
          nextStep();
-         router.push("/step-3.1");
+         router.push("/PartOne/step-3.1");
          setConfirmPassword("");
       }
    };

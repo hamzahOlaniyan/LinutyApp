@@ -1,16 +1,17 @@
 export const colors = {
-   primary: "#151718",
+   primary: "#0057ff",
    secondary: "",
    gray: "#7e7e7e",
    darkWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",
    offwhite: "#f1f1f1",
    white: "#fff",
-   placeholder: "#a3a3a3",
+   placeholder: "#aebbc8",
    focus: "#202020",
    error: "#b70000",
    warring: "#",
    success: "#3677b2",
+   concept: "#ff8200",
 
    dark: {
       background: "#171717",

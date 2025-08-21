@@ -4,22 +4,22 @@ import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import { supabase } from "@/src/lib/supabase";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { View } from "react-native";
 
 export default function Step1() {
-   const { form, errors, updateField, setError, nextStep, resetErrors } = useRegistrationStore();
+   const { form, errors, updateField, setError, nextStep, resetErrors, clearError } = useRegistrationStore();
 
    const [loading, setLoading] = useState(false);
 
    const router = useRouter();
 
-   useFocusEffect(
-      React.useCallback(() => {
-         return () => resetErrors(); // clears ALL errors when leaving screen
-      }, [resetErrors])
-   );
+   // useFocusEffect(
+   //    React.useCallback(() => {
+   //       return () => clearError("email"); // clears ALL errors when leaving screen
+   //    }, [resetErrors])
+   // );
 
    const isValidEmail = (email: string) => {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,7 +61,7 @@ export default function Step1() {
 
       if (valid) {
          nextStep();
-         router.push("/step-2");
+         router.push("/PartOne/step-2");
          setLoading(false);
       }
    };

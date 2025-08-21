@@ -30,7 +30,7 @@ export default function Step3() {
       if (!valid) return;
       if (valid) {
          nextStep();
-         router.push("/step-3.2");
+         router.push("/PartOne/step-3.2");
          setLoading(false);
       }
    };

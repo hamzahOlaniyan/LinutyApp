@@ -38,8 +38,9 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
                   borderWidth: 1,
                   marginBottom: 3,
                   borderColor: isFocused ? colors.focus : error ? colors.error : colors.placeholder,
+                  borderRadius: 15,
                }}
-               className={`w-full flex-row items-center justify-center p-4 rounded-2xl gap-2 `}
+               className={`w-full flex-row items-center justify-center p-4 gap-2 `}
             >
                {icon && <View className="relative top-[1px]">{icon}</View>}
                <TextInput
@@ -48,7 +49,7 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
                   placeholderTextColor={"#a3a3a3"}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
-                  autoCapitalize="none"
+                  // autoCapitalize="none"
                   {...props}
                   selectionColor={"#38704f"}
                   selectionHandleColor={"#38704f"}

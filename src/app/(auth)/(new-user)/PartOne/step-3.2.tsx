@@ -15,8 +15,6 @@ export default function Step3() {
    const [loading, setLoading] = useState(false);
    const router = useRouter();
 
-   const cutomeUsername = form.firstName + form.surname;
-
    const handleNext = async () => {
       let valid = true;
 
@@ -50,7 +48,7 @@ export default function Step3() {
       if (!valid) return;
       if (valid) {
          nextStep();
-         router.push("/agreement");
+         router.push("/PartOne/agreement");
          setLoading(false);
       }
    };

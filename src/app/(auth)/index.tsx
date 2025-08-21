@@ -2,19 +2,59 @@ import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
-import { colors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { supabase } from "@/src/lib/supabase";
+import { useAuthStore } from "@/src/store/authStore";
 import { Image } from "expo-image";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, View } from "react-native";
+import { Alert, Pressable, View } from "react-native";
 
 export default function index() {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
+   const [loading, setLoading] = useState(false);
+
+   const setSession = useAuthStore((s) => s.setSession);
+   // const setUserProfile = useAuthStore((s) => s.setUserProfile);
 
    const router = useRouter();
+
+   const handleSignIn = async () => {
+      if (!email || !password) {
+         Alert.alert("Please fill in all fields");
+         return;
+      }
+      try {
+         setLoading(true);
+         const { error, data: session } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+         });
+         setSession(session?.session);
+
+         // const { data: profile } = await supabase
+         //    .from("profiles")
+         //    .select("*")
+         //    .eq("id", session?.user?.id as string)
+         //    .single();
+
+         // if (profile && !profile.isComplete) {
+         //    router.replace("/profile-setup");
+         // } else {
+         //    router.replace("/(protected)/(tabs)/(home)");
+         // }
+
+         if (error) Alert.alert(error.message);
+         console.log("logged in");
+         setLoading(false);
+      } catch (error) {
+         console.error("Error signing in:", error);
+      } finally {
+         setLoading(false);
+      }
+   };
+
    return (
       <ScreenWrapper>
          <View style={{ position: "relative", marginTop: hp(18) }}>
@@ -27,7 +67,6 @@ export default function index() {
             <View className="gap-8 relative top-20">
                <View className="gap-2">
                   <Input
-                     icon={<MaterialCommunityIcons name="email-outline" size={18} color={colors.placeholder} />}
                      placeholder="Email address"
                      value={email}
                      onChangeText={setEmail}
@@ -35,7 +74,6 @@ export default function index() {
                      inputMode="text"
                   />
                   <Input
-                     icon={<MaterialCommunityIcons name="lock-outline" size={18} color={colors.placeholder} />}
                      placeholder="Password"
                      value={password}
                      onChangeText={setPassword}
@@ -51,16 +89,19 @@ export default function index() {
                </View>
                <Button
                   title="Sign in"
-                  // onPress={handleSignIn}
-                  // isLoading={loading}
+                  onPress={handleSignIn}
+                  isLoading={loading}
                   disabled={!email || !password}
                   size="lg"
                />
             </View>
             <View className="gap-6 absolute bottom-5">
-               <Link href={"/(auth)/(new-user)"} asChild>
-                  <Button title="Create new account" size="lg" variant="outline" />
-               </Link>
+               <Button
+                  title="Create an account"
+                  onPress={() => router.push("/(auth)/(new-user)")}
+                  size="lg"
+                  variant="outline"
+               />
                <View className="flex-row items-center justify-center flex-wrap">
                   <AppText size="sm" align="center">
                      By signing in, you agree to our{" "}

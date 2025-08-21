@@ -9,9 +9,10 @@ export type RegistrationState = {
       email: string;
       password: string;
       username: string;
+      fullLineageName: string;
       gender: "male" | "female" | "other" | "";
+      location: string;
       nationality: string;
-      cob: string;
       ethnicity: string;
       lineage_ids: string[];
       lineage_names: string[];
@@ -35,9 +36,10 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
       email: "",
       password: "",
       username: "",
-      gender: "",
+      fullLineageName: "",
+      gender: "" as "" | "male" | "female" | "other",
+      location: "",
       nationality: "",
-      cob: "",
       ethnicity: "",
       lineage_ids: [],
       lineage_names: [],
@@ -63,9 +65,10 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
             username: "",
             email: "",
             password: "",
+            fullLineageName: "",
             gender: "",
             nationality: "",
-            cob: "",
+            location: "",
             ethnicity: "",
             lineage_ids: [],
             lineage_names: [],

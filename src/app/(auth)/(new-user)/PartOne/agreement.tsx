@@ -15,8 +15,6 @@ export default function Agreement() {
 
    const router = useRouter();
 
-   // console.log(JSON.stringify(form, null, 2));
-
    const handleNext = async () => {
       let valid = true;
       setLoading(true);
@@ -37,7 +35,7 @@ export default function Agreement() {
 
       if (valid) {
          nextStep();
-         router.push("/otp");
+         router.push("/PartOne/otp");
          setLoading(false);
       }
    };
@@ -67,7 +65,7 @@ export default function Agreement() {
             </View>
 
             <View className="gap-2 my-6">
-               <Button onPress={handleNext} title="confirm" size="lg" isLoading={loading} />
+               <Button onPress={handleNext} title="I agree" size="lg" isLoading={loading} />
             </View>
          </StepContainer>
       </ScreenWrapper>

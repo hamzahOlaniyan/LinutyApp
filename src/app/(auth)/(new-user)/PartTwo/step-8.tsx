@@ -18,7 +18,7 @@ export default function Step8() {
    useEffect(() => {
       if (session) {
          const timer = setTimeout(() => {
-            router.replace("/step-final");
+            router.replace("/(protected)");
          }, 4000);
          return () => clearTimeout(timer);
       }

@@ -1,6 +1,7 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -17,8 +18,18 @@ SplashScreen.setOptions({
    fade: true,
 });
 
+const logoutAndClearSession = async () => {
+   await supabase.auth.signOut(); // clear Supabase session
+   await AsyncStorage.removeItem("auth-store"); // clear Zustand persist
+   // useAuthStore.getState().reset(); // clear in-memory state
+};
+
 export default function RootLayout() {
-   const { setSession } = useAuthStore();
+   const setSession = useAuthStore((s) => s.setSession);
+   const fetchProfile = useAuthStore((s) => s.fetchProfile);
+   const user = useAuthStore((s) => s.user);
+
+   const router = useRouter();
 
    const [loaded] = useFonts({
       [TiktokFont.TiktokBlack]: require("@/assets/fonts/TikTokSans-Black.ttf"),
@@ -36,14 +47,48 @@ export default function RootLayout() {
       }
    }, [loaded]);
 
+   // useEffect(() => {
+   //    const checkGhostSession = async () => {
+   //       const { data } = await supabase.auth.getSession();
+
+   //       if (data.session?.user) {
+   //          const { data: profile } = await supabase
+   //             .from("profiles")
+   //             .select("*")
+   //             .eq("id", data.session.user.id)
+   //             .single();
+
+   //          if (!profile) {
+   //             await logoutAndClearSession();
+   //          }
+   //       }
+   //    };
+   //    checkGhostSession();
+   // }, []);
+
    useEffect(() => {
-      const checkSession = async () => {
-         const { data } = await supabase.auth.getSession();
-         if (data?.session) {
-            setSession(data?.session);
+      // load initial session
+      supabase.auth.getSession().then(({ data: { session } }) => {
+         setSession(session);
+         if (session?.user) fetchProfile(session.user.id);
+      });
+
+      // listen for changes
+      const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+         setSession(session);
+         if (session?.user) {
+            fetchProfile(session.user.id);
+            router.replace("/(protected)");
          }
+         if (!session) {
+            AsyncStorage.removeItem("auth-store");
+            router.replace("/(auth)");
+         }
+      });
+
+      return () => {
+         authListener.subscription.unsubscribe();
       };
-      checkSession();
    }, []);
 
    if (!loaded) {

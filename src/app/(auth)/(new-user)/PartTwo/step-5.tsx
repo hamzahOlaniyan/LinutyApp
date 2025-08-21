@@ -2,7 +2,7 @@ import Button from "@/src/components/Button";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
-import { COUNTRIES, NATIONALITIES } from "@/src/data/ProfileData";
+import { COUNTRIES } from "@/src/data/ProfileData";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -15,12 +15,8 @@ export default function Step5() {
    const handleNext = async () => {
       let valid = true;
 
-      if (!form.nationality) {
-         setError("nationality", "nationality name is required");
-         valid = false;
-      }
-      if (!form.cob) {
-         setError("cob", "country of birth is required");
+      if (!form.location) {
+         setError("location", "country of birth is required");
          valid = false;
       }
 
@@ -28,7 +24,7 @@ export default function Step5() {
 
       if (valid) {
          nextStep();
-         router.push("/step-6");
+         router.push("/PartTwo/step-6");
       }
    };
 
@@ -38,27 +34,16 @@ export default function Step5() {
             heading="Background Information"
             paragraph="Share your nationality and country of birth to help us build meaningful connections through lineage and community."
          >
-            <View className="relative gap-20">
-               <Select
-                  height={90}
-                  modalTitle="Nationality"
-                  options={NATIONALITIES}
-                  searchable
-                  placeholder="Nationality"
-                  onSelect={(nationality) => updateField("nationality", nationality)}
-                  error={!!errors.nationality}
-                  errorMessage={errors.nationality}
-               />
+            <View className="relative gap-24">
                <Select
                   height={90}
                   options={COUNTRIES}
                   searchable
-                  placeholder="Country of Birth"
-                  onSelect={(cob) => updateField("cob", cob)}
-                  error={!!errors.cob}
-                  errorMessage={errors.cob}
+                  placeholder="Location"
+                  onSelect={(cob) => updateField("location", cob)}
+                  error={!!errors.location}
+                  errorMessage={errors.location}
                />
-
                <View className="gap-2 my-6">
                   <Button onPress={handleNext} title="Next" size="lg" />
                </View>

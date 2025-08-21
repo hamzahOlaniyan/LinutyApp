@@ -3,6 +3,7 @@ import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import { supabase } from "@/src/lib/supabase";
+import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -11,6 +12,9 @@ import { View } from "react-native";
 export default function Otp() {
    const { form, errors, updateField, nextStep, resetErrors } = useRegistrationStore();
 
+   const setSession = useAuthStore((s) => s.setSession);
+   const fetchProfile = useAuthStore((s) => s.fetchProfile);
+
    const [otp, setOtp] = useState("");
    const [loading, setLoading] = useState(false);
    const [error, setError] = useState("");
@@ -18,6 +22,7 @@ export default function Otp() {
    const router = useRouter();
 
    const handleNext = async () => {
+      setLoading(true);
       if (!otp) {
          setError("enter the 6-digit code");
          return;
@@ -30,11 +35,30 @@ export default function Otp() {
             type: "email",
          });
 
+         if (error) {
+            console.log("OTP ERROR", error.message);
+            return;
+         }
+
          if (!session.session) return;
+
+         setSession(session?.session);
+
+         const { error: ProfileUpdateError } = await supabase
+            .from("profiles")
+            .update({ firstName: form.firstName, lastName: form.surname })
+            .eq("id", session?.user?.id);
+
+         fetchProfile(session?.user?.id ?? "");
+
+         if (ProfileUpdateError) {
+            console.log("OTP ERROR", ProfileUpdateError.message);
+            return;
+         }
 
          if (session.session) {
             nextStep();
-            router.push("/(auth)/(new-user)/step-4");
+            router.replace("/(auth)/(new-user)/PartTwo/step-4");
             setLoading(false);
          }
          console.log("otps session", { session });
