@@ -32,19 +32,6 @@ export default function NewUserLayout() {
          }}
       >
          <Stack.Screen name="index" />
-         {/* <Stack.Screen name="step-1" />
-         <Stack.Screen name="step-2" />
-         <Stack.Screen name="step-3.1" />
-         <Stack.Screen name="step-3.2" />
-         <Stack.Screen name="step-4" />
-         <Stack.Screen name="step-5" />
-         <Stack.Screen name="step-6" />
-         <Stack.Screen name="step-7" /> */}
-         {/* <Stack.Screen name="step-8" options={{ headerBackVisible: false }} /> */}
-         {/* <Stack.Screen name="step-final" /> */}
-         {/* <Stack.Screen name="agreement" /> */}
-         {/* <Stack.Screen name="otp" /> */}
-         {/* <Stack.Screen name="resend-otp" /> */}
       </Stack>
    );
 }

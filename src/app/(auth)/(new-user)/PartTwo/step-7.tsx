@@ -15,6 +15,8 @@ export default function Step3() {
    const { form, errors, updateField, setError, nextStep, resetErrors } = useRegistrationStore();
    const { session } = useAuthStore();
 
+   const [refreshing, setRefreshing] = React.useState(false);
+
    const [loading, setLoading] = useState(false);
 
    const router = useRouter();
@@ -26,7 +28,7 @@ export default function Step3() {
    // );
 
    // console.log("step-7", JSON.stringify(avatarUrl, null, 2));
-   console.log(JSON.stringify(session, null, 2));
+   // console.log(JSON.stringify(session, null, 2));
 
    async function completeRegistration() {
       setLoading(true);
@@ -84,11 +86,19 @@ export default function Step3() {
       if (valid) {
          completeRegistration().then((res) => {
             if (res?.status === "success") {
+               onRefresh();
                router.replace("/PartTwo/step-8");
             }
          });
       }
    };
+
+   const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+         setRefreshing(false);
+      }, 2000);
+   }, []);
 
    return (
       <ScreenWrapper>

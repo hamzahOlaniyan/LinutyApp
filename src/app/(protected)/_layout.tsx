@@ -19,7 +19,8 @@ export default function ProtectedLayout() {
       return;
    }
 
-   if (profile?.isComplete === "false") {
+   if (!profile?.isComplete === true) {
+      // <Redirect href={"/(auth)/(new-user)/PartTwo/step-4"} />;
       router.replace("/(auth)/(new-user)/PartTwo/step-4");
       return;
    }

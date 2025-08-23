@@ -24,7 +24,7 @@ export default function Step6() {
 
    const router = useRouter();
 
-   console.log(JSON.stringify(form, null, 2));
+   // console.log(JSON.stringify(form, null, 2));
 
    // pick ethnicity (Select stays visible because we always render it)
    const handleEthnicitySelect = (ethnicity: Ethnicity) => {
@@ -86,7 +86,7 @@ export default function Step6() {
          return;
       }
       nextStep();
-      router.push("/PartTwo/step-7");
+      router.push("/PartTwo/step-6.2");
    };
 
    return (
@@ -113,7 +113,7 @@ export default function Step6() {
                   <View className="gap-2 flex-1">
                      {selectedEthnicityName && (
                         <View
-                           className="gap-4 p-6 bg-purple-700"
+                           className="gap-4 p-6"
                            style={{
                               padding: atLeaf ? 16 : 0,
                               borderRadius: 10,
@@ -148,6 +148,7 @@ export default function Step6() {
                      <View className="flex-row flex-wrap w-full justify-center gap-2 flex-1 my-4">
                         {currentLevel.map((clan) => (
                            <Button
+                              key={clan.id}
                               onPress={() => handleClanSelect(clan)}
                               title={clan.name}
                               variant="outline"

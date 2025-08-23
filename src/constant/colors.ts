@@ -6,12 +6,20 @@ export const colors = {
    whitesmoke: "#f5f5f5",
    offwhite: "#f1f1f1",
    white: "#fff",
-   placeholder: "#aebbc8",
+   placeholder: "#767f86",
+   ghost: "#f0f6fb",
    focus: "#202020",
    error: "#b70000",
-   warring: "#",
+   warning: "",
    success: "#3677b2",
    concept: "#ff8200",
+   inputInactive: "#aebbc8",
+   inputActive: "#677179",
+
+   gradients: {
+      primary: ["#06b6d4", "#3b82f6", "#1d417b"] as const,
+      sunset: ["#ff7e5f", "#feb47b"] as const,
+   },
 
    dark: {
       background: "#171717",

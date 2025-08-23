@@ -1,7 +1,7 @@
 import { hp } from "@/src/constant/common";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import MaskedView from "@react-native-masked-view/masked-view";
@@ -59,7 +59,7 @@ export default function Button({
             padding: variant === "outline" ? 1.2 : 0,
          }}
       >
-         <Pressable
+         <TouchableOpacity
             style={{
                borderRadius: 100,
                justifyContent: "center",
@@ -100,7 +100,7 @@ export default function Button({
                   {title}
                </Text>
             )}
-         </Pressable>
+         </TouchableOpacity>
       </LinearGradient>
    );
 }

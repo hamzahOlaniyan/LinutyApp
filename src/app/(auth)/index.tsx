@@ -2,6 +2,7 @@ import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
+import { colors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { supabase } from "@/src/lib/supabase";
 import { useAuthStore } from "@/src/store/authStore";
@@ -82,7 +83,7 @@ export default function index() {
                      isPassword={true}
                   />
                   <Pressable>
-                     <AppText align="right" size="md" weight="med">
+                     <AppText align="right" size="md" weight="med" color={colors.inputActive}>
                         Forgot password
                      </AppText>
                   </Pressable>

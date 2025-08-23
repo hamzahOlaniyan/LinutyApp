@@ -16,22 +16,23 @@ export default function StepContainer({
    footer?: boolean;
 }) {
    const router = useRouter();
+
    return (
       <View className="gap-4">
-         <View>
+         <View className="gap-4">
             <View className="gap-3">
                {heading && (
-                  <AppText size="xxl" weight="semi">
+                  <AppText size="xxl" weight="bold">
                      {heading}
                   </AppText>
                )}
                {paragraph && (
-                  <AppText size="lg" weight="med">
+                  <AppText size="lg" weight="semi">
                      {paragraph}
                   </AppText>
                )}
             </View>
-            <View className="mt-5">{children}</View>
+            <View className="">{children}</View>
          </View>
          {footer && (
             <View className="relative bottom-4">

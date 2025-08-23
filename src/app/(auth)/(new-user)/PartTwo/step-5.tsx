@@ -24,7 +24,7 @@ export default function Step5() {
 
       if (valid) {
          nextStep();
-         router.push("/PartTwo/step-6");
+         router.push("/PartTwo/step-6.1");
       }
    };
 

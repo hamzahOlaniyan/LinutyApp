@@ -22,7 +22,7 @@ export default function Step8() {
          }, 4000);
          return () => clearTimeout(timer);
       }
-      router.replace("/");
+      router.replace("/(protected)");
       reset();
    }, []);
 

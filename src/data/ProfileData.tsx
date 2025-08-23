@@ -418,3 +418,5 @@ export const PROFESSIONS = [
    "Prefer not to say",
    "other",
 ];
+
+export const APP_INTEREST = ["clan history", "Business", "Marriage", "Fundrasing", "Comumunity news"];

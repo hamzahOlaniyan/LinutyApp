@@ -17,7 +17,9 @@ export default function ScreenWrapper({
    return (
       <View
          style={{
-            paddingBottom: bottom,
+            position: "relative",
+            marginBottom: bottom,
+            overflow: "hidden",
             // paddingTop: top,
             flex: 1,
             paddingHorizontal: wp(paddingHorizontal),

@@ -16,6 +16,9 @@ export type RegistrationState = {
       ethnicity: string;
       lineage_ids: string[];
       lineage_names: string[];
+      profession: string;
+      app_interest: string[];
+      interests: string[];
       profilePic: string;
    };
    errors: Partial<Record<keyof RegistrationState["form"], string>>;
@@ -43,6 +46,9 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
       ethnicity: "",
       lineage_ids: [],
       lineage_names: [],
+      profession: "",
+      app_interest: [],
+      interests: [],
       profilePic: "",
    },
    errors: {},
@@ -72,6 +78,9 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
             ethnicity: "",
             lineage_ids: [],
             lineage_names: [],
+            profession: "",
+            app_interest: [],
+            interests: [],
             profilePic: "",
          },
          errors: {},

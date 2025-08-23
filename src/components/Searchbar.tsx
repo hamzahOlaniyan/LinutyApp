@@ -17,7 +17,7 @@ export default function Searchbar({ value, onChangeText, onPress, ...rest }: Sea
       <View
          style={{
             height: hp(4.7),
-            backgroundColor: colors.offwhite,
+            backgroundColor: colors.darkWhite,
          }}
          className={`w-full flex-row bg-offwightGreen items-center justify-center px-4 rounded-full gap-3`}
       >
@@ -32,15 +32,7 @@ export default function Searchbar({ value, onChangeText, onPress, ...rest }: Sea
             autoCapitalize="none"
             {...rest}
          />
-         {value && (
-            <Fontisto
-               name="close-a"
-               size={10}
-               color="#a3a3a3"
-               onPress={onPress}
-               className="bg-neutral-300 p-2 rounded-full"
-            />
-         )}
+         {value && <Fontisto name="close-a" size={15} onPress={onPress} />}
       </View>
    );
 }

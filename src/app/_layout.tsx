@@ -47,24 +47,24 @@ export default function RootLayout() {
       }
    }, [loaded]);
 
-   // useEffect(() => {
-   //    const checkGhostSession = async () => {
-   //       const { data } = await supabase.auth.getSession();
+   useEffect(() => {
+      const checkGhostSession = async () => {
+         const { data } = await supabase.auth.getSession();
 
-   //       if (data.session?.user) {
-   //          const { data: profile } = await supabase
-   //             .from("profiles")
-   //             .select("*")
-   //             .eq("id", data.session.user.id)
-   //             .single();
+         if (data.session?.user) {
+            const { data: profile } = await supabase
+               .from("profiles")
+               .select("*")
+               .eq("id", data.session.user.id)
+               .single();
 
-   //          if (!profile) {
-   //             await logoutAndClearSession();
-   //          }
-   //       }
-   //    };
-   //    checkGhostSession();
-   // }, []);
+            if (!profile) {
+               await logoutAndClearSession();
+            }
+         }
+      };
+      checkGhostSession();
+   }, []);
 
    useEffect(() => {
       // load initial session

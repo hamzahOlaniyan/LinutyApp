@@ -18,7 +18,7 @@ export default function Step4() {
 
    const router = useRouter();
 
-   console.log("Gender Page", JSON.stringify(profile, null, 2));
+   // console.log("Gender Page", JSON.stringify(profile, null, 2));
 
    const handleNext = async () => {
       let valid = true;
@@ -57,21 +57,18 @@ export default function Step4() {
             heading="What's your gender?"
             paragraph="Tell us your gender to help personalize your experience on Linuty. This information can make your profile more complete and help others connect with you in a way that feels authentic."
          >
-            <View className="gap-4">
-               <RadioSelection select="Male" field={"gender"} />
-               <RadioSelection select="Female" field={"gender"} />
-               <RadioSelection select="Other" field={"gender"} />
-            </View>
+            <RadioSelection select="Male" field={"gender"} />
+            <RadioSelection select="Female" field={"gender"} />
+            <RadioSelection select="Other" field={"gender"} />
             {errors.gender && (
                <AppText color={colors.error} size="sm">
-                  {" "}
                   {errors.gender}
                </AppText>
             )}
+            <View className="gap-2 my-6">
+               <Button onPress={handleNext} title="Next" size="lg" />
+            </View>
          </StepContainer>
-         <View className="gap-2 my-6">
-            <Button onPress={handleNext} title="Next" size="lg" />
-         </View>
       </ScreenWrapper>
    );
 }
