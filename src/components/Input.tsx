@@ -35,7 +35,7 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
             <View
                style={{
                   height: hp(7),
-                  borderWidth: 1,
+                  borderWidth: 0.9,
                   marginBottom: 3,
                   borderColor: isFocused ? colors.inputActive : error ? colors.error : colors.inputInactive,
                   borderRadius: 15,

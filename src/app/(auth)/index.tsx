@@ -60,8 +60,9 @@ export default function index() {
       <ScreenWrapper>
          <View style={{ position: "relative", marginTop: hp(18) }}>
             <Image
-               source={require("@/assets/images/logo_1.svg")}
-               style={{ width: 100, height: 36, objectFit: "contain", alignSelf: "center" }}
+               source={require("@/assets/images/logo_color.png")}
+               style={{ width: 100, height: 40, alignSelf: "center" }}
+               contentFit="contain"
             />
          </View>
          <View className="gap-2 py-6 flex-1 justify-between relative">
@@ -95,6 +96,7 @@ export default function index() {
                   disabled={!email || !password}
                   size="lg"
                />
+               <Button title="splash screen" onPress={() => router.replace("/")} />
             </View>
             <View className="gap-6 absolute bottom-5">
                <Button

@@ -67,7 +67,7 @@ export default function Button({
                paddingHorizontal: 16,
                height:
                   size === "lg"
-                     ? hp(5.7)
+                     ? hp(5.6)
                      : size === "md"
                      ? hp(5)
                      : size === "sm"

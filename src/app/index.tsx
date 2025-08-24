@@ -1,42 +1,42 @@
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect } from "react";
-import { ImageBackground, StyleSheet } from "react-native";
-import { colors } from "../constant/colors";
+import React from "react";
+import { View } from "react-native";
 
 SplashScreen.setOptions({
    duration: 1000,
    fade: true,
 });
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 export default function AnimatedSplash() {
    const router = useRouter();
 
-   useEffect(() => {
-      SplashScreen.hideAsync();
-   }, []);
+   // useEffect(() => {
+   //    SplashScreen.hideAsync();
+   // }, []);
 
-   useEffect(() => {
-      const timer = setTimeout(() => {
-         router.replace("/(auth)");
-      }, 2000);
-      return () => clearTimeout(timer);
-   }, []);
+   // useEffect(() => {
+   //    const timer = setTimeout(() => {
+   //       router.replace("/(auth)");
+   //    }, 2000);
+   //    return () => clearTimeout(timer);
+   // }, []);
 
    return (
-      <ImageBackground
-         source={require("@/assets/images/splash-icon-dark.png")}
-         style={{ flex: 1, justifyContent: "center" }}
-      />
+      <View className="flex-1 justify-center items-center bg-white">
+         <Image
+            source={require("@/assets/images/linuty_logo-1.png")}
+            style={{ width: "100%", height: 120, alignSelf: "center", justifyContent: "center", borderRadius: 100 }}
+            contentFit="contain"
+         />
+      </View>
+      // <ImageBackground
+      //    source={require("@/assets/images/splashscreen.png")}
+      //    style={{ flex: 1, justifyContent: "center" }}
+      // >
+
+      // </ImageBackground>
    );
 }
-
-const styles = StyleSheet.create({
-   animationContainer: {
-      flex: 1,
-      backgroundColor: colors.primary,
-      justifyContent: "center",
-      alignItems: "center",
-   },
-});

@@ -9,7 +9,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       slug: "LinutyApp",
       version: "1.0.3",
       orientation: "portrait",
-      icon: "./assets/images/ios-dark.png",
+      icon: "./assets/images/icon.png",
       scheme: "linutyapp",
       userInterfaceStyle: "automatic",
       newArchEnabled: true,
@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       },
       android: {
          adaptiveIcon: {
-            backgroundImage: "./assets/images/splash-icon-dark.png",
+            backgroundImage: "./assets/images/adaptive-icon.png",
          },
          edgeToEdgeEnabled: true,
       },
@@ -32,8 +32,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          [
             "expo-splash-screen",
             {
-               backgroundColor: "#151718",
-               image: "./assets/images/splash-icon-dark.png",
+               backgroundColor: "#ffffff",
+               image: "./assets/images/white.png",
             },
          ],
       ],
