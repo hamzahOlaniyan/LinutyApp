@@ -1,13 +1,13 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import AppText from "@/src/components/AppText";
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import { colors } from "@/src/constant/colors";
 import { APP_INTEREST, INTERESTS } from "@/src/data/ProfileData";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -17,6 +17,15 @@ export default function Step6_3() {
    const [showButton, setShowButton] = useState(false);
 
    const router = useRouter();
+
+   useFocusEffect(
+      React.useCallback(() => {
+         return () => {
+            updateField("app_interest", [] as any);
+            updateField("interests", [] as any);
+         };
+      }, [])
+   );
 
    const handleAppInterest = (interest: string) => {
       const current = form.app_interest ?? [];
@@ -30,7 +39,7 @@ export default function Step6_3() {
       }
       updateField("app_interest", Array.from(set) as any);
 
-      if (form.app_interest.length > 3 && form.interests.length > 5) {
+      if (form.app_interest.length + form.interests.length >= 9) {
          setShowButton(true);
       } else {
          setShowButton(false);
@@ -44,12 +53,12 @@ export default function Step6_3() {
       if (set.has(interest)) {
          set.delete(interest);
       } else {
-         if (set.size >= 10) return;
+         if (set.size >= 6) return;
          set.add(interest);
       }
       updateField("interests", Array.from(set) as any);
 
-      if (form.app_interest.length > 3 && form.interests.length > 5) {
+      if (form.app_interest.length + form.interests.length >= 9) {
          setShowButton(true);
       } else {
          setShowButton(false);
@@ -66,12 +75,14 @@ export default function Step6_3() {
          <ScrollView showsVerticalScrollIndicator={false}>
             <StepContainer
                heading="What is your interest?"
-               paragraph="What kind of content would you like to see on Linuty?"
+               // paragraph="What kind of content would you like to see on Linuty?"
             >
                <View className="gap-10 relative">
                   <View className="gap-4">
                      <View className="flex-row items-center gap-2">
-                        <AppText>What kind of content would you like to see on Linuty? (minimum on 3)</AppText>
+                        <AppText size="lg" weight="semi">
+                           What kind of content would you like to see on Linuty? (minimum on 3)
+                        </AppText>
                      </View>
                      <View className="flex-row flex-wrap gap-4">
                         {APP_INTEREST.map((int) => {
@@ -86,25 +97,21 @@ export default function Step6_3() {
                                  }}
                               >
                                  <LinearGradient
-                                    colors={
-                                       selected
-                                          ? ["#06b6d425", "#3b82f625", "#1d417b25"]
-                                          : ["transparent", "transparent"]
-                                    }
+                                    colors={selected ? colors.gradients.primaryLight : ["transparent", "transparent"]}
                                     start={{ x: 0, y: 0 }}
                                     end={{ x: 1.2, y: 0 }}
                                     style={{
                                        ...StyleSheet.absoluteFillObject,
-                                       backgroundColor: selected ? "" : colors.offwhite,
+                                       backgroundColor: selected ? "" : colors.whitesmoke,
                                     }}
                                  />
                                  <Text
                                     style={{
-                                       fontFamily: selected ? TiktokFont.TiktokMedium : TiktokFont.TiktokRegular,
-                                       color: selected ? "black" : colors.gray,
+                                       fontFamily: selected ? TiktokFont.TiktokSemiBold : TiktokFont.TiktokMedium,
+                                       color: selected ? "black" : colors.inputActive,
                                        textTransform: "capitalize",
                                        textAlign: "center",
-                                       fontSize: 12,
+                                       fontSize: 14,
                                     }}
                                  >
                                     {int}
@@ -116,7 +123,9 @@ export default function Step6_3() {
                   </View>
                   <View className="gap-4 pb-16">
                      <View className="flex-row items-center gap-2">
-                        <AppText>What are your interests?. (maximum on 5)</AppText>
+                        <AppText size="lg" weight="semi">
+                           What are your interests? (max 5)
+                        </AppText>
                      </View>
 
                      <View className="flex-row flex-wrap gap-4">
@@ -132,25 +141,21 @@ export default function Step6_3() {
                                  }}
                               >
                                  <LinearGradient
-                                    colors={
-                                       selected
-                                          ? ["#06b6d425", "#3b82f625", "#1d417b25"]
-                                          : ["transparent", "transparent"]
-                                    }
+                                    colors={selected ? colors.gradients.primaryLight : ["transparent", "transparent"]}
                                     start={{ x: 0, y: 0 }}
                                     end={{ x: 1.2, y: 0 }}
                                     style={{
                                        ...StyleSheet.absoluteFillObject,
-                                       backgroundColor: selected ? "" : colors.offwhite,
+                                       backgroundColor: selected ? "" : colors.whitesmoke,
                                     }}
                                  />
                                  <Text
                                     style={{
-                                       fontFamily: selected ? TiktokFont.TiktokMedium : TiktokFont.TiktokRegular,
-                                       color: selected ? "black" : colors.gray,
+                                       fontFamily: TiktokFont.TiktokMedium,
+                                       color: selected ? "black" : colors.inputActive,
                                        textTransform: "capitalize",
                                        textAlign: "center",
-                                       fontSize: 12,
+                                       fontSize: 14,
                                     }}
                                  >
                                     {int}
@@ -165,7 +170,7 @@ export default function Step6_3() {
          </ScrollView>
          {showButton && (
             <View className="bg-white absolute bottom-0 w-full self-center">
-               <Button title="Next" onPress={handleNext} />
+               <GradientButton text="Next" onPress={handleNext} />
             </View>
          )}
       </ScreenWrapper>

@@ -8,6 +8,7 @@ type AuthState = {
    session: any | null;
    user: any | null;
    profile: any | null;
+   resetSession: () => null;
    setSession: (session: any | null) => void;
    fetchProfile: (userId: string) => Promise<void>;
    signOut: () => Promise<void>;
@@ -21,9 +22,14 @@ export const useAuthStore = create<AuthState>()(
          user: null,
          profile: null,
          loading: true,
+         resetSession: () => {
+            set({ session: null });
+            return null;
+         },
 
          setSession: (session) => {
             set({ session, user: session?.user ?? null });
+            set({ loading: false });
          },
 
          setLoading: (loading) => set({ loading }),

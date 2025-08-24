@@ -1,10 +1,10 @@
 export const colors = {
-   primary: "#134D7A",
+   primary: "#156760",
    // secondary: "",
    // gray: "#7e7e7e",
-   searchBar: "#f9f9f9",
-   // whitesmoke: "#f5f5f5",
-   offwhite: "#f1f1f1",
+   offWhite: "#f9f9f9",
+   whitesmoke: "#f5f5f5",
+   searchBar: "#f1f1f1",
    white: "#fff",
    black: "#262626",
    placeholder: "#767f86",
@@ -20,6 +20,7 @@ export const colors = {
 
    gradients: {
       primary: ["#1D174C", "#2B2768", "#134D7A", "#11515D", "#156760", "#48BE9A"] as const,
+      primaryLight: ["#1D174C25", "#2B276825", "#134D7A25", "#11515D25", "#15676025", "#48BE9A25"] as const,
    },
 
    // dark: {

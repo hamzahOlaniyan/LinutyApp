@@ -1,4 +1,3 @@
-import Button from "@/src/components/Button";
 import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
@@ -74,23 +73,17 @@ export default function Otp() {
             heading="Enter the 6 digit confirmation code"
             paragraph={`We have sent a verification code to your email address ${form.email}. To confirm enter the 6-digit code.`}
          >
-            <Input
-               placeholder="Email address"
-               value={otp}
-               onChangeText={setOtp}
-               keyboardType="email-address"
-               inputMode="text"
-            />
+            <Input placeholder="code" value={otp} onChangeText={setOtp} keyboardType="email-address" inputMode="text" />
 
             <View className="gap-4 my-6">
                <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
-               <Button
+               {/* <Button
                   text="Resend code"
                   onPress={() => router.push("/(auth)/(new-user)/PartOne/resend-otp")}
                   size="lg"
                   isLoading={loading}
                   variant="outline"
-               />
+               /> */}
             </View>
          </StepContainer>
       </ScreenWrapper>

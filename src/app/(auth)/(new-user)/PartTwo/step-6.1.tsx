@@ -1,6 +1,6 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import AppText from "@/src/components/AppText";
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
@@ -8,10 +8,11 @@ import { colors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { ClanNode, ETHNICITIES, Ethnicity } from "@/src/data/ClanTree";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
-import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, TextInput, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Step6() {
    const { form, errors, updateField, nextStep, setError } = useRegistrationStore();
@@ -102,7 +103,7 @@ export default function Step6() {
                      options={ETHNICITIES.map((item) => item.name)}
                      placeholder="Ethnicity"
                      searchable
-                     selectedValue={selectedEthnicityName ?? undefined} // ✅ use selectedValue
+                     selectedValue={selectedEthnicityName ?? undefined}
                      onSelect={(ethnicityName) => {
                         const ethnicity = ETHNICITIES.find((e) => e.name === ethnicityName);
                         if (ethnicity) handleEthnicitySelect(ethnicity);
@@ -110,61 +111,83 @@ export default function Step6() {
                      error={!!errors.ethnicity}
                      errorMessage={errors.ethnicity}
                   />
-                  <View className="gap-2 flex-1">
+                  <View className="gap-6 flex-1">
                      {selectedEthnicityName && (
-                        <View
-                           className="gap-4 p-6"
-                           style={{
-                              padding: atLeaf ? 16 : 0,
-                              borderRadius: 10,
-                              backgroundColor: atLeaf ? colors.darkWhite : "",
-                           }}
-                        >
-                           {!atLeaf ? (
-                              <AppText size="xl" weight="bold">
-                                 Select your clans
-                              </AppText>
-                           ) : (
-                              <AppText weight="semi">Your selected clan</AppText>
-                           )}
-
+                        <View className="gap-6">
                            {path.length > 0 && (
                               <View
                                  style={{
-                                    backgroundColor: colors.offwhite,
-                                    padding: 10,
-                                    borderRadius: 10,
+                                    backgroundColor: colors.searchBar,
+                                    borderRadius: 12,
                                     paddingHorizontal: 10,
+                                    paddingVertical: 20,
+                                    gap: 10,
                                  }}
                               >
-                                 <AppText size="lg" weight="semi" cap="capitalize">
-                                    {path.map((p) => `${p.name}   `).join("")}
+                                 {atLeaf && <AppText weight="semi">Your selected clan</AppText>}
+
+                                 <AppText size="lg" weight="bold" cap="capitalize" color={colors.primary}>
+                                    {path.map((p, idx) => `${idx + 1}. ${p.name}  `).join("")}
                                  </AppText>
+                              </View>
+                           )}
+
+                           {!atLeaf && (
+                              <View className="flex-row justify-between">
+                                 <AppText size="lg" weight="semi">
+                                    Select your clans
+                                 </AppText>
+                                 {path.length > 0 && (
+                                    <Pressable
+                                       onPress={handleBack}
+                                       style={{ borderWidth: 1, borderRadius: 6, padding: 5 }}
+                                       className="flex-row items-center gap-1 justify-center"
+                                    >
+                                       <Ionicons
+                                          name="arrow-back-sharp"
+                                          size={16}
+                                          color="black"
+                                          className="relative top-[2px]"
+                                       />
+                                       <AppText>back</AppText>
+                                    </Pressable>
+                                 )}
                               </View>
                            )}
                         </View>
                      )}
 
-                     <View className="flex-row flex-wrap w-full justify-center gap-2 flex-1 my-4">
+                     <View className="flex-row flex-wrap w-full justify-center gap-2 flex-1">
                         {currentLevel.map((clan) => (
-                           <Button
+                           <TouchableOpacity
                               key={clan.id}
                               onPress={() => handleClanSelect(clan)}
-                              title={clan.name}
-                              variant="outline"
-                              size="sm"
-                           />
+                              className="p-3 px-4 rounded-md relative overflow-hidden"
+                              style={{
+                                 borderRadius: 8,
+                              }}
+                           >
+                              <LinearGradient
+                                 colors={colors.gradients.primaryLight}
+                                 start={{ x: 0, y: 0 }}
+                                 end={{ x: 1.2, y: 0 }}
+                                 style={{
+                                    ...StyleSheet.absoluteFillObject,
+                                 }}
+                              />
+                              <Text
+                                 style={{
+                                    fontFamily: TiktokFont.TiktokSemiBold,
+                                    textTransform: "capitalize",
+                                    textAlign: "center",
+                                    fontSize: 14,
+                                 }}
+                              >
+                                 {clan.name}
+                              </Text>
+                           </TouchableOpacity>
                         ))}
                      </View>
-
-                     {path.length > 0 && (
-                        <View style={{ top: atLeaf ? -40 : 0 }}>
-                           <Pressable onPress={handleBack} className="flex-row items-center gap-1 justify-center my-8">
-                              <AntDesign name="back" size={14} color="black" />
-                              <AppText>back one step</AppText>
-                           </Pressable>
-                        </View>
-                     )}
 
                      {atLeaf && (
                         <View className="gap-4">
@@ -178,7 +201,6 @@ export default function Step6() {
                                  marginBottom: 3,
                                  borderColor: colors.placeholder,
                                  borderRadius: 15,
-                                 // borderColor: isFocused ? colors.focus : error ? colors.error : colors.placeholder,
                               }}
                               className=" flex-1 flex-row justify-between items-center gap-1 p-2 border rounded-lg"
                            >
@@ -190,10 +212,10 @@ export default function Step6() {
                                  placeholderTextColor={"#a3a3a3"}
                                  className="px-2 flex-1"
                               />
-                              <AppText size="lg" weight="med" color={colors.gray}>
+                              <AppText size="lg" weight="med" cap="capitalize" color={colors.inputActive}>
                                  {path
-                                    .slice(0, 1)
                                     .reverse()
+                                    .slice(0, 1)
                                     .map((p) => `${p.name} `)
                                     .join("")}
                               </AppText>
@@ -206,7 +228,9 @@ export default function Step6() {
                         </View>
                      )}
 
-                     <View className="my-4">{atLeaf && <Button title="Next" onPress={handleNext} />}</View>
+                     <View className="my-6">
+                        {atLeaf && <GradientButton text="Next" onPress={handleNext} size="lg" />}
+                     </View>
                   </View>
                </View>
             </StepContainer>

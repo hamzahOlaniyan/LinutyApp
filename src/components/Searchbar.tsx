@@ -3,7 +3,6 @@ import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { Feather, Fontisto } from "@expo/vector-icons";
 import React from "react";
 import { TextInput, TextInputProps, View } from "react-native";
-import { colors } from "../constant/colors";
 import { hp } from "../constant/common";
 
 type SearchProps = TextInputProps & {
@@ -17,7 +16,7 @@ export default function Searchbar({ value, onChangeText, onPress, ...rest }: Sea
       <View
          style={{
             height: hp(4.7),
-            backgroundColor: colors.searchBar,
+            backgroundColor: "#f1f1f1",
          }}
          className={`w-full flex-row bg-offwightGreen items-center justify-center px-4 rounded-full gap-3`}
       >

@@ -8,12 +8,11 @@ export default function ProtectedLayout() {
    const router = useRouter();
 
    useEffect(() => {
-      if (!session || !user) {
+      if (!session) {
          router.replace("/(auth)");
          return;
       }
-      if (!profile?.isComplete === true) {
-         // <Redirect href={"/(auth)/(new-user)/PartTwo/step-4"} />;
+      if (profile?.isComplete === false) {
          router.replace("/(auth)/(new-user)/PartTwo/step-4");
          return;
       }

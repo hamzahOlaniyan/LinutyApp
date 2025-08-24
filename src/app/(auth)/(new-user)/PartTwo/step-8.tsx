@@ -13,17 +13,15 @@ export default function Step8() {
 
    const router = useRouter();
 
-   // console.log("FINAL STEP", JSON.stringify(session, null, 2));
-
    useEffect(() => {
-      if (session) {
-         const timer = setTimeout(() => {
-            router.replace("/(protected)");
-         }, 4000);
-         return () => clearTimeout(timer);
-      }
-      router.replace("/(protected)");
+      // if (session) {
       reset();
+      const timer = setTimeout(() => {
+         router.replace("/(protected)");
+      }, 2000);
+      return () => clearTimeout(timer);
+      // }
+      // router.replace("/(protected)");
    }, []);
 
    return (

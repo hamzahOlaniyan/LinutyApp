@@ -75,7 +75,7 @@ export default function Select({
                   padding: 10,
                   borderWidth: 1,
                   marginBottom: 3,
-                  borderColor: isFocused ? colors.focus : error ? colors.error : colors.placeholder,
+                  borderColor: isFocused ? colors.inputActive : error ? colors.error : colors.placeholder,
                }}
                className="w-full flex-row justify-between items-center rounded-2xl"
             >
@@ -115,22 +115,22 @@ export default function Select({
                         <Searchbar value={searchText} onChangeText={setSearchText} onPress={() => setSearchText("")} />
                      )}
                   </View>
-                  <View className="">
-                     <Pressable onPress={handleClose}>
-                        <FlatList
-                           data={options?.filter((search) => search.toLowerCase().includes(searchText.toLowerCase()))}
-                           keyExtractor={(item) => item}
-                           renderItem={({ item }) => (
-                              <TouchableOpacity onPress={() => handleSelect(item)} style={{ paddingVertical: 12 }}>
-                                 <AppText size="lg" weight="med">
-                                    {item}
-                                 </AppText>
-                              </TouchableOpacity>
-                           )}
-                           contentContainerStyle={{ paddingBottom: 100 }}
-                        />
-                     </Pressable>
-                  </View>
+                  {/* <View className=""> */}
+                  <Pressable onPress={handleClose}>
+                     <FlatList
+                        data={options?.filter((search) => search.toLowerCase().includes(searchText.toLowerCase()))}
+                        keyExtractor={(item) => item}
+                        renderItem={({ item }) => (
+                           <TouchableOpacity onPress={() => handleSelect(item)} style={{ paddingVertical: 12 }}>
+                              <AppText size="lg" weight="med">
+                                 {item}
+                              </AppText>
+                           </TouchableOpacity>
+                        )}
+                        contentContainerStyle={{ paddingBottom: 100 }}
+                     />
+                  </Pressable>
+                  {/* </View> */}
                </View>
             </ActionsheetContent>
          </Actionsheet>

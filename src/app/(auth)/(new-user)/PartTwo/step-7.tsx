@@ -1,5 +1,5 @@
 import AvatarPicker from "@/src/components/AvatarPicker";
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import { uploadAvatar } from "@/src/components/uploadAvatar";
@@ -12,7 +12,7 @@ import { View } from "react-native";
 
 export default function Step3() {
    const [avatarUrl, setAvatarUrl] = useState();
-   const { form, errors, updateField, setError, nextStep, resetErrors } = useRegistrationStore();
+   const { form, errors, updateField, setError, nextStep, resetErrors, reset } = useRegistrationStore();
    const { session } = useAuthStore();
 
    const [refreshing, setRefreshing] = React.useState(false);
@@ -20,15 +20,6 @@ export default function Step3() {
    const [loading, setLoading] = useState(false);
 
    const router = useRouter();
-
-   // useFocusEffect(
-   //    React.useCallback(() => {
-   //       return () => resetErrors();
-   //    }, [resetErrors])
-   // );
-
-   // console.log("step-7", JSON.stringify(avatarUrl, null, 2));
-   // console.log(JSON.stringify(session, null, 2));
 
    async function completeRegistration() {
       setLoading(true);
@@ -54,6 +45,8 @@ export default function Step3() {
                fullLineageName: form.fullLineageName,
                avatar_url: avatarUrl,
                isComplete: true,
+               content: form.app_interest,
+               interest: form.interests,
             })
             .eq("id", userId);
 
@@ -109,7 +102,7 @@ export default function Step3() {
             <AvatarPicker size={200} url={""} onPickLocal={(uri: string) => onUpload(uri as any)} />
             {avatarUrl && (
                <View className="gap-2 my-6">
-                  <Button onPress={handleNext} title="Next" size="lg" isLoading={loading} />
+                  <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
                </View>
             )}
          </StepContainer>

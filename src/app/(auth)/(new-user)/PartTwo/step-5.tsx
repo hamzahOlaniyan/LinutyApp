@@ -1,4 +1,4 @@
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
@@ -45,7 +45,7 @@ export default function Step5() {
                   errorMessage={errors.location}
                />
                <View className="gap-2 my-6">
-                  <Button onPress={handleNext} title="Next" size="lg" />
+                  <GradientButton onPress={handleNext} text="Next" size="lg" />
                </View>
             </View>
          </StepContainer>

@@ -1,5 +1,5 @@
 import AppText from "@/src/components/AppText";
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import Searchbar from "@/src/components/Searchbar";
 import StepContainer from "@/src/components/StepContainer";
@@ -46,31 +46,30 @@ export default function Step6() {
                   data={PROFESSIONS}
                   keyExtractor={(item) => item}
                   showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{ rowGap: 10 }}
                   renderItem={({ item }) => (
-                     <View className="flex-row justify-between py-5">
-                        <Pressable onPress={() => handlePress(item)}>
-                           <AppText size="lg" weight="med">
-                              {item}
-                           </AppText>
-                        </Pressable>
+                     <Pressable onPress={() => handlePress(item)} className="flex-row justify-between py-2">
+                        <AppText size="lg" weight="med">
+                           {item}
+                        </AppText>
                         {selected === item && (
-                           <MaskedView maskElement={<FontAwesome name="check-circle" size={20} color="black" />}>
+                           <MaskedView maskElement={<FontAwesome name="check-circle" size={24} color="black" />}>
                               <LinearGradient
                                  colors={colors.gradients.primary}
                                  start={{ x: 0, y: 0 }}
                                  end={{ x: 1, y: 0 }}
-                                 style={{ width: 20, height: 20 }}
+                                 style={{ width: 24, height: 24 }}
                               />
                            </MaskedView>
                         )}
-                     </View>
+                     </Pressable>
                   )}
                />
             </View>
          </StepContainer>
          {showButton && (
             <View className="bg-white h-20 absolute bottom-0 w-full self-center justify-center">
-               <Button title="Next" onPress={handleNext} />
+               <GradientButton text="Next" onPress={handleNext} />
             </View>
          )}
       </ScreenWrapper>

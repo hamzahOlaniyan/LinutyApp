@@ -1,9 +1,8 @@
 import AppText from "@/src/components/AppText";
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import { colors } from "@/src/constant/colors";
-import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -12,7 +11,7 @@ import { Pressable, View } from "react-native";
 
 export default function Step4() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
-   const { profile } = useAuthStore();
+   // const { profile } = useAuthStore();
 
    const [onSelect, setOnSelect] = useState("");
 
@@ -66,7 +65,7 @@ export default function Step4() {
                </AppText>
             )}
             <View className="gap-2 my-6">
-               <Button onPress={handleNext} title="Next" size="lg" />
+               <GradientButton onPress={handleNext} text="Next" size="lg" />
             </View>
          </StepContainer>
       </ScreenWrapper>
