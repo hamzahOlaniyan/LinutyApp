@@ -26,11 +26,7 @@ export default function StepContainer({
                      {heading}
                   </AppText>
                )}
-               {paragraph && (
-                  <AppText size="lg" weight="semi">
-                     {paragraph}
-                  </AppText>
-               )}
+               {paragraph && <AppText weight="med">{paragraph}</AppText>}
             </View>
             <View className="">{children}</View>
          </View>
@@ -38,7 +34,7 @@ export default function StepContainer({
             <View className="relative bottom-4">
                <Button
                   onPress={() => router.replace("/(auth)")}
-                  title="Already have an account"
+                  text="Already have an account"
                   size="lg"
                   variant="plain"
                />

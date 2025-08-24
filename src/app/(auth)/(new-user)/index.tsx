@@ -1,5 +1,6 @@
 import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
@@ -10,7 +11,7 @@ export default function NewUser() {
    const router = useRouter();
    return (
       <ScreenWrapper>
-         <View className="gap-4">
+         <View className="gap-6">
             <AppText size="xxxl" weight="bold">
                Join Linuty
             </AppText>
@@ -21,19 +22,19 @@ export default function NewUser() {
                   height: "40%",
                   alignSelf: "center",
                   zIndex: 0,
-                  backgroundColor: "#f1f5fe",
+                  backgroundColor: "#48BE9A20",
                   borderRadius: 20,
                }}
             />
-            <AppText size="xl" weight="bold">
+            <AppText size="xxl" weight="bold">
                🚀 Let’s Get You Set Up!
             </AppText>
-            <AppText size="xl" weight="med">
+            <AppText size="lg" weight="med">
                To connect, share, and explore — we need a little more info from you.
             </AppText>
-            <View className="gap-2 my-6">
-               <Button onPress={() => router.push("/PartOne/step-1")} title="Get started" size="lg" />
-               <Button onPress={() => router.back()} title="Already have an account" size="lg" variant="outline" />
+            <View className="gap-4 my-6">
+               <GradientButton onPress={() => router.push("/PartOne/step-1")} text="Get started" size="lg" />
+               <Button onPress={() => router.back()} text="Already have an account" size="lg" variant="outline" />
             </View>
          </View>
       </ScreenWrapper>

@@ -1,4 +1,4 @@
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
@@ -12,22 +12,30 @@ export default function Step2() {
    const router = useRouter();
    const [confirmPassword, setConfirmPassword] = useState("");
    const [passwordError, setPasswordError] = useState("");
+   const [loading, setLoading] = useState(false);
 
    const handleNext = async () => {
       console.log("next");
 
       let valid = true;
 
+      setLoading(true);
+
       if (!form.password) {
          setError("password", "password is required");
+         setLoading(false);
          valid = false;
       }
 
       if (!confirmPassword) {
          setPasswordError("please confirm your password");
+         setLoading(false);
+
          valid = false;
       } else if (form.password !== confirmPassword) {
          setPasswordError("Password does not match");
+         setLoading(false);
+
          return;
       }
 
@@ -68,7 +76,7 @@ export default function Step2() {
                />
             </View>
             <View className="gap-2 my-6">
-               <Button onPress={handleNext} title="Next" size="lg" />
+               <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
             </View>
          </StepContainer>
       </ScreenWrapper>

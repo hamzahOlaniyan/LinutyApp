@@ -29,7 +29,7 @@ export default function Step8() {
    return (
       <ScreenWrapper>
          <Image
-            source={require("@/assets/images/icon-dark.png")}
+            source={require("@/assets/images/logo_full.png")}
             accessibilityLabel="Avatar"
             contentFit="contain"
             style={{ width: "100%", height: 30, alignSelf: "center" }}

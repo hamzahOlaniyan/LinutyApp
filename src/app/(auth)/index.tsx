@@ -1,5 +1,6 @@
 import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import { colors } from "@/src/constant/colors";
@@ -60,8 +61,8 @@ export default function index() {
       <ScreenWrapper>
          <View style={{ position: "relative", marginTop: hp(18) }}>
             <Image
-               source={require("@/assets/images/logo_color.png")}
-               style={{ width: 100, height: 40, alignSelf: "center" }}
+               source={require("@/assets/images/logo_full.png")}
+               style={{ width: 100, height: 100, alignSelf: "center" }}
                contentFit="contain"
             />
          </View>
@@ -83,42 +84,41 @@ export default function index() {
                      inputMode="text"
                      isPassword={true}
                   />
-                  <Pressable>
-                     <AppText align="right" size="md" weight="med" color={colors.inputActive}>
-                        Forgot password
+                  <Pressable onPress={() => router.push("/password-recovery")}>
+                     <AppText align="right" size="sm" weight="med" color={colors.inputActive}>
+                        Forgot password?
                      </AppText>
                   </Pressable>
                </View>
-               <Button
-                  title="Sign in"
-                  onPress={handleSignIn}
+               <GradientButton text="Sign in" onPress={handleSignIn} isLoading={loading} size="lg" />
+               <GradientButton
+                  text="otp"
+                  onPress={() => router.push("/(auth)/(new-user)/PartOne/otp")}
                   isLoading={loading}
-                  disabled={!email || !password}
                   size="lg"
                />
-               <Button title="splash screen" onPress={() => router.replace("/")} />
             </View>
-            <View className="gap-6 absolute bottom-5">
+            <View className="w-full absolute bottom-5 gap-4">
                <Button
-                  title="Create an account"
+                  text="Create new account"
                   onPress={() => router.push("/(auth)/(new-user)")}
                   size="lg"
                   variant="outline"
                />
-               <View className="flex-row items-center justify-center flex-wrap">
-                  <AppText size="sm" align="center">
+               <View className="w-2/3 flex-row items-center justify-center flex-wrap self-center">
+                  <AppText size="xs" align="center">
                      By signing in, you agree to our{" "}
                   </AppText>
                   <Pressable>
-                     <AppText size="sm" align="center" color="blue">
+                     <AppText size="xs" align="center" color="blue">
                         Terms & Conditions,
                      </AppText>
                   </Pressable>
-                  <AppText size="sm" align="center">
+                  <AppText size="xs" align="center">
                      and{" "}
                   </AppText>
                   <Pressable>
-                     <AppText size="sm" align="center" color="blue">
+                     <AppText size="xs" align="center" color="blue">
                         Privacy policy
                      </AppText>
                   </Pressable>

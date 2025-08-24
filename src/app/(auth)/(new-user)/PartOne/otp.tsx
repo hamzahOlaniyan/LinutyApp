@@ -1,4 +1,5 @@
 import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
@@ -29,18 +30,18 @@ export default function Otp() {
       }
 
       try {
-         const { error, data: session } = await supabase.auth.verifyOtp({
+         const { data: session, error } = await supabase.auth.verifyOtp({
             email: form.email,
             token: otp,
             type: "email",
          });
 
-         if (error) {
-            console.log("OTP ERROR", error.message);
+         if (error || !session.session) {
+            console.log("OTP ERROR", error?.message);
             return;
          }
 
-         if (!session.session) return;
+         // if (!session.session) return;
 
          setSession(session?.session);
 
@@ -56,10 +57,9 @@ export default function Otp() {
             return;
          }
 
-         if (session.session) {
+         if (session?.session) {
             nextStep();
             router.replace("/(auth)/(new-user)/PartTwo/step-4");
-            setLoading(false);
          }
          console.log("otps session", { session });
       } catch (error) {
@@ -82,9 +82,15 @@ export default function Otp() {
                inputMode="text"
             />
 
-            <View className="gap-2 my-6">
-               <Button onPress={handleNext} title="Next" size="lg" isLoading={loading} />
-               <Button title="Resend code" size="lg" isLoading={loading} variant="outline" />
+            <View className="gap-4 my-6">
+               <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
+               <Button
+                  text="Resend code"
+                  onPress={() => router.push("/(auth)/(new-user)/PartOne/resend-otp")}
+                  size="lg"
+                  isLoading={loading}
+                  variant="outline"
+               />
             </View>
          </StepContainer>
       </ScreenWrapper>

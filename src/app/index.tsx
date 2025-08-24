@@ -1,13 +1,12 @@
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
 
-SplashScreen.setOptions({
-   duration: 1000,
-   fade: true,
-});
+// SplashScreen.setOptions({
+//    duration: 1000,
+//    fade: true,
+// });
 // SplashScreen.preventAutoHideAsync();
 
 export default function AnimatedSplash() {
@@ -17,12 +16,12 @@ export default function AnimatedSplash() {
    //    SplashScreen.hideAsync();
    // }, []);
 
-   // useEffect(() => {
-   //    const timer = setTimeout(() => {
-   //       router.replace("/(auth)");
-   //    }, 2000);
-   //    return () => clearTimeout(timer);
-   // }, []);
+   useEffect(() => {
+      const timer = setTimeout(() => {
+         router.replace("/(auth)");
+      }, 2000);
+      return () => clearTimeout(timer);
+   }, []);
 
    return (
       <View className="flex-1 justify-center items-center bg-white">
@@ -32,11 +31,5 @@ export default function AnimatedSplash() {
             contentFit="contain"
          />
       </View>
-      // <ImageBackground
-      //    source={require("@/assets/images/splashscreen.png")}
-      //    style={{ flex: 1, justifyContent: "center" }}
-      // >
-
-      // </ImageBackground>
    );
 }

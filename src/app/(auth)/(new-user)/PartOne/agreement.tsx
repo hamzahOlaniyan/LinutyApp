@@ -1,5 +1,5 @@
 import AppText from "@/src/components/AppText";
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import { supabase } from "@/src/lib/supabase";
@@ -27,16 +27,13 @@ export default function Agreement() {
                data: { username: form.username },
             },
          });
-         console.log("NEW USER HAS BEEN ADDED", { data });
       } catch (error) {
          console.error("Error signing in:", error);
          return;
       }
-
       if (valid) {
          nextStep();
          router.push("/PartOne/otp");
-         setLoading(false);
       }
    };
 
@@ -65,7 +62,7 @@ export default function Agreement() {
             </View>
 
             <View className="gap-2 my-6">
-               <Button onPress={handleNext} title="I agree" size="lg" isLoading={loading} />
+               <GradientButton onPress={handleNext} text="I agree" size="lg" isLoading={loading} />
             </View>
          </StepContainer>
       </ScreenWrapper>

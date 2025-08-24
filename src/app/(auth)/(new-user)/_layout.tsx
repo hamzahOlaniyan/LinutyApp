@@ -1,18 +1,18 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Stack, usePathname } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function NewUserLayout() {
    const { reset } = useRegistrationStore();
 
    const pathname = usePathname();
 
-   // useEffect(() => {
-   //    if (!pathname.startsWith("/(new-user)/PartOne")) {
-   //       reset();
-   //    }
-   // }, [pathname]);
+   useEffect(() => {
+      if (!pathname.includes("/Part")) {
+         reset();
+      }
+   }, [pathname]);
 
    return (
       <Stack
@@ -30,8 +30,6 @@ export default function NewUserLayout() {
                // backgroundColor: currentTheme === "light" ? colors.light.background : colors.dark.background,
             },
          }}
-      >
-         <Stack.Screen name="index" />
-      </Stack>
+      />
    );
 }

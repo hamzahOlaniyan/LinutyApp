@@ -1,4 +1,4 @@
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
@@ -34,7 +34,6 @@ export default function Step3() {
 
       if (data) {
          setError("username", "this username name has already been taken, choose another one");
-         setLoading(false);
          valid = false;
          return;
       }
@@ -49,7 +48,6 @@ export default function Step3() {
       if (valid) {
          nextStep();
          router.push("/PartOne/agreement");
-         setLoading(false);
       }
    };
 
@@ -69,7 +67,7 @@ export default function Step3() {
                errorMessage={errors.username}
             />
             <View className="gap-2 my-6">
-               <Button onPress={handleNext} title="Next" size="lg" />
+               <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
             </View>
          </StepContainer>
       </ScreenWrapper>

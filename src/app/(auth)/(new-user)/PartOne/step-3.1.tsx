@@ -1,4 +1,4 @@
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
@@ -31,7 +31,6 @@ export default function Step3() {
       if (valid) {
          nextStep();
          router.push("/PartOne/step-3.2");
-         setLoading(false);
       }
    };
 
@@ -63,7 +62,7 @@ export default function Step3() {
                </View>
             </StepContainer>
             <View className="gap-2">
-               <Button onPress={handleNext} title="Next" size="lg" isLoading={loading} />
+               <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
             </View>
          </View>
       </ScreenWrapper>

@@ -31,15 +31,16 @@ export default function AppText({
    // const { currentTheme } = useThemeStore();
 
    const fontSize = {
-      xxxxl: hp(4.4),
-      xxxl: hp(3.3),
-      xxl: hp(2.7),
-      xl: hp(2.1),
-      lg: hp(1.9),
+      xxxxxl: hp(4.4),
+      xxxxl: hp(3.4),
+      xxxl: hp(3),
+      xxl: hp(2.6),
+      xl: hp(2.3),
+      lg: hp(2),
       md: hp(1.7),
       sm: hp(1.5),
       xs: hp(1.2),
-      xxs: hp(1),
+      xxs: hp(0.9),
    }[size];
 
    const fontFamilyMap: Record<TextWeight, TextStyle["fontFamily"]> = {

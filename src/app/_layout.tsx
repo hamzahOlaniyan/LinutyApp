@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
+import { supabase } from "../lib/supabase";
 import { useAuthStore } from "../store/authStore";
 
 SplashScreen.preventAutoHideAsync();
@@ -44,6 +45,15 @@ export default function RootLayout() {
          SplashScreen.hide();
       }
    }, [loaded]);
+
+   useEffect(() => {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+         setSession(session);
+      });
+      supabase.auth.onAuthStateChange((_event, session) => {
+         setSession(session);
+      });
+   }, []);
 
    // useEffect(() => {
    //    const checkGhostSession = async () => {

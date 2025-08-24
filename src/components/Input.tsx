@@ -25,7 +25,7 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
          behavior={Platform.OS === "ios" ? "padding" : "height"}
          keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 0}
       >
-         <View className={`${label ? "gap-1" : "gap-0"} gap-2`}>
+         <View className={`${label ? "gap-1" : "gap-0"}`}>
             {label && (
                <Text style={{ fontSize: hp(1.7) }} className="text-text font-SansMed capitalize">
                   {label}
@@ -53,8 +53,8 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
                   selectionColor={colors.primary}
                   selectionHandleColor={colors.primary}
                   secureTextEntry={isPassword && showPassword}
+                  autoCapitalize="none"
                />
-               {/* {clearValue && <Fontisto name="close-a" size={20} color="#a3a3a3" onPress={() => setResetValue("")} />} */}
                {isPassword && (
                   <View>
                      <Ionicons

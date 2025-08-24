@@ -1,4 +1,4 @@
-import Button from "@/src/components/Button";
+import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 
 export default function Step1() {
-   const { form, errors, updateField, setError, nextStep, resetErrors, clearError } = useRegistrationStore();
+   const { form, errors, updateField, setError, nextStep, resetErrors, clearError, reset } = useRegistrationStore();
 
    const [loading, setLoading] = useState(false);
 
@@ -17,7 +17,10 @@ export default function Step1() {
 
    // useFocusEffect(
    //    React.useCallback(() => {
-   //       return () => clearError("email"); // clears ALL errors when leaving screen
+   //       return () => {
+   //          clearError("email"); // clears ALL errors when leaving screen
+   //          reset();
+   //       };
    //    }, [resetErrors])
    // );
 
@@ -28,17 +31,17 @@ export default function Step1() {
 
    const handleNext = async () => {
       let valid = true;
+      setLoading(true);
+
       if (!form.email) {
-         setError("email", "Email is required");
+         setError("email", "Email is required!");
          valid = false;
          return;
       } else if (!isValidEmail(form.email)) {
-         setError("email", "Enter a valid email address");
+         setError("email", "Enter a valid email address!");
          valid = false;
          return;
       }
-
-      setLoading(true);
 
       const { data, error } = await supabase
          .from("profiles") // 👈 your users table
@@ -47,7 +50,7 @@ export default function Step1() {
          .maybeSingle();
 
       if (data) {
-         setError("email", "This email is already registered, try another email");
+         setError("email", "This email is already registered, try another email!");
          setLoading(false);
          valid = false;
          return;
@@ -69,7 +72,7 @@ export default function Step1() {
    return (
       <ScreenWrapper>
          <StepContainer
-            heading="What is your email address?"
+            heading="What's your email address?"
             paragraph="Enter a valid email address to continue. We’ll use this email to verify your identity and send important
                updates about your Linuty account."
          >
@@ -83,7 +86,7 @@ export default function Step1() {
                errorMessage={errors.email}
             />
             <View className="gap-2 my-6">
-               <Button onPress={handleNext} title="Next" size="lg" isLoading={loading} />
+               <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
             </View>
          </StepContainer>
       </ScreenWrapper>

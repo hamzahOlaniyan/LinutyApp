@@ -17,7 +17,7 @@ export default function Searchbar({ value, onChangeText, onPress, ...rest }: Sea
       <View
          style={{
             height: hp(4.7),
-            backgroundColor: colors.darkWhite,
+            backgroundColor: colors.searchBar,
          }}
          className={`w-full flex-row bg-offwightGreen items-center justify-center px-4 rounded-full gap-3`}
       >
