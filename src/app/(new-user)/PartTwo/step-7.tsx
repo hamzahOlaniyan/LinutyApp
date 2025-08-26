@@ -10,12 +10,10 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { View } from "react-native";
 
-export default function Step3() {
+export default function Step7() {
    const [avatarUrl, setAvatarUrl] = useState();
    const { form, errors, updateField, setError, nextStep, resetErrors, reset } = useRegistrationStore();
    const { session } = useAuthStore();
-
-   const [refreshing, setRefreshing] = React.useState(false);
 
    const [loading, setLoading] = useState(false);
 
@@ -26,15 +24,7 @@ export default function Step3() {
       try {
          const userId = session?.user?.id;
          uploadAvatar(userId, form.profilePic);
-         //  const user = supabase.auth.getUser(); // assume user already exists
 
-         // 1. Upload avatar if user selected one
-         // let avatarUrl = null;
-         // if (form.profilePic) {
-         //    avatarUrl = await uploadAvatar(userId, form.profilePic);
-         // }
-
-         // 2. Save the rest of the form
          const { error } = await supabase
             .from("profiles")
             .update({
@@ -67,8 +57,6 @@ export default function Step3() {
    };
 
    const handleNext = async () => {
-      console.log("next");
-
       let valid = true;
 
       if (!form.profilePic) {
@@ -79,19 +67,11 @@ export default function Step3() {
       if (valid) {
          completeRegistration().then((res) => {
             if (res?.status === "success") {
-               onRefresh();
                router.replace("/PartTwo/step-8");
             }
          });
       }
    };
-
-   const onRefresh = React.useCallback(() => {
-      setRefreshing(true);
-      setTimeout(() => {
-         setRefreshing(false);
-      }, 2000);
-   }, []);
 
    return (
       <ScreenWrapper>

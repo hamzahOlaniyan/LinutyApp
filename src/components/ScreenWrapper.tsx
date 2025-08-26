@@ -12,7 +12,7 @@ export default function ScreenWrapper({
    paddingHorizontal?: number;
    bg?: string;
 }) {
-   const { top, bottom } = useSafeAreaInsets();
+   const { bottom } = useSafeAreaInsets();
 
    return (
       <View
@@ -20,10 +20,9 @@ export default function ScreenWrapper({
             position: "relative",
             marginBottom: bottom,
             overflow: "hidden",
-            // paddingTop: top,
-            flex: 1,
             paddingHorizontal: wp(paddingHorizontal),
             backgroundColor: bg,
+            flex: 1,
          }}
       >
          {children}

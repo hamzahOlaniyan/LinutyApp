@@ -5,7 +5,7 @@ import React from "react";
 import { Text, TextStyle } from "react-native";
 
 type TextWeight = "black" | "bold" | "semi" | "med" | "reg" | "light";
-type TextSize = "xxxxl" | "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs" | "xxs";
+type TextSize = "xxxxxl" | "xxxxl" | "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs" | "xxs";
 
 type AppTextProps = {
    size?: TextSize;

@@ -10,18 +10,19 @@ import { View } from "react-native";
 export default function Step8() {
    const { form, reset } = useRegistrationStore();
    const { session } = useAuthStore();
+   const fetchProfile = useAuthStore((s) => s.fetchProfile);
 
    const router = useRouter();
+   const userId = session?.user?.id;
 
    useEffect(() => {
-      // if (session) {
-      reset();
+      fetchProfile(userId);
+
       const timer = setTimeout(() => {
-         router.replace("/(protected)");
+         router.replace("/(app)");
+         reset();
       }, 2000);
       return () => clearTimeout(timer);
-      // }
-      // router.replace("/(protected)");
    }, []);
 
    return (

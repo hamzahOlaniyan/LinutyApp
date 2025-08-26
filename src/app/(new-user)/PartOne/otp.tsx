@@ -1,3 +1,4 @@
+import Button from "@/src/components/Button";
 import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
@@ -22,13 +23,13 @@ export default function Otp() {
    const router = useRouter();
 
    const handleNext = async () => {
-      setLoading(true);
       if (!otp) {
          setError("enter the 6-digit code");
          return;
       }
 
       try {
+         setLoading(true);
          const { data: session, error } = await supabase.auth.verifyOtp({
             email: form.email,
             token: otp,
@@ -37,10 +38,9 @@ export default function Otp() {
 
          if (error || !session.session) {
             console.log("OTP ERROR", error?.message);
+            setLoading(false);
             return;
          }
-
-         // if (!session.session) return;
 
          setSession(session?.session);
 
@@ -50,20 +50,27 @@ export default function Otp() {
             .eq("id", session?.user?.id);
 
          fetchProfile(session?.user?.id ?? "");
+         router.replace("/(new-user)/PartTwo/step-4");
 
          if (ProfileUpdateError) {
             console.log("OTP ERROR", ProfileUpdateError.message);
+            setLoading(false);
             return;
          }
-
-         if (session?.session) {
-            nextStep();
-            router.replace("/(auth)/(new-user)/PartTwo/step-4");
-         }
-         console.log("otps session", { session });
       } catch (error) {
          console.error("Error signing in:", error);
+         setLoading(false);
          return;
+      }
+   };
+
+   const resentOtp = async () => {
+      const { error } = await supabase.auth.resend({
+         type: "signup",
+         email: form.email,
+      });
+      if (error) {
+         console.log(error);
       }
    };
 
@@ -74,16 +81,9 @@ export default function Otp() {
             paragraph={`We have sent a verification code to your email address ${form.email}. To confirm enter the 6-digit code.`}
          >
             <Input placeholder="code" value={otp} onChangeText={setOtp} keyboardType="email-address" inputMode="text" />
-
             <View className="gap-4 my-6">
+               <Button text="Resend code" onPress={resentOtp} size="lg" variant="outline" />
                <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
-               {/* <Button
-                  text="Resend code"
-                  onPress={() => router.push("/(auth)/(new-user)/PartOne/resend-otp")}
-                  size="lg"
-                  isLoading={loading}
-                  variant="outline"
-               /> */}
             </View>
          </StepContainer>
       </ScreenWrapper>

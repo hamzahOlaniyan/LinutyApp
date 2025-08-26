@@ -14,7 +14,7 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-export default function Step6() {
+export default function Step6_1() {
    const { form, errors, updateField, nextStep, setError } = useRegistrationStore();
 
    const [selectedEthnicityId, setSelectedEthnicityId] = useState<string | null>(null);

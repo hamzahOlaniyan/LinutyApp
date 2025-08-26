@@ -13,7 +13,7 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { FlatList, Pressable, View } from "react-native";
 
-export default function Step6() {
+export default function Step6_2() {
    const { form, errors, updateField, nextStep, setError } = useRegistrationStore();
    const [searchText, setSearchText] = useState("");
    const [selected, setSelected] = useState("");

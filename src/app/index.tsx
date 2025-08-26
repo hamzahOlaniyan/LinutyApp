@@ -2,25 +2,34 @@ import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import { View } from "react-native";
-
-// SplashScreen.setOptions({
-//    duration: 1000,
-//    fade: true,
-// });
-// SplashScreen.preventAutoHideAsync();
+import { supabase } from "../lib/supabase";
+import { useAuthStore } from "../store/authStore";
 
 export default function AnimatedSplash() {
+   const setSession = useAuthStore((s) => s.setSession);
+   const fetchProfile = useAuthStore((s) => s.fetchProfile);
+   const { session, profile } = useAuthStore();
    const router = useRouter();
 
-   // useEffect(() => {
-   //    SplashScreen.hideAsync();
-   // }, []);
-
    useEffect(() => {
-      const timer = setTimeout(() => {
-         router.replace("/(auth)");
-      }, 2000);
-      return () => clearTimeout(timer);
+      const checkAuth = async () => {
+         await supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+            if (session?.user) fetchProfile(session.user.id);
+         });
+
+         setTimeout(() => {
+            if (!session) {
+               router.replace("/(auth)");
+            } else if (profile?.isComplete === false) {
+               router.replace("/(new-user)/PartTwo/step-4");
+            } else {
+               router.replace("/(app)");
+            }
+         }, 2000);
+      };
+
+      checkAuth();
    }, []);
 
    return (

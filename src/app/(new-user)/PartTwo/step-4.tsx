@@ -11,13 +11,10 @@ import { Pressable, View } from "react-native";
 
 export default function Step4() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
-   // const { profile } = useAuthStore();
 
    const [onSelect, setOnSelect] = useState("");
 
    const router = useRouter();
-
-   // console.log("Gender Page", JSON.stringify(profile, null, 2));
 
    const handleNext = async () => {
       let valid = true;
