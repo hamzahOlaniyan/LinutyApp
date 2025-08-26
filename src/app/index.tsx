@@ -1,9 +1,16 @@
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import { supabase } from "../lib/supabase";
 import { useAuthStore } from "../store/authStore";
+
+SplashScreen.setOptions({
+   duration: 500,
+   fade: true,
+});
+SplashScreen.preventAutoHideAsync();
 
 export default function AnimatedSplash() {
    const setSession = useAuthStore((s) => s.setSession);
@@ -30,6 +37,7 @@ export default function AnimatedSplash() {
       };
 
       checkAuth();
+      SplashScreen.hideAsync();
    }, []);
 
    return (

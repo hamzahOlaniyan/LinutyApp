@@ -16,12 +16,11 @@ export default function Step8() {
    const userId = session?.user?.id;
 
    useEffect(() => {
-      fetchProfile(userId);
-
       const timer = setTimeout(() => {
+         fetchProfile(userId);
          router.replace("/(app)");
          reset();
-      }, 2000);
+      }, 3000);
       return () => clearTimeout(timer);
    }, []);
 
@@ -31,7 +30,7 @@ export default function Step8() {
             source={require("@/assets/images/logo_full.png")}
             accessibilityLabel="Avatar"
             contentFit="contain"
-            style={{ width: "100%", height: 30, alignSelf: "center" }}
+            style={{ width: "100%", height: 100, alignSelf: "center" }}
          />
          <View className="justify-around flex-1">
             <View className="self-center gap-12 relative bottom-12">
@@ -40,8 +39,11 @@ export default function Step8() {
                   accessibilityLabel="Avatar"
                   style={{ width: 150, height: 150, borderRadius: 300, alignSelf: "center" }}
                />
-               <AppText size="xxxl" align="center">
-                  {`Welcome to Linuty, ${form.firstName}`}
+               <AppText size="xxxl" align="center" weight="med">
+                  Welcome to Linuty
+               </AppText>
+               <AppText size="xxxl" align="center" weight="semi">
+                  {form.firstName}
                </AppText>
             </View>
          </View>

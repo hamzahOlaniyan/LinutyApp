@@ -15,8 +15,6 @@ export default function Step2() {
    const [loading, setLoading] = useState(false);
 
    const handleNext = async () => {
-      console.log("next");
-
       let valid = true;
 
       setLoading(true);
@@ -51,7 +49,7 @@ export default function Step2() {
       <ScreenWrapper>
          <StepContainer
             heading="Create a password"
-            paragraph="Your password should be at least 8 characters long. Avoid using easily guessed information."
+            paragraph="Your password should be at least 8 characters long. Avoid using easily guessed information. (Password must a least 1 uppercase, 1 lowercase and a number)"
          >
             <View className="gap-2">
                <Input

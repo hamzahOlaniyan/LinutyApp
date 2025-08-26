@@ -13,7 +13,7 @@ export default function ProtectedLayout() {
          router.replace("/(auth)");
          return;
       }
-      if (profile?.isComplete === false) {
+      if (session && profile?.isComplete === false) {
          router.replace("/(new-user)/PartTwo/step-4");
          return;
       }

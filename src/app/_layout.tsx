@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import { Linking } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
@@ -64,6 +65,18 @@ export default function RootLayout() {
       return () => {
          authListener.subscription.unsubscribe();
       };
+   }, []);
+
+   useEffect(() => {
+      const subscription = Linking.addEventListener("url", async ({ url }: { url: string }) => {
+         const { data } = await supabase.auth.exchangeCodeForSession(url);
+         if (data.session) {
+            console.log("Password reset session started!");
+            router.replace("/(auth)/reset-password");
+         }
+      });
+
+      return () => subscription.remove();
    }, []);
 
    return (
