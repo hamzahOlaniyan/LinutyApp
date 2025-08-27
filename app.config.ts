@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { ConfigContext, ExpoConfig } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => {
@@ -41,6 +42,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          typedRoutes: true,
       },
       extra: {
+         supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
+         supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
          router: {},
          eas: {
             projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",

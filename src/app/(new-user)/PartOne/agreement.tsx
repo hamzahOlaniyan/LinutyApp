@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 
 export default function Agreement() {
-   const { form, errors, updateField, nextStep, resetErrors } = useRegistrationStore();
+   const { form, nextStep } = useRegistrationStore();
 
    const [loading, setLoading] = useState(false);
 

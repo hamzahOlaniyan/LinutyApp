@@ -20,8 +20,6 @@ export default function PasswordRecovery() {
       }
    };
 
-   console.log(email);
-
    return (
       <ScreenWrapper>
          <View style={{ position: "relative", marginTop: hp(9) }}>

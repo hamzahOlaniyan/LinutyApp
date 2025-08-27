@@ -14,9 +14,12 @@
 //    // We're in Node.js (no react-native available), keep storage = undefined
 // }
 
-const supabaseUrl = "https://kttxalavymeiicyrwefq.supabase.co";
-const supabaseAnonKey =
-   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0dHhhbGF2eW1laWljeXJ3ZWZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc0MDY3MzMsImV4cCI6MjA2Mjk4MjczM30.EOxYNIEICekBygc5SV9D1wpKwqMEEg8DDk8wvJlKfe8";
+// const supabaseUrl = "https://kttxalavymeiicyrwefq.supabase.co";
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL as string;
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY as string;
+
+// const supabaseAnonKey =
+//    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0dHhhbGF2eW1laWljeXJ3ZWZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc0MDY3MzMsImV4cCI6MjA2Mjk4MjczM30.EOxYNIEICekBygc5SV9D1wpKwqMEEg8DDk8wvJlKfe8";
 
 // export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 //    auth: {
