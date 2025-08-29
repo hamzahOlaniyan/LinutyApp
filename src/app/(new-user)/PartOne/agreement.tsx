@@ -15,6 +15,8 @@ export default function Agreement() {
 
    const router = useRouter();
 
+   // console.log(JSON.stringify(form, null, 2));
+
    const handleNext = async () => {
       let valid = true;
       setLoading(true);
@@ -27,13 +29,18 @@ export default function Agreement() {
                data: { username: form.username },
             },
          });
+
+         if (auth_error) {
+            console.error("Error signing up:", auth_error.message);
+            return;
+         }
+
+         console.log("Signup response:", data);
+         router.push("/PartOne/otp");
       } catch (error) {
          console.error("Error signing in:", error);
-         return;
-      }
-      if (valid) {
-         nextStep();
-         router.push("/PartOne/otp");
+      } finally {
+         setLoading(false);
       }
    };
 
