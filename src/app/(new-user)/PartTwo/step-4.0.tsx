@@ -5,7 +5,7 @@ import StepContainer from "@/src/components/StepContainer";
 import { colors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
 import moment from "moment";
 import React, { useState } from "react";
@@ -13,16 +13,13 @@ import { Pressable, View } from "react-native";
 
 export default function Step4() {
    const { form, errors, updateField, setError, nextStep } = useRegistrationStore();
-   // console.log(JSON.stringify(form, null, 2));
 
    const [date, setDate] = useState<string>(new Date().toISOString().split("T")[0]);
-   const [show, setShow] = useState(false);
    const [age, setAge] = useState(0);
-   const [mode, setMode] = useState("date");
 
    const router = useRouter();
 
-   const onChange = (event: any, selectedDate?: Date) => {
+   const onChange = (event: {}, selectedDate?: Date) => {
       if (selectedDate) {
          const formattedDate = selectedDate.toISOString().split("T")[0];
          const age = moment().diff(moment(formattedDate, "YYYY-MM-DD"), "years");
@@ -36,23 +33,14 @@ export default function Step4() {
       showMode("date");
    };
 
-   const showMode = (currentMode: string) => {
-      setShow(true);
-      setMode(currentMode);
+   const showMode = (currentMode: any) => {
+      DateTimePickerAndroid.open({
+         value: new Date(date),
+         onChange,
+         mode: currentMode,
+         is24Hour: true,
+      });
    };
-
-   // const showMode = (currentMode: any) => {
-   //    DateTimePickerAndroid.open({
-   //       value: new Date(date),
-   //       onChange,
-   //       mode: currentMode,
-   //       is24Hour: true,
-   //    });
-   // };
-
-   // const showDatepicker = () => {
-   //    showMode("date");
-   // };
 
    const handleNext = async () => {
       let valid = true;
@@ -91,15 +79,6 @@ export default function Step4() {
                <AppText weight="med" size="lg">
                   {moment(date).format("D MMMM YYYY")}
                </AppText>
-               {show && (
-                  <DateTimePicker
-                     testID="dateTimePicker"
-                     value={new Date(date)}
-                     mode={"date"}
-                     is24Hour={true}
-                     onChange={onChange}
-                  />
-               )}
                <Pressable onPress={showDatepicker} className="opacity-0 absolute w-full h-full">
                   <AppText>Show date picker!</AppText>
                </Pressable>

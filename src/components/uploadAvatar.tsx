@@ -15,15 +15,15 @@ export async function uploadAvatar(userId: string, imageUri: string) {
          upsert: true,
       });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+         throw uploadError;
+      }
 
       const {
          data: { publicUrl },
       } = supabase.storage.from("avatars").getPublicUrl(fullPath);
 
-      // console.log("PUBLIC URL FROM UPLOAD_AVATAR", publicUrl);
-
-      const { error: updateError } = await supabase.from("profiles").update({ avatar_url: publicUrl }).eq("id", userId);
+      const { error: updateError } = await supabase.from("profiles").update({ avatarUrl: publicUrl }).eq("id", userId);
 
       if (updateError) throw updateError;
 

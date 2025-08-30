@@ -1,3 +1,4 @@
+import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
 import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
@@ -7,7 +8,7 @@ import { supabase } from "@/src/lib/supabase";
 import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 
 export default function Otp() {
@@ -19,6 +20,8 @@ export default function Otp() {
    const [otp, setOtp] = useState("");
    const [loading, setLoading] = useState(false);
    const [error, setError] = useState("");
+   const [timer, setTimer] = useState(60); // countdown in seconds
+   const [canResend, setCanResend] = useState(false);
 
    const router = useRouter();
 
@@ -64,7 +67,22 @@ export default function Otp() {
       }
    };
 
-   const resentOtp = async () => {
+   useEffect(() => {
+      let interval: any;
+
+      if (timer > 0) {
+         interval = setInterval(() => {
+            setTimer((prev) => prev - 1);
+         }, 1000);
+      } else {
+         setCanResend(true);
+         clearInterval(interval);
+      }
+
+      return () => clearInterval(interval); // cleanup on unmount
+   }, [timer]);
+
+   const resendOtp = async () => {
       const { error } = await supabase.auth.resend({
          type: "signup",
          email: form.email,
@@ -72,6 +90,8 @@ export default function Otp() {
       if (error) {
          console.log(error);
       }
+      setTimer(60);
+      setCanResend(false);
    };
 
    return (
@@ -81,8 +101,12 @@ export default function Otp() {
             paragraph={`We have sent a verification code to your email address ${form.email}. To confirm enter the 6-digit code.`}
          >
             <Input placeholder="code" value={otp} onChangeText={setOtp} keyboardType="email-address" inputMode="text" />
-            <View className="gap-4 my-6">
-               <Button text="Resend code" onPress={resentOtp} size="lg" variant="outline" />
+            <View className="gap-4 my-6 justify-center">
+               {canResend ? (
+                  <Button text="Resend OTP" onPress={resendOtp} />
+               ) : (
+                  <AppText align="center"> Resend OTP in: {timer} sec</AppText>
+               )}
                <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
             </View>
          </StepContainer>

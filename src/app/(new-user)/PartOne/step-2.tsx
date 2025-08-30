@@ -2,6 +2,7 @@ import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
+import { validatePassword } from "@/src/hooks/validatePassword";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -25,15 +26,22 @@ export default function Step2() {
          valid = false;
       }
 
+      const error = validatePassword(form.password);
+
+      if (error) {
+         setError("password", "Password must include at least 1 lowercase, 1 uppercase & 1 number");
+         setLoading(false);
+         return;
+      }
+
       if (!confirmPassword) {
          setPasswordError("please confirm your password");
          setLoading(false);
-
          valid = false;
+         return;
       } else if (form.password !== confirmPassword) {
          setPasswordError("Password does not match");
          setLoading(false);
-
          return;
       }
 

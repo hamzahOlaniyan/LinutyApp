@@ -32,6 +32,7 @@ export default function Agreement() {
 
          if (auth_error) {
             console.error("Error signing up:", auth_error.message);
+            setLoading(true);
             return;
          }
 

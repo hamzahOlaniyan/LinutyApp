@@ -13,7 +13,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Step6_3() {
    const { form, errors, updateField, nextStep, setError } = useRegistrationStore();
-   console.log("6.3", JSON.stringify(form, null, 2));
+   // console.log("6.3", JSON.stringify(form, null, 2));
 
    const [showButton, setShowButton] = useState(false);
 
@@ -35,7 +35,7 @@ export default function Step6_3() {
       if (set.has(interest)) {
          set.delete(interest);
       } else {
-         if (set.size >= 5) return;
+         if (set.size >= 3) return;
          set.add(interest);
       }
       updateField("app_interest", Array.from(set) as any);

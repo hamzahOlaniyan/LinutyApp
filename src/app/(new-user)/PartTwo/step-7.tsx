@@ -19,6 +19,8 @@ export default function Step7() {
 
    const router = useRouter();
 
+   console.log(JSON.stringify(form, null, 2));
+
    async function completeRegistration() {
       setLoading(true);
       try {
@@ -29,23 +31,23 @@ export default function Step7() {
             .from("profiles")
             .update({
                location: form.location,
-               clan: form.lineage_names,
+               lineage_names: form.lineage_names,
                gender: form.gender,
                ethnicity: form.ethnicity,
                fullLineageName: form.fullLineageName,
-               avatar_url: avatarUrl,
+               avatarUrl: form.avatarUrl,
                isComplete: true,
-               content: form.app_interest,
+               app_interest: form.app_interest,
                interest: form.interests,
             })
             .eq("id", userId);
 
          if (error) {
             console.log("something went wrong", error);
+            setLoading(false);
             throw error;
          }
-
-         return { status: "success" };
+         // return { status: "success" };
       } catch (err) {
          console.error("try error", err);
       }
@@ -65,11 +67,13 @@ export default function Step7() {
       }
 
       if (valid) {
-         completeRegistration().then((res) => {
-            if (res?.status === "success") {
-               router.replace("/PartTwo/step-8");
-            }
-         });
+         completeRegistration();
+         router.replace("/PartTwo/step-8");
+         // completeRegistration().then((res) => {
+         //    if (res?.status === "success") {
+         //       router.replace("/PartTwo/step-8");
+         //    }
+         // });
       }
    };
 

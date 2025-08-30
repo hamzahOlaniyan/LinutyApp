@@ -12,11 +12,10 @@ export default function Step8() {
    const { session } = useAuthStore();
    const fetchProfile = useAuthStore((s) => s.fetchProfile);
 
+   console.log(JSON.stringify(form, null, 2));
+
    const router = useRouter();
    const userId = session?.user?.id;
-
-   const clanName = "Darood";
-   const name = "Hamzah";
 
    useEffect(() => {
       const timer = setTimeout(() => {
@@ -38,27 +37,25 @@ export default function Step8() {
             />
             <View className="flex-1">
                <View className="self-center gap-8">
-                  <View className="w-60 h-60 bg-red-300 rounded-full self-center"></View>
-                  {/* <Image
-                  source={{ uri: form.avatarUrl }}
-                  accessibilityLabel="Avatar"
-                  style={{ width: 150, height: 150, borderRadius: 300, alignSelf: "center" }}
-                   /> */}
+                  <Image
+                     source={{ uri: form.avatarUrl }}
+                     accessibilityLabel="Avatar"
+                     style={{ width: 150, height: 150, borderRadius: 300, alignSelf: "center" }}
+                  />
                   <View className="gap-12">
                      <View>
                         <AppText size="xxxl" align="center" weight="med">
                            Welcome to Linuty
                         </AppText>
-                        <AppText size="xxxl" align="center" weight="semi">
-                           {/* {form.firstName} */}
-                           {name}!
+                        <AppText size="xxxl" align="center" weight="semi" cap="capitalize">
+                           {form.firstName}
                         </AppText>
                      </View>
                      <View className="gap-4">
                         <AppText weight="semi" size="lg" align="center">
                            We’re proud to have you join us as part of the{" "}
                            <AppText size="xl" weight="bold">
-                              Darood
+                              {form.lineage_names.pop()}
                            </AppText>{" "}
                            community.
                         </AppText>

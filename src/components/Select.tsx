@@ -128,6 +128,7 @@ export default function Select({
                            </TouchableOpacity>
                         )}
                         contentContainerStyle={{ paddingBottom: 100 }}
+                        showsVerticalScrollIndicator={false}
                      />
                   </Pressable>
                   {/* </View> */}
