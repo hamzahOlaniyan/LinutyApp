@@ -19,8 +19,6 @@ export default function Step7() {
 
    const router = useRouter();
 
-   console.log(JSON.stringify(form, null, 2));
-
    async function completeRegistration() {
       setLoading(true);
       try {
@@ -31,6 +29,7 @@ export default function Step7() {
             .from("profiles")
             .update({
                location: form.location,
+               dob: form.dob,
                lineage_names: form.lineage_names,
                gender: form.gender,
                ethnicity: form.ethnicity,
@@ -39,6 +38,7 @@ export default function Step7() {
                isComplete: true,
                app_interest: form.app_interest,
                interest: form.interests,
+               profession: form.profession,
             })
             .eq("id", userId);
 

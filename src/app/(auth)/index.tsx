@@ -35,17 +35,17 @@ export default function index() {
          });
          setSession(session?.session);
 
-         // const { data: profile } = await supabase
-         //    .from("profiles")
-         //    .select("*")
-         //    .eq("id", session?.user?.id as string)
-         //    .single();
+         const { data: profile } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("id", session?.user?.id as string)
+            .single();
 
-         // if (profile && !profile.isComplete) {
-         //    router.replace("/profile-setup");
-         // } else {
-         //    router.replace("/(protected)/(tabs)/(home)");
-         // }
+         if (profile && !profile.isComplete) {
+            router.replace("/(new-user)/PartTwo/step-4.0");
+         } else {
+            router.replace("/(app)");
+         }
 
          if (error) Alert.alert(error.message);
          console.log("logged in");
@@ -61,8 +61,8 @@ export default function index() {
       <ScreenWrapper>
          <View style={{ position: "relative", marginTop: hp(18) }}>
             <Image
-               source={require("@/assets/images/logo_full.png")}
-               style={{ width: 100, height: 100, alignSelf: "center" }}
+               source={require("@/assets/images/logo_outline.png")}
+               style={{ width: 70, height: 70, alignSelf: "center" }}
                contentFit="contain"
             />
          </View>
@@ -93,7 +93,7 @@ export default function index() {
                <GradientButton text="Sign in" onPress={handleSignIn} isLoading={loading} size="lg" />
                {/* <GradientButton
                   text=""
-                  onPress={() => router.push("/(new-user)/PartTwo/step-4.0")}
+                  onPress={() => router.push("/(new-user)/PartTwo/step-8")}
                   isLoading={loading}
                   size="lg"
                /> */}

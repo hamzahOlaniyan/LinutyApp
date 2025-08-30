@@ -12,8 +12,6 @@ export default function Step8() {
    const { session } = useAuthStore();
    const fetchProfile = useAuthStore((s) => s.fetchProfile);
 
-   console.log(JSON.stringify(form, null, 2));
-
    const router = useRouter();
    const userId = session?.user?.id;
 
@@ -30,7 +28,7 @@ export default function Step8() {
       <ScreenWrapper paddingHorizontal={6}>
          <View className="flex-1 gap-12">
             <Image
-               source={require("@/assets/images/logo_full.png")}
+               source={require("@/assets/images/logo_outline.png")}
                accessibilityLabel="Avatar"
                contentFit="contain"
                style={{ width: "100%", height: 100, alignSelf: "center" }}

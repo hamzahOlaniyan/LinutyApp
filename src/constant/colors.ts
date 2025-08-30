@@ -1,5 +1,5 @@
 export const colors = {
-   primary: "#156760",
+   primary: "#1e9187",
    // secondary: "",
    // gray: "#7e7e7e",
    offWhite: "#f9f9f9",
@@ -19,8 +19,8 @@ export const colors = {
    buttonOutline: "#156760",
 
    gradients: {
-      primary: ["#1D174C", "#2B2768", "#134D7A", "#11515D", "#156760", "#48BE9A"] as const,
-      primaryLight: ["#1D174C25", "#2B276825", "#134D7A25", "#11515D25", "#15676025", "#48BE9A25"] as const,
+      primary: ["#2a5e87", "#28626d", "#1e9187", "#48BE9A"] as const,
+      primaryLight: ["#134D7A25", "#11515D25", "#15676025", "#48BE9A25"] as const,
    },
 
    // dark: {

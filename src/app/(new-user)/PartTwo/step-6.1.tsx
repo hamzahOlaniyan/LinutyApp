@@ -25,8 +25,6 @@ export default function Step6_1() {
 
    const router = useRouter();
 
-   // console.log(JSON.stringify(form, null, 2));
-
    // pick ethnicity (Select stays visible because we always render it)
    const handleEthnicitySelect = (ethnicity: Ethnicity) => {
       setSelectedEthnicityId(ethnicity.id);

@@ -15,8 +15,6 @@ export default function Agreement() {
 
    const router = useRouter();
 
-   // console.log(JSON.stringify(form, null, 2));
-
    const handleNext = async () => {
       let valid = true;
       setLoading(true);

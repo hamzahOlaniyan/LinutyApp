@@ -32,7 +32,7 @@ export default function Button({
             borderRadius: 100,
             justifyContent: "center",
             paddingHorizontal: 16,
-            borderWidth: variant === "outline" ? 1 : 0,
+            borderWidth: variant === "outline" ? 1.2 : 0,
             borderColor: colors.buttonOutline,
             height:
                size === "lg"

@@ -13,20 +13,10 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Step6_3() {
    const { form, errors, updateField, nextStep, setError } = useRegistrationStore();
-   // console.log("6.3", JSON.stringify(form, null, 2));
 
    const [showButton, setShowButton] = useState(false);
 
    const router = useRouter();
-
-   // useFocusEffect(
-   //    React.useCallback(() => {
-   //       return () => {
-   //          updateField("app_interest", [] as any);
-   //          updateField("interests", [] as any);
-   //       };
-   //    }, [])
-   // );
 
    const handleAppInterest = (interest: string) => {
       const current = form.app_interest ?? [];
@@ -35,7 +25,7 @@ export default function Step6_3() {
       if (set.has(interest)) {
          set.delete(interest);
       } else {
-         if (set.size >= 3) return;
+         if (set.size >= 4) return;
          set.add(interest);
       }
       updateField("app_interest", Array.from(set) as any);
