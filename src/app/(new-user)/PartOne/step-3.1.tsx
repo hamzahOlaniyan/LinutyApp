@@ -20,8 +20,8 @@ export default function Step3() {
          valid = false;
       }
 
-      if (!form.surname) {
-         setError("surname", "password is required");
+      if (!form.lastName) {
+         setError("lastName", "password is required");
          valid = false;
          3;
       }
@@ -53,11 +53,11 @@ export default function Step3() {
                   />
                   <Input
                      placeholder="Last name"
-                     value={form.surname}
-                     onChangeText={(surname) => updateField("surname", surname)}
+                     value={form.lastName}
+                     onChangeText={(lastName) => updateField("lastName", lastName)}
                      inputMode="text"
-                     error={!!errors.surname}
-                     errorMessage={errors.surname}
+                     error={!!errors.lastName}
+                     errorMessage={errors.lastName}
                   />
                </View>
             </StepContainer>

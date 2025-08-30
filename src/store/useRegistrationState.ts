@@ -5,21 +5,21 @@ export type RegistrationState = {
    step: number;
    form: {
       firstName: string;
-      surname: string;
+      lastName: string;
       email: string;
+      dob: string;
       password: string;
       username: string;
       fullLineageName: string;
       gender: "male" | "female" | "other" | "";
       location: string;
-      nationality: string;
       ethnicity: string;
       lineage_ids: string[];
       lineage_names: string[];
       profession: string;
       app_interest: string[];
       interests: string[];
-      profilePic: string;
+      avatarUrl: string;
    };
    errors: Partial<Record<keyof RegistrationState["form"], string>>;
    nextStep: () => void;
@@ -35,21 +35,21 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
    step: 0,
    form: {
       firstName: "",
-      surname: "",
+      lastName: "",
+      dob: "",
       email: "",
       password: "",
       username: "",
       fullLineageName: "",
       gender: "" as "" | "male" | "female" | "other",
       location: "",
-      nationality: "",
       ethnicity: "",
       lineage_ids: [],
       lineage_names: [],
       profession: "",
       app_interest: [],
       interests: [],
-      profilePic: "",
+      avatarUrl: "",
    },
    errors: {},
    nextStep: () => set((s) => ({ step: s.step + 1 })),
@@ -67,13 +67,13 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
          step: 0,
          form: {
             firstName: "",
-            surname: "",
+            lastName: "",
             username: "",
             email: "",
             password: "",
             fullLineageName: "",
             gender: "",
-            nationality: "",
+            dob: "",
             location: "",
             ethnicity: "",
             lineage_ids: [],
@@ -81,7 +81,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
             profession: "",
             app_interest: [],
             interests: [],
-            profilePic: "",
+            avatarUrl: "",
          },
          errors: {},
       }),

@@ -22,11 +22,15 @@ export default function StepContainer({
          <View className="gap-4">
             <View className="gap-3">
                {heading && (
-                  <AppText size="xxl" weight="bold">
+                  <AppText size="xxxl" weight="bold">
                      {heading}
                   </AppText>
                )}
-               {paragraph && <AppText weight="med">{paragraph}</AppText>}
+               {paragraph && (
+                  <AppText size="lg" weight="med">
+                     {paragraph}
+                  </AppText>
+               )}
             </View>
             <View className="">{children}</View>
          </View>

@@ -33,7 +33,7 @@ export default function AppText({
    const fontSize = {
       xxxxxl: hp(4.4),
       xxxxl: hp(3.4),
-      xxxl: hp(3),
+      xxxl: hp(2.8),
       xxl: hp(2.6),
       xl: hp(2.3),
       lg: hp(2),

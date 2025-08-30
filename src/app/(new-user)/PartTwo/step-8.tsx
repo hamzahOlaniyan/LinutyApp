@@ -40,7 +40,7 @@ export default function Step8() {
                <View className="self-center gap-8">
                   <View className="w-60 h-60 bg-red-300 rounded-full self-center"></View>
                   {/* <Image
-                  source={{ uri: form.profilePic }}
+                  source={{ uri: form.avatarUrl }}
                   accessibilityLabel="Avatar"
                   style={{ width: 150, height: 150, borderRadius: 300, alignSelf: "center" }}
                    /> */}

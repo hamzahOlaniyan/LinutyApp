@@ -23,12 +23,12 @@ export default function Step7() {
       setLoading(true);
       try {
          const userId = session?.user?.id;
-         uploadAvatar(userId, form.profilePic);
+         uploadAvatar(userId, form.avatarUrl);
 
          const { error } = await supabase
             .from("profiles")
             .update({
-               current_location: form.location,
+               location: form.location,
                clan: form.lineage_names,
                gender: form.gender,
                ethnicity: form.ethnicity,
@@ -53,14 +53,14 @@ export default function Step7() {
 
    const onUpload = (value: any) => {
       setAvatarUrl(value);
-      updateField("profilePic", value);
+      updateField("avatarUrl", value);
    };
 
    const handleNext = async () => {
       let valid = true;
 
-      if (!form.profilePic) {
-         setError("profilePic", "please upload an image");
+      if (!form.avatarUrl) {
+         setError("avatarUrl", "please upload an image");
          return;
       }
 

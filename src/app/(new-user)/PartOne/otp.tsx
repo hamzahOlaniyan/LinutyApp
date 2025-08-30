@@ -46,11 +46,11 @@ export default function Otp() {
 
          const { error: ProfileUpdateError } = await supabase
             .from("profiles")
-            .update({ firstName: form.firstName, lastName: form.surname })
+            .update({ firstName: form.firstName, lastName: form.lastName })
             .eq("id", session?.user?.id);
 
          fetchProfile(session?.user?.id ?? "");
-         router.replace("/(new-user)/PartTwo/step-4");
+         router.replace("/(new-user)/PartTwo/step-4.0");
 
          if (ProfileUpdateError) {
             console.log("OTP ERROR", ProfileUpdateError.message);

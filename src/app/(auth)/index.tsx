@@ -91,12 +91,12 @@ export default function index() {
                   </Pressable>
                </View>
                <GradientButton text="Sign in" onPress={handleSignIn} isLoading={loading} size="lg" />
-               <GradientButton
+               {/* <GradientButton
                   text=""
-                  onPress={() => router.push("/(new-user)/PartTwo/step-8")}
+                  onPress={() => router.push("/(new-user)/PartTwo/step-4.0")}
                   isLoading={loading}
                   size="lg"
-               />
+               /> */}
             </View>
             <View className="w-full absolute bottom-5 gap-4">
                <Button

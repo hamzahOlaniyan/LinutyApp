@@ -15,15 +15,6 @@ export default function Step1() {
 
    const router = useRouter();
 
-   // useFocusEffect(
-   //    React.useCallback(() => {
-   //       return () => {
-   //          clearError("email"); // clears ALL errors when leaving screen
-   //          reset();
-   //       };
-   //    }, [resetErrors])
-   // );
-
    const isValidEmail = (email: string) => {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return regex.test(email);
@@ -58,6 +49,19 @@ export default function Step1() {
 
       if (error) {
          setError("email", "Error checking email, try again later");
+         console.log(
+            "email",
+            "Error checking email, try again later",
+            error.cause,
+            error.details,
+            error.hint,
+            error.message,
+            error.name,
+            error.stack,
+            error.code
+         );
+         setLoading(false);
+
          valid = false;
          return;
       }
