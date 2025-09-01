@@ -43,7 +43,7 @@ export default function AnimatedSplash() {
    return (
       <View className="flex-1 justify-center items-center bg-white">
          <Image
-            source={require("@/assets/images/logo_outline.png")}
+            source={require("@/assets/images/tree-icon.png")}
             style={{ width: "100%", height: 100, alignSelf: "center", justifyContent: "center", borderRadius: 100 }}
             contentFit="contain"
          />

@@ -32,8 +32,18 @@ export default function Button({
             borderRadius: 100,
             justifyContent: "center",
             paddingHorizontal: 16,
+            shadowColor: "#000",
+            shadowOffset: {
+               width: 0,
+               height: 3,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 6,
+            elevation: 0.3,
             borderWidth: variant === "outline" ? 1.2 : 0,
             borderColor: colors.buttonOutline,
+            backgroundColor:
+               variant === "outline" ? "transparent" : variant === "plain" ? "transparent" : colors.lightOlive,
             height:
                size === "lg"
                   ? hp(5.6)

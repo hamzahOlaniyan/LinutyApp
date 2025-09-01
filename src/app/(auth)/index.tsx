@@ -44,7 +44,7 @@ export default function index() {
          if (profile && !profile.isComplete) {
             router.replace("/(new-user)/PartTwo/step-4.0");
          } else {
-            router.replace("/(app)");
+            router.replace("/(app)/(tabs)");
          }
 
          if (error) Alert.alert(error.message);
@@ -61,8 +61,8 @@ export default function index() {
       <ScreenWrapper>
          <View style={{ position: "relative", marginTop: hp(18) }}>
             <Image
-               source={require("@/assets/images/logo_outline.png")}
-               style={{ width: 70, height: 70, alignSelf: "center" }}
+               source={require("@/assets/images/tree-icon.png")}
+               style={{ width: 80, height: 80, alignSelf: "center" }}
                contentFit="contain"
             />
          </View>
@@ -91,20 +91,9 @@ export default function index() {
                   </Pressable>
                </View>
                <GradientButton text="Sign in" onPress={handleSignIn} isLoading={loading} size="lg" />
-               {/* <GradientButton
-                  text=""
-                  onPress={() => router.push("/(new-user)/PartTwo/step-8")}
-                  isLoading={loading}
-                  size="lg"
-               /> */}
             </View>
             <View className="w-full absolute bottom-5 gap-4">
-               <Button
-                  text="Create new account"
-                  onPress={() => router.push("/(new-user)")}
-                  size="lg"
-                  variant="outline"
-               />
+               <Button text="Create new account" onPress={() => router.push("/(new-user)")} size="lg" />
                <View className="w-2/3 flex-row items-center justify-center flex-wrap self-center">
                   <AppText size="xs" align="center">
                      By signing in, you agree to our{" "}

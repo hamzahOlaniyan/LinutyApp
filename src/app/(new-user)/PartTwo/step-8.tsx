@@ -28,7 +28,7 @@ export default function Step8() {
       <ScreenWrapper paddingHorizontal={6}>
          <View className="flex-1 gap-12">
             <Image
-               source={require("@/assets/images/logo_outline.png")}
+               source={require("@/assets/images/tree-icon.png")}
                accessibilityLabel="Avatar"
                contentFit="contain"
                style={{ width: "100%", height: 100, alignSelf: "center" }}

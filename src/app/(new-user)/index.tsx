@@ -2,6 +2,7 @@ import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
 import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
+import { colors } from "@/src/constant/colors";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -16,13 +17,14 @@ export default function NewUser() {
                Join Linuty
             </AppText>
             <Image
-               source={require("@/assets/images/tree.svg")}
+               source={require("@/assets/images/lin.png")}
+               contentFit="contain"
                style={{
                   width: "100%",
                   height: "40%",
                   alignSelf: "center",
                   zIndex: 0,
-                  backgroundColor: "#48BE9A20",
+                  backgroundColor: colors.extralightOlive,
                   borderRadius: 20,
                }}
             />
@@ -34,7 +36,7 @@ export default function NewUser() {
             </AppText>
             <View className="gap-4 my-6">
                <GradientButton onPress={() => router.push("/PartOne/step-1")} text="Get started" size="lg" />
-               <Button onPress={() => router.back()} text="Already have an account" size="lg" variant="outline" />
+               <Button onPress={() => router.back()} text="Already have an account" size="lg" />
             </View>
          </View>
       </ScreenWrapper>

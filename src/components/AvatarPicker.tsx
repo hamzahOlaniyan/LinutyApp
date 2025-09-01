@@ -92,7 +92,6 @@ export default function AvatarPicker({ url, size = 150, onPickLocal }: Props) {
                text={uploading ? "Uploading ..." : avatarUrl ? "Change image" : "Upload"}
                onPress={pickAvatar}
                disabled={uploading}
-               variant="outline"
                size="lg"
             />
          </View>

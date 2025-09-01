@@ -36,12 +36,7 @@ export default function StepContainer({
          </View>
          {footer && (
             <View className="relative bottom-4">
-               <Button
-                  onPress={() => router.replace("/(auth)")}
-                  text="Already have an account"
-                  size="lg"
-                  variant="plain"
-               />
+               <Button onPress={() => router.replace("/(auth)")} text="Already have an account" size="lg" />
             </View>
          )}
       </View>
