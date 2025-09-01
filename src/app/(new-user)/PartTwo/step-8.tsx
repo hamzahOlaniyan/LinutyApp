@@ -18,7 +18,7 @@ export default function Step8() {
    useEffect(() => {
       const timer = setTimeout(() => {
          fetchProfile(userId);
-         router.replace("/(app)");
+         router.replace("/(app)/(tabs)");
          reset();
       }, 6000);
       return () => clearTimeout(timer);

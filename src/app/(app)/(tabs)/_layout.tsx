@@ -1,7 +1,9 @@
 import { colors } from "@/src/constant/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import { Tabs } from "expo-router";
 import React from "react";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
@@ -37,11 +39,25 @@ export default function TabLayout() {
                title: "Home",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  <Ionicons
-                     name={focused ? "home-sharp" : "home-outline"}
-                     size={24}
-                     color={focused ? colors.primary : ""}
-                  />
+                  <View>
+                     {focused ? (
+                        <Image
+                           source={require("@/assets/icons/home-solid.svg")}
+                           style={{
+                              width: 24,
+                              height: "100%",
+                           }}
+                        />
+                     ) : (
+                        <Image
+                           source={require("@/assets/icons/home-outline.svg")}
+                           style={{
+                              width: 24,
+                              height: "100%",
+                           }}
+                        />
+                     )}
+                  </View>
                ),
             }}
          />
@@ -51,11 +67,25 @@ export default function TabLayout() {
                title: "Find friends",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  <Ionicons
-                     name={focused ? "people-sharp" : "people-outline"}
-                     size={24}
-                     color={focused ? colors.primary : ""}
-                  />
+                  <View>
+                     {focused ? (
+                        <Image
+                           source={require("@/assets/icons/search.svg")}
+                           style={{
+                              width: 24,
+                              height: "100%",
+                           }}
+                        />
+                     ) : (
+                        <Image
+                           source={require("@/assets/icons/search-solid.svg")}
+                           style={{
+                              width: 24,
+                              height: "100%",
+                           }}
+                        />
+                     )}
+                  </View>
                ),
             }}
          />

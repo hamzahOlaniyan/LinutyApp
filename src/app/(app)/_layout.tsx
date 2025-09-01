@@ -3,7 +3,7 @@ import { Stack, useRouter } from "expo-router";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 
-export default function ProtectedLayout() {
+export default function AppLayout() {
    const { session, profile, loading, user } = useAuthStore();
    const router = useRouter();
 
@@ -14,7 +14,7 @@ export default function ProtectedLayout() {
          return;
       }
       if (session && profile?.isComplete === false) {
-         router.replace("/(new-user)/PartTwo/step-4");
+         router.replace("/(new-user)/PartTwo/step-4.0");
          return;
       }
    }, [session, profile, loading]);

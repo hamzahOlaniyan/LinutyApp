@@ -29,9 +29,9 @@ export default function AnimatedSplash() {
             if (!session) {
                router.replace("/(auth)");
             } else if (profile?.isComplete === false) {
-               router.replace("/(new-user)/PartTwo/step-4");
+               router.replace("/(new-user)/PartTwo/step-4.0");
             } else {
-               router.replace("/(app)");
+               router.replace("/(app)/(tabs)");
             }
          }, 2000);
       };
