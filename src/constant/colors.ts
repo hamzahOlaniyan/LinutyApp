@@ -13,6 +13,7 @@ export const colors = {
    inputInactive: "#aebbc8",
    inputActive: "#677179",
    buttonOutline: "#006891",
+   // tabInactive: "#5b5b5b",
 
    gradients: {
       primary: ["#68be91", "#006891", "#36326c"] as const,

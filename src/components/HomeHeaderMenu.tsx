@@ -3,19 +3,24 @@
 // import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 // import { useAuthStore } from "../context/authStore";
 // import { useThemeStore } from "../context/themeStore";
 // import { getNotfication } from "../Services/Notification";
 // import SupabaseImage from "./SupabaseImage";
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import AppText from "./AppText";
+import { colors } from "../constant/colors";
+import { hp } from "../constant/common";
+import { useAuthStore } from "../store/authStore";
 
 export default function HomeHeaderMenu() {
-   // const { userProfile, currentUser } = useAuthStore();
+   const { profile } = useAuthStore();
    // const { currentTheme } = useThemeStore();
 
    const router = useRouter();
+
+   console.log(JSON.stringify(profile, null, 2));
 
    // const queryClient = useQueryClient();
 
@@ -74,37 +79,20 @@ export default function HomeHeaderMenu() {
          <Image
             source={require("@/assets/images/linuty.png")}
             style={{
-               width: 120,
-               height: 50,
+               width: 100,
+               height: 35,
                alignSelf: "center",
                justifyContent: "center",
             }}
             contentFit="contain"
          />
          <View className="flex-row items-center justify-center gap-4">
-            <AppText>home</AppText>
-            {/* <Pressable
-               onPress={() => router.push("/(protected)/new-post")}
-               style={{ backgroundColor: currentTheme === "light" ? colors.light.input : colors.dark.input }}
-               className="rounded-full p-2"
-            >
-               <Ionicons
-                  name="add-circle-outline"
-                  size={hp(3)}
-                  color={currentTheme === "light" ? colors.light.text : colors.dark.text}
-               />
-            </Pressable> */}
-            {/* <Pressable
-               onPress={() => router.push("/(protected)/notification")}
-               style={{ backgroundColor: currentTheme === "light" ? colors.light.input : colors.dark.input }}
-               className="rounded-full p-2"
-            >
-               <Ionicons
-                  name="notifications-outline"
-                  size={hp(3)}
-                  color={currentTheme === "light" ? colors.light.text : colors.dark.text}
-               />
-               {unreadCount > 0 && (
+            <Pressable className="rounded-full p-2" style={{ backgroundColor: colors.extralightOlive }}>
+               <Ionicons name="add-circle-outline" size={hp(3.5)} />
+            </Pressable>
+            <Pressable className="rounded-full p-2">
+               <Ionicons name="notifications-outline" size={hp(3.5)} />
+               {/* {unreadCount > 0 && (
                   <View className="absolute -top-1 -right-2 bg-primary border-2 border-white rounded-full w-6 h-6 items-center justify-center">
                      <View className="relative -top-[1px]">
                         <AppText size="xs" weight="semi" color="white">
@@ -112,17 +100,9 @@ export default function HomeHeaderMenu() {
                         </AppText>
                      </View>
                   </View>
-               )}
-            </Pressable> */}
-            {/* <Pressable onPress={() => router.push("/(protected)/(profile)")}>
-               <SupabaseImage
-                  bucket="avatars"
-                  path={userProfile?.avatar_url}
-                  width={40}
-                  height={40}
-                  borderRadius={100}
-               />
-            </Pressable> */}
+               )} */}
+            </Pressable>
+            <Image source={{ uri: profile?.avatarUrl }} style={{ width: 40, height: 40, borderRadius: 100 }} />
          </View>
       </View>
    );
