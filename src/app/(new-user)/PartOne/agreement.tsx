@@ -67,7 +67,7 @@ export default function Agreement() {
                </AppText>
             </View>
 
-            <View className="gap-2 my-6">
+            <View className="gap-2 my-10">
                <GradientButton onPress={handleNext} text="I agree" size="lg" isLoading={loading} />
             </View>
          </StepContainer>

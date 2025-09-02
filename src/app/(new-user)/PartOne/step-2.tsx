@@ -50,6 +50,7 @@ export default function Step2() {
          nextStep();
          router.push("/PartOne/step-3.1");
          setConfirmPassword("");
+         setLoading(false);
       }
    };
 
@@ -57,7 +58,7 @@ export default function Step2() {
       <ScreenWrapper>
          <StepContainer
             heading="Create a password"
-            paragraph="Your password should be at least 8 characters long. Avoid using easily guessed information. (Password must a least 1 uppercase, 1 lowercase and a number)"
+            paragraph="Your password should be at least 8 characters long. Avoid using easily guessed information. (Password must a contain uppercase,lowercase, digits & symbol)"
          >
             <View className="gap-2">
                <Input

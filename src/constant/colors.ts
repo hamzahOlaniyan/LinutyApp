@@ -16,7 +16,7 @@ export const colors = {
 
    gradients: {
       primary: ["#68be91", "#006891", "#36326c"] as const,
-      primaryLight: ["#68be9125", "#00689125", "#36326c25"] as const,
+      primaryLight: ["#68be9150", "#00689150", "#36326c50"] as const,
    },
 
    // dark: {

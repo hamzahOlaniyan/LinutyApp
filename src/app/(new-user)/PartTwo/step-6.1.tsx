@@ -72,6 +72,7 @@ export default function Step6_1() {
    };
 
    const atLeaf = currentLevel.length === 0 && path.length > 0;
+   const lastSelected = path.length > 0 ? `${path[path.length - 1].name}` : "";
 
    const handleNext = () => {
       updateField("lineage_ids", path.map((n) => n.id) as any);
@@ -115,7 +116,7 @@ export default function Step6_1() {
                            {path.length > 0 && (
                               <View
                                  style={{
-                                    backgroundColor: colors.searchBar,
+                                    backgroundColor: colors.extralightOlive,
                                     borderRadius: 12,
                                     paddingHorizontal: 10,
                                     paddingVertical: 20,
@@ -124,43 +125,48 @@ export default function Step6_1() {
                               >
                                  {atLeaf && <AppText weight="semi">Your selected clan</AppText>}
 
-                                 <AppText size="lg" weight="bold" cap="capitalize" color={colors.primary}>
+                                 <AppText size="lg" weight="bold" cap="capitalize">
                                     {path.map((p, idx) => `${idx + 1}. ${p.name}  `).join("")}
                                  </AppText>
                               </View>
                            )}
 
-                           {!atLeaf && (
-                              <View className="flex-row justify-between">
+                           <View className="flex-row justify-between">
+                              {!atLeaf && (
                                  <AppText size="lg" weight="semi">
                                     Select your clans
                                  </AppText>
-                                 {path.length > 0 && (
-                                    <Pressable
-                                       onPress={handleBack}
-                                       style={{ borderWidth: 1, borderRadius: 6, padding: 5 }}
-                                       className="flex-row items-center gap-1 justify-center"
-                                    >
-                                       <Ionicons
-                                          name="arrow-back-sharp"
-                                          size={16}
-                                          color="black"
-                                          className="relative top-[2px]"
-                                       />
-                                       <AppText>back</AppText>
-                                    </Pressable>
-                                 )}
-                              </View>
-                           )}
+                              )}
+                              {path.length > 0 && (
+                                 <Pressable
+                                    onPress={handleBack}
+                                    style={{
+                                       borderWidth: 0.8,
+                                       borderRadius: 6,
+                                       padding: 5,
+                                       borderColor: colors.placeholder,
+                                    }}
+                                    className="flex-row items-center gap-1 justify-center"
+                                 >
+                                    <Ionicons
+                                       name="arrow-back-sharp"
+                                       size={12}
+                                       color="black"
+                                       className="relative top-[1px]"
+                                    />
+                                    <AppText size="xs">back</AppText>
+                                 </Pressable>
+                              )}
+                           </View>
                         </View>
                      )}
 
-                     <View className="flex-row flex-wrap w-full justify-center gap-2 flex-1">
+                     <View className="flex-row flex-wrap w-full justify-center gap-2">
                         {currentLevel.map((clan) => (
                            <TouchableOpacity
                               key={clan.id}
                               onPress={() => handleClanSelect(clan)}
-                              className="p-3 px-4 rounded-md relative overflow-hidden"
+                              className="p-3 px-8 rounded-md relative overflow-hidden"
                               style={{
                                  borderRadius: 8,
                               }}
@@ -168,7 +174,7 @@ export default function Step6_1() {
                               <LinearGradient
                                  colors={colors.gradients.primaryLight}
                                  start={{ x: 0, y: 0 }}
-                                 end={{ x: 1.2, y: 0 }}
+                                 end={{ x: 1, y: 0 }}
                                  style={{
                                     ...StyleSheet.absoluteFillObject,
                                  }}
@@ -178,7 +184,7 @@ export default function Step6_1() {
                                     fontFamily: TiktokFont.TiktokSemiBold,
                                     textTransform: "capitalize",
                                     textAlign: "center",
-                                    fontSize: 14,
+                                    fontSize: 15,
                                  }}
                               >
                                  {clan.name}
@@ -205,17 +211,13 @@ export default function Step6_1() {
                               <TextInput
                                  placeholder="Names"
                                  value={form.fullLineageName}
-                                 onChangeText={(linegaeName) => updateField("fullLineageName", linegaeName)}
+                                 onChangeText={(name) => updateField("fullLineageName", name)}
                                  style={{ fontSize: hp(2), fontFamily: TiktokFont.TiktokMedium }}
                                  placeholderTextColor={"#a3a3a3"}
                                  className="px-2 flex-1"
                               />
                               <AppText size="lg" weight="med" cap="capitalize" color={colors.inputActive}>
-                                 {path
-                                    .reverse()
-                                    .slice(0, 1)
-                                    .map((p) => `${p.name} `)
-                                    .join("")}
+                                 {lastSelected}
                               </AppText>
                            </View>
                            {errors.fullLineageName && (

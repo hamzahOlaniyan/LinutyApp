@@ -43,10 +43,10 @@ export default function Step6_2() {
                <Searchbar value={searchText} onChangeText={(e) => setSearchText(e)} onPress={() => setSearchText("")} />
                <FlatList
                   scrollEnabled
-                  data={PROFESSIONS}
+                  data={PROFESSIONS?.sort().filter((item) => item.toLowerCase().includes(searchText.toLowerCase()))}
                   keyExtractor={(item) => item}
                   showsVerticalScrollIndicator={false}
-                  contentContainerStyle={{ rowGap: 10 }}
+                  contentContainerStyle={{ rowGap: 10, paddingBottom: 750 }}
                   renderItem={({ item }) => (
                      <Pressable onPress={() => handlePress(item)} className="flex-row justify-between py-2">
                         <AppText size="lg" weight="med">

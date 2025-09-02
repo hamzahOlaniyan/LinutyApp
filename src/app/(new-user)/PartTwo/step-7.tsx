@@ -15,6 +15,8 @@ export default function Step7() {
    const { form, errors, updateField, setError, nextStep, resetErrors, reset } = useRegistrationStore();
    const { session } = useAuthStore();
 
+   console.log(JSON.stringify(form, null, 2));
+
    const [loading, setLoading] = useState(false);
 
    const router = useRouter();
@@ -35,10 +37,10 @@ export default function Step7() {
                ethnicity: form.ethnicity,
                fullLineageName: form.fullLineageName,
                avatarUrl: form.avatarUrl,
-               isComplete: true,
                app_interest: form.app_interest,
                interest: form.interests,
                profession: form.profession,
+               isComplete: true,
             })
             .eq("id", userId);
 
@@ -47,7 +49,6 @@ export default function Step7() {
             setLoading(false);
             throw error;
          }
-         // return { status: "success" };
       } catch (err) {
          console.error("try error", err);
       }

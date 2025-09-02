@@ -54,8 +54,6 @@ export default function AvatarPicker({ url, size = 150, onPickLocal }: Props) {
             return;
          }
 
-         console.log(result);
-
          if (!result.canceled) {
             const image = result.assets[0].uri;
             setAvatarUrl(image);

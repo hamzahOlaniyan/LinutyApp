@@ -2,6 +2,7 @@ import { colors } from "@/src/constant/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { hp } from "../constant/common";
 import AppText from "./AppText";
 import Searchbar from "./Searchbar";
@@ -45,6 +46,8 @@ export default function Select({
    const [isFocused, setIsFocused] = useState(false);
 
    const handleClose = () => setShowActionsheet(false);
+
+   const { bottom } = useSafeAreaInsets();
 
    useEffect(() => {
       if (typeof selectedValue !== "undefined") {
@@ -96,14 +99,13 @@ export default function Select({
                </AppText>
             ) : null}
          </View>
-
          <Actionsheet isOpen={showActionsheet} onClose={handleClose} preventScroll={true} snapPoints={[height]}>
             <ActionsheetBackdrop />
             <ActionsheetContent>
                <ActionsheetDragIndicatorWrapper>
                   <ActionsheetDragIndicator />
                </ActionsheetDragIndicatorWrapper>
-               <View className="flex-1 w-full">
+               <View style={{ marginBottom: bottom }} className="flex-1 w-full overflow-hidden">
                   <View className="py-5 gap-3">
                      {modalTitle && (
                         <AppText weight="semi" align="center" size="lg" className="font-SansBold text-center">
@@ -115,7 +117,6 @@ export default function Select({
                         <Searchbar value={searchText} onChangeText={setSearchText} onPress={() => setSearchText("")} />
                      )}
                   </View>
-                  {/* <View className=""> */}
                   <Pressable onPress={handleClose}>
                      <FlatList
                         data={options?.filter((search) => search.toLowerCase().includes(searchText.toLowerCase()))}
@@ -131,7 +132,6 @@ export default function Select({
                         showsVerticalScrollIndicator={false}
                      />
                   </Pressable>
-                  {/* </View> */}
                </View>
             </ActionsheetContent>
          </Actionsheet>

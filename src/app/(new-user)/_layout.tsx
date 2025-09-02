@@ -13,7 +13,7 @@ export default function NewUserLayout() {
 
    useEffect(() => {
       if (profile?.isComplete) {
-         router.replace("/(app)");
+         router.replace("/(app)/(tabs)");
       }
    }, [profile]);
 
