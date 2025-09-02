@@ -4,7 +4,6 @@ import React from "react";
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import { colors } from "../constant/colors";
 
 type ButtonProps = {
    text?: React.ReactNode;
@@ -19,7 +18,7 @@ export default function GradientButton({ text, onPress, isLoading = false, disab
    return (
       <>
          <LinearGradient
-            colors={colors.gradients.primary}
+            colors={appColors.gradients.primary}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             dither={true}

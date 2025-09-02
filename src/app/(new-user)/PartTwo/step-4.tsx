@@ -2,7 +2,7 @@ import AppText from "@/src/components/AppText";
 import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
-import { colors } from "@/src/constant/colors";
+import { appColors } from "@/src/constant/colors";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -57,7 +57,7 @@ export default function Step4() {
             <RadioSelection select="Female" field={"gender"} />
             <RadioSelection select="Other" field={"gender"} />
             {errors.gender && (
-               <AppText color={colors.error} size="sm">
+               <AppText color={appColors.error} size="sm">
                   {errors.gender}
                </AppText>
             )}

@@ -3,7 +3,7 @@ import Button from "@/src/components/Button";
 import GradientButton from "@/src/components/GradientButton";
 import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
-import { colors } from "@/src/constant/colors";
+import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { supabase } from "@/src/lib/supabase";
 import { useAuthStore } from "@/src/store/authStore";
@@ -85,7 +85,7 @@ export default function index() {
                      isPassword={true}
                   />
                   <Pressable onPress={() => router.push("/password-recovery")}>
-                     <AppText align="right" size="sm" weight="med" color={colors.inputActive}>
+                     <AppText align="right" size="sm" weight="med" color={appColors.inputActive}>
                         Forgot password?
                      </AppText>
                   </Pressable>

@@ -3,7 +3,7 @@ import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import Searchbar from "@/src/components/Searchbar";
 import StepContainer from "@/src/components/StepContainer";
-import { colors } from "@/src/constant/colors";
+import { appColors } from "@/src/constant/colors";
 import { PROFESSIONS } from "@/src/data/ProfileData";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { FontAwesome } from "@expo/vector-icons";
@@ -55,7 +55,7 @@ export default function Step6_2() {
                         {selected === item && (
                            <MaskedView maskElement={<FontAwesome name="check-circle" size={24} color="black" />}>
                               <LinearGradient
-                                 colors={colors.gradients.primary}
+                                 colors={appColors.gradients.primary}
                                  start={{ x: 0, y: 0 }}
                                  end={{ x: 1, y: 0 }}
                                  style={{ width: 24, height: 24 }}

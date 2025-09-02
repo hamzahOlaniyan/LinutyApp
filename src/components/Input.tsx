@@ -1,5 +1,4 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import { colors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { Ionicons } from "@expo/vector-icons";
 import React, { FC, useState } from "react";
@@ -37,7 +36,7 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
                   height: hp(7),
                   borderWidth: 0.9,
                   marginBottom: 3,
-                  borderColor: isFocused ? colors.inputActive : error ? colors.error : colors.inputInactive,
+                  borderColor: isFocused ? appColors.inputActive : error ? appColors.error : appColors.inputInactive,
                   borderRadius: 15,
                }}
                className={`w-full flex-row items-center justify-center p-4 gap-2 `}
@@ -46,12 +45,12 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
                <TextInput
                   style={{ fontSize: hp(2), fontFamily: TiktokFont.TiktokMedium }}
                   className="flex-1  p-0 m-0 h-full"
-                  placeholderTextColor={`${colors.placeholder}`}
+                  placeholderTextColor={`${appColors.placeholder}`}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
                   {...props}
-                  selectionColor={colors.primary}
-                  selectionHandleColor={colors.primary}
+                  selectionColor={appColors.primary}
+                  selectionHandleColor={appColors.primary}
                   secureTextEntry={isPassword && showPassword}
                   autoCapitalize="none"
                />
@@ -61,13 +60,13 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
                         onPress={() => setShowPassword(!showPassword)}
                         name={showPassword ? "eye-off-outline" : "eye-outline"}
                         size={24}
-                        color={colors.inputActive}
+                        color={appColors.inputActive}
                      />
                   </View>
                )}
             </View>
             {error && errorMessage ? (
-               <AppText color={colors.error} size="sm">
+               <AppText color={appColors.error} size="sm">
                   {errorMessage}
                </AppText>
             ) : null}

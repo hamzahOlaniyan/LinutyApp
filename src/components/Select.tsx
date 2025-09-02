@@ -1,4 +1,3 @@
-import { colors } from "@/src/constant/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
@@ -78,7 +77,7 @@ export default function Select({
                   padding: 10,
                   borderWidth: 1,
                   marginBottom: 3,
-                  borderColor: isFocused ? colors.inputActive : error ? colors.error : colors.placeholder,
+                  borderColor: isFocused ? appColors.inputActive : error ? appColors.error : appColors.placeholder,
                }}
                className="w-full flex-row justify-between items-center rounded-2xl"
             >
@@ -87,14 +86,14 @@ export default function Select({
                      {selected}
                   </AppText>
                ) : (
-                  <AppText weight="med" size="md" cap="capitalize" color={colors.placeholder}>
+                  <AppText weight="med" size="md" cap="capitalize" color={appColors.placeholder}>
                      {placeholder}
                   </AppText>
                )}
-               <MaterialCommunityIcons name="chevron-down" size={26} color={colors.placeholder} />
+               <MaterialCommunityIcons name="chevron-down" size={26} color={appColors.placeholder} />
             </TouchableOpacity>
             {error && errorMessage ? (
-               <AppText color={colors.error} size="sm">
+               <AppText color={appColors.error} size="sm">
                   {errorMessage}
                </AppText>
             ) : null}

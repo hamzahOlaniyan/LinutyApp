@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-export const Search2 = ({ color = "#1f1f1f", size = 32, ...props }) => {
+export const Search2 = ({ color = "#1f1f1f", size = 28, ...props }) => {
    return (
       <Svg viewBox="0 -960 960 960" fill={color} width={size} height={size} {...props}>
          <Path

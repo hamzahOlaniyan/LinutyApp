@@ -4,7 +4,7 @@ import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
-import { colors } from "@/src/constant/colors";
+import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { ClanNode, ETHNICITIES, Ethnicity } from "@/src/data/ClanTree";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
@@ -116,7 +116,7 @@ export default function Step6_1() {
                            {path.length > 0 && (
                               <View
                                  style={{
-                                    backgroundColor: colors.extralightOlive,
+                                    backgroundColor: appColors.extralightOlive,
                                     borderRadius: 12,
                                     paddingHorizontal: 10,
                                     paddingVertical: 20,
@@ -144,7 +144,7 @@ export default function Step6_1() {
                                        borderWidth: 0.8,
                                        borderRadius: 6,
                                        padding: 5,
-                                       borderColor: colors.placeholder,
+                                       borderColor: appColors.placeholder,
                                     }}
                                     className="flex-row items-center gap-1 justify-center"
                                  >
@@ -172,7 +172,7 @@ export default function Step6_1() {
                               }}
                            >
                               <LinearGradient
-                                 colors={colors.gradients.primaryLight}
+                                 colors={appColors.gradients.primaryLight}
                                  start={{ x: 0, y: 0 }}
                                  end={{ x: 1, y: 0 }}
                                  style={{
@@ -203,7 +203,7 @@ export default function Step6_1() {
                                  height: hp(7),
                                  borderWidth: 1,
                                  marginBottom: 3,
-                                 borderColor: colors.placeholder,
+                                 borderColor: appColors.placeholder,
                                  borderRadius: 15,
                               }}
                               className=" flex-1 flex-row justify-between items-center gap-1 p-2 border rounded-lg"
@@ -216,12 +216,12 @@ export default function Step6_1() {
                                  placeholderTextColor={"#a3a3a3"}
                                  className="px-2 flex-1"
                               />
-                              <AppText size="lg" weight="med" cap="capitalize" color={colors.inputActive}>
+                              <AppText size="lg" weight="med" cap="capitalize" color={appColors.inputActive}>
                                  {lastSelected}
                               </AppText>
                            </View>
                            {errors.fullLineageName && (
-                              <AppText size="sm" color={colors.error}>
+                              <AppText size="sm" color={appColors.error}>
                                  {errors.fullLineageName}
                               </AppText>
                            )}

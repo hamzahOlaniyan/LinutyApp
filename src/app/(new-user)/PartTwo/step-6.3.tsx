@@ -3,7 +3,7 @@ import AppText from "@/src/components/AppText";
 import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
-import { colors } from "@/src/constant/colors";
+import { appColors } from "@/src/constant/colors";
 import { APP_INTEREST, INTERESTS } from "@/src/data/ProfileData";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { LinearGradient } from "expo-linear-gradient";
@@ -79,18 +79,20 @@ export default function Step6_3() {
                                  }}
                               >
                                  <LinearGradient
-                                    colors={selected ? colors.gradients.primaryLight : ["transparent", "transparent"]}
+                                    colors={
+                                       selected ? appColors.gradients.primaryLight : ["transparent", "transparent"]
+                                    }
                                     start={{ x: 0, y: 0 }}
                                     end={{ x: 1.2, y: 0 }}
                                     style={{
                                        ...StyleSheet.absoluteFillObject,
-                                       backgroundColor: selected ? "" : colors.whitesmoke,
+                                       backgroundColor: selected ? "" : appColors.whitesmoke,
                                     }}
                                  />
                                  <Text
                                     style={{
                                        fontFamily: selected ? TiktokFont.TiktokSemiBold : TiktokFont.TiktokMedium,
-                                       color: selected ? "black" : colors.inputActive,
+                                       color: selected ? "black" : appColors.inputActive,
                                        textTransform: "capitalize",
                                        textAlign: "center",
                                        fontSize: 15,
@@ -123,18 +125,20 @@ export default function Step6_3() {
                                  }}
                               >
                                  <LinearGradient
-                                    colors={selected ? colors.gradients.primaryLight : ["transparent", "transparent"]}
+                                    colors={
+                                       selected ? appColors.gradients.primaryLight : ["transparent", "transparent"]
+                                    }
                                     start={{ x: 0, y: 0 }}
                                     end={{ x: 1.2, y: 0 }}
                                     style={{
                                        ...StyleSheet.absoluteFillObject,
-                                       backgroundColor: selected ? "" : colors.whitesmoke,
+                                       backgroundColor: selected ? "" : appColors.whitesmoke,
                                     }}
                                  />
                                  <Text
                                     style={{
                                        fontFamily: TiktokFont.TiktokMedium,
-                                       color: selected ? "black" : colors.inputActive,
+                                       color: selected ? "black" : appColors.inputActive,
                                        textTransform: "capitalize",
                                        textAlign: "center",
                                        fontSize: 15,

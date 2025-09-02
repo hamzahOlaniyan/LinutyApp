@@ -6,12 +6,11 @@ import { Search2 } from "@/assets/icons/search-2";
 import { Search2Outline } from "@/assets/icons/search-2-outline";
 import { Store } from "@/assets/icons/store";
 import { StoreSolid } from "@/assets/icons/store-solid";
-import { colors } from "@/src/constant/colors";
+import { appColors } from "@/src/constant/colors";
 import { Tabs } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export default function TabLayout() {
    const insets = useSafeAreaInsets();
@@ -27,6 +26,8 @@ export default function TabLayout() {
                height: 50 + insets.bottom,
                position: "absolute",
                elevation: 0,
+               borderTopColor: "transparent",
+               borderTopWidth: 0,
                shadowOpacity: 0,
                paddingVertical: 10,
                backgroundColor: "white",
@@ -43,7 +44,7 @@ export default function TabLayout() {
                title: "Home",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  <View>{focused ? <HomeSolid color={colors.primary} /> : <Home />}</View>
+                  <View>{focused ? <HomeSolid color={appColors.primary} /> : <Home />}</View>
                ),
             }}
          />
@@ -53,8 +54,8 @@ export default function TabLayout() {
                title: "Find friends",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  // <Search color={focused ? colors.primary : colors.tabInactive} />
-                  <View>{focused ? <Search2 color={Colors.primary} /> : <Search2Outline />}</View>
+                  // <Search color={focused ? appColors.primary : appColors.tabInactive} />
+                  <View>{focused ? <Search2 color={appColors.primary} /> : <Search2Outline />}</View>
                ),
             }}
          />
@@ -65,7 +66,7 @@ export default function TabLayout() {
                headerShown: false,
                popToTopOnBlur: true,
                tabBarIcon: ({ size, color, focused }) => (
-                  <View>{focused ? <StoreSolid color={Colors.primary} /> : <Store />}</View>
+                  <View>{focused ? <StoreSolid color={appColors.primary} /> : <Store />}</View>
                ),
             }}
          />
@@ -75,7 +76,7 @@ export default function TabLayout() {
                title: "comunity",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  <View>{focused ? <Community color={Colors.primary} /> : <CommunityOtline />}</View>
+                  <View>{focused ? <Community color={appColors.primary} /> : <CommunityOtline />}</View>
                ),
             }}
          />

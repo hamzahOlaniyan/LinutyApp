@@ -8,11 +8,12 @@ import { Pressable, View } from "react-native";
 // import { useThemeStore } from "../context/themeStore";
 // import { getNotfication } from "../Services/Notification";
 // import SupabaseImage from "./SupabaseImage";
-import { Ionicons } from "@expo/vector-icons";
+import { Notification } from "@/assets/icons/notification";
+import { Plus } from "@/assets/icons/plus";
 import { Image } from "expo-image";
-import { colors } from "../constant/colors";
-import { hp } from "../constant/common";
+import { GLOBAL_STYLES } from "../constant/globalStyles";
 import { useAuthStore } from "../store/authStore";
+import Button from "./Button";
 
 export default function HomeHeaderMenu() {
    const { profile } = useAuthStore();
@@ -75,23 +76,25 @@ export default function HomeHeaderMenu() {
    // }, [currentUser?.id]);
 
    return (
-      <View className="flex-row justify-between">
+      <View style={[GLOBAL_STYLES.screenPadding]} className="flex-row items-end  justify-between py-2">
          <Image
             source={require("@/assets/images/linuty.png")}
             style={{
-               width: 100,
+               width: 90,
                height: 35,
                alignSelf: "center",
                justifyContent: "center",
+               position: "relative",
+               top: 5,
             }}
             contentFit="contain"
          />
-         <View className="flex-row items-center justify-center gap-4">
-            <Pressable className="rounded-full p-2" style={{ backgroundColor: colors.extralightOlive }}>
-               <Ionicons name="add-circle-outline" size={hp(3.5)} />
-            </Pressable>
+         <View className="flex-row items-center justify-center gap-2">
+            <Button size="xs">
+               <Plus size={24} />
+            </Button>
             <Pressable className="rounded-full p-2">
-               <Ionicons name="notifications-outline" size={hp(3.5)} />
+               <Notification size={24} />
                {/* {unreadCount > 0 && (
                   <View className="absolute -top-1 -right-2 bg-primary border-2 border-white rounded-full w-6 h-6 items-center justify-center">
                      <View className="relative -top-[1px]">

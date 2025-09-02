@@ -2,7 +2,7 @@ import AppText from "@/src/components/AppText";
 import Button from "@/src/components/Button";
 import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
-import { colors } from "@/src/constant/colors";
+import { appColors } from "@/src/constant/colors";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -24,7 +24,7 @@ export default function NewUser() {
                   height: "40%",
                   alignSelf: "center",
                   zIndex: 0,
-                  backgroundColor: colors.extralightOlive,
+                  backgroundColor: appColors.extralightOlive,
                   borderRadius: 20,
                }}
             />

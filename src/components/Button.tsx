@@ -1,12 +1,13 @@
 import { hp } from "@/src/constant/common";
 import React from "react";
-import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import { colors } from "../constant/colors";
+import { appColors } from "../constant/colors";
 
 type ButtonProps = {
    text?: React.ReactNode;
+   children?: React.ReactNode;
    onPress?: () => void;
    isLoading?: boolean;
    className?: string;
@@ -18,9 +19,10 @@ type ButtonProps = {
 
 export default function Button({
    text,
+   children,
    onPress,
    isLoading = false,
-   className,
+   // className,
    disabled,
    size = "md",
    variant,
@@ -31,7 +33,7 @@ export default function Button({
          style={{
             borderRadius: 100,
             justifyContent: "center",
-            paddingHorizontal: 16,
+            paddingHorizontal: size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 8 : hp(5),
             shadowColor: "#000",
             shadowOffset: {
                width: 0,
@@ -41,9 +43,9 @@ export default function Button({
             shadowRadius: 6,
             elevation: 0.3,
             borderWidth: variant === "outline" ? 1.2 : 0,
-            borderColor: colors.buttonOutline,
+            borderColor: appColors.buttonOutline,
             backgroundColor:
-               variant === "outline" ? "transparent" : variant === "plain" ? "transparent" : colors.lightOlive,
+               variant === "outline" ? "transparent" : variant === "plain" ? "transparent" : appColors.lightOlive,
             height:
                size === "lg"
                   ? hp(5.6)
@@ -52,26 +54,31 @@ export default function Button({
                   : size === "sm"
                   ? hp(4.5)
                   : size === "xs"
-                  ? hp(4)
+                  ? hp(3.7)
                   : hp(5),
          }}
          onPress={onPress}
          disabled={disabled}
-         activeOpacity={0.9}
+         // activeOpacity={0.9}
       >
          {isLoading ? (
             <ActivityIndicator color={indicatorColor} size={"small"} />
          ) : (
-            <Text
-               style={{
-                  fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.6) : size === "xs" ? hp(1.3) : hp(1.6),
-                  color: colors.buttonOutline,
-                  textAlign: "center",
-                  fontFamily: TiktokFont.TiktokRegular,
-               }}
-            >
-               {text}
-            </Text>
+            <View className="justify-center items-center">
+               {children && children}
+               {text && (
+                  <Text
+                     style={{
+                        fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.6) : size === "xs" ? hp(1.3) : hp(1.6),
+                        color: appColors.buttonOutline,
+                        textAlign: "center",
+                        fontFamily: TiktokFont.TiktokRegular,
+                     }}
+                  >
+                     {text}
+                  </Text>
+               )}
+            </View>
          )}
       </TouchableOpacity>
    );
