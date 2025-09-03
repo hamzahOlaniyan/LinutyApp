@@ -27,5 +27,33 @@ export default function AppLayout() {
       );
    }
 
-   return <Stack screenOptions={{ headerShown: false }} />;
+   return (
+      <Stack>
+         <Stack.Screen
+            name="(profile)"
+            options={{
+               title: "profile",
+               animation: "slide_from_right",
+            }}
+         />
+         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+         <Stack.Screen
+            name="new-post"
+            options={{
+               title: "New post",
+               headerTitleAlign: "left",
+               headerShadowVisible: false,
+               animation: "slide_from_bottom",
+            }}
+         />
+         <Stack.Screen
+            name="notification"
+            options={{
+               title: "Notification",
+               headerTitleAlign: "left",
+               headerShadowVisible: false,
+            }}
+         />
+      </Stack>
+   );
 }

@@ -1,9 +1,9 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import AppText from "@/src/components/AppText";
-import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
-import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
+import AppText from "@/src/components/ui/AppText";
+import GradientButton from "@/src/components/ui/GradientButton";
+import Select from "@/src/components/ui/Select";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { ClanNode, ETHNICITIES, Ethnicity } from "@/src/data/ClanTree";
@@ -196,7 +196,7 @@ export default function Step6_1() {
                      {atLeaf && (
                         <View className="gap-4">
                            <AppText weight="semi" size="lg">
-                              Complete you linage
+                              Please enter your abtiriis
                            </AppText>
                            <View
                               style={{

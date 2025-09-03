@@ -1,9 +1,9 @@
-import AppText from "@/src/components/AppText";
-import Button from "@/src/components/Button";
-import GradientButton from "@/src/components/GradientButton";
-import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
+import AppText from "@/src/components/ui/AppText";
+import Button from "@/src/components/ui/Button";
+import GradientButton from "@/src/components/ui/GradientButton";
+import { Input } from "@/src/components/ui/Input";
 import { supabase } from "@/src/lib/supabase";
 import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";

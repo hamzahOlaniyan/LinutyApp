@@ -2,7 +2,7 @@ import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 interface Props {
    size: number;

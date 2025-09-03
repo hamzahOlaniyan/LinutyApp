@@ -1,7 +1,7 @@
-import GradientButton from "@/src/components/GradientButton";
-import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
+import GradientButton from "@/src/components/ui/GradientButton";
+import { Input } from "@/src/components/ui/Input";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -40,8 +40,7 @@ export default function Step3() {
          <View className="gap-6">
             <StepContainer
                heading="Whats your name?"
-               paragraph="This helps your friends, family, and community easily recognize and connect. Use the name you’re most
-               commonly known by, so others can find you without confusion."
+               paragraph="This helps your friends, family, and community easily recognize and connect. Use the name you are known by among family and friends back home"
             >
                <View className="gap-2">
                   <Input

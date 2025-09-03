@@ -1,8 +1,8 @@
 import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
-import AppText from "./AppText";
-import Button from "./Button";
+import AppText from "./ui/AppText";
+import Button from "./ui/Button";
 
 export default function StepContainer({
    children,

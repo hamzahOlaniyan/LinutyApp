@@ -1,5 +1,5 @@
-import AppText from "@/src/components/AppText";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
+import AppText from "@/src/components/ui/AppText";
 import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Image } from "expo-image";

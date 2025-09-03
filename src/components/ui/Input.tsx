@@ -1,4 +1,5 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { Ionicons } from "@expo/vector-icons";
 import React, { FC, useState } from "react";

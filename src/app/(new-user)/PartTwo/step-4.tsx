@@ -1,7 +1,7 @@
-import AppText from "@/src/components/AppText";
-import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
+import AppText from "@/src/components/ui/AppText";
+import GradientButton from "@/src/components/ui/GradientButton";
 import { appColors } from "@/src/constant/colors";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Ionicons } from "@expo/vector-icons";

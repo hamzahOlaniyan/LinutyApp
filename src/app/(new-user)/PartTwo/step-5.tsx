@@ -1,7 +1,7 @@
-import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
-import Select from "@/src/components/Select";
 import StepContainer from "@/src/components/StepContainer";
+import GradientButton from "@/src/components/ui/GradientButton";
+import Select from "@/src/components/ui/Select";
 import { COUNTRIES } from "@/src/data/ProfileData";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";

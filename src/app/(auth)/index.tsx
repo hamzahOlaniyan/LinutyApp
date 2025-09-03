@@ -1,8 +1,8 @@
-import AppText from "@/src/components/AppText";
-import Button from "@/src/components/Button";
-import GradientButton from "@/src/components/GradientButton";
-import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
+import AppText from "@/src/components/ui/AppText";
+import Button from "@/src/components/ui/Button";
+import GradientButton from "@/src/components/ui/GradientButton";
+import { Input } from "@/src/components/ui/Input";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { supabase } from "@/src/lib/supabase";

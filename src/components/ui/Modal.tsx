@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 // import { useThemeStore } from "../context/themeStore";
-import AppText from "./AppText";
+import AppText from "./ui/AppText";
 import {
    Actionsheet,
    ActionsheetBackdrop,

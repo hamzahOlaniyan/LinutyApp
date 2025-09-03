@@ -1,7 +1,7 @@
-import AppText from "@/src/components/AppText";
-import Button from "@/src/components/Button";
-import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
+import AppText from "@/src/components/ui/AppText";
+import Button from "@/src/components/ui/Button";
+import GradientButton from "@/src/components/ui/GradientButton";
 import { appColors } from "@/src/constant/colors";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";

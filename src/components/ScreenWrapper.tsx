@@ -30,6 +30,7 @@ export default function ScreenWrapper({
          <SafeAreaView
             style={{
                flex: 1,
+               overflow: "hidden",
             }}
          >
             {children}
