@@ -1,26 +1,23 @@
-export const colors = {
-   primary: "#1e9187",
-   // secondary: "",
-   // gray: "#7e7e7e",
+export const appColors = {
+   // primary: "#1e9187",
+   primary: "#319295",
+   lightOlive: "#daf2ea",
+   extralightOlive: "#f3fbf8",
    offWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",
    searchBar: "#f1f1f1",
    white: "#fff",
    black: "#262626",
    placeholder: "#767f86",
-   // ghost: "#f0f6fb",
-   // focus: "#202020",
    error: "#ff3232",
-   // warning: "",
-   // success: "#3677b2",
-   // concept: "#ff8200",
    inputInactive: "#aebbc8",
    inputActive: "#677179",
-   buttonOutline: "#156760",
+   buttonOutline: "#006891",
+   // tabInactive: "#5b5b5b",
 
    gradients: {
-      primary: ["#2a5e87", "#28626d", "#1e9187", "#48BE9A"] as const,
-      primaryLight: ["#134D7A25", "#11515D25", "#15676025", "#48BE9A25"] as const,
+      primary: ["#68be91", "#006891", "#36326c"] as const,
+      primaryLight: ["#68be9150", "#00689150", "#36326c50"] as const,
    },
 
    // dark: {

@@ -1,7 +1,15 @@
-import { colors } from "@/src/constant/colors";
-import { Ionicons } from "@expo/vector-icons";
+import { Community } from "@/assets/icons/community";
+import { CommunityOtline } from "@/assets/icons/community-outline";
+import { Home } from "@/assets/icons/home";
+import { HomeSolid } from "@/assets/icons/home-solid";
+import { Search2 } from "@/assets/icons/search-2";
+import { Search2Outline } from "@/assets/icons/search-2-outline";
+import { Store } from "@/assets/icons/store";
+import { StoreSolid } from "@/assets/icons/store-solid";
+import { appColors } from "@/src/constant/colors";
 import { Tabs } from "expo-router";
 import React from "react";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
@@ -18,13 +26,12 @@ export default function TabLayout() {
                height: 50 + insets.bottom,
                position: "absolute",
                elevation: 0,
+               borderTopColor: "transparent",
+               borderTopWidth: 0,
                shadowOpacity: 0,
                paddingVertical: 10,
                backgroundColor: "white",
-               // borderTopColor: currentTheme === "light" ? colors.light.text_gray : colors.dark.text_gray,
                borderLeftWidth: 1,
-               // backgroundColor: currentTheme === "light" ? colors.light.background : colors.dark.background,
-               // backgroundColor: "rgba(255,255,255,.4)",
             },
             tabBarItemStyle: {
                paddingVertical: 5,
@@ -37,11 +44,7 @@ export default function TabLayout() {
                title: "Home",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  <Ionicons
-                     name={focused ? "home-sharp" : "home-outline"}
-                     size={24}
-                     color={focused ? colors.primary : ""}
-                  />
+                  <View>{focused ? <HomeSolid color={appColors.primary} /> : <Home />}</View>
                ),
             }}
          />
@@ -51,11 +54,8 @@ export default function TabLayout() {
                title: "Find friends",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  <Ionicons
-                     name={focused ? "people-sharp" : "people-outline"}
-                     size={24}
-                     color={focused ? colors.primary : ""}
-                  />
+                  // <Search color={focused ? appColors.primary : appColors.tabInactive} />
+                  <View>{focused ? <Search2 color={appColors.primary} /> : <Search2Outline />}</View>
                ),
             }}
          />
@@ -66,11 +66,7 @@ export default function TabLayout() {
                headerShown: false,
                popToTopOnBlur: true,
                tabBarIcon: ({ size, color, focused }) => (
-                  <Ionicons
-                     name={focused ? "storefront-sharp" : "storefront-outline"}
-                     size={24}
-                     color={focused ? colors.primary : ""}
-                  />
+                  <View>{focused ? <StoreSolid color={appColors.primary} /> : <Store />}</View>
                ),
             }}
          />
@@ -80,11 +76,7 @@ export default function TabLayout() {
                title: "comunity",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  <Ionicons
-                     name={focused ? "globe" : "globe-outline"}
-                     size={24}
-                     color={focused ? colors.primary : ""}
-                  />
+                  <View>{focused ? <Community color={appColors.primary} /> : <CommunityOtline />}</View>
                ),
             }}
          />

@@ -13,7 +13,7 @@ export default function NewUserLayout() {
 
    useEffect(() => {
       if (profile?.isComplete) {
-         router.replace("/(app)");
+         router.replace("/(app)/(tabs)");
       }
    }, [profile]);
 
@@ -33,10 +33,10 @@ export default function NewUserLayout() {
             headerTitleStyle: {
                fontSize: 20,
                fontFamily: TiktokFont.TiktokSemiBold,
-               // color: currentTheme === "light" ? colors.light.text : colors.dark.text,
+               // color: currentTheme === "light" ? appColors.light.text : appColors.dark.text,
             },
             headerStyle: {
-               // backgroundColor: currentTheme === "light" ? colors.light.background : colors.dark.background,
+               // backgroundColor: currentTheme === "light" ? appColors.light.background : appColors.dark.background,
             },
          }}
       />

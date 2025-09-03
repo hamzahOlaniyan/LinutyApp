@@ -1,7 +1,7 @@
-import GradientButton from "@/src/components/GradientButton";
-import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
+import GradientButton from "@/src/components/ui/GradientButton";
+import { Input } from "@/src/components/ui/Input";
 import { hp } from "@/src/constant/common";
 import { supabase } from "@/src/lib/supabase";
 import { useRouter } from "expo-router";
@@ -40,7 +40,7 @@ export default function ResetPassword() {
       }
 
       console.log("Password updated successfully!");
-      router.replace("/(app)");
+      router.replace("/(app)/(tabs)");
    }
 
    return (

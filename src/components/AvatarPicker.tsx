@@ -2,7 +2,7 @@ import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 interface Props {
    size: number;
@@ -54,8 +54,6 @@ export default function AvatarPicker({ url, size = 150, onPickLocal }: Props) {
             return;
          }
 
-         console.log(result);
-
          if (!result.canceled) {
             const image = result.assets[0].uri;
             setAvatarUrl(image);
@@ -92,7 +90,6 @@ export default function AvatarPicker({ url, size = 150, onPickLocal }: Props) {
                text={uploading ? "Uploading ..." : avatarUrl ? "Change image" : "Upload"}
                onPress={pickAvatar}
                disabled={uploading}
-               variant="outline"
                size="lg"
             />
          </View>

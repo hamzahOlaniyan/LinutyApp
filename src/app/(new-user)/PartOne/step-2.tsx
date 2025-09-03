@@ -1,7 +1,7 @@
-import GradientButton from "@/src/components/GradientButton";
-import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
+import GradientButton from "@/src/components/ui/GradientButton";
+import { Input } from "@/src/components/ui/Input";
 import { validatePassword } from "@/src/hooks/validatePassword";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
@@ -50,6 +50,7 @@ export default function Step2() {
          nextStep();
          router.push("/PartOne/step-3.1");
          setConfirmPassword("");
+         setLoading(false);
       }
    };
 
@@ -57,7 +58,7 @@ export default function Step2() {
       <ScreenWrapper>
          <StepContainer
             heading="Create a password"
-            paragraph="Your password should be at least 8 characters long. Avoid using easily guessed information. (Password must a least 1 uppercase, 1 lowercase and a number)"
+            paragraph="Your password should be at least 8 characters long. Avoid using easily guessed information. (Password must a contain uppercase,lowercase, digits & symbol)"
          >
             <View className="gap-2">
                <Input

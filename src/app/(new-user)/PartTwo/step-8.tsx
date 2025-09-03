@@ -1,5 +1,5 @@
-import AppText from "@/src/components/AppText";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
+import AppText from "@/src/components/ui/AppText";
 import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Image } from "expo-image";
@@ -18,7 +18,7 @@ export default function Step8() {
    useEffect(() => {
       const timer = setTimeout(() => {
          fetchProfile(userId);
-         router.replace("/(app)");
+         router.replace("/(app)/(tabs)");
          reset();
       }, 6000);
       return () => clearTimeout(timer);
@@ -28,7 +28,7 @@ export default function Step8() {
       <ScreenWrapper paddingHorizontal={6}>
          <View className="flex-1 gap-12">
             <Image
-               source={require("@/assets/images/logo_outline.png")}
+               source={require("@/assets/images/tree-icon.png")}
                accessibilityLabel="Avatar"
                contentFit="contain"
                style={{ width: "100%", height: 100, alignSelf: "center" }}

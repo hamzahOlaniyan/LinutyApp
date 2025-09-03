@@ -1,9 +1,9 @@
 // import { useThemeStore } from "@/src/context/themeStore";
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { hp } from "@/src/constant/common";
 import { Feather, Fontisto } from "@expo/vector-icons";
 import React from "react";
 import { TextInput, TextInputProps, View } from "react-native";
-import { hp } from "../constant/common";
 
 type SearchProps = TextInputProps & {
    onPress?: () => void;

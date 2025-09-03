@@ -1,8 +1,8 @@
-import AppText from "@/src/components/AppText";
-import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
-import { colors } from "@/src/constant/colors";
+import AppText from "@/src/components/ui/AppText";
+import GradientButton from "@/src/components/ui/GradientButton";
+import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
@@ -71,7 +71,7 @@ export default function Step4() {
                   height: hp(7),
                   borderWidth: 0.9,
                   marginBottom: 3,
-                  borderColor: colors.inputInactive,
+                  borderColor: appColors.inputInactive,
                   borderRadius: 15,
                }}
                className={`w-full flex-row items-center justify-between px-4 `}
@@ -85,7 +85,7 @@ export default function Step4() {
                <AppText>{`(${moment().diff(moment(date, "YYYY-MM-DD"), "years")} years old)`}</AppText>
             </View>
             {errors.dob && (
-               <AppText color={colors.error} size="sm">
+               <AppText color={appColors.error} size="sm">
                   {errors.dob}
                </AppText>
             )}

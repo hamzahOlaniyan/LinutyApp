@@ -62,7 +62,7 @@ export default function AppText({
                fontSize,
                fontFamily,
                textTransform: cap,
-               // color: currentTheme === "light" ? colors.light.text : colors.dark.text || color,
+               // color: currentTheme === "light" ? appColors.light.text : appColors.dark.text || color,
                color: color,
                textAlign: align,
             },

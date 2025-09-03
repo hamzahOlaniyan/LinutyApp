@@ -1,17 +1,18 @@
-import { colors } from "@/src/constant/colors";
+import { appColors } from "@/src/constant/colors";
+import { hp } from "@/src/constant/common";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
-import { hp } from "../constant/common";
-import AppText from "./AppText";
-import Searchbar from "./Searchbar";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
    Actionsheet,
    ActionsheetBackdrop,
    ActionsheetContent,
    ActionsheetDragIndicator,
    ActionsheetDragIndicatorWrapper,
-} from "./ui/actionsheet";
+} from "./actionsheet";
+import AppText from "./AppText";
+import Searchbar from "./Searchbar";
 
 interface SelectButtonProps {
    options: string[] | [] | null;
@@ -46,6 +47,8 @@ export default function Select({
 
    const handleClose = () => setShowActionsheet(false);
 
+   const { bottom } = useSafeAreaInsets();
+
    useEffect(() => {
       if (typeof selectedValue !== "undefined") {
          setSelected(selectedValue ?? null);
@@ -75,7 +78,7 @@ export default function Select({
                   padding: 10,
                   borderWidth: 1,
                   marginBottom: 3,
-                  borderColor: isFocused ? colors.inputActive : error ? colors.error : colors.placeholder,
+                  borderColor: isFocused ? appColors.inputActive : error ? appColors.error : appColors.placeholder,
                }}
                className="w-full flex-row justify-between items-center rounded-2xl"
             >
@@ -84,26 +87,25 @@ export default function Select({
                      {selected}
                   </AppText>
                ) : (
-                  <AppText weight="med" size="md" cap="capitalize" color={colors.placeholder}>
+                  <AppText weight="med" size="md" cap="capitalize" color={appColors.placeholder}>
                      {placeholder}
                   </AppText>
                )}
-               <MaterialCommunityIcons name="chevron-down" size={26} color={colors.placeholder} />
+               <MaterialCommunityIcons name="chevron-down" size={26} color={appColors.placeholder} />
             </TouchableOpacity>
             {error && errorMessage ? (
-               <AppText color={colors.error} size="sm">
+               <AppText color={appColors.error} size="sm">
                   {errorMessage}
                </AppText>
             ) : null}
          </View>
-
          <Actionsheet isOpen={showActionsheet} onClose={handleClose} preventScroll={true} snapPoints={[height]}>
             <ActionsheetBackdrop />
             <ActionsheetContent>
                <ActionsheetDragIndicatorWrapper>
                   <ActionsheetDragIndicator />
                </ActionsheetDragIndicatorWrapper>
-               <View className="flex-1 w-full">
+               <View style={{ marginBottom: bottom }} className="flex-1 w-full overflow-hidden">
                   <View className="py-5 gap-3">
                      {modalTitle && (
                         <AppText weight="semi" align="center" size="lg" className="font-SansBold text-center">
@@ -115,7 +117,6 @@ export default function Select({
                         <Searchbar value={searchText} onChangeText={setSearchText} onPress={() => setSearchText("")} />
                      )}
                   </View>
-                  {/* <View className=""> */}
                   <Pressable onPress={handleClose}>
                      <FlatList
                         data={options?.filter((search) => search.toLowerCase().includes(searchText.toLowerCase()))}
@@ -131,7 +132,6 @@ export default function Select({
                         showsVerticalScrollIndicator={false}
                      />
                   </Pressable>
-                  {/* </View> */}
                </View>
             </ActionsheetContent>
          </Actionsheet>

@@ -1,8 +1,8 @@
-import GradientButton from "@/src/components/GradientButton";
-import { Input } from "@/src/components/Input";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
-import { colors } from "@/src/constant/colors";
+import GradientButton from "@/src/components/ui/GradientButton";
+import { Input } from "@/src/components/ui/Input";
+import { appColors } from "@/src/constant/colors";
 import { supabase } from "@/src/lib/supabase";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -47,6 +47,7 @@ export default function Step3() {
       if (!valid) return;
       if (valid) {
          nextStep();
+         setLoading(false);
          router.push("/PartOne/agreement");
       }
    };
@@ -58,7 +59,7 @@ export default function Step3() {
             paragraph="Pick a unique username that represents you on Linuty. This will be your identity across the app, making it easy for others to find and connect with you."
          >
             <Input
-               icon={<MaterialIcons name="alternate-email" size={20} color={colors.placeholder} />}
+               icon={<MaterialIcons name="alternate-email" size={20} color={appColors.placeholder} />}
                placeholder="Username"
                value={form.username}
                onChangeText={(username) => updateField("username", username)}

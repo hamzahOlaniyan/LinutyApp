@@ -1,8 +1,8 @@
 import AvatarPicker from "@/src/components/AvatarPicker";
-import GradientButton from "@/src/components/GradientButton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
-import { uploadAvatar } from "@/src/components/uploadAvatar";
+import GradientButton from "@/src/components/ui/GradientButton";
+import { UploadAvatar } from "@/src/components/UploadAvatar";
 import { supabase } from "@/src/lib/supabase";
 import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
@@ -15,6 +15,8 @@ export default function Step7() {
    const { form, errors, updateField, setError, nextStep, resetErrors, reset } = useRegistrationStore();
    const { session } = useAuthStore();
 
+   console.log(JSON.stringify(form, null, 2));
+
    const [loading, setLoading] = useState(false);
 
    const router = useRouter();
@@ -23,7 +25,7 @@ export default function Step7() {
       setLoading(true);
       try {
          const userId = session?.user?.id;
-         uploadAvatar(userId, form.avatarUrl);
+         UploadAvatar(userId, form.avatarUrl);
 
          const { error } = await supabase
             .from("profiles")
@@ -35,10 +37,10 @@ export default function Step7() {
                ethnicity: form.ethnicity,
                fullLineageName: form.fullLineageName,
                avatarUrl: form.avatarUrl,
-               isComplete: true,
                app_interest: form.app_interest,
                interest: form.interests,
                profession: form.profession,
+               isComplete: true,
             })
             .eq("id", userId);
 
@@ -47,7 +49,6 @@ export default function Step7() {
             setLoading(false);
             throw error;
          }
-         // return { status: "success" };
       } catch (err) {
          console.error("try error", err);
       }

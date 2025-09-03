@@ -1,8 +1,8 @@
 import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
-import AppText from "./AppText";
-import Button from "./Button";
+import AppText from "./ui/AppText";
+import Button from "./ui/Button";
 
 export default function StepContainer({
    children,
@@ -36,12 +36,7 @@ export default function StepContainer({
          </View>
          {footer && (
             <View className="relative bottom-4">
-               <Button
-                  onPress={() => router.replace("/(auth)")}
-                  text="Already have an account"
-                  size="lg"
-                  variant="plain"
-               />
+               <Button onPress={() => router.replace("/(auth)")} text="Already have an account" size="lg" />
             </View>
          )}
       </View>

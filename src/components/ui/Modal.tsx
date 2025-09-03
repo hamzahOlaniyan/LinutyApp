@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 // import { useThemeStore } from "../context/themeStore";
-import AppText from "./AppText";
+import AppText from "./ui/AppText";
 import {
    Actionsheet,
    ActionsheetBackdrop,
@@ -38,15 +38,15 @@ export default function Modal({ height = 50, preventScroll, children, isOpen, on
          <ActionsheetBackdrop
             style={
                {
-                  //    backgroundColor: currentTheme === "light" ? colors.gray : colors.dark.backdrop,
+                  //    backgroundColor: currentTheme === "light" ? appColors.gray : appColors.dark.backdrop,
                }
             }
          />
          <ActionsheetContent
             style={
                {
-                  //    backgroundColor: currentTheme === "light" ? colors.light.background : colors.dark.background,
-                  //    borderColor: currentTheme === "light" ? colors.light.background : colors.dark.background,
+                  //    backgroundColor: currentTheme === "light" ? appColors.light.background : appColors.dark.background,
+                  //    borderColor: currentTheme === "light" ? appColors.light.background : appColors.dark.background,
                }
             }
             className="flex-1 w-full p-0 m-0"

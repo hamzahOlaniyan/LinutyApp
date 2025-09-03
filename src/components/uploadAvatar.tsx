@@ -1,6 +1,6 @@
 import { supabase } from "../lib/supabase";
 
-export async function uploadAvatar(userId: string, imageUri: string) {
+export async function UploadAvatar(userId: string, imageUri: string) {
    try {
       const arraybuffer = await fetch(imageUri).then((res) => res.arrayBuffer());
       const fileExt = imageUri.split(".").pop()?.toLowerCase() ?? "jpeg";
