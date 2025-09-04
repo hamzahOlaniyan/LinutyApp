@@ -1,4 +1,5 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 // import { useThemeStore } from "@/src/context/themeStore";
 import React from "react";
@@ -62,8 +63,9 @@ export default function AppText({
                fontSize,
                fontFamily,
                textTransform: cap,
+
                // color: currentTheme === "light" ? appColors.light.text : appColors.dark.text || color,
-               color: color,
+               color: appColors.text,
                textAlign: align,
             },
          ]}

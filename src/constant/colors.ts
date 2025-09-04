@@ -13,6 +13,7 @@ export const appColors = {
    inputInactive: "#aebbc8",
    inputActive: "#677179",
    buttonOutline: "#006891",
+   text: "#262626",
    // tabInactive: "#5b5b5b",
 
    gradients: {

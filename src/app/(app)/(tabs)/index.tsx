@@ -9,7 +9,14 @@ import { Animated, FlatList, NativeScrollEvent, NativeSyntheticEvent, SafeAreaVi
 
 export default function index() {
    const { signOut } = useAuthStore();
+
+   const [showComments, setShowComments] = useState(false);
+   const [postID, setPostID] = useState<string>("");
+   const [showKeyboard, setShowKeyboard] = useState(false);
+   const [replyToName, setReplyToName] = useState<string | null>(null);
+   const [replyToId, setReplyToId] = useState<string | null>(null);
    const [lastOffset, setLastOffset] = useState(0);
+
    const headerTranslateY = useRef(new Animated.Value(0)).current;
 
    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {

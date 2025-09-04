@@ -21,7 +21,7 @@ export default function Button({
    children,
    onPress,
    isLoading = false,
-   // className,
+   className,
    disabled,
    size = "md",
    variant,
@@ -29,6 +29,7 @@ export default function Button({
 }: ButtonProps) {
    return (
       <TouchableOpacity
+         className={`${className}`}
          style={{
             borderRadius: 100,
             justifyContent: "center",
@@ -58,7 +59,6 @@ export default function Button({
          }}
          onPress={onPress}
          disabled={disabled}
-         // activeOpacity={0.9}
       >
          {isLoading ? (
             <ActivityIndicator color={indicatorColor} size={"small"} />

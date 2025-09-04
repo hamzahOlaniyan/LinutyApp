@@ -4,6 +4,7 @@ import React from "react";
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { appColors } from "@/src/constant/colors";
 
 type ButtonProps = {
    text?: React.ReactNode;
