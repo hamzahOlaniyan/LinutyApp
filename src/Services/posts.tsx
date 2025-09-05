@@ -4,8 +4,7 @@ import { PostInput } from "../types/types";
 export const fetchPost = async () => {
    const { data, error } = await supabase
       .from("posts")
-      .select(`*, user:profiles(id, full_name, username, avatar_url),comments(*), postLikes(*)`)
-      .not("user_id", "is", null)
+      .select("*, author:profiles(id, firstName,lastName, username, avatarUrl)")
       .order("created_at", { ascending: false });
 
    if (error) throw error;

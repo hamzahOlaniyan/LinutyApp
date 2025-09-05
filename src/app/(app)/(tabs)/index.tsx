@@ -3,9 +3,11 @@ import PostCard from "@/src/components/post/PostCard";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
+import { fetchPost } from "@/src/Services/posts";
 import { useAuthStore } from "@/src/store/authStore";
+import { useQuery } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
-import { Animated, FlatList, NativeScrollEvent, NativeSyntheticEvent, SafeAreaView } from "react-native";
+import { Animated, FlatList, NativeScrollEvent, NativeSyntheticEvent, SafeAreaView, View } from "react-native";
 
 export default function index() {
    const { signOut } = useAuthStore();
@@ -16,6 +18,17 @@ export default function index() {
    const [replyToName, setReplyToName] = useState<string | null>(null);
    const [replyToId, setReplyToId] = useState<string | null>(null);
    const [lastOffset, setLastOffset] = useState(0);
+
+   const {
+      data: posts,
+      isLoading,
+      error,
+   } = useQuery({
+      queryKey: ["posts"],
+      queryFn: fetchPost,
+   });
+
+   // console.log(JSON.stringify(posts, null, 2));
 
    const headerTranslateY = useRef(new Animated.Value(0)).current;
 
@@ -47,21 +60,33 @@ export default function index() {
 
       setLastOffset(offsetY);
    };
-   const sample = Array(20)
-      .fill(0)
-      .map((_, i) => i);
 
    return (
       <ScreenWrapper paddingHorizontal={0}>
-         <SafeAreaView style={{ paddingHorizontal: wp(3), backgroundColor: appColors.extralightOlive }}>
+         <SafeAreaView style={{ paddingHorizontal: wp(0), backgroundColor: appColors.extralightOlive }}>
             <HomeHeaderMenu headerTranslateY={headerTranslateY} />
             <FlatList
-               data={sample}
-               renderItem={({ item }) => <PostCard />}
+               data={posts?.filter((p) => !p.parent_id)}
+               renderItem={({ item }) => (
+                  <PostCard
+                     post={item}
+                     showMoreIcon
+                     count={item.comments?.filter((c: any) => c.parentId === null).length ?? 0}
+                     showComments={showComments}
+                     setShowComments={setShowComments}
+                     setPostID={setPostID}
+                  />
+               )}
                showsVerticalScrollIndicator={false}
                onScroll={handleScroll}
                scrollEventThrottle={4}
-               contentContainerStyle={{ paddingTop: 70 }}
+               contentContainerStyle={{
+                  paddingTop: 70,
+                  rowGap: 6,
+               }}
+               ListFooterComponent={
+                  <View style={{ marginVertical: posts?.length === 0 ? 200 : 30 }}>{/* <Loading /> */}</View>
+               }
             />
          </SafeAreaView>
       </ScreenWrapper>
