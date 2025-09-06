@@ -13,8 +13,11 @@ import { appColors } from "@/src/constant/colors";
 import { useAuthStore } from "@/src/store/authStore";
 import { Image } from "expo-image";
 import AppText from "../ui/AppText";
+import BottomSheet from "../ui/BottomSheet";
+import Comments from "./Comments";
 import PostAction from "./PostAction";
 import PostHeader from "./PostHeader";
+import PostInfo from "./PostInfo";
 
 // import PostInfo from "./PostInfo";
 
@@ -23,15 +26,14 @@ export default function Post({
    showMoreIcon = false,
    isPostDetails = false,
    count,
-   setShowComments,
+   comments,
    setPostID,
 }: {
    post: any;
    showMoreIcon?: boolean;
    isPostDetails?: boolean;
    count?: number;
-   setShowComments?: any;
-   showComments?: boolean;
+   comments: any;
    setPostID?: any;
 }) {
    const { profile } = useAuthStore();
@@ -40,15 +42,19 @@ export default function Post({
    const [likes, setPostLikes] = useState<any[]>([]);
    const [modalVisible, setModalVisible] = useState(false);
 
+   const [showComments, setShowComments] = useState(false);
+
    const queryClient = useQueryClient();
 
    const router = useRouter();
 
    const fullName = post.author.firstName + post.author.lastName;
    const isComment = post.parent_id !== null;
-   const isUserOwner = profile?.id === post.user_id;
+   const isUserOwner = profile?.id === post?.author?.id;
 
    // console.log("post", JSON.stringify(post, null, 2));
+
+   // console.log(JSON.stringify(post, null, 2));
 
    const deletePostMutation = useMutation({
       mutationFn: (postId: string) => deletePost(postId),
@@ -101,11 +107,7 @@ export default function Post({
 
    const likeMutation = useMutation({
       mutationFn: async () => {
-         let data = {
-            userId: post.user_id,
-            postId: post?.id,
-         };
-         return createPostLike(data);
+         return createPostLike({ userId: post?.author?.id, postId: post?.id });
       },
       onSuccess: (data) => {
          if (data) {
@@ -163,60 +165,36 @@ export default function Post({
                      if (liked) removeLikeMutation.mutate();
                      else likeMutation.mutate();
                   }}
+                  liked={liked}
+                  likes={likes.length || null}
+                  showComment={() => {
+                     if (!showMoreIcon) return null;
+                     setPostID(post?.id), setShowComments(true);
+                  }}
+                  commentCount={count || null}
                />
-               {/* ACTIONS */}
-               {/* <View className="flex-row justify-between">
-                  <View className="flex-row flex-1 items-center gap-3">
-                     <Pressable
-                        className="flex-row justify-center items-center gap-2"
-                        // onPress={() => {
-                        //    if (liked) removeLikeMutation.mutate();
-                        //    else likeMutation.mutate();
-                        // }}
-                     >
-                        {post.images.length > 0 ? (
-                           <Feather name="thumbs-up" size={20} />
-                        ) : (
-                           <Feather
-                              name="thumbs-up"
-                              size={20}
-                              // color={`${
-                              //    liked ? "red" : currentTheme === "light" ? colors.light.text : colors.dark.text
-                              // }`}
-                           />
-                        )}
-
-                        <AppText weight="semi" size="lg">
-                           {likes?.length || null}
-                        </AppText>
-                     </Pressable>
-                     <Pressable
-                        onPress={() => {
-                           if (!showMoreIcon) return null;
-                           setPostID(post?.id), setShowComments(true);
-                        }}
-                        className="flex-row items-center relative top-[3px] gap-2"
-                     >
-                        {post.images.length > 0 && <FontAwesome6 name="comment-alt" size={17} color={appColors.text} />}
-                        <AppText
-                           weight="semi"
-                           size="lg"
-                           // textColor={post.images.length > 0 ? "white" : "#262626"}
-                           className="relative -top-[2.5px]"
-                        >
-                           {count || null}
-                        </AppText>
-                     </Pressable>
-                  </View>
-               </View> */}
             </View>
          </View>
-         {/* <PostInfo
-            isVisible={modalVisible}
-            isUserOwner={isUserOwner}
-            handleDelete={handleDelete}
+         <BottomSheet
+            isOpen={showComments}
+            onClose={() => setShowComments(false)}
+            heading={`${count} Comments`}
+            children={<Comments data={comments} />}
+         />
+         <BottomSheet
+            isOpen={modalVisible}
             onClose={() => setModalVisible(false)}
-         /> */}
+            heading={`Info`}
+            height={30}
+            children={
+               <PostInfo
+                  isVisible={modalVisible}
+                  isUserOwner={isUserOwner}
+                  handleDelete={handleDelete}
+                  onClose={() => setModalVisible(false)}
+               />
+            }
+         />
       </>
    );
 }

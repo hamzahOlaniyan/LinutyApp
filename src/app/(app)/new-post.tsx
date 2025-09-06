@@ -1,5 +1,5 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import { ImageIcon } from "@/assets/icons/image";
+import { ImageIcon } from "@/assets/icons/ImageIcon";
 import Avatar from "@/src/components/Avatar";
 import Imagepicker from "@/src/components/Imagepicker";
 import AppText from "@/src/components/ui/AppText";

@@ -76,9 +76,9 @@ export default function Select({
                style={{
                   height: hp(7),
                   padding: 10,
-                  borderWidth: 1,
-                  marginBottom: 3,
-                  borderColor: isFocused ? appColors.inputActive : error ? appColors.error : appColors.placeholder,
+                  borderWidth: 0.9,
+                  borderColor: isFocused ? appColors.inputActive : error ? appColors.error : appColors.inputInactive,
+                  borderRadius: 15,
                }}
                className="w-full flex-row justify-between items-center rounded-2xl"
             >
@@ -87,7 +87,7 @@ export default function Select({
                      {selected}
                   </AppText>
                ) : (
-                  <AppText weight="med" size="md" cap="capitalize" color={appColors.placeholder}>
+                  <AppText weight="med" size="lg" cap="capitalize" color={appColors.placeholder}>
                      {placeholder}
                   </AppText>
                )}

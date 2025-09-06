@@ -1,17 +1,17 @@
 import { supabase } from "../lib/supabase";
-import { PostInput } from "../types/types";
+// import { PostInput } from "../types/types";
 
 export const fetchPost = async () => {
    const { data, error } = await supabase
       .from("posts")
-      .select("*, author:profiles(id, firstName,lastName, username, avatarUrl)")
+      .select("*, author:profiles(id, firstName,lastName, username, avatarUrl),comments(*), postLikes(*)")
       .order("created_at", { ascending: false });
 
    if (error) throw error;
    return data;
 };
 
-export const createPost = async (newPost: PostInput) => {
+export const createPost = async (newPost: any) => {
    const { data, error } = await supabase.from("posts").insert(newPost).select("*").throwOnError();
    return data;
 };
@@ -19,17 +19,17 @@ export const createPost = async (newPost: PostInput) => {
 export const getPostById = async (id: string) => {
    const { data, error } = await supabase
       .from("posts")
-      .select(
-         `*,user:profiles(id, full_name, username, avatar_url),comments(
-            id,
-            content,
-            parentId,
-            created_at,
-            user:profiles(id, full_name, username, avatar_url)
-         ),
-         postLikes(*)
-         `
-      )
+      .select("*, comments(*, author:profiles(id,firstName,lastName, username, avatarUrl))")
+      // "*, comments(author:profiles(id,fullName))"
+      // `*,author:profiles(id, firstName,lastName, username, avatarUrl),comments(
+      //    id,
+      //    content,
+      //    parentId,
+      //    created_at,
+      //    user:profiles(id, full_name, username, avatar_url)
+      // ),
+      // postLikes(*)
+      // `
       .eq("id", id)
       .order("created_at", { ascending: false })
       .single()

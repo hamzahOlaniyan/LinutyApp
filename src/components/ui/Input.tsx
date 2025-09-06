@@ -44,7 +44,7 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
             >
                {icon && <View className="relative top-[1px]">{icon}</View>}
                <TextInput
-                  style={{ fontSize: hp(2), fontFamily: TiktokFont.TiktokMedium }}
+                  style={{ fontSize: hp(1.9), fontFamily: TiktokFont.TiktokMedium }}
                   className="flex-1  p-0 m-0 h-full"
                   placeholderTextColor={`${appColors.placeholder}`}
                   onFocus={() => setIsFocused(true)}

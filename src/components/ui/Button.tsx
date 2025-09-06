@@ -12,7 +12,7 @@ type ButtonProps = {
    className?: string;
    disabled?: boolean;
    size?: "lg" | "md" | "sm" | "xs";
-   variant?: "outline" | "plain";
+   variant?: "outline" | "plain" | "secondary";
    indicatorColor?: string;
 };
 
@@ -33,7 +33,8 @@ export default function Button({
          style={{
             borderRadius: 100,
             justifyContent: "center",
-            paddingHorizontal: size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 8 : hp(5),
+            paddingHorizontal:
+               size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 10 : hp(5),
             shadowColor: "#000",
             shadowOffset: {
                width: 0,
@@ -45,7 +46,13 @@ export default function Button({
             borderWidth: variant === "outline" ? 1.2 : 0,
             borderColor: appColors.buttonOutline,
             backgroundColor:
-               variant === "outline" ? "transparent" : variant === "plain" ? "transparent" : appColors.lightOlive,
+               variant === "outline"
+                  ? "transparent"
+                  : variant === "plain"
+                  ? "transparent"
+                  : variant === "secondary"
+                  ? appColors.searchBar
+                  : appColors.lightOlive,
             height:
                size === "lg"
                   ? hp(5.6)
@@ -71,7 +78,7 @@ export default function Button({
                         fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.6) : size === "xs" ? hp(1.3) : hp(1.6),
                         color: appColors.buttonOutline,
                         textAlign: "center",
-                        fontFamily: TiktokFont.TiktokRegular,
+                        fontFamily: TiktokFont.TiktokMedium,
                      }}
                   >
                      {text}
