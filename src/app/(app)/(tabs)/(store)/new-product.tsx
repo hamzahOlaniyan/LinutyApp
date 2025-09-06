@@ -96,7 +96,12 @@ export default function NewProduct() {
 
    return (
       <ScrollView className="relative" style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }}>
-         <NewListingHeader image={profile?.avatarUrl} user={profile?.firstName + profile?.lastName} />
+         <View className="flex-row items-center">
+            <View className="flex-1">
+               <NewListingHeader image={profile?.avatarUrl} user={profile?.firstName + profile?.lastName} />
+            </View>
+            <Button size="xs" text="Publish" onPress={() => mutate()} isLoading={isPending} />
+         </View>
          <ProductImagePicker onPickLocal={(uri: []) => setProductImage(uri)} />
          <View style={{ paddingBottom: 200, paddingTop: 30 }} className="gap-4 flex-1">
             <AppText weight="semi">Product Information</AppText>
@@ -130,9 +135,7 @@ export default function NewProduct() {
                modalTitle="Availability"
             />
             <InputArea placeholder="Description" value={description} onChangeText={setDescription} inputMode="text" />
-            <View className="my-12">
-               <Button text="Publish" onPress={() => mutate()} isLoading={isPending} />
-            </View>
+
             <View className="">
                <AppText>
                   Store items are public and can be seen by anyone on Linuty. Store listing must not decriminate.
