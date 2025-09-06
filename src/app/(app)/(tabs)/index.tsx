@@ -3,13 +3,41 @@ import PostCard from "@/src/components/post/PostCard";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
-import { useAuthStore } from "@/src/store/authStore";
+import { fetchPost, getPostById } from "@/src/Services/posts";
+import { useQuery } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
-import { Animated, FlatList, NativeScrollEvent, NativeSyntheticEvent, SafeAreaView } from "react-native";
+
+import { Animated, FlatList, NativeScrollEvent, NativeSyntheticEvent, SafeAreaView, View } from "react-native";
 
 export default function index() {
-   const { signOut } = useAuthStore();
+   // const [showComments, setShowComments] = useState(false);
+   const [postID, setPostID] = useState<string>("");
+   const [showKeyboard, setShowKeyboard] = useState(false);
+   const [replyToName, setReplyToName] = useState<string | null>(null);
+   const [replyToId, setReplyToId] = useState<string | null>(null);
    const [lastOffset, setLastOffset] = useState(0);
+
+   const {
+      data: POSTS,
+      isLoading,
+      error,
+   } = useQuery({
+      queryKey: ["posts"],
+      queryFn: fetchPost,
+   });
+
+   const {
+      data: COMMENTS,
+      isLoading: loading,
+      error: postDetailError,
+   } = useQuery({
+      queryKey: ["posts", postID],
+      queryFn: () => getPostById(postID),
+   });
+
+   // console.log("comments", JSON.stringify(COMMENTS, null, 2));
+   // console.log(showComments, postID);
+
    const headerTranslateY = useRef(new Animated.Value(0)).current;
 
    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -40,21 +68,32 @@ export default function index() {
 
       setLastOffset(offsetY);
    };
-   const sample = Array(20)
-      .fill(0)
-      .map((_, i) => i);
 
    return (
       <ScreenWrapper paddingHorizontal={0}>
-         <SafeAreaView style={{ paddingHorizontal: wp(3), backgroundColor: appColors.extralightOlive }}>
+         <SafeAreaView style={{ paddingHorizontal: wp(0), backgroundColor: appColors.extralightOlive }}>
             <HomeHeaderMenu headerTranslateY={headerTranslateY} />
             <FlatList
-               data={sample}
-               renderItem={({ item }) => <PostCard />}
+               data={POSTS?.filter((p) => !p.parent_id)}
+               renderItem={({ item }) => (
+                  <PostCard
+                     post={item}
+                     showMoreIcon
+                     count={item.comments?.filter((c: any) => c.parentId === null).length ?? 0}
+                     setPostID={setPostID}
+                     comments={COMMENTS}
+                  />
+               )}
                showsVerticalScrollIndicator={false}
                onScroll={handleScroll}
                scrollEventThrottle={4}
-               contentContainerStyle={{ paddingTop: 70 }}
+               contentContainerStyle={{
+                  paddingTop: 60,
+                  rowGap: 6,
+               }}
+               ListFooterComponent={
+                  <View style={{ marginVertical: POSTS?.length === 0 ? 200 : 30 }}>{/* <Loading /> */}</View>
+               }
             />
          </SafeAreaView>
       </ScreenWrapper>
