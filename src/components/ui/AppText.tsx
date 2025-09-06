@@ -36,7 +36,7 @@ export default function AppText({
       xxxl: hp(2.8),
       xxl: hp(2.6),
       xl: hp(2.3),
-      lg: hp(2),
+      lg: hp(1.9),
       md: hp(1.7),
       sm: hp(1.5),
       xs: hp(1.2),
@@ -62,8 +62,8 @@ export default function AppText({
                fontSize,
                fontFamily,
                textTransform: cap,
-               // color: currentTheme === "light" ? appColors.light.text : appColors.dark.text || color,
                color: color,
+               // color: appColors.text,
                textAlign: align,
             },
          ]}

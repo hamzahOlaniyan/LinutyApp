@@ -1,5 +1,6 @@
 // import { useThemeStore } from "@/src/context/themeStore";
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { Feather, Fontisto } from "@expo/vector-icons";
 import React from "react";
@@ -15,8 +16,8 @@ export default function Searchbar({ value, onChangeText, onPress, ...rest }: Sea
    return (
       <View
          style={{
-            height: hp(4.7),
-            backgroundColor: "#f1f1f1",
+            height: hp(4.5),
+            backgroundColor: appColors.extralightOlive,
          }}
          className={`w-full flex-row bg-offwightGreen items-center justify-center px-4 rounded-full gap-3`}
       >
@@ -27,7 +28,7 @@ export default function Searchbar({ value, onChangeText, onPress, ...rest }: Sea
             style={{ fontSize: hp(2), fontFamily: TiktokFont.TiktokRegular }}
             className="flex-1 font-SansReg"
             placeholder="search item"
-            placeholderTextColor="#a3a3a3"
+            placeholderTextColor={appColors.placeholder}
             autoCapitalize="none"
             {...rest}
          />

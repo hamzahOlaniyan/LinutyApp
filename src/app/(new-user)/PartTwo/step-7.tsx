@@ -2,7 +2,7 @@ import AvatarPicker from "@/src/components/AvatarPicker";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import GradientButton from "@/src/components/ui/GradientButton";
-import { UploadAvatar } from "@/src/components/uploadAvatar";
+import { UploadAvatar } from "@/src/components/UploadAvatar";
 import { supabase } from "@/src/lib/supabase";
 import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";

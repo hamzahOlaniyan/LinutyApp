@@ -3,16 +3,23 @@ import { Stack } from "expo-router";
 
 export default function StoreLayout() {
    return (
-      <Stack>
+      <Stack
+         screenOptions={{
+            headerShadowVisible: false,
+            headerTitleStyle: { fontSize: 20, fontFamily: TiktokFont.TiktokSemiBold },
+            headerTitleAlign: "left",
+         }}
+      >
          <Stack.Screen
             name="index"
             options={{
                headerShown: false,
-               title: "comunity page",
-               headerTitleAlign: "left",
-               headerShadowVisible: false,
-               headerTitleStyle: { fontSize: 20, fontFamily: TiktokFont.TiktokSemiBold },
-               animation: "slide_from_bottom",
+            }}
+         />
+         <Stack.Screen
+            name="new-product"
+            options={{
+               title: "New listing",
             }}
          />
       </Stack>

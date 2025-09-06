@@ -1,5 +1,6 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -79,12 +80,16 @@ export default function RootLayout() {
       return () => subscription.remove();
    }, []);
 
+   const queryClient = new QueryClient();
+
    return (
       <SafeAreaProvider>
-         <GluestackUIProvider>
-            <StatusBar style="auto" />
-            <Stack screenOptions={{ headerShown: false }} />
-         </GluestackUIProvider>
+         <QueryClientProvider client={queryClient}>
+            <GluestackUIProvider>
+               <StatusBar style="auto" />
+               <Stack screenOptions={{ headerShown: false }} />
+            </GluestackUIProvider>
+         </QueryClientProvider>
       </SafeAreaProvider>
    );
 }
