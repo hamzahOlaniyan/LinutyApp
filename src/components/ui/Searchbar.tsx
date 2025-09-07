@@ -8,9 +8,10 @@ import { TextInput, TextInputProps, View } from "react-native";
 
 type SearchProps = TextInputProps & {
    onPress?: () => void;
+   placeholder?: string;
 };
 
-export default function Searchbar({ value, onChangeText, onPress, ...rest }: SearchProps) {
+export default function Searchbar({ value, onChangeText, onPress, placeholder, ...rest }: SearchProps) {
    // const { currentTheme } = useThemeStore();
 
    return (
@@ -27,7 +28,7 @@ export default function Searchbar({ value, onChangeText, onPress, ...rest }: Sea
             onChangeText={onChangeText}
             style={{ fontSize: hp(2), fontFamily: TiktokFont.TiktokRegular }}
             className="flex-1 font-SansReg"
-            placeholder="search item"
+            placeholder={placeholder}
             placeholderTextColor={appColors.placeholder}
             autoCapitalize="none"
             {...rest}

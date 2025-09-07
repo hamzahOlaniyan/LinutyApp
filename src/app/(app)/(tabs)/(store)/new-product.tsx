@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import { Alert, ScrollView, View } from "react-native";
 
 const ProductCondition = ["new", "used - like", "used - good", "used - fair"];
-const ProductCategory = ["electrionic", "furniture", "vehicle", "other"];
+export const ProductCategory = ["electrionic", "furniture", "vehicle", "other"];
 const available = ["immediatly", "in a week", "in a month ", "other"];
 
 export default function NewProduct() {
