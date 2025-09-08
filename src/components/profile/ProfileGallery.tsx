@@ -9,9 +9,7 @@ export default function ProfileGallery() {
          data={gallery}
          keyExtractor={(_, index) => index.toString()}
          numColumns={3}
-         renderItem={({ index }) => (
-            <View className="aspect-square flex-1 border border-neutral-200" key={index} />
-         )}
+         renderItem={({ index }) => <View className="w-full h-40 flex-1 bg-red-400" key={index} />}
       />
    );
 }

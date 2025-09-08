@@ -1,29 +1,32 @@
-import Button from "@/src/components/ui/Button";
-import { useAuthStore } from "@/src/store/authStore";
+import ScreenWrapper from "@/src/components/ScreenWrapper";
+import FriendList from "@/src/components/search/FriendList";
+import FriendSearch from "@/src/components/search/FriendSearch";
+import ScreenHeader from "@/src/components/ui/ScreenHeader";
+import Tab from "@/src/components/ui/Tab";
+import { wp } from "@/src/constant/common";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 export default function Search() {
-   const { signOut } = useAuthStore();
    return (
-      <View
-         style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "white",
-         }}
-      >
-         <Text
-            style={{
-               fontSize: 50,
-               color: "black",
-               textAlign: "center",
-            }}
-         >
-            Search Friends
-         </Text>
-         <Button text="sign out" onPress={() => signOut()} />
-      </View>
+      <ScreenWrapper paddingHorizontal={0}>
+         <View className="flex-1">
+            <View style={{ paddingHorizontal: wp(4) }}>
+               <ScreenHeader headerTitle="Your friends" />
+            </View>
+            <Tab
+               routes={[
+                  { key: "Search", title: "Search friends" },
+                  { key: "SearchFriend", title: "Search friends" },
+                  { key: "info", title: "Your friends" },
+               ]}
+               scenes={{
+                  Search: () => <FriendSearch />,
+                  SearchFriend: () => <FriendList />,
+                  // info: () => <ProfileInfo />,
+               }}
+            />
+         </View>
+      </ScreenWrapper>
    );
 }

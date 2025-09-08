@@ -14,12 +14,11 @@ export default function ProfilePosts({ item }: any) {
             <FlatList
                data={item || []}
                renderItem={({ item }) => <PostCard post={item} comments={undefined} />}
+               scrollEnabled
                contentContainerStyle={{
                   rowGap: 10,
-                  flex: 1,
                   paddingHorizontal: 10,
-                  //   backgroundColor:
-                  //   currentTheme === "light" ? colors.light.foreground : colors.dark.foreground,
+                  paddingBottom: 50,
                }}
             />
          )}

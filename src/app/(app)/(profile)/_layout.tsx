@@ -1,5 +1,7 @@
+import { TiktokFont } from "@/assets/fonts/FontFamily";
 import BackButton from "@/src/components/ui/BackButton";
-import { Stack } from "expo-router";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { Link, Stack } from "expo-router";
 import React from "react";
 
 export default function ProfileLayout() {
@@ -9,6 +11,22 @@ export default function ProfileLayout() {
             name="index"
             options={{
                title: "Profile",
+               headerShadowVisible: false,
+               headerRight: () => (
+                  <Link href="/(app)/(profile)/(profile-menu)">
+                     <SimpleLineIcons name="menu" size={24} />
+                  </Link>
+               ),
+               headerTitleStyle: {
+                  fontSize: 20,
+                  fontFamily: TiktokFont.TiktokSemiBold,
+               },
+            }}
+         />
+         <Stack.Screen name="edit" options={{ title: "Edit Profile" }} />
+         <Stack.Screen
+            name="(profile-menu)"
+            options={{
                headerShown: false,
                headerLeft: () => <BackButton />,
             }}
