@@ -20,8 +20,6 @@ export default function FriendSearch() {
       queryFn: () => getProfiles(profile?.id),
    });
 
-   console.log("PROFILES", JSON.stringify(PROFILES, null, 2));
-
    return (
       <View style={{ paddingHorizontal: wp(3) }} className="flex-1">
          <View className="mt-4">

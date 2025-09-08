@@ -17,12 +17,12 @@ export default function Search() {
             <Tab
                routes={[
                   { key: "Search", title: "Search friends" },
-                  { key: "SearchFriend", title: "Search friends" },
-                  { key: "info", title: "Your friends" },
+                  { key: "Yourfriends", title: "Search friends" },
+                  { key: "FriendRequest", title: "Friend request" },
                ]}
                scenes={{
                   Search: () => <FriendSearch />,
-                  SearchFriend: () => <FriendList />,
+                  Yourfriends: () => <FriendList />,
                   // info: () => <ProfileInfo />,
                }}
             />
