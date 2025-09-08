@@ -93,7 +93,7 @@ export default function index() {
                <GradientButton text="Sign in" onPress={handleSignIn} isLoading={loading} size="lg" />
             </View>
             <View className="w-full absolute bottom-5 gap-4">
-               <Button text="Create new account" onPress={() => router.push("/(new-user")} size="lg" />
+               <Button text="Create new account" onPress={() => router.push("/(new-user)")} size="lg" />
                {/* <Button text="skip" onPress={() => router.push("/(new-user)/PartTwo/step-8")} size="lg" /> */}
                <View className="w-2/3 flex-row items-center justify-center flex-wrap self-center">
                   <AppText size="xs" align="center">

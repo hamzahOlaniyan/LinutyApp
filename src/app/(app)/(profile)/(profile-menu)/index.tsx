@@ -1,18 +1,19 @@
 // import LogoutButton from "@/src/components/LogoutButton";
-import LogoutButton from "@/src/components/profile/LogoutButton";
 import AppText from "@/src/components/ui/AppText";
 import { appColors } from "@/src/constant/colors";
 import { hp, wp } from "@/src/constant/common";
+import { useAuthStore } from "@/src/store/authStore";
 // import { useThemeStore } from "@/src/context/themeStore";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 
 const mockArray = Array.from({ length: 10 }, (_, i) => `Time management ${i + 1}`);
 
 export default function ProfileMenu() {
    // const { currentTheme } = useThemeStore();
+   const { signOut } = useAuthStore();
 
    return (
       <View
@@ -47,7 +48,11 @@ export default function ProfileMenu() {
                </Link>
             )}
             contentContainerStyle={{ rowGap: 20 }}
-            ListFooterComponent={<LogoutButton />}
+            ListFooterComponent={
+               <TouchableOpacity onPress={() => signOut()}>
+                  <AppText>logout</AppText>
+               </TouchableOpacity>
+            }
          />
       </View>
    );
