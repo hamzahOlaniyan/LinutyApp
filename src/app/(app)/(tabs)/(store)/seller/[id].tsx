@@ -1,3 +1,4 @@
+import { Store } from "@/assets/icons/store";
 import Avatar from "@/src/components/Avatar";
 import StoreCard from "@/src/components/store/StoreCard";
 import AppText from "@/src/components/ui/AppText";
@@ -32,11 +33,8 @@ export default function seller() {
       queryFn: () => getProfileById(id),
    });
 
-   console.log("PRODUCTS", JSON.stringify(PRODUCTS, null, 2));
-   console.log("SELLER", JSON.stringify(SELLER, null, 2));
-
-   // if (SELLER) {
-   //    const user = SELLER[0];
+   // console.log("PRODUCTS", JSON.stringify(PRODUCTS, null, 2));
+   // console.log("SELLER", JSON.stringify(SELLER, null, 2));
 
    return (
       <View style={{ backgroundColor: appColors.white }} className="flex-1">
@@ -45,33 +43,45 @@ export default function seller() {
             renderItem={({ item }) => <StoreCard item={item} />}
             numColumns={2}
             scrollToOverflowEnabled
-            columnWrapperStyle={{ gap: 10, marginVertical: 8 }}
-            contentContainerStyle={{ marginTop: 10, flex: 1, paddingHorizontal: wp(3) }}
+            columnWrapperStyle={{ gap: 10 }}
+            contentContainerStyle={{ flex: 1, paddingHorizontal: wp(3) }}
             ListHeaderComponent={
-               <View>
-                  <View style={{}}>
-                     <View className="flex-row items-start gap-3 justify-between my-4">
-                        <Avatar path={SELLER?.avatarUrl} />
-                        <View className="w-full flex-1 gap-2">
-                           <AppText weight="semi" cap="capitalize">
-                              {SELLER?.firstName}
+               <View style={{}}>
+                  <View className="flex-row items-start gap-3 justify-between bg-red-500">
+                     <Avatar path={SELLER?.avatarUrl} size={60} />
+                     <View className="w-full flex-1">
+                        <AppText weight="semi" size="xxl" cap="capitalize">
+                           {SELLER?.firstName}
+                           {SELLER?.lastName}
+                        </AppText>
+                        <AppText weight="semi" color={appColors.grey}>
+                           @{SELLER?.username}
+                        </AppText>
+                        <View className="flex-row gap-1 items-center">
+                           <AppText color={appColors.grey} weight="med">
+                              {(PRODUCTS?.length ?? 0) - 1} + listings
                            </AppText>
-                           <View className="flex-row gap-1">
-                              <AppText weight="med">10+</AppText>
-                              <AppText weight="med">listings</AppText>
-                           </View>
+                           <Store color={appColors.grey} size={20} />
                         </View>
                      </View>
-                     <View className="gap-6 pb-3 my-3">
-                        <Searchbar placeholder="search item" />
-                        <AppText weight="bold" cap="capitalize">
-                           {SELLER?.firstName}'s listing
+                  </View>
+
+                  <View className="gap-6 pb-3 my-3 bg-slate-500">
+                     <Searchbar placeholder="search item" />
+                     <View className="flex-row justify-between items-end">
+                        <View className="flex-row -gap-2">
+                           <AppText size="lg" weight="semi" cap="capitalize">
+                              {SELLER?.firstName}
+                           </AppText>
+                           <AppText size="lg" weight="semi">
+                              's listing
+                           </AppText>
+                        </View>
+                        <AppText size="lg" weight="semi">
+                           Latest Items
                         </AppText>
                      </View>
                   </View>
-                  <AppText size="lg" weight="semi">
-                     Latest Items
-                  </AppText>
                </View>
             }
          />

@@ -13,7 +13,7 @@ export const getProfiles = async (id: any) => {
 export const getProfileById = async (id: string) => {
    const { data } = await supabase
       .from("profiles")
-      .select("username, firstName,lastName, avatarUrl")
+      .select("id, username, firstName,lastName, avatarUrl")
       .eq("id", id)
       .single()
       .throwOnError();

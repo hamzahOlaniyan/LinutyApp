@@ -1,3 +1,4 @@
+import BackButton from "@/src/components/ui/BackButton";
 import { useAuthStore } from "@/src/store/authStore";
 import { Stack, useRouter } from "expo-router";
 import { useEffect } from "react";
@@ -32,8 +33,11 @@ export default function AppLayout() {
          <Stack.Screen
             name="(profile)"
             options={{
-               title: "profile",
-               animation: "slide_from_right",
+               title: "Profile",
+               headerShadowVisible: false,
+               headerLeft: () => <BackButton />,
+
+               // animation: "slide_from_right",
             }}
          />
          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -43,7 +47,8 @@ export default function AppLayout() {
                title: "New post",
                headerTitleAlign: "left",
                headerShadowVisible: false,
-               animation: "slide_from_bottom",
+               animation: "none",
+               // animation: "slide_from_bottom",
             }}
          />
          <Stack.Screen
@@ -52,6 +57,7 @@ export default function AppLayout() {
                title: "Notification",
                headerTitleAlign: "left",
                headerShadowVisible: false,
+               animation: "none",
             }}
          />
       </Stack>

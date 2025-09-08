@@ -40,17 +40,19 @@ export default function ProductDetail({ item }: { item: any }) {
                   <AppText weight="semi">Description</AppText>
                   <AppText>{item?.description}</AppText>
                </View>
-               <View className="flex-row justify-between">
-                  <AppText weight="semi">Condition</AppText>
-                  <AppText size="lg">{item?.condition}</AppText>
-               </View>
-               <View className="flex-row justify-between">
-                  <AppText weight="semi">Availability</AppText>
-                  <AppText size="lg">{item?.availability}</AppText>
-               </View>
-               <View className="flex-row justify-between">
-                  <AppText weight="semi">Location</AppText>
-                  <AppText size="lg">{item?.location}</AppText>
+               <View className="my-6">
+                  <View className="flex-row justify-between">
+                     <AppText weight="semi">Condition</AppText>
+                     <AppText size="lg">{item?.condition}</AppText>
+                  </View>
+                  <View className="flex-row justify-between">
+                     <AppText weight="semi">Availability</AppText>
+                     <AppText size="lg">{item?.availability}</AppText>
+                  </View>
+                  <View className="flex-row justify-between">
+                     <AppText weight="semi">Location</AppText>
+                     <AppText size="lg">{item?.location}</AppText>
+                  </View>
                </View>
             </View>
             <View className="flex-row items-start justify-between">
@@ -69,7 +71,7 @@ export default function ProductDetail({ item }: { item: any }) {
                      </View>
                   </View>
                </View>
-               <Link href={`/(app)/(tabs)/(store)/seller/${item?.id}`} asChild>
+               <Link href={`/(app)/(tabs)/(store)/seller/${item?.profile_id}`} asChild>
                   <Pressable>
                      <AppText weight="med">Sellers store {">"}</AppText>
                   </Pressable>

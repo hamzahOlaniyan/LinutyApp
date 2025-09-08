@@ -140,7 +140,7 @@ export default function HomeHeaderMenu({ headerTranslateY }: { headerTranslateY?
             <Pressable onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
                <Notification size={24} />
             </Pressable>
-            <Pressable onPress={() => router.push("/")}>
+            <Pressable onPress={() => router.push("/(app)/(profile)")}>
                <Image source={{ uri: profile?.avatarUrl }} style={{ width: 40, height: 40, borderRadius: 100 }} />
             </Pressable>
          </View>

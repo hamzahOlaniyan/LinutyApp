@@ -27,12 +27,11 @@ export const getStoreProductById = async (id: string) => {
    return data;
 };
 
-export const getStoreProductByProfileId = async (id: string) => {
+export const getStoreProductByProfileId = async (profileId: string) => {
    const { data, error } = await supabase
       .from("store")
-      .select("* , profiles(firstName,lastName, avatarUrl, username)")
-      .not("id", "is", null)
-      .eq("profileId", id)
+      .select("*, profiles(firstName,lastName, avatarUrl, username)")
+      .eq("profileId", profileId)
       .order("created_at", { ascending: false })
       .throwOnError();
    return data;
