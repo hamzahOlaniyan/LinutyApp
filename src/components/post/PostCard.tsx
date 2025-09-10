@@ -28,6 +28,7 @@ export default function Post({
    count,
    comments,
    setPostID,
+   loading,
 }: {
    post: any;
    showMoreIcon?: boolean;
@@ -35,6 +36,7 @@ export default function Post({
    count?: number;
    comments: any;
    setPostID?: any;
+   loading: boolean;
 }) {
    const { profile } = useAuthStore();
    // const { currentTheme } = useThemeStore();
@@ -179,7 +181,7 @@ export default function Post({
             isOpen={showComments}
             onClose={() => setShowComments(false)}
             heading={`${count} Comments`}
-            children={<Comments data={comments} />}
+            children={<Comments data={comments} loading={loading} />}
          />
          <BottomSheet
             isOpen={modalVisible}

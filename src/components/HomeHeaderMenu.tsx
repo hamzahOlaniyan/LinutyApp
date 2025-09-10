@@ -89,36 +89,29 @@ export default function HomeHeaderMenu({ headerTranslateY }: { headerTranslateY?
                width: "100%",
             },
          ]}
-         className="flex-row items-center justify-between py-2 bg-white"
+         className="flex-row items-center justify-between py-1 gap-10 bg-white"
       >
-         <View className="flex-row items-center justify-between gap-2 relative w-full">
-            <View className="flex-row items-center gap-4">
-               <View className="relative">
-                  <Menu />
-               </View>
+         <Image
+            source={require("@/assets/images/linuty.png")}
+            style={{
+               width: 80,
+               height: 30,
+            }}
+            contentFit="contain"
+         />
+         <View className="flex-row items-center justify-between w-full flex-1">
+            <View className="relative">
+               <Menu />
             </View>
-            <Image
-               source={require("@/assets/images/linuty.png")}
-               style={{
-                  width: 80,
-                  height: 30,
-                  position: "absolute",
-                  left: "50%",
-                  transform: [{ translateX: "-50%" }],
-               }}
-               contentFit="contain"
-            />
-            <View className="flex-row items-center gap-2">
-               <Pressable onPress={() => router.push("/(app)/new-post")}>
-                  <AddCircleIcon />
-               </Pressable>
-               <Pressable onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
-                  <Notification />
-               </Pressable>
-               <Pressable onPress={() => router.push("/(app)/(profile)")}>
-                  <Avatar path={profile?.avatarUrl} size={35} />
-               </Pressable>
-            </View>
+            <Pressable onPress={() => router.push("/(app)/new-post")}>
+               <AddCircleIcon />
+            </Pressable>
+            <Pressable onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
+               <Notification />
+            </Pressable>
+            <Pressable onPress={() => router.push("/(app)/(profile)")}>
+               <Avatar path={profile?.avatarUrl} size={40} />
+            </Pressable>
          </View>
       </Animated.View>
    );

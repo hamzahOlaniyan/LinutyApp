@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 // import { useThemeStore } from "../context/themeStore";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -57,12 +56,9 @@ export default function BottomSheet({
             <ActionsheetDragIndicatorWrapper className="my-4">
                <ActionsheetDragIndicator />
             </ActionsheetDragIndicatorWrapper>
-            <View className="mb-4">
-               <AppText weight="semi" cap="capitalize">
-                  {heading}
-               </AppText>
-            </View>
-
+            <AppText weight="semi" cap="capitalize">
+               {heading}
+            </AppText>
             {children}
          </ActionsheetContent>
       </Actionsheet>

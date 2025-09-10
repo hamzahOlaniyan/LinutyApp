@@ -50,11 +50,11 @@ export default function CommentCard({
    });
 
    return (
-      <View style={{ paddingHorizontal: wp(3) }} className="flex-row gap-5 justify-between items-start w-full">
+      <View style={{ paddingHorizontal: wp(4) }} className="flex-row gap-5 justify-between items-start w-full ">
          <View className="flex-row gap-2">
             <Avatar path={item?.author?.avatarUrl} size={35} />
             <View className="flex-1">
-               <View className="flex-row gap-1 items-center justify-between flex-1">
+               <View className="flex-row  gap-1 items-center justify-between flex-1">
                   <AppText weight="med" color={appColors.grey} cap="capitalize">
                      {item?.author?.firstName}
                      {item?.author?.lastName}
@@ -82,8 +82,10 @@ export default function CommentCard({
                   </View>
                   <View>
                      <Pressable className="flex-row gap-2 justify-center items-center">
-                        <Thumbsup size={20} />
-                        <AppText size="sm">0</AppText>
+                        <Thumbsup size={18} color={appColors.grey} />
+                        <AppText color={appColors.grey} size="sm">
+                           0
+                        </AppText>
                      </Pressable>
                   </View>
                </View>

@@ -44,7 +44,7 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                      className="flex-row justify-center items-center gap-2 p-3 px-4"
                   >
                      <View className="top-[1px]">
-                        <Thumbsup size={20} color={liked ? appColors.primary : ""} />
+                        <Thumbsup size={18} color={liked ? appColors.primary : ""} />
                      </View>
                      <AppText>Like</AppText>
                   </TouchableOpacity>
@@ -55,7 +55,7 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                      className="flex-row justify-center items-center gap-2 p-3 px-2"
                   >
                      <View className="top-[1px]">
-                        <Comment size={20} />
+                        <Comment size={18} />
                      </View>
                      <AppText className="relative">Comments</AppText>
                   </TouchableOpacity>
@@ -67,7 +67,7 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                   className="flex-row justify-center items-center gap-2 p-3 px-2"
                >
                   <View className="top-[1px]">
-                     <ShareIcon size={20} />
+                     <ShareIcon size={18} />
                   </View>
                   <AppText className="relative">Share</AppText>
                </TouchableOpacity>

@@ -19,22 +19,19 @@ export default function TabLayout() {
          screenOptions={{
             headerTitleAlign: "center",
             tabBarShowLabel: false,
-            tabBarLabelStyle: { margin: 0, padding: 0 },
             headerShadowVisible: false,
             tabBarStyle: {
-               paddingBottom: insets.bottom,
-               height: 50 + insets.bottom,
+               height: 35 + insets.bottom,
                position: "absolute",
                elevation: 0,
-               borderTopColor: "transparent",
-               borderTopWidth: 0,
+               borderTopColor: appColors.bordersLight,
+               borderTopWidth: 0.5,
                shadowOpacity: 0,
-               paddingVertical: 10,
-               backgroundColor: "white",
-               borderLeftWidth: 1,
+               backgroundColor: appColors.white,
+               // backgroundColor: "green",
             },
             tabBarItemStyle: {
-               paddingVertical: 5,
+               // paddingVertical: 1,
             },
          }}
       >

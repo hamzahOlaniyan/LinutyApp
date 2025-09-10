@@ -26,7 +26,7 @@ export default function FriendSearch() {
             <Searchbar value={searchText} onChangeText={setSearchText} onPress={() => setSearchText("")} />
          </View>
          <FlatList
-            data={PROFILES?.data.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))}
+            data={PROFILES?.data?.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))}
             renderItem={({ item }) => (
                <FriendsCard
                   id={item?.id}

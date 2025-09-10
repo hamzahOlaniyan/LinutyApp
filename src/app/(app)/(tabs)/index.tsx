@@ -28,7 +28,7 @@ export default function index() {
 
    const {
       data: COMMENTS,
-      isLoading: loading,
+      isLoading: commentsLoading,
       error: postDetailError,
    } = useQuery({
       queryKey: ["posts", postID],
@@ -86,13 +86,14 @@ export default function index() {
                      count={item.comments?.filter((c: any) => c.parentId === null).length ?? 0}
                      setPostID={setPostID}
                      comments={COMMENTS}
+                     loading={commentsLoading}
                   />
                )}
                showsVerticalScrollIndicator={false}
                onScroll={setScroll}
                scrollEventThrottle={4}
                contentContainerStyle={{
-                  paddingTop: 56,
+                  paddingTop: 45,
                   rowGap: 8,
                }}
                ListFooterComponent={

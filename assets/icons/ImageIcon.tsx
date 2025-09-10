@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-export const ImageIcon = ({ color = "#1f1f1f", size = 28, ...props }) => {
+export const ImageIcon = ({ color = "#1f1f1f", size = 24, ...props }) => {
    return (
       <Svg viewBox="0 -960 960 960" fill={color} width={size} height={size} {...props}>
          <Path

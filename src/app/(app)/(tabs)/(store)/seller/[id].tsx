@@ -47,7 +47,7 @@ export default function seller() {
             contentContainerStyle={{ flex: 1, paddingHorizontal: wp(3) }}
             ListHeaderComponent={
                <View style={{}}>
-                  <View className="flex-row items-start gap-3 justify-between bg-red-500">
+                  <View className="flex-row items-start gap-3 justify-between">
                      <Avatar path={SELLER?.avatarUrl} size={60} />
                      <View className="w-full flex-1">
                         <AppText weight="semi" size="xxl" cap="capitalize">
@@ -66,7 +66,7 @@ export default function seller() {
                      </View>
                   </View>
 
-                  <View className="gap-6 pb-3 my-3 bg-slate-500">
+                  <View className="gap-6 pb-3 my-3">
                      <Searchbar placeholder="search item" />
                      <View className="flex-row justify-between items-end">
                         <View className="flex-row -gap-2">

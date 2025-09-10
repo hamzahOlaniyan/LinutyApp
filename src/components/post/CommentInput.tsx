@@ -89,61 +89,64 @@ export default function CommentInput({
 
    return (
       <KeyboardAvoidingView
-         style={{ zIndex: 999, width: "100%" }}
-         behavior="padding"
-         keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 120}
+         style={{ flex: 1 }}
+         behavior={Platform.OS === "ios" ? "padding" : undefined}
+         // keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 120}
+         keyboardVerticalOffset={200}
       >
-         {replyToName && (
+         <View style={{ zIndex: 999, width: "100%", borderTopWidth: 0.5, borderTopColor: appColors.bordersLight }}>
+            {replyToName && (
+               <View
+                  style={{ backgroundColor: appColors.extralightOlive }}
+                  className="w-full items-center justify-between flex-row  py-4"
+               >
+                  <AppText color={appColors.primary} size="sm" weight="semi" className="px-4">
+                     relpy to @{replyToName}
+                  </AppText>
+                  <MaterialCommunityIcons
+                     onPress={() => {
+                        setReplyToId(null);
+                        setReplyToName(null);
+                        setShowKeyboard(false);
+                     }}
+                     name="close"
+                     size={18}
+                     color="black"
+                     className="relative top-[2px] -left-4"
+                  />
+               </View>
+            )}
             <View
-               style={{ backgroundColor: appColors.extralightOlive }}
-               className="w-full items-center justify-between flex-row  py-4"
+               style={{ borderTopColor: appColors.bordersLight, borderTopWidth: 0.2 }}
+               className="w-full items-center flex-row gap-2 px-3 py-4"
             >
-               <AppText color={appColors.primary} size="sm" weight="semi" className="px-4">
-                  relpy to @{replyToName}
-               </AppText>
-               <MaterialCommunityIcons
-                  onPress={() => {
-                     setReplyToId(null);
-                     setReplyToName(null);
-                     setShowKeyboard(false);
-                  }}
-                  name="close"
-                  size={18}
-                  color="black"
-                  className="relative top-[2px] -left-4"
-               />
+               <Avatar path={profile?.avatarUrl} size={35} />
+               <View className="h-12  flex-1 justify-center w-full rounded-full">
+                  <TextInput
+                     ref={inputRef}
+                     style={{
+                        fontSize: hp(1.8),
+                        backgroundColor: appColors.offWhite,
+                        borderRadius: 100,
+                        paddingHorizontal: 10,
+                     }}
+                     value={commentText}
+                     onChangeText={setCommentText}
+                     className="flex-1 p-1 px-4"
+                     placeholder="write a comment..."
+                     placeholderTextColor={appColors.placeholder}
+                     autoFocus={false}
+                  />
+               </View>
+               <Button size="sm" isLoading={isPending}>
+                  <Feather
+                     onPress={() => mutate()}
+                     disabled={isPending || commentText.length === 0}
+                     size={20}
+                     name="send"
+                  />
+               </Button>
             </View>
-         )}
-         <View
-            style={{ borderTopColor: appColors.placeholder, borderTopWidth: 0.2 }}
-            className="w-full items-center flex-row gap-2 px-3 py-4"
-         >
-            <Avatar path={profile?.avatarUrl} size={35} />
-            <View className="h-12  flex-1 justify-center w-full rounded-full">
-               <TextInput
-                  ref={inputRef}
-                  style={{
-                     fontSize: hp(1.8),
-                     backgroundColor: appColors.offWhite,
-                     borderRadius: 100,
-                     paddingHorizontal: 10,
-                  }}
-                  value={commentText}
-                  onChangeText={setCommentText}
-                  className="flex-1 p-1 px-4"
-                  placeholder="write a comment..."
-                  placeholderTextColor={appColors.placeholder}
-                  autoFocus={false}
-               />
-            </View>
-            <Button size="sm" isLoading={isPending}>
-               <Feather
-                  onPress={() => mutate()}
-                  disabled={isPending || commentText.length === 0}
-                  size={20}
-                  name="send"
-               />
-            </Button>
          </View>
       </KeyboardAvoidingView>
    );

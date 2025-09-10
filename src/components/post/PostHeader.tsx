@@ -30,7 +30,7 @@ export default function PostHeader({ avatar, name, username, date, postInfo }: P
       >
          <View className="flex-row justify-between items-start">
             <View className="flex-row items-center gap-2">
-               <Avatar path={avatar} size={40} />
+               <Avatar path={avatar} size={37} />
                <View className="">
                   <View className="flex-row items-center gap-2">
                      <AppText weight="semi" cap="capitalize">
