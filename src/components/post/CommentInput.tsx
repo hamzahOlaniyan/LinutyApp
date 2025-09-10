@@ -124,7 +124,7 @@ export default function CommentInput({
                   ref={inputRef}
                   style={{
                      fontSize: hp(1.8),
-                     backgroundColor: appColors.extralightOlive,
+                     backgroundColor: appColors.offWhite,
                      borderRadius: 100,
                      paddingHorizontal: 10,
                   }}

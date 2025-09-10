@@ -33,21 +33,21 @@ export default function PostHeader({ avatar, name, username, date, postInfo }: P
                <Avatar path={avatar} size={40} />
                <View className="">
                   <View className="flex-row items-center gap-2">
-                     <AppText weight="med" size="md" cap="capitalize">
+                     <AppText weight="semi" cap="capitalize">
                         {name}
                      </AppText>
                      <Octicons name="dot-fill" size={6} className="relative top-[2px]" />
-                     <AppText size="xs" className="top-[2px]">
+                     <AppText className="top-[2px]">
                         <TimeAgo time={dayjs(date).fromNow()} />
                      </AppText>
                   </View>
-                  <AppText color={appColors.grey} size="sm">
+                  <AppText size="sm" color={appColors.grey}>
                      @{username}
                   </AppText>
                </View>
             </View>
             <Pressable onPress={postInfo} className="h-full relative">
-               <ThreeDots />
+               <ThreeDots color={appColors.grey} />
             </Pressable>
          </View>
       </View>

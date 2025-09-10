@@ -1,9 +1,9 @@
 import { Community } from "@/assets/icons/community";
 import { CommunityOtline } from "@/assets/icons/community-outline";
+import { GroupIcon } from "@/assets/icons/groupIcon";
+import { GroupIconSolid } from "@/assets/icons/groupIconSolid";
 import { Home } from "@/assets/icons/home";
 import { HomeSolid } from "@/assets/icons/home-solid";
-import { Search2 } from "@/assets/icons/search-2";
-import { Search2Outline } from "@/assets/icons/search-2-outline";
 import { Store } from "@/assets/icons/store";
 import { StoreSolid } from "@/assets/icons/store-solid";
 import { appColors } from "@/src/constant/colors";
@@ -54,8 +54,7 @@ export default function TabLayout() {
                title: "Find friends",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  // <Search color={focused ? appColors.primary : appColors.tabInactive} />
-                  <View>{focused ? <Search2 color={appColors.primary} /> : <Search2Outline />}</View>
+                  <View>{focused ? <GroupIconSolid color={appColors.primary} /> : <GroupIcon />}</View>
                ),
             }}
          />

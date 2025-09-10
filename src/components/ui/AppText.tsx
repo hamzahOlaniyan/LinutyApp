@@ -1,4 +1,5 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 // import { useThemeStore } from "@/src/context/themeStore";
 import React from "react";
@@ -21,9 +22,9 @@ type AppTextProps = {
 export default function AppText({
    children,
    size = "md",
-   weight = "reg",
+   weight = "med",
    cap,
-   color,
+   color = appColors.text,
    style,
    align,
    className,
@@ -39,7 +40,7 @@ export default function AppText({
       lg: hp(1.9),
       md: hp(1.7),
       sm: hp(1.5),
-      xs: hp(1.2),
+      xs: hp(1.3),
       xxs: hp(0.9),
    }[size];
 

@@ -82,7 +82,7 @@ export default function CommentCard({
                   </View>
                   <View>
                      <Pressable className="flex-row gap-2 justify-center items-center">
-                        <Thumbsup size={24} color={appColors.primary} />
+                        <Thumbsup size={20} />
                         <AppText size="sm">0</AppText>
                      </Pressable>
                   </View>

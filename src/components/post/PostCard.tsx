@@ -132,7 +132,7 @@ export default function Post({
 
    return (
       <>
-         <View style={{ backgroundColor: appColors.white }} className="rounded-2xl overflow-hidden">
+         <View style={{ backgroundColor: appColors.white }} className="overflow-hidden">
             <PostHeader
                avatar={post.author.avatarUrl}
                name={fullName}
@@ -140,7 +140,7 @@ export default function Post({
                date={post.created_at}
                postInfo={() => setModalVisible(true)}
             />
-            <View className="px-4 py-1">
+            <View className="px-4 pb-3">
                <AppText size="lg">{post?.content}</AppText>
             </View>
 

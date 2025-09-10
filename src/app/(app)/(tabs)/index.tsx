@@ -69,6 +69,10 @@ export default function index() {
       setLastOffset(offsetY);
    };
 
+   const setScroll = () => {
+      return false;
+   };
+
    return (
       <ScreenWrapper paddingHorizontal={0}>
          <SafeAreaView style={{ paddingHorizontal: wp(0), backgroundColor: appColors.extralightOlive }}>
@@ -85,11 +89,11 @@ export default function index() {
                   />
                )}
                showsVerticalScrollIndicator={false}
-               onScroll={handleScroll}
+               onScroll={setScroll}
                scrollEventThrottle={4}
                contentContainerStyle={{
-                  paddingTop: 60,
-                  rowGap: 6,
+                  paddingTop: 56,
+                  rowGap: 8,
                }}
                ListFooterComponent={
                   <View style={{ marginVertical: POSTS?.length === 0 ? 200 : 30 }}>{/* <Loading /> */}</View>
