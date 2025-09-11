@@ -17,7 +17,7 @@ import { useAuthStore } from "../store/authStore";
 import Avatar from "./Avatar";
 import Menu from "./ui/Menu";
 
-export default function HomeHeaderMenu({ headerTranslateY }: { headerTranslateY?: any }) {
+export default function HomeHeaderMenu() {
    const { profile } = useAuthStore();
    // const { currentTheme } = useThemeStore();
 
@@ -78,15 +78,9 @@ export default function HomeHeaderMenu({ headerTranslateY }: { headerTranslateY?
          style={[
             GLOBAL_STYLES.screenPadding,
             {
-               transform: [{ translateY: headerTranslateY }],
-               position: "absolute",
-               top: 0,
-               left: 0,
-               right: 0,
                zIndex: 10,
                borderBottomColor: appColors.bordersLight,
                borderBottomWidth: 1,
-               width: "100%",
             },
          ]}
          className="flex-row items-center justify-between py-1 gap-10 bg-white"
