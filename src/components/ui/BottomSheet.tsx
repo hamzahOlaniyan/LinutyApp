@@ -1,14 +1,9 @@
 import React from "react";
 // import { useThemeStore } from "../context/themeStore";
 
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-   Actionsheet,
-   ActionsheetBackdrop,
-   ActionsheetContent,
-   ActionsheetDragIndicator,
-   ActionsheetDragIndicatorWrapper,
-} from "./actionsheet";
+import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIndicator } from "./actionsheet";
 import AppText from "./AppText";
 
 type BottomSheetProps = {
@@ -38,28 +33,15 @@ export default function BottomSheet({
 
    return (
       <Actionsheet isOpen={isOpen} onClose={handleClose} preventScroll={preventScroll} snapPoints={[height]}>
-         <ActionsheetBackdrop
-            style={
-               {
-                  // backgroundColor: currentTheme === "light" ? appColors.gray : appColors.dark.backdrop,
-               }
-            }
-         />
-         <ActionsheetContent
-            style={{
-               marginBottom: bottom,
-               // backgroundColor: currentTheme === "light" ? appColors.light.background : appColors.dark.background,
-               // borderColor: currentTheme === "light" ? appColors.light.background : appColors.dark.background,
-            }}
-            className="flex-1 w-full p-0 m-0"
-         >
-            <ActionsheetDragIndicatorWrapper className="my-4">
-               <ActionsheetDragIndicator />
-            </ActionsheetDragIndicatorWrapper>
-            <AppText weight="semi" cap="capitalize">
-               {heading}
-            </AppText>
-            {children}
+         <ActionsheetBackdrop />
+         <ActionsheetContent className="p-0 m-0 px-3">
+            <ActionsheetDragIndicator className="mt-6" />
+            <View className="my-6">
+               <AppText weight="semi" cap="capitalize">
+                  {heading}
+               </AppText>
+            </View>
+            <View className="w-full flex-1">{children}</View>
          </ActionsheetContent>
       </Actionsheet>
    );

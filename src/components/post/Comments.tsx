@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AppText from "../ui/AppText";
 import CommentCard from "./CommentCard";
 import CommentInput from "./CommentInput";
+import CommentSkeletion from "./CommentSkeletion";
 
 export default function Comments({ data, loading }: { data: any; loading: boolean }) {
    const [showKeyboard, setShowKeyboard] = useState(false);
@@ -11,11 +12,17 @@ export default function Comments({ data, loading }: { data: any; loading: boolea
    const [replyToId, setReplyToId] = useState<string | null>(null);
 
    const { bottom } = useSafeAreaInsets();
-   //    console.log("data", JSON.stringify(data, null, 2));
-   if (loading) return null;
+
+   const skeleton = Array.from({ length: 5 }, (_, i) => <CommentSkeletion key={i} />);
+   if (loading) return <View className="gap-8">{skeleton}</View>;
 
    return (
-      <View style={{ paddingBottom: bottom }} className="gap-4 flex-1">
+      <View
+         style={{
+            paddingBottom: bottom,
+         }}
+         className="flex-1 justify-between"
+      >
          {data?.comments?.length < 1 && (
             <View className="px-6">
                <AppText weight="med">be the first to comment</AppText>{" "}
@@ -35,14 +42,9 @@ export default function Comments({ data, loading }: { data: any; loading: boolea
             scrollEventThrottle={4}
             contentContainerStyle={{
                rowGap: 20,
+               flex: 1,
             }}
          />
-         {/* <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior="padding"
-            // keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 120}
-            keyboardVerticalOffset={200}
-         > */}
          <CommentInput
             postId={data?.id}
             postUserID={data?.author?.id}
@@ -53,7 +55,6 @@ export default function Comments({ data, loading }: { data: any; loading: boolea
             setReplyToId={setReplyToId}
             setShowKeyboard={setShowKeyboard}
          />
-         {/* </KeyboardAvoidingView> */}
       </View>
    );
 }

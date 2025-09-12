@@ -88,19 +88,19 @@ export default function CommentInput({
    });
 
    return (
-      <KeyboardAvoidingView
-         style={{ flex: 1 }}
-         behavior={Platform.OS === "ios" ? "padding" : undefined}
-         // keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 120}
-         keyboardVerticalOffset={200}
-      >
-         <View style={{ zIndex: 999, width: "100%", borderTopWidth: 0.5, borderTopColor: appColors.bordersLight }}>
+      <KeyboardAvoidingView keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 135} behavior="padding">
+         <View
+            style={{
+               zIndex: 999,
+               width: "100%",
+            }}
+         >
             {replyToName && (
                <View
-                  style={{ backgroundColor: appColors.extralightOlive }}
-                  className="w-full items-center justify-between flex-row  py-4"
+                  style={{ backgroundColor: appColors.selectedTeply, borderRadius: 10 }}
+                  className="w-full items-center justify-between flex-row py-4 my-1"
                >
-                  <AppText color={appColors.primary} size="sm" weight="semi" className="px-4">
+                  <AppText color={appColors.primary} weight="semi" className="px-4">
                      relpy to @{replyToName}
                   </AppText>
                   <MaterialCommunityIcons
@@ -117,23 +117,23 @@ export default function CommentInput({
                </View>
             )}
             <View
-               style={{ borderTopColor: appColors.bordersLight, borderTopWidth: 0.2 }}
-               className="w-full items-center flex-row gap-2 px-3 py-4"
+               style={{ borderTopColor: appColors.bordersLight, borderTopWidth: 1 }}
+               className="w-full items-center flex-row gap-2 py-3"
             >
                <Avatar path={profile?.avatarUrl} size={35} />
                <View className="h-12  flex-1 justify-center w-full rounded-full">
                   <TextInput
                      ref={inputRef}
                      style={{
-                        fontSize: hp(1.8),
-                        backgroundColor: appColors.offWhite,
+                        fontSize: hp(2),
+                        backgroundColor: appColors.searchBar,
                         borderRadius: 100,
                         paddingHorizontal: 10,
                      }}
                      value={commentText}
                      onChangeText={setCommentText}
                      className="flex-1 p-1 px-4"
-                     placeholder="write a comment..."
+                     placeholder="Add comment..."
                      placeholderTextColor={appColors.placeholder}
                      autoFocus={false}
                   />

@@ -1,7 +1,6 @@
 import { ThreeDots } from "@/assets/icons/threedots";
 import { Thumbsup } from "@/assets/icons/thumbsup";
 import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
 import { TimeAgo } from "@/src/hooks/timeAgo";
 import { fetchComments } from "@/src/Services/comment";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -50,11 +49,11 @@ export default function CommentCard({
    });
 
    return (
-      <View style={{ paddingHorizontal: wp(4) }} className="flex-row gap-5 justify-between items-start w-full ">
+      <View className="flex-row gap-5 justify-between items-start w-full">
          <View className="flex-row gap-2">
             <Avatar path={item?.author?.avatarUrl} size={35} />
             <View className="flex-1">
-               <View className="flex-row  gap-1 items-center justify-between flex-1">
+               <View className="flex-row  gap-1 items-center justify-between">
                   <AppText weight="med" color={appColors.grey} cap="capitalize">
                      {item?.author?.firstName}
                      {item?.author?.lastName}
@@ -63,7 +62,9 @@ export default function CommentCard({
                      <ThreeDots color={appColors.grey} size={24} />
                   </Pressable>
                </View>
-               <AppText size="lg">{item.content!!}</AppText>
+               <AppText weight="reg" size="lg">
+                  {item.content!!}
+               </AppText>
                <View className="flex-row items-center justify-between">
                   <View className="flex-row items-center gap-4">
                      <TimeAgo time={item?.created_at} size="sm" color={appColors.grey} />
@@ -89,7 +90,7 @@ export default function CommentCard({
                      </Pressable>
                   </View>
                </View>
-               {REPLIES?.length === 0 ? null : (
+               {REPLIES && REPLIES?.length === 0 ? null : (
                   <TouchableOpacity onPress={() => setShowReplies(!showReplies)} className="flex-row items-center">
                      <AppText color={appColors.grey}>
                         {REPLIES?.length! >= 2 ? `view ${REPLIES?.length!} replies` : `view ${REPLIES?.length!} reply`}

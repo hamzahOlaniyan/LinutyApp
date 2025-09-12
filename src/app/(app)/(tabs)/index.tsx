@@ -1,16 +1,18 @@
 import HomeHeaderMenu from "@/src/components/HomeHeaderMenu";
 import PostCard from "@/src/components/post/PostCard";
+import PostSkeleton from "@/src/components/post/PostSkeleton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import AppText from "@/src/components/ui/AppText";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
+import { injectSponsoredBlocks } from "@/src/hooks/injecSponsoredBloacks";
 import { fetchPost, getPostById } from "@/src/Services/posts";
 import { getStoreProduct } from "@/src/Services/store";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
-import React, { useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 
-import { Animated, FlatList, SafeAreaView, View } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 
 export default function index() {
    // const [showComments, setShowComments] = useState(false);
@@ -19,49 +21,6 @@ export default function index() {
    const [replyToName, setReplyToName] = useState<string | null>(null);
    const [replyToId, setReplyToId] = useState<string | null>(null);
    const [lastOffset, setLastOffset] = useState(0);
-
-   function injectSponsoredBlocks(posts: any[], products: any[], interval = 5) {
-      if (!products?.length) return posts?.map((p) => ({ ...p, type: "post" }));
-
-      const merged: any[] = [];
-      let productIndex = 0;
-
-      posts?.forEach((post, index) => {
-         merged.push({ ...post, type: "post" });
-
-         if ((index + 1) % interval === 0) {
-            // pick a random block type
-            const blockType = ["product-single", "product-group", "info"][Math.floor(Math.random() * 3)];
-
-            if (blockType === "product-single") {
-               merged.push({
-                  type: "product-single",
-                  item: products[productIndex],
-               });
-               productIndex = (productIndex + 1) % products?.length;
-            }
-
-            if (blockType === "product-group") {
-               const group: any[] = [];
-               for (let i = 0; i < 3; i++) {
-                  group.push(products[productIndex]);
-                  productIndex = (productIndex + 1) % products?.length;
-               }
-               merged.push({ type: "product-group", items: group });
-            }
-
-            if (blockType === "info") {
-               merged.push({
-                  type: "info",
-                  title: "Sponsored Info",
-                  description: "This is an informational sponsored block.",
-               });
-            }
-         }
-      });
-
-      return merged;
-   }
 
    // only top-level posts
 
@@ -90,9 +49,20 @@ export default function index() {
 
    const topLevelPosts = POSTS?.filter((p: any) => !p.parent_id);
 
-   const feedData = injectSponsoredBlocks(topLevelPosts as any, PRODUCT as any, 1);
+   const feedData = useMemo(() => {
+      return injectSponsoredBlocks(topLevelPosts as any, PRODUCT as any, 2);
+   }, [topLevelPosts, PRODUCT as any]);
 
-   const headerTranslateY = useRef(new Animated.Value(0)).current;
+   const skeleton = Array.from({ length: 6 }, (_, i) => <PostSkeleton key={i} />);
+   if (isLoading)
+      return (
+         <View className="gap-8">
+            <View className="gap-4">
+               <View className="w-full h-28 bg-white rounded-md"></View>
+               {skeleton}
+            </View>
+         </View>
+      );
 
    return (
       <ScreenWrapper paddingHorizontal={0}>
@@ -102,6 +72,8 @@ export default function index() {
                data={feedData}
                keyExtractor={(item, index) => item.id ?? `feed-${index}`}
                contentContainerStyle={{ rowGap: 8 }}
+               decelerationRate={0.6}
+               showsVerticalScrollIndicator={false}
                renderItem={({ item }) => {
                   switch (item.type) {
                      case "post":

@@ -3,6 +3,7 @@ export const appColors = {
    primary: "#319295",
    lightOlive: "#daf2ea",
    extralightOlive: "#e1e7e5",
+   selectedTeply: "#f3fbf8",
 
    offWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",
