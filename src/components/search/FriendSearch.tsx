@@ -35,7 +35,7 @@ export default function FriendSearch() {
                   username={item?.username}
                />
             )}
-            contentContainerStyle={{ rowGap: 30, marginVertical: 15 }}
+            contentContainerStyle={{ rowGap: 20, marginVertical: 15 }}
          />
       </View>
    );

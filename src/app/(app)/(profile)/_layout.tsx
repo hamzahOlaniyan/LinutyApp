@@ -6,7 +6,7 @@ import React from "react";
 
 export default function ProfileLayout() {
    return (
-      <Stack>
+      <Stack screenOptions={{ headerShadowVisible: false }}>
          <Stack.Screen
             name="index"
             options={{

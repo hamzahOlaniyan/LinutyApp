@@ -71,7 +71,7 @@ export default function ProductImagePicker({ url, size = 200, onPickLocal, picke
                   contentContainerStyle={{
                      marginVertical: 10,
                      columnGap: 10,
-                     backgroundColor: appColors.extralightOlive,
+                     backgroundColor: appColors.selectedTeply,
                      padding: 10,
                      borderRadius: 10,
                   }}

@@ -1,6 +1,6 @@
-import { HomeSolid } from "@/assets/icons/home-solid";
 import { ImageIcon } from "@/assets/icons/ImageIcon";
 import { InfoIcon } from "@/assets/icons/info";
+import { PostsIcon } from "@/assets/icons/PostsIcon";
 import ProfileGallery from "@/src/components/profile/ProfileGallery";
 import ProfileHeader from "@/src/components/profile/ProfileHeader";
 import ProfileInfo from "@/src/components/profile/ProfileInfo";
@@ -26,17 +26,20 @@ export default function index() {
       isLoading,
       error,
    } = useQuery({
-      queryKey: ["posts"],
+      queryKey: ["posts", { user_id: profile?.id }],
       queryFn: async () => getPostsUserById(profile!.id),
    });
 
+   console.log(JSON.stringify(USER_POSTS, null, 2));
+
    return (
       <View style={{ paddingBottom: bottom, backgroundColor: appColors.white }} className="flex-1">
-         <View className=" flex-1 gap-4">
+         <View className="flex-1 gap-4">
+            <View className="w-full bg-yellow-500 h-48"></View>
             <ProfileHeader userProfile={profile} />
             <Tab
                routes={[
-                  { key: "Posts", icon: <HomeSolid size={24} /> },
+                  { key: "Posts", icon: <PostsIcon size={24} /> },
                   { key: "Images", icon: <ImageIcon size={24} /> },
                   { key: "Info", icon: <InfoIcon size={24} /> }, // extra route
                ]}
@@ -45,6 +48,7 @@ export default function index() {
                   profile: () => <ProfileGallery />,
                   info: () => <ProfileInfo />,
                }}
+               activeColor={appColors.primary}
             />
          </View>
       </View>

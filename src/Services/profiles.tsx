@@ -1,4 +1,4 @@
-import { TablesUpdate } from "@/supabase/types/database.types";
+// import { TablesUpdate } from "@/supabase/types/database.types";
 import { supabase } from "../lib/supabase";
 
 export const getProfiles = async (id: any) => {
@@ -20,7 +20,7 @@ export const getProfileById = async (id: string) => {
    return data;
 };
 
-export const updateProfile = async (id: string, updateProfile: TablesUpdate<"profiles">) => {
+export const updateProfile = async (id: string, updateProfile: any) => {
    const { data } = await supabase
       .from("profiles")
       .update(updateProfile)

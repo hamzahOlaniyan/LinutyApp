@@ -57,8 +57,8 @@ export default function index() {
    if (isLoading)
       return (
          <View className="gap-8">
-            <View className="gap-4">
-               <View className="w-full h-28 bg-white rounded-md"></View>
+            <View style={{ backgroundColor: appColors.extralightOlive }} className="gap-2">
+               <View className="w-full h-[114px] bg-white rounded-md"></View>
                {skeleton}
             </View>
          </View>

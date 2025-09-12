@@ -1,3 +1,4 @@
+import { appColors } from "@/src/constant/colors";
 import React from "react";
 import { FlatList, View } from "react-native";
 import PostCard from "../post/PostCard";
@@ -15,10 +16,13 @@ export default function ProfilePosts({ item }: any) {
                data={item || []}
                renderItem={({ item }) => <PostCard post={item} comments={undefined} />}
                scrollEnabled
+               showsVerticalScrollIndicator={false}
+               decelerationRate={0.5}
                contentContainerStyle={{
                   rowGap: 10,
-                  paddingHorizontal: 10,
                   paddingBottom: 50,
+                  backgroundColor: appColors.extralightOlive,
+                  paddingTop: 1,
                }}
             />
          )}

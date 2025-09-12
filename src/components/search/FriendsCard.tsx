@@ -9,6 +9,7 @@ import { Pressable, View } from "react-native";
 // import { useThemeStore } from "../context/themeStore";
 // import { createNotification } from "../Services/Notification";
 // import { deleteFriendRequest, sendFriendRequest } from "../Services/relationships";
+import { appColors } from "@/src/constant/colors";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
@@ -63,15 +64,15 @@ export default function FriendsCard({ id, avatar, name, username }: FriendsCardP
    return (
       <View className="flex-row flex-1 justify-between items-start">
          <View className="flex-row flex-1 gap-3 items-start">
-            <Avatar path={avatar} size={50} />
+            <Avatar path={avatar} size={45} />
             <View>
                <View className="flex-row gap-1 items-center w-full">
-                  <AppText size="lg" weight="semi" cap="capitalize">
+                  <AppText weight="semi" cap="capitalize">
                      {name}
                   </AppText>
                   <Octicons name="dot-fill" size={6} className="relative top-[2px]" />
                </View>
-               <AppText size="sm" weight="med" cap="capitalize">
+               <AppText size="sm" weight="med" cap="capitalize" color={appColors.grey}>
                   @{username}
                </AppText>
             </View>

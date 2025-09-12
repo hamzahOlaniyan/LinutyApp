@@ -1,8 +1,4 @@
-// import { wp } from "@/src/common";
-// import BottomSheet from "@/src/components/BottomSheet";
-// import ScreenHeader from "@/src/components/ScreenHeader";
-// import ScreenWrapper from "@/src/components/ScreenWrapper";
-// import StoreCard from "@/src/components/Store/StoreCard";
+import { CategoryIcon } from "@/assets/icons/categoryIcon";
 import { Plus } from "@/assets/icons/plus";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StoreCard from "@/src/components/store/StoreCard";
@@ -13,12 +9,10 @@ import Searchbar from "@/src/components/ui/Searchbar";
 import { wp } from "@/src/constant/common";
 import { getStoreProduct } from "@/src/Services/store";
 import { useQuery } from "@tanstack/react-query";
-// import { ProductInput } from "@/src/types/types";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { FlatList, View } from "react-native";
 import { ProductCategory } from "./new-product";
-// import { ProductCategory } from "./new-product";
 
 export default function StorePage() {
    const [showCategory, setShowCategory] = useState(false);
@@ -35,16 +29,20 @@ export default function StorePage() {
 
    return (
       <ScreenWrapper paddingHorizontal={3}>
-         <View className="gap-4">
+         <View className="gap-4 my-2">
             <View className="flex-row justify-between">
                <AppText weight="bold" size="xxxl">
                   Store
                </AppText>
                <View className="flex-row gap-6">
-                  <Button onPress={() => setShowCategory(true)} variant="secondary" size="xs" text="Category" />
-                  <Button size="xs" onPress={() => router.push("/new-product")}>
-                     <Plus size={24} />
-                  </Button>
+                  <Button
+                     onPress={() => setShowCategory(true)}
+                     variant="secondary"
+                     size="sm"
+                     text="Category"
+                     icon={<CategoryIcon size={20} />}
+                  />
+                  <Button size="sm" onPress={() => router.push("/new-product")} icon={<Plus size={24} />} />
                </View>
             </View>
             <Searchbar onPress={() => ""} />

@@ -28,6 +28,7 @@ export default function CustomTabView({
    indicatorColor = appColors.primary,
 }: Props) {
    const [index, setIndex] = useState(initialIndex);
+   // const [index, setIndex] = useState(initialIndex);
 
    const renderScene = useCallback(
       ({ route }: { route: TabRoute }) => {
@@ -39,15 +40,15 @@ export default function CustomTabView({
 
    const renderTabBar = useCallback(
       (props: any) => {
-         //  const inputRange = props.navigationState.routes.map((_: any, i: number) => i);
+         const inputRange = props.navigationState.routes.map((_: any, i: number) => i);
 
          return (
             <View style={styles.tabBar}>
                {props.navigationState.routes.map((route: TabRoute, i: number) => {
-                  //   const opacity = props.position.interpolate({
-                  //      inputRange,
-                  //      outputRange: inputRange.map((inputIndex: number) => (inputIndex === i ? 1 : 0.6)),
-                  //   });
+                  const opacity = props.position.interpolate({
+                     inputRange,
+                     outputRange: inputRange.map((inputIndex: number) => (inputIndex === i ? 1 : 0.6)),
+                  });
 
                   const isActive = index === i;
                   const color = isActive ? activeColor : inactiveColor;
@@ -56,10 +57,9 @@ export default function CustomTabView({
                      <TouchableOpacity key={route.key} style={[styles.tabItem]} onPress={() => setIndex(i)}>
                         <Animated.View style={[styles.tabContent]}>
                            {route.icon && <View style={[styles.icon]}>{route.icon}</View>}
-                           {route.title && <Text style={[styles.tabText, { color }]}>{route.title}</Text>}
+                           {route.title && <Text style={[styles.tabText, { color: color }]}>{route.title}</Text>}
                         </Animated.View>
 
-                        {/* Active underline */}
                         {isActive && <View style={[styles.indicator, { backgroundColor: indicatorColor }]} />}
                      </TouchableOpacity>
                   );
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
       color: "black",
    },
    icon: {
-      marginRight: 4,
+      // marginRight: 4,
    },
    indicator: {
       height: 3,

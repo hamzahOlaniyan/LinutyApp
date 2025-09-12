@@ -14,6 +14,7 @@ type ButtonProps = {
    size?: "lg" | "md" | "sm" | "xs";
    variant?: "outline" | "plain" | "secondary";
    indicatorColor?: string;
+   icon?: React.ReactNode;
 };
 
 export default function Button({
@@ -26,6 +27,7 @@ export default function Button({
    size = "md",
    variant,
    indicatorColor,
+   icon,
 }: ButtonProps) {
    return (
       <TouchableOpacity
@@ -70,13 +72,12 @@ export default function Button({
          {isLoading ? (
             <ActivityIndicator color={indicatorColor} size={"small"} />
          ) : (
-            <View className="justify-center items-center">
-               {children && children}
+            <View className="flex-row justify-center items-center gap-3">
+               {icon && icon}
                {text && (
                   <Text
                      style={{
                         fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.6) : size === "xs" ? hp(1.3) : hp(1.6),
-                        color: appColors.buttonOutline,
                         textAlign: "center",
                         fontFamily: TiktokFont.TiktokMedium,
                      }}

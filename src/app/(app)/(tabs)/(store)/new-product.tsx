@@ -1,3 +1,4 @@
+import { PublishIcon } from "@/assets/icons/publishIcon";
 import NewListingHeader from "@/src/components/store/NewListingHeader";
 import ProductImagePicker from "@/src/components/store/ProductImagePicker";
 import AppText from "@/src/components/ui/AppText";
@@ -95,13 +96,23 @@ export default function NewProduct() {
    });
 
    return (
-      <ScrollView className="relative" style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }}>
-         <View className="flex-row items-center">
-            <View className="flex-1">
-               <NewListingHeader image={profile?.avatarUrl} user={profile?.firstName + profile?.lastName} />
-            </View>
-            <Button size="xs" text="Publish" onPress={() => mutate()} isLoading={isPending} />
+      <ScrollView
+         decelerationRate={0.8}
+         className="relative"
+         style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }}
+      >
+         {/* <View className="flex-row items-center"> */}
+         <View className="w-full flex-row relative justify-center items-center">
+            <NewListingHeader image={profile?.avatarUrl} firstName={profile?.firstName} lastName={profile?.lastName} />
+            <Button
+               size="sm"
+               text="Publish"
+               onPress={() => mutate()}
+               isLoading={isPending}
+               icon={<PublishIcon size={20} />}
+            />
          </View>
+         {/* </View> */}
          <ProductImagePicker onPickLocal={(uri: []) => setProductImage(uri)} />
          <View style={{ paddingBottom: 200, paddingTop: 30 }} className="gap-4 flex-1">
             <AppText weight="semi">Product Information</AppText>

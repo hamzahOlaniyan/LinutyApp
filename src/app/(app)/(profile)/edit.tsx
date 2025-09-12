@@ -1,7 +1,7 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
-import Button from "@/src/components/ui/Button";
-import { Input } from "@/src/components/ui/Input";
-import InputArea from "@/src/components/ui/InputArea";
+import { EditIcon } from "@/assets/icons/edit";
+import { PhotoIcon } from "@/assets/icons/photoIcon";
+import AppText from "@/src/components/ui/AppText";
+import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
 // import UserAvatarPicker from "@/src/components/UserAvatarPicker";
 // import { useAuthStore } from "@/src/context/authStore";
@@ -21,7 +21,7 @@ export default function EditScreen() {
    const { profile } = useAuthStore();
    const queryClient = useQueryClient();
 
-   const { data: profiles } = useQuery({
+   const { data: PROFILE } = useQuery({
       queryKey: ["profile", profile?.id],
       queryFn: async () => getProfileById(profile!.id),
    });
@@ -46,17 +46,58 @@ export default function EditScreen() {
    }, [profile?.id]);
 
    return (
-      <ScreenWrapper>
-         <View style={{ marginHorizontal: wp(3) }} className="flex-1">
-            <View className="gap-16">
-               {/* <UserAvatarPicker currentAvatar={profile?.avatar_url ?? ""} onUpload={setAvatarUrl} /> */}
-               <View className="gap-4">
-                  <Input label="name" value={fullName} onChangeText={setFullName} placeholder="full name" />
-                  <InputArea label="bio" value={bio} onChangeText={setBio} multiline placeholder="bio" />
-                  <Button text="save" onPress={() => mutate()} isLoading={isPending} />
-               </View>
+      <View style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }} className="flex-1">
+         <View className="w-full bg-yellow-500 h-48 rounded-lg justify-center items-center">
+            <View className="w-24 h-24 rounded-full border justify-center items-center">
+               <PhotoIcon />
             </View>
          </View>
-      </ScreenWrapper>
+
+         <View className="gap-2 my-4">
+            <ListItem label="First name" value={PROFILE?.firstName} />
+            <ListItem label="Last name" value={PROFILE?.lastName} />
+            <ListItem label="First" value={PROFILE?.username} />
+
+            {/* <UserAvatarPicker currentAvatar={profile?.avatar_url ?? ""} onUpload={setAvatarUrl} /> */}
+            {/* <View className="gap-4">
+               <Input label="name" value={fullName} onChangeText={setFullName} placeholder="full name" />
+               <InputArea label="bio" value={bio} onChangeText={setBio} multiline placeholder="bio" />
+               <Button text="save" onPress={() => mutate()} isLoading={isPending} />
+            </View> */}
+         </View>
+      </View>
    );
 }
+
+const ListItem = ({
+   children,
+   label,
+   value,
+}: {
+   label: string;
+   children?: React.ReactNode;
+   value?: React.ReactNode;
+}) => {
+   return (
+      <View
+         style={{
+            borderBottomColor: appColors.bordersLight,
+            borderBottomWidth: 1,
+            paddingVertical: 4,
+            gap: 12,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            // backgroundColor: "pink",
+         }}
+      >
+         <View className="flex-1">
+            <AppText weight="semi">{label}</AppText>
+            <AppText size="lg" weight="reg">
+               {value}
+            </AppText>
+         </View>
+         <EditIcon />
+      </View>
+   );
+};

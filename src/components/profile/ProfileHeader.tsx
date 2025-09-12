@@ -35,7 +35,7 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
             <Button text="Manage your profile" className="flex-1" />
             <Pressable
                style={{ backgroundColor: appColors.extralightOlive }}
-               // onPress={() => router.push("/(protected)/(profile)/edit")}
+               onPress={() => router.push("/(app)/(profile)/edit")}
                className="justify-center rounded-full p-3"
             >
                <EditIcon />

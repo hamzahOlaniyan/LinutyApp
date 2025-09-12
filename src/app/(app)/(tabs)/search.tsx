@@ -17,7 +17,7 @@ export default function Search() {
             <Tab
                routes={[
                   { key: "Search", title: "Search friends" },
-                  { key: "Yourfriends", title: "Search friends" },
+                  { key: "Yourfriends", title: "Your friends" },
                   { key: "FriendRequest", title: "Friend request" },
                ]}
                scenes={{

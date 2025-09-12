@@ -20,16 +20,6 @@ export const getPostById = async (id: string) => {
    const { data, error } = await supabase
       .from("posts")
       .select("*, comments(*, author:profiles(id,firstName,lastName, username, avatarUrl))")
-      // "*, comments(author:profiles(id,fullName))"
-      // `*,author:profiles(id, firstName,lastName, username, avatarUrl),comments(
-      //    id,
-      //    content,
-      //    parentId,
-      //    created_at,
-      //    user:profiles(id, full_name, username, avatar_url)
-      // ),
-      // postLikes(*)
-      // `
       .eq("id", id)
       .order("created_at", { ascending: false })
       .single()
@@ -42,8 +32,8 @@ export const getPostsUserById = async (user_id: string) => {
    const { data, error } = await supabase
       .from("posts")
       .select("*, user:profiles(*), comments:posts(count), postLikes(*)")
-      .not("user_id", "is", null)
-      .eq("user_id", user_id)
+      .not("author", "is", null)
+      .eq("author", user_id)
       .order("created_at", { ascending: false })
       .throwOnError();
    return data;
@@ -53,7 +43,7 @@ export const getPostComments = async (id: string) => {
    const { data } = await supabase
       .from("posts")
       .select("*, user:profiles(*), comments:posts(count), postLikes(*)")
-      .not("user_id", "is", null)
+      .not("author", "is", null)
       .eq("parent_id", id)
       .throwOnError();
    return data;
