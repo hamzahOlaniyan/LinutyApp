@@ -1,24 +1,23 @@
 import { EditIcon } from "@/assets/icons/edit";
-import { PhotoIcon } from "@/assets/icons/photoIcon";
+import CoverImagepicker from "@/src/components/CoverImagepicker";
 import AppText from "@/src/components/ui/AppText";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
 // import UserAvatarPicker from "@/src/components/UserAvatarPicker";
 // import { useAuthStore } from "@/src/context/authStore";
-import { getProfileById, updateProfile } from "@/src/Services/profiles";
+import { getProfileById } from "@/src/Services/profiles";
 import { useAuthStore } from "@/src/store/authStore";
 // import { useAuth } from "@/src/utils/AuthProvider";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
 import { View } from "react-native";
 
 export default function EditScreen() {
+   const { profile } = useAuthStore();
    const [fullName, setFullName] = useState("");
    const [bio, setBio] = useState("");
    const [avatatUrl, setAvatarUrl] = useState("");
 
-   const { profile } = useAuthStore();
    const queryClient = useQueryClient();
 
    const { data: PROFILE } = useQuery({
@@ -26,32 +25,28 @@ export default function EditScreen() {
       queryFn: async () => getProfileById(profile!.id),
    });
 
-   const { mutate, isPending, error } = useMutation({
-      mutationFn: () => updateProfile(profile!.id, { full_name: fullName, bio, avatar_url: avatatUrl }),
+   // const { mutate, isPending, error } = useMutation({
+   //    mutationFn: () => updateProfile(profile!.id, { full_name: fullName, bio, avatar_url: avatatUrl }),
 
-      onSuccess: () => {
-         console.log("SUCCESS!!!, FORM UPDATED");
-         queryClient.invalidateQueries({ queryKey: ["profile", profile?.id] });
-         router.back();
-      },
-      onError: (error) => {
-         console.log("ERROR!!!", error?.message, error?.cause, error?.name, error?.stack);
-      },
-   });
+   //    onSuccess: () => {
+   //       console.log("SUCCESS!!!, FORM UPDATED");
+   //       queryClient.invalidateQueries({ queryKey: ["profile", profile?.id] });
+   //       router.back();
+   //    },
+   //    onError: (error) => {
+   //       console.log("ERROR!!!", error?.message, error?.cause, error?.name, error?.stack);
+   //    },
+   // });
 
-   useEffect(() => {
-      setFullName(profile?.full_name ?? "");
-      setBio(profile?.bio ?? "");
-      setAvatarUrl(profile?.avatar_url ?? "");
-   }, [profile?.id]);
+   // useEffect(() => {
+   //    setFullName(profile?.full_name ?? "");
+   //    setBio(profile?.bio ?? "");
+   //    setAvatarUrl(profile?.avatar_url ?? "");
+   // }, [profile?.id]);
 
    return (
       <View style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }} className="flex-1">
-         <View className="w-full bg-yellow-500 h-48 rounded-lg justify-center items-center">
-            <View className="w-24 h-24 rounded-full border justify-center items-center">
-               <PhotoIcon />
-            </View>
-         </View>
+         <CoverImagepicker />
 
          <View className="gap-2 my-4">
             <ListItem label="First name" value={PROFILE?.firstName} />

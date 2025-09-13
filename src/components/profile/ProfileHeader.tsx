@@ -1,19 +1,16 @@
 import { EditIcon } from "@/assets/icons/edit";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
-// import { useThemeStore } from "../context/themeStore";
-// import { UserProfile } from "../types/types";
 
 export default function ProfileHeader({ userProfile }: { userProfile: any }) {
    const [readmore, setReadMore] = useState(false);
-
-   // const { currentTheme } = useThemeStore();
 
    const router = useRouter();
 
@@ -22,6 +19,13 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
 
    return (
       <View style={{ paddingHorizontal: wp(3) }} className="gap-6">
+         <View className="w-full h-36 rounded-lg overflow-hidden">
+            <Image
+               source={userProfile?.cover_photo || userProfile?.cover_photo}
+               transition={100}
+               style={{ width: "100%", height: "100%" }}
+            />
+         </View>
          <View className="gap-2">
             <View className="flex-row items-center gap-3">
                <Avatar path={userProfile?.avatarUrl} size={100} />
@@ -35,11 +39,14 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                            {userProfile?.lastName}
                         </AppText>
                      </View>
-                     <AppText size="lg" weight="med" color={appColors.grey}>
+                     <AppText size="lg" color={appColors.grey}>
                         @{userProfile?.username}
                      </AppText>
                   </View>
-                  <AppText weight="semi">Friends: 347</AppText>
+                  <View className="flex-row gap-1">
+                     <AppText weight="reg">Friends</AppText>
+                     <AppText weight="med"> 347</AppText>
+                  </View>
                </View>
             </View>
             {!readmore ? (

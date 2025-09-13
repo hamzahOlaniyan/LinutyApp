@@ -23,7 +23,7 @@ type AppTextProps = {
 export default function AppText({
    children,
    size = "md",
-   weight = "med",
+   weight = "reg",
    cap,
    color = appColors.text,
    style,

@@ -1,6 +1,8 @@
+import { ImageIcon } from "@/assets/icons/ImageIcon";
 import { PublishIcon } from "@/assets/icons/publishIcon";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
+import { Image } from "expo-image";
 import React from "react";
 import { View } from "react-native";
 import Avatar from "../Avatar";
@@ -10,7 +12,17 @@ import Button from "../ui/Button";
 export default function UserHeader({ profile }: { profile: any }) {
    return (
       <View style={{ paddingHorizontal: wp(3) }} className="gap-4 mb-6">
-         <View className="h-32 bg-fuchsia-400 rounded-lg"></View>
+         <View style={{ backgroundColor: appColors.offWhite }} className="h-36 rounded-lg justify-center items-center">
+            {profile?.cover_photo ? (
+               <Image
+                  source={profile?.cover_photo || profile?.cover_photo}
+                  transition={100}
+                  style={{ width: "100%", height: "100%" }}
+               />
+            ) : (
+               <ImageIcon size={100} color={appColors.kkkk} />
+            )}
+         </View>
          <View className="gap-2">
             <View className="flex-row items-center gap-3">
                <Avatar path={profile?.avatarUrl} size={100} />
@@ -25,21 +37,17 @@ export default function UserHeader({ profile }: { profile: any }) {
                               {profile?.lastName}
                            </AppText>
                         </View>
-                        <AppText size="lg" weight="med" color={appColors.grey}>
+                        <AppText size="lg" color={appColors.grey}>
                            @{profile?.username}
                         </AppText>
                      </View>
                      <View className="flex-row gap-2">
                         <View className="flex-row gap-1">
-                           <AppText weight="semi" color={appColors.grey}>
-                              Friends:
-                           </AppText>
-                           <AppText weight="semi">347</AppText>
+                           <AppText color={appColors.grey}>Friends</AppText>
+                           <AppText weight="med">347</AppText>
                         </View>
                         <View className="flex-row gap-1">
-                           <AppText weight="semi" color={appColors.grey}>
-                              mutual Friends:
-                           </AppText>
+                           <AppText color={appColors.grey}>mutual Friends:</AppText>
                            <AppText weight="semi">3</AppText>
                         </View>
                      </View>
@@ -53,7 +61,7 @@ export default function UserHeader({ profile }: { profile: any }) {
             </AppText>
          </View>
          <View className="flex-row justify-between gap-2">
-            <Button text="Add friend" className="flex-1" icon={<PublishIcon />} />
+            <Button size="sm" text="Add friend" className="flex-1" icon={<PublishIcon />} />
          </View>
       </View>
    );

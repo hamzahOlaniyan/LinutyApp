@@ -7,6 +7,7 @@ export const appColors = {
 
    offWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",
+   kkkk: "#e1e1e1",
    searchBar: "#f1f1f1",
    white: "#fff",
    black: "#000000",
