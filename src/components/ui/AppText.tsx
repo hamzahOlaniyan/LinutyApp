@@ -17,6 +17,7 @@ type AppTextProps = {
    style?: any;
    align?: "left" | "right" | "center";
    className?: string;
+   onPress?: () => void;
 };
 
 export default function AppText({
@@ -28,6 +29,7 @@ export default function AppText({
    style,
    align,
    className,
+   onPress,
 }: AppTextProps) {
    // const { currentTheme } = useThemeStore();
 
@@ -57,6 +59,7 @@ export default function AppText({
 
    return (
       <Text
+         onPress={onPress}
          style={[
             style,
             {

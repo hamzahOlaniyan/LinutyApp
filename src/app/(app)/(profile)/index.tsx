@@ -1,12 +1,6 @@
-import { ImageIcon } from "@/assets/icons/ImageIcon";
-import { InfoIcon } from "@/assets/icons/info";
-import { PostsIcon } from "@/assets/icons/PostsIcon";
-import ProfileGallery from "@/src/components/profile/ProfileGallery";
 import ProfileHeader from "@/src/components/profile/ProfileHeader";
-import ProfileInfo from "@/src/components/profile/ProfileInfo";
-import ProfilePosts from "@/src/components/profile/ProfilePosts";
-import Tab from "@/src/components/ui/Tab";
 import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { getPostsUserById } from "@/src/Services/posts";
 import { useAuthStore } from "@/src/store/authStore";
 import { useQuery } from "@tanstack/react-query";
@@ -35,21 +29,24 @@ export default function index() {
    return (
       <View style={{ paddingBottom: bottom, backgroundColor: appColors.white }} className="flex-1">
          <View className="flex-1 gap-4">
-            <View className="w-full bg-yellow-500 h-48"></View>
+            <View style={{ paddingHorizontal: wp(3) }}>
+               <View className="w-full bg-yellow-500 h-32 rounded-lg"></View>
+            </View>
+
             <ProfileHeader userProfile={profile} />
-            <Tab
+            {/* <Tab /> */}
+            {/* <Tab
                routes={[
-                  { key: "Posts", icon: <PostsIcon size={24} /> },
-                  { key: "Images", icon: <ImageIcon size={24} /> },
-                  { key: "Info", icon: <InfoIcon size={24} /> }, // extra route
+                  { key: "Posts", title: "Posts" },
+                  { key: "Images", title: "Pictures" },
+                  { key: "Info", title: "Details" }, // extra route
                ]}
                scenes={{
                   Posts: () => <ProfilePosts item={USER_POSTS} />,
                   profile: () => <ProfileGallery />,
                   info: () => <ProfileInfo />,
                }}
-               activeColor={appColors.primary}
-            />
+            /> */}
          </View>
       </View>
    );

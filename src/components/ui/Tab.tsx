@@ -1,82 +1,147 @@
+// import { TiktokFont } from "@/assets/fonts/FontFamily";
+// import { hp, wp } from "@/src/constant/common";
+// import React, { useState } from "react";
+// import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+
+// type TabRoute = {
+//    key: string;
+//    title: string;
+// };
+
+// type TabProps = {
+//    routes: TabRoute[];
+//    scenes: { [key: string]: React.ReactNode };
+//    initialKey?: string;
+//    activeColor?: string;
+//    inactiveColor?: string;
+//    indicatorColor?: string;
+// };
+
+// export default function SimpleTabs({
+//    routes,
+//    scenes,
+//    initialKey,
+//    activeColor = "#000",
+//    inactiveColor = "#999",
+//    indicatorColor = "#000",
+// }: TabProps) {
+//    const [activeKey, setActiveKey] = useState(initialKey ?? routes[0].key);
+
+//    return (
+//       <View style={{ flex: 1 }}>
+//          {/* Tab Bar */}
+//          <View style={styles.tabBar}>
+//             {routes.map((route) => {
+//                const isActive = route.key === activeKey;
+//                return (
+//                   <Pressable key={route.key} onPress={() => setActiveKey(route.key)} style={styles.tabButton}>
+//                      <Text style={[styles.tabText, { color: isActive ? activeColor : inactiveColor }]}>
+//                         {route.title}
+//                      </Text>
+//                      {isActive && <View style={[styles.indicator, { backgroundColor: indicatorColor }]} />}
+//                   </Pressable>
+//                );
+//             })}
+//          </View>
+
+//          {/* Active Scene */}
+//          <ScrollView
+//             style={{ flex: 1 }}
+//             contentContainerStyle={{ paddingBottom: 50 }}
+//             showsVerticalScrollIndicator={false}
+//          >
+//             {scenes[activeKey]}
+//          </ScrollView>
+//       </View>
+//    );
+// }
+
+// const styles = StyleSheet.create({
+//    tabBar: {
+//       flexDirection: "row",
+//       backgroundColor: "#fff",
+//       borderBottomWidth: 1,
+//       borderBottomColor: "#ddd",
+//       paddingHorizontal: wp(4),
+//       gap: 20,
+//    },
+//    tabButton: {
+//       paddingVertical: 20,
+//    },
+//    tabText: {
+//       fontSize: hp(1.8),
+//       fontFamily: TiktokFont.TiktokMedium,
+//    },
+//    indicator: {
+//       marginTop: 4,
+//       height: 3,
+//       width: "100%",
+//       position: "absolute",
+//       bottom: -1.5,
+//       borderRadius: 20,
+//    },
+// });
+
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/src/constant/colors";
-import React, { useCallback, useState } from "react";
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { TabView } from "react-native-tab-view";
+import { hp, wp } from "@/src/constant/common";
+import React, { useRef, useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type TabRoute = {
-   key: string;
-   title?: string;
-   icon?: React.ReactNode; // can be <Icon /> or JSX
-};
+type TabRoute = { key: string; title: string };
 
 type Props = {
-   routes: TabRoute[] | any;
-   scenes: Record<string, React.ComponentType<any>>;
-   initialIndex?: number;
+   header: React.ReactNode;
+   routes: TabRoute[];
+   scenes: { [key: string]: React.ReactNode };
+   initialKey?: string;
    activeColor?: string;
    inactiveColor?: string;
    indicatorColor?: string;
 };
 
-export default function CustomTabView({
+export default function StickyTabs({
+   header,
    routes,
    scenes,
-   initialIndex = 0,
-   activeColor = appColors.primary,
-   inactiveColor = appColors.grey,
-   indicatorColor = appColors.primary,
+   initialKey,
+   activeColor = "#000",
+   inactiveColor = "#999",
+   indicatorColor = "#000",
 }: Props) {
-   const [index, setIndex] = useState(initialIndex);
-   // const [index, setIndex] = useState(initialIndex);
+   const [activeKey, setActiveKey] = useState(initialKey ?? routes[0].key);
+   const scrollRef = useRef<ScrollView>(null);
 
-   const renderScene = useCallback(
-      ({ route }: { route: TabRoute }) => {
-         const Scene = scenes[route.key];
-         return Scene ? <Scene /> : null;
-      },
-      [scenes]
-   );
+   const { bottom } = useSafeAreaInsets();
 
-   const renderTabBar = useCallback(
-      (props: any) => {
-         const inputRange = props.navigationState.routes.map((_: any, i: number) => i);
+   return (
+      <ScrollView
+         style={{ flex: 1, backgroundColor: appColors.white, marginBottom: bottom }}
+         stickyHeaderIndices={[1]}
+         showsVerticalScrollIndicator={false}
+         ref={scrollRef}
+      >
+         <View>{header}</View>
 
-         return (
+         <View>
             <View style={styles.tabBar}>
-               {props.navigationState.routes.map((route: TabRoute, i: number) => {
-                  const opacity = props.position.interpolate({
-                     inputRange,
-                     outputRange: inputRange.map((inputIndex: number) => (inputIndex === i ? 1 : 0.6)),
-                  });
-
-                  const isActive = index === i;
-                  const color = isActive ? activeColor : inactiveColor;
-
+               {routes.map((route) => {
+                  const isActive = route.key === activeKey;
                   return (
-                     <TouchableOpacity key={route.key} style={[styles.tabItem]} onPress={() => setIndex(i)}>
-                        <Animated.View style={[styles.tabContent]}>
-                           {route.icon && <View style={[styles.icon]}>{route.icon}</View>}
-                           {route.title && <Text style={[styles.tabText, { color: color }]}>{route.title}</Text>}
-                        </Animated.View>
-
+                     <Pressable key={route.key} onPress={() => setActiveKey(route.key)} style={styles.tabButton}>
+                        <Text style={[styles.tabText, { color: isActive ? activeColor : inactiveColor }]}>
+                           {route.title}
+                        </Text>
                         {isActive && <View style={[styles.indicator, { backgroundColor: indicatorColor }]} />}
-                     </TouchableOpacity>
+                     </Pressable>
                   );
                })}
             </View>
-         );
-      },
-      [index, activeColor, inactiveColor, indicatorColor]
-   );
+         </View>
 
-   return (
-      <TabView
-         navigationState={{ index, routes }}
-         renderScene={renderScene}
-         renderTabBar={renderTabBar}
-         onIndexChange={setIndex}
-      />
+         <View style={{ paddingVertical: 16 }}>{scenes[activeKey]}</View>
+      </ScrollView>
    );
 }
 
@@ -86,32 +151,21 @@ const styles = StyleSheet.create({
       backgroundColor: "#fff",
       borderBottomWidth: 1,
       borderBottomColor: "#ddd",
+      paddingHorizontal: wp(4),
+      gap: 20,
    },
-   tabItem: {
-      flex: 1,
-      alignItems: "center",
-      position: "relative",
+   tabButton: {
       paddingVertical: 12,
    },
-   tabContent: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 6,
-   },
    tabText: {
-      fontSize: 14,
+      fontSize: hp(1.8),
       fontFamily: TiktokFont.TiktokMedium,
-      color: "black",
-   },
-   icon: {
-      // marginRight: 4,
    },
    indicator: {
       height: 3,
       width: "100%",
-      borderRadius: 2,
-      marginTop: 6,
       position: "absolute",
-      bottom: 0,
+      bottom: -1.5,
+      borderRadius: 20,
    },
 });

@@ -136,10 +136,11 @@ export default function Post({
       <>
          <View style={{ backgroundColor: appColors.white }} className="overflow-hidden">
             <PostHeader
-               avatar={post.author.avatarUrl}
+               id={post?.author.id}
+               avatar={post?.author.avatarUrl}
                name={fullName}
-               username={post.author.username}
-               date={post.created_at}
+               username={post?.author.username}
+               date={post?.created_at}
                postInfo={() => setModalVisible(true)}
             />
             <View className="px-4 pb-3">

@@ -79,7 +79,7 @@ export default function Button({
                      style={{
                         fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.6) : size === "xs" ? hp(1.3) : hp(1.6),
                         textAlign: "center",
-                        fontFamily: TiktokFont.TiktokMedium,
+                        fontFamily: TiktokFont.TiktokSemiBold,
                      }}
                   >
                      {text}
