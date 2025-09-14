@@ -1,8 +1,8 @@
 import ProfileGallery from "@/src/components/profile/ProfileGallery";
+import ProfileInfo from "@/src/components/profile/ProfileInfo";
 import ProfilePosts from "@/src/components/profile/ProfilePosts";
 import StickyTabs from "@/src/components/ui/Tab";
 import UserHeader from "@/src/components/user/UserHeader";
-import UserInfo from "@/src/components/user/UserInfo";
 import { getPostsUserById } from "@/src/Services/posts";
 import { getProfileById } from "@/src/Services/profiles";
 import { useQuery } from "@tanstack/react-query";
@@ -27,8 +27,6 @@ export default function id() {
       queryFn: async () => getProfileById(id),
    });
 
-   console.log(JSON.stringify(USER_POSTS, null, 2));
-
    return (
       <>
          <Stack.Screen
@@ -47,7 +45,7 @@ export default function id() {
             scenes={{
                Post: <ProfilePosts item={USER_POSTS} />,
                Images: <ProfileGallery />,
-               About: <UserInfo profile={PROFILE} />,
+               About: <ProfileInfo profile={PROFILE} />,
             }}
          />
       </>

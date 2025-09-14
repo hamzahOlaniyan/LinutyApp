@@ -1,5 +1,4 @@
 import { ImageIcon } from "@/assets/icons/ImageIcon";
-import { PublishIcon } from "@/assets/icons/publishIcon";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
 import { Image } from "expo-image";
@@ -47,7 +46,7 @@ export default function UserHeader({ profile }: { profile: any }) {
                            <AppText weight="med">347</AppText>
                         </View>
                         <View className="flex-row gap-1">
-                           <AppText color={appColors.grey}>mutual Friends:</AppText>
+                           <AppText color={appColors.grey}>Mutual friends</AppText>
                            <AppText weight="semi">3</AppText>
                         </View>
                      </View>
@@ -61,7 +60,7 @@ export default function UserHeader({ profile }: { profile: any }) {
             </AppText>
          </View>
          <View className="flex-row justify-between gap-2">
-            <Button size="sm" text="Add friend" className="flex-1" icon={<PublishIcon />} />
+            <Button size="sm" text="Add friend" className="flex-1" />
          </View>
       </View>
    );

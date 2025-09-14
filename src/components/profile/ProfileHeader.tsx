@@ -4,7 +4,7 @@ import { wp } from "@/src/constant/common";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
@@ -18,7 +18,7 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias obcaecati tempora saepe deleniti ipsa eveniet numquam modi reiciendis dolore nemo perspiciatis totam debitis.";
 
    return (
-      <View style={{ paddingHorizontal: wp(3) }} className="gap-6">
+      <View style={{ paddingHorizontal: wp(3) }} className="gap-6 mb-6">
          <View className="w-full h-36 rounded-lg overflow-hidden">
             <Image
                source={userProfile?.cover_photo || userProfile?.cover_photo}
@@ -66,14 +66,15 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
             )}
          </View>
          <View className="flex-row justify-between gap-2">
-            <Button text="Manage your profile" className="flex-1" />
-            <Pressable
-               style={{ backgroundColor: appColors.extralightOlive }}
+            <Button size="sm" text="Manage your profile" className="flex-1" />
+            <Button
+               text="Edit profile"
+               size="sm"
+               icon={<EditIcon />}
+               variant="secondary"
                onPress={() => router.push("/(app)/(profile)/edit")}
                className="justify-center rounded-full p-3 px-6 flex-row gap-2"
-            >
-               <EditIcon /> <AppText weight="semi">Edit profile</AppText>
-            </Pressable>
+            />
          </View>
       </View>
    );

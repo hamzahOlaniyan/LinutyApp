@@ -33,10 +33,11 @@ export default function StickyTabs({
 
    return (
       <ScrollView
-         style={{ flex: 1, backgroundColor: appColors.white, marginBottom: bottom }}
+         style={{ flex: 1, backgroundColor: appColors.white, marginBottom: bottom, paddingBottom: 200 }}
          stickyHeaderIndices={[1]}
          showsVerticalScrollIndicator={false}
          ref={scrollRef}
+         decelerationRate={0.8}
       >
          <View>{header}</View>
 

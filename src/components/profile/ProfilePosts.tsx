@@ -13,22 +13,9 @@ export default function ProfilePosts({ item }: any) {
          ) : (
             <View className="bg-red-700">
                {item?.map((item: any) => (
-                  <PostCard key={item?.id} post={item} comments={undefined} />
+                  <PostCard key={item?.id} post={item} comments={undefined} loading={false} />
                ))}
             </View>
-            // <FlatList
-            //    data={item || []}
-            //    renderItem={({ item }) => <PostCard post={item} comments={undefined} />}
-            //    scrollEnabled
-            //    showsVerticalScrollIndicator={false}
-            //    decelerationRate={0.5}
-            //    contentContainerStyle={{
-            //       rowGap: 10,
-            //       paddingBottom: 50,
-            //       backgroundColor: appColors.extralightOlive,
-            //       paddingTop: 1,
-            //    }}
-            // />
          )}
       </View>
    );

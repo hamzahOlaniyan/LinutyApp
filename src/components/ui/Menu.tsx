@@ -1,7 +1,8 @@
 import { FilterIcon } from "@/assets/icons/filter";
 import { appColors } from "@/src/constant/colors";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import AppText from "./AppText";
 
 type MenuProps = {
@@ -11,6 +12,28 @@ type MenuProps = {
 export default function Menu({ options }: MenuProps) {
    const [showMenu, setShowMenu] = useState(false);
    const [selected, setSelected] = useState<string | null>(null);
+
+   const scale = useSharedValue(2);
+   const opacity = useSharedValue(0);
+
+   useEffect(() => {
+      if (showMenu) {
+         // animate in
+         scale.value = withSpring(1, { damping: 15 });
+         opacity.value = withTiming(1);
+      } else {
+         // animate out
+         scale.value = withTiming(0.9);
+         opacity.value = withTiming(0);
+      }
+   }, [showMenu]);
+
+   const animatedStyle = useAnimatedStyle(() => {
+      return {
+         opacity: opacity.value,
+         transform: [{ scale: scale.value }],
+      };
+   });
 
    const selectClan = ["none", "yellow", "black", "white", "pink"];
 
@@ -26,10 +49,7 @@ export default function Menu({ options }: MenuProps) {
 
    return (
       <View className="w-full relative">
-         <View
-            // style={{ borderWidth: 0.5, borderRadius: 6, borderColor: appColors.black }}
-            className="flex-row items-center px-2"
-         >
+         <View className="flex-row items-center px-2">
             {selected && (
                <View className="p-2">
                   <AppText cap="capitalize">{selected}</AppText>
@@ -41,9 +61,8 @@ export default function Menu({ options }: MenuProps) {
          </View>
 
          {showMenu && (
-            // <View className="bg-black h-full w-full absolute top-0 left-0 right-0">
-            <View
-               style={{ borderWidth: 1, borderRadius: 6, borderColor: appColors.bordersLight }}
+            <Animated.View
+               style={[{ borderWidth: 1, borderRadius: 6, borderColor: appColors.bordersLight }, animatedStyle]}
                className="absolute -left-20 top-10 bg-white elevation-xl rounded-lg shadow-lg w-64"
             >
                <View style={{ borderBottomColor: appColors.bordersLight, borderBottomWidth: 1 }} className="p-4 py-2">
@@ -54,8 +73,7 @@ export default function Menu({ options }: MenuProps) {
                      <AppText cap="capitalize">{opt}</AppText>
                   </TouchableOpacity>
                ))}
-            </View>
-            // </View>
+            </Animated.View>
          )}
       </View>
    );
