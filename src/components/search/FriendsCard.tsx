@@ -1,4 +1,3 @@
-import { Octicons } from "@expo/vector-icons";
 import { useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { Pressable, View } from "react-native";
@@ -70,9 +69,9 @@ export default function FriendsCard({ id, avatar, name, username }: FriendsCardP
                   <AppText weight="semi" cap="capitalize">
                      {name}
                   </AppText>
-                  <Octicons name="dot-fill" size={6} className="relative top-[2px]" />
+                  {/* <Octicons name="dot-fill" size={6} className="relative top-[2px]" /> */}
                </View>
-               <AppText size="sm" weight="med" cap="capitalize" color={appColors.grey}>
+               <AppText size="sm" weight="light" color={appColors.grey}>
                   @{username}
                </AppText>
             </View>

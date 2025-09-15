@@ -54,10 +54,6 @@ export default function Post({
    const isComment = post.parent_id !== null;
    const isUserOwner = profile?.id === post?.author?.id;
 
-   // console.log("post", JSON.stringify(post, null, 2));
-
-   // console.log(JSON.stringify(post, null, 2));
-
    const deletePostMutation = useMutation({
       mutationFn: (postId: string) => deletePost(postId),
       onSuccess: () => {

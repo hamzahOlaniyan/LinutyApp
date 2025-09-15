@@ -94,8 +94,6 @@ export default function CoverImagepicker() {
       });
    };
 
-   console.log(JSON.stringify(profile, null, 2));
-
    // const removeImage = (uriToRemove: string) => {
    //    setImage((prev) => prev.filter((img) => img.uri !== uriToRemove));
    // };

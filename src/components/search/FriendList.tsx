@@ -18,8 +18,6 @@ export default function FriendList() {
       enabled: !!profile?.id,
    });
 
-   // console.log(JSON.stringify(friends, null, 2));
-
    return (
       <View className="gap-5 py-4">
          {friends?.map((item: any, idx: number) => (

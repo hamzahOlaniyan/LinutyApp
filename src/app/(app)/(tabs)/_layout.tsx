@@ -46,7 +46,7 @@ export default function TabLayout() {
             }}
          />
          <Tabs.Screen
-            name="search"
+            name="Friends"
             options={{
                title: "Find friends",
                headerShown: false,
