@@ -23,6 +23,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
             backgroundImage: "./assets/images/adaptive-icon.png",
          },
          edgeToEdgeEnabled: true,
+         softwareKeyboardLayoutMode: "pan",
       },
       web: {
          bundler: "metro",

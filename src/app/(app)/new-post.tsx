@@ -73,7 +73,7 @@ export default function NewPost() {
                keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 80}
                className="relative"
             >
-               <View style={{ backgroundColor: appColors.extralightOlive, height: hp(20) }} className="rounded-xl p-2">
+               <View style={{ backgroundColor: appColors.offWhite, height: hp(20) }} className="rounded-xl p-2">
                   <TextInput
                      style={{
                         fontSize: hp(3),

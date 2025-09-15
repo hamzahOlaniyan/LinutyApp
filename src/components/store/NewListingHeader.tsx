@@ -5,14 +5,27 @@ import { View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 
-export default function NewListingHeader({ user, image }: { image: any; user: string }) {
+export default function NewListingHeader({
+   firstName,
+   lastName,
+   image,
+}: {
+   image: any;
+   firstName: string;
+   lastName: string;
+}) {
    return (
-      <View className="flex-row gap-2 my-4 items-center">
+      <View className="flex-row gap-2 my-4 items-center w-full flex-1">
          <Avatar path={image} size={35} />
          <View className="w-full">
-            <AppText weight="med" cap="capitalize">
-               {user}
-            </AppText>
+            <View className="flex-row gap-1">
+               <AppText weight="semi" cap="capitalize">
+                  {firstName}
+               </AppText>
+               <AppText weight="semi" cap="capitalize">
+                  {lastName}
+               </AppText>
+            </View>
             <View className="flex-row gap-3 items-center">
                <AppText size="sm" color={appColors.grey}>
                   Listing in Store

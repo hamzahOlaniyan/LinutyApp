@@ -1,10 +1,10 @@
 import Svg, { Path } from "react-native-svg";
 
-export const Home = ({ color = "#1f1f1f", size = 28, ...props }) => {
+export const Home = ({ color = "#1f1f1f", size = 24, ...props }) => {
    return (
       <Svg viewBox="0 -960 960 960" fill={color} width={size} height={size} {...props}>
          <Path
-            d="M225.39-185.39h155.76v-244.99h197.7v244.99h155.76v-381.92L480-759.23 225.39-567.44v382.05ZM180-140v-450l300-225.77L780-590v450H533.46v-245H426.54v245H180Zm300-332.62Z"
+            d="M221-180h138v-257h243v257h137v-389L480-763 221-569.33V-180Zm-73 73v-499l332-248 332 248v499H529v-257h-97v257H148Zm332-365Z"
             fill={color}
          />
       </Svg>

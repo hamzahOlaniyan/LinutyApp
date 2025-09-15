@@ -2,58 +2,26 @@
 // import { hp, wp } from "@/src/common";
 // import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import React, { useRef, useState } from "react";
+import React from "react";
 import { Animated, Pressable, View } from "react-native";
 // import { useAuthStore } from "../context/authStore";
 // import { useThemeStore } from "../context/themeStore";
 // import { getNotfication } from "../Services/Notification";
 // import SupabaseImage from "./SupabaseImage";
+import { AddCircleIcon } from "@/assets/icons/addCircle";
 import { Notification } from "@/assets/icons/notification";
-import { Plus } from "@/assets/icons/plus";
 import { Image } from "expo-image";
+import { appColors } from "../constant/colors";
 import { GLOBAL_STYLES } from "../constant/globalStyles";
 import { useAuthStore } from "../store/authStore";
-import Button from "./ui/Button";
+import Avatar from "./Avatar";
+import Menu from "./ui/Menu";
 
-export default function HomeHeaderMenu({ headerTranslateY }: { headerTranslateY?: any }) {
+export default function HomeHeaderMenu() {
    const { profile } = useAuthStore();
    // const { currentTheme } = useThemeStore();
 
    const router = useRouter();
-
-   // console.log(JSON.stringify(profile, null, 2));
-
-   const scrollY = useRef(new Animated.Value(0)).current;
-   const lastOffset = useRef(0);
-   const [showHeader, setShowHeader] = useState(true);
-
-   // const headerTranslateY = useRef(new Animated.Value(0)).current;
-
-   // const toggleHeader = (show: boolean) => {
-   //    Animated.timing(headerTranslateY, {
-   //       toValue: show ? 0 : -100, // slide up or down
-   //       duration: 200,
-   //       useNativeDriver: true,
-   //    }).start();
-   // };
-
-   // const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-   //    const currentOffset = e.nativeEvent.contentOffset.y;
-
-   //    if (currentOffset > lastOffset.current && showHeader) {
-   //       // scrolling down → hide
-   //       setShowHeader(false);
-   //       toggleHeader(false);
-   //    } else if (currentOffset < lastOffset.current && !showHeader) {
-   //       // scrolling up → show
-   //       setShowHeader(true);
-   //       toggleHeader(true);
-   //    }
-
-   //    lastOffset.current = currentOffset;
-   // };
-
-   // const queryClient = useQueryClient();
 
    // const { data: notifications } = useQuery({
    //    queryKey: ["notification", currentUser?.id],
@@ -110,38 +78,33 @@ export default function HomeHeaderMenu({ headerTranslateY }: { headerTranslateY?
          style={[
             GLOBAL_STYLES.screenPadding,
             {
-               transform: [{ translateY: headerTranslateY }],
-               position: "absolute",
-               top: 0,
-               left: 0,
-               right: 0,
                zIndex: 10,
-               backgroundColor: "white",
+               borderBottomColor: appColors.bordersLight,
+               borderBottomWidth: 1,
             },
          ]}
-         className="flex-row items-end  justify-between py-2 bg-white"
+         className="flex-row items-center justify-between py-1 gap-10 bg-white"
       >
          <Image
             source={require("@/assets/images/linuty.png")}
             style={{
-               width: 90,
-               height: 35,
-               alignSelf: "center",
-               justifyContent: "center",
-               position: "relative",
-               top: 5,
+               width: 80,
+               height: 30,
             }}
             contentFit="contain"
          />
-         <View className="flex-row items-center justify-center gap-2">
-            <Button size="xs" onPress={() => router.push("/(app)/new-post")}>
-               <Plus size={24} />
-            </Button>
-            <Pressable onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
-               <Notification size={24} />
+         <View className="flex-row items-center justify-between w-full flex-1">
+            <View className="relative">
+               <Menu />
+            </View>
+            <Pressable onPress={() => router.push("/(app)/new-post")}>
+               <AddCircleIcon />
             </Pressable>
-            <Pressable onPress={() => router.push("/")}>
-               <Image source={{ uri: profile?.avatarUrl }} style={{ width: 40, height: 40, borderRadius: 100 }} />
+            <Pressable onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
+               <Notification />
+            </Pressable>
+            <Pressable onPress={() => router.push("/(app)/(profile)")}>
+               <Avatar path={profile?.avatarUrl} size={40} />
             </Pressable>
          </View>
       </Animated.View>

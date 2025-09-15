@@ -28,6 +28,7 @@ export default function Post({
    count,
    comments,
    setPostID,
+   loading,
 }: {
    post: any;
    showMoreIcon?: boolean;
@@ -35,6 +36,7 @@ export default function Post({
    count?: number;
    comments: any;
    setPostID?: any;
+   loading: boolean;
 }) {
    const { profile } = useAuthStore();
    // const { currentTheme } = useThemeStore();
@@ -51,10 +53,6 @@ export default function Post({
    const fullName = post.author.firstName + post.author.lastName;
    const isComment = post.parent_id !== null;
    const isUserOwner = profile?.id === post?.author?.id;
-
-   // console.log("post", JSON.stringify(post, null, 2));
-
-   // console.log(JSON.stringify(post, null, 2));
 
    const deletePostMutation = useMutation({
       mutationFn: (postId: string) => deletePost(postId),
@@ -132,15 +130,16 @@ export default function Post({
 
    return (
       <>
-         <View style={{ backgroundColor: appColors.white }} className="rounded-2xl overflow-hidden">
+         <View style={{ backgroundColor: appColors.white }} className="overflow-hidden">
             <PostHeader
-               avatar={post.author.avatarUrl}
+               id={post?.author.id}
+               avatar={post?.author.avatarUrl}
                name={fullName}
-               username={post.author.username}
-               date={post.created_at}
+               username={post?.author.username}
+               date={post?.created_at}
                postInfo={() => setModalVisible(true)}
             />
-            <View className="px-4 py-1">
+            <View className="px-4 pb-3">
                <AppText size="lg">{post?.content}</AppText>
             </View>
 
@@ -179,7 +178,7 @@ export default function Post({
             isOpen={showComments}
             onClose={() => setShowComments(false)}
             heading={`${count} Comments`}
-            children={<Comments data={comments} />}
+            children={<Comments data={comments} loading={loading} />}
          />
          <BottomSheet
             isOpen={modalVisible}
