@@ -1,3 +1,4 @@
+import { PublishIcon } from "@/assets/icons/publishIcon";
 import NewListingHeader from "@/src/components/store/NewListingHeader";
 import ProductImagePicker from "@/src/components/store/ProductImagePicker";
 import AppText from "@/src/components/ui/AppText";
@@ -15,7 +16,7 @@ import React, { useState } from "react";
 import { Alert, ScrollView, View } from "react-native";
 
 const ProductCondition = ["new", "used - like", "used - good", "used - fair"];
-const ProductCategory = ["electrionic", "furniture", "vehicle", "other"];
+export const ProductCategory = ["electrionic", "furniture", "vehicle", "other"];
 const available = ["immediatly", "in a week", "in a month ", "other"];
 
 export default function NewProduct() {
@@ -95,8 +96,23 @@ export default function NewProduct() {
    });
 
    return (
-      <ScrollView className="relative" style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }}>
-         <NewListingHeader image={profile?.avatarUrl} user={profile?.firstName + profile?.lastName} />
+      <ScrollView
+         decelerationRate={0.8}
+         className="relative"
+         style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }}
+      >
+         {/* <View className="flex-row items-center"> */}
+         <View className="w-full flex-row relative justify-center items-center">
+            <NewListingHeader image={profile?.avatarUrl} firstName={profile?.firstName} lastName={profile?.lastName} />
+            <Button
+               size="sm"
+               text="Publish"
+               onPress={() => mutate()}
+               isLoading={isPending}
+               icon={<PublishIcon size={20} />}
+            />
+         </View>
+         {/* </View> */}
          <ProductImagePicker onPickLocal={(uri: []) => setProductImage(uri)} />
          <View style={{ paddingBottom: 200, paddingTop: 30 }} className="gap-4 flex-1">
             <AppText weight="semi">Product Information</AppText>
@@ -130,9 +146,7 @@ export default function NewProduct() {
                modalTitle="Availability"
             />
             <InputArea placeholder="Description" value={description} onChangeText={setDescription} inputMode="text" />
-            <View className="my-12">
-               <Button text="Publish" onPress={() => mutate()} isLoading={isPending} />
-            </View>
+
             <View className="">
                <AppText>
                   Store items are public and can be seen by anyone on Linuty. Store listing must not decriminate.

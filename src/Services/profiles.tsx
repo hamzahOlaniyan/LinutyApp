@@ -1,10 +1,10 @@
-import { TablesUpdate } from "@/supabase/types/database.types";
+// import { TablesUpdate } from "@/supabase/types/database.types";
 import { supabase } from "../lib/supabase";
 
 export const getProfiles = async (id: any) => {
    const { data, count } = await supabase
       .from("profiles")
-      .select("id, username, full_name, avatar_url", { count: "exact" })
+      .select("id, username, firstName,lastName, avatarUrl", { count: "exact" })
       .neq("id", id)
       .throwOnError();
    return { data, count };
@@ -15,7 +15,7 @@ export const getProfileById = async (id: string) => {
    return data;
 };
 
-export const updateProfile = async (id: string, updateProfile: TablesUpdate<"profiles">) => {
+export const updateProfile = async (id: string, updateProfile: any) => {
    const { data } = await supabase
       .from("profiles")
       .update(updateProfile)
@@ -24,9 +24,4 @@ export const updateProfile = async (id: string, updateProfile: TablesUpdate<"pro
       .select("*")
       .maybeSingle();
    return data;
-};
-
-export const checkProfileComplete = async (userId: string) => {
-   const { data } = await supabase.from("profiles").select("isComplete").eq("id", userId).single();
-   return data?.isComplete === true;
 };

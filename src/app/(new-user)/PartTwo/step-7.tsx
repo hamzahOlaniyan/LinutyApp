@@ -15,8 +15,6 @@ export default function Step7() {
    const { form, errors, updateField, setError, nextStep, resetErrors, reset } = useRegistrationStore();
    const { session } = useAuthStore();
 
-   console.log(JSON.stringify(form, null, 2));
-
    const [loading, setLoading] = useState(false);
 
    const router = useRouter();

@@ -1,4 +1,5 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 // import { useThemeStore } from "@/src/context/themeStore";
 import React from "react";
@@ -16,6 +17,7 @@ type AppTextProps = {
    style?: any;
    align?: "left" | "right" | "center";
    className?: string;
+   onPress?: () => void;
 };
 
 export default function AppText({
@@ -23,10 +25,11 @@ export default function AppText({
    size = "md",
    weight = "reg",
    cap,
-   color,
+   color = appColors.text,
    style,
    align,
    className,
+   onPress,
 }: AppTextProps) {
    // const { currentTheme } = useThemeStore();
 
@@ -39,7 +42,7 @@ export default function AppText({
       lg: hp(1.9),
       md: hp(1.7),
       sm: hp(1.5),
-      xs: hp(1.2),
+      xs: hp(1.3),
       xxs: hp(0.9),
    }[size];
 
@@ -56,6 +59,7 @@ export default function AppText({
 
    return (
       <Text
+         onPress={onPress}
          style={[
             style,
             {

@@ -32,18 +32,20 @@ export default function AppLayout() {
          <Stack.Screen
             name="(profile)"
             options={{
-               title: "profile",
-               animation: "slide_from_right",
+               title: "Profile",
+               headerShown: false,
+               headerShadowVisible: false,
             }}
          />
          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+         <Stack.Screen name="(user)/[id]" />
          <Stack.Screen
             name="new-post"
             options={{
                title: "New post",
                headerTitleAlign: "left",
                headerShadowVisible: false,
-               animation: "slide_from_bottom",
+               animation: "none",
             }}
          />
          <Stack.Screen
@@ -52,6 +54,7 @@ export default function AppLayout() {
                title: "Notification",
                headerTitleAlign: "left",
                headerShadowVisible: false,
+               animation: "none",
             }}
          />
       </Stack>

@@ -3,9 +3,8 @@ import { appColors } from "@/src/constant/colors";
 import { Fontisto } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
-import { Alert, FlatList, Image, View } from "react-native";
+import { Alert, FlatList, Image, Pressable, View } from "react-native";
 import AppText from "../ui/AppText";
-import Button from "../ui/Button";
 
 interface Props {
    size?: number;
@@ -72,7 +71,7 @@ export default function ProductImagePicker({ url, size = 200, onPickLocal, picke
                   contentContainerStyle={{
                      marginVertical: 10,
                      columnGap: 10,
-                     backgroundColor: appColors.extralightOlive,
+                     backgroundColor: appColors.selectedTeply,
                      padding: 10,
                      borderRadius: 10,
                   }}
@@ -89,15 +88,18 @@ export default function ProductImagePicker({ url, size = 200, onPickLocal, picke
                      </View>
                   )}
                   ListHeaderComponent={
-                     <View className="w-24 h-40 rounded-md justify-center">
+                     <View
+                        style={{ borderWidth: 0.8, borderColor: appColors.inputInactive, padding: 5 }}
+                        className="w-28 h-40 rounded-md justify-center "
+                     >
                         <View className="">
-                           <Button
+                           <Pressable
                               onPress={pickStoreImage}
-                              className="items-center gap-2 mr-2 relative p-2 justify-center"
+                              className="items-center rounded-full gap-2 mr-2 relative p-2 justify-center"
                            >
-                              <ImageIcon />
-                           </Button>
-                           <AppText size="sm" weight="med">
+                              <ImageIcon color={appColors.grey} />
+                           </Pressable>
+                           <AppText size="sm" weight="med" align="center" color={appColors.grey}>
                               Add Photo
                            </AppText>
                         </View>

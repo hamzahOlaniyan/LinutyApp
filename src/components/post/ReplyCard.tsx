@@ -14,7 +14,7 @@ export default function ReplyCard({ reply }: { reply: any }) {
    return (
       <View className="flex-row gap-3 items-center my-2">
          <Avatar path={reply?.author?.avatarUrl} size={35} />
-         <View>
+         <View className="flex-1">
             <View className="flex-row">
                <View className="flex-row items-center gap-1">
                   <AppText size="sm" weight="semi" cap="capitalize" color={appColors.grey}>
@@ -25,7 +25,9 @@ export default function ReplyCard({ reply }: { reply: any }) {
                   <TimeAgo time={reply?.created_at} size="sm" color={appColors.grey} />
                </View>
             </View>
-            <AppText size="lg">{reply?.content}</AppText>
+            <AppText weight="reg" size="lg">
+               {reply?.content}
+            </AppText>
          </View>
       </View>
    );

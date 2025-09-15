@@ -8,16 +8,17 @@ import { TextInput, TextInputProps, View } from "react-native";
 
 type SearchProps = TextInputProps & {
    onPress?: () => void;
+   placeholder?: string;
 };
 
-export default function Searchbar({ value, onChangeText, onPress, ...rest }: SearchProps) {
+export default function Searchbar({ value, onChangeText, onPress, placeholder, ...rest }: SearchProps) {
    // const { currentTheme } = useThemeStore();
 
    return (
       <View
          style={{
-            height: hp(4.5),
-            backgroundColor: appColors.extralightOlive,
+            height: hp(5),
+            backgroundColor: appColors.searchBar,
          }}
          className={`w-full flex-row bg-offwightGreen items-center justify-center px-4 rounded-full gap-3`}
       >
@@ -25,9 +26,9 @@ export default function Searchbar({ value, onChangeText, onPress, ...rest }: Sea
          <TextInput
             value={value}
             onChangeText={onChangeText}
-            style={{ fontSize: hp(2), fontFamily: TiktokFont.TiktokRegular }}
-            className="flex-1 font-SansReg"
-            placeholder="search item"
+            style={{ fontSize: hp(1.8), fontFamily: TiktokFont.TiktokLight }}
+            className="flex-1"
+            placeholder={placeholder}
             placeholderTextColor={appColors.placeholder}
             autoCapitalize="none"
             {...rest}

@@ -2,12 +2,15 @@ export const appColors = {
    // primary: "#1e9187",
    primary: "#319295",
    lightOlive: "#daf2ea",
-   extralightOlive: "#f3fbf8",
+   extralightOlive: "#e1e7e5",
+   selectedTeply: "#f3fbf8",
+
    offWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",
-   searchBar: "#f1f1f1",
+   kkkk: "#e1e1e1",
+   searchBar: "#f4f4f4",
    white: "#fff",
-   black: "#262626",
+   black: "#000000",
    placeholder: "#767f86",
    error: "#ff3232",
    inputInactive: "#aebbc8",
@@ -15,6 +18,7 @@ export const appColors = {
    buttonOutline: "#006891",
    text: "#262626",
    grey: "#6b6b6b",
+   bordersLight: "#e8edeb",
 
    gradients: {
       primary: ["#68be91", "#006891", "#36326c"] as const,

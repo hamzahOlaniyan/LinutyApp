@@ -1,9 +1,9 @@
 import { Community } from "@/assets/icons/community";
 import { CommunityOtline } from "@/assets/icons/community-outline";
+import { GroupIcon } from "@/assets/icons/groupIcon";
+import { GroupIconSolid } from "@/assets/icons/groupIconSolid";
 import { Home } from "@/assets/icons/home";
 import { HomeSolid } from "@/assets/icons/home-solid";
-import { Search2 } from "@/assets/icons/search-2";
-import { Search2Outline } from "@/assets/icons/search-2-outline";
 import { Store } from "@/assets/icons/store";
 import { StoreSolid } from "@/assets/icons/store-solid";
 import { appColors } from "@/src/constant/colors";
@@ -19,22 +19,19 @@ export default function TabLayout() {
          screenOptions={{
             headerTitleAlign: "center",
             tabBarShowLabel: false,
-            tabBarLabelStyle: { margin: 0, padding: 0 },
             headerShadowVisible: false,
             tabBarStyle: {
-               paddingBottom: insets.bottom,
-               height: 50 + insets.bottom,
+               height: 35 + insets.bottom,
                position: "absolute",
                elevation: 0,
-               borderTopColor: "transparent",
-               borderTopWidth: 0,
+               borderTopColor: appColors.bordersLight,
+               borderTopWidth: 0.5,
                shadowOpacity: 0,
-               paddingVertical: 10,
-               backgroundColor: "white",
-               borderLeftWidth: 1,
+               backgroundColor: appColors.white,
+               // backgroundColor: "green",
             },
             tabBarItemStyle: {
-               paddingVertical: 5,
+               // paddingVertical: 1,
             },
          }}
       >
@@ -49,13 +46,12 @@ export default function TabLayout() {
             }}
          />
          <Tabs.Screen
-            name="search"
+            name="Friends"
             options={{
                title: "Find friends",
                headerShown: false,
                tabBarIcon: ({ size, color, focused }) => (
-                  // <Search color={focused ? appColors.primary : appColors.tabInactive} />
-                  <View>{focused ? <Search2 color={appColors.primary} /> : <Search2Outline />}</View>
+                  <View>{focused ? <GroupIconSolid color={appColors.primary} /> : <GroupIcon />}</View>
                ),
             }}
          />
