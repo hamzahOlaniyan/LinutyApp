@@ -1,13 +1,15 @@
-import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
 // import { hp } from "../common";
 // import { colors } from "../constant/colors";
 // import { useThemeStore } from "../context/themeStore";
+import { SendIcon } from "@/assets/icons/sendIcon";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { createComment } from "@/src/Services/comment";
+import { createNotification } from "@/src/Services/Notification";
 import { useAuthStore } from "@/src/store/authStore";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
@@ -16,7 +18,7 @@ import Button from "../ui/Button";
 
 export default function CommentInput({
    postId,
-   postUserID,
+   postAuthor,
    replyToName,
    parentId,
    showKeyboard,
@@ -25,7 +27,7 @@ export default function CommentInput({
    setReplyToId,
 }: {
    postId?: string;
-   postUserID?: string;
+   postAuthor?: string;
    showKeyboard?: boolean;
    replyToName?: string | null;
    parentId?: any;
@@ -60,24 +62,26 @@ export default function CommentInput({
          console.log("✅ repliy has been sent", data);
          setCommentText("");
 
-         // if (profile.id !== postUserID) {
-         //    try {
-         //       let notify = {
-         //          senderId: profile?.id,
-         //          receiverId: postUserID,
-         //          title: commentText,
-         //          content: { postId: postId, commentId: data?.id ?? "" },
-         //       };
-         //       // await createNotification(notify);
-         //       // console.log("Notification created CREATE=====>", JSON.stringify(notify, null, 2));
-         //    } catch (error) {
-         //       console.log("Notification error", error);
-         //    }
-         // }
-         // setCommentText("");
-         // setReplyToId(null);
-         // setReplyToName(null);
-         // setShowKeyboard(false);
+         if (profile.id !== postAuthor) {
+            try {
+               let notify = {
+                  senderId: profile?.id,
+                  receiverId: postAuthor,
+                  title: commentText,
+                  content: { postId: postId, commentId: data?.id ?? "" },
+                  type: "comment",
+                  postId: postId,
+               };
+               await createNotification(notify);
+               console.log("Notification created CREATE=====>", JSON.stringify(notify, null, 2));
+            } catch (error) {
+               console.log("Notification error", error);
+            }
+         }
+         setCommentText("");
+         setReplyToId(null);
+         setReplyToName(null);
+         setShowKeyboard(false);
          await queryClient.invalidateQueries({ queryKey: ["posts"] });
          await queryClient.invalidateQueries({ queryKey: ["posts", parentId] });
          await queryClient.invalidateQueries({ queryKey: ["posts", postId] });
@@ -125,7 +129,7 @@ export default function CommentInput({
                   <TextInput
                      ref={inputRef}
                      style={{
-                        fontSize: hp(2),
+                        fontSize: hp(1.8),
                         backgroundColor: appColors.searchBar,
                         borderRadius: 100,
                         paddingHorizontal: 10,
@@ -138,14 +142,13 @@ export default function CommentInput({
                      autoFocus={false}
                   />
                </View>
-               <Button size="sm" isLoading={isPending}>
-                  <Feather
-                     onPress={() => mutate()}
-                     disabled={isPending || commentText.length === 0}
-                     size={20}
-                     name="send"
-                  />
-               </Button>
+               <Button
+                  size="sm"
+                  onPress={() => mutate()}
+                  isLoading={isPending}
+                  disabled={isPending || commentText.length === 0}
+                  icon={<SendIcon />}
+               ></Button>
             </View>
          </View>
       </KeyboardAvoidingView>

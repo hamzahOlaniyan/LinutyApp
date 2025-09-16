@@ -2,7 +2,7 @@ import ProfileGallery from "@/src/components/profile/ProfileGallery";
 import ProfileHeader from "@/src/components/profile/ProfileHeader";
 import ProfileInfo from "@/src/components/profile/ProfileInfo";
 import ProfilePosts from "@/src/components/profile/ProfilePosts";
-import StickyTabs from "@/src/components/ui/Tab";
+import StickyTabs from "@/src/components/ui/StickyTabs";
 import { getPostsUserById } from "@/src/Services/posts";
 import { getProfileById } from "@/src/Services/profiles";
 import { useAuthStore } from "@/src/store/authStore";
@@ -32,7 +32,7 @@ export default function index() {
       queryFn: async () => getProfileById(profile.id),
    });
 
-   console.log("PROFILE", JSON.stringify(PROFILE, null, 2));
+   // console.log("PROFILE", JSON.stringify(PROFILE, null, 2));
 
    return (
       <StickyTabs

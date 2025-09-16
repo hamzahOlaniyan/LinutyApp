@@ -1,3 +1,4 @@
+import { appColors } from "@/src/constant/colors";
 import React from "react";
 import { View } from "react-native";
 import PostCard from "../post/PostCard";
@@ -11,7 +12,7 @@ export default function ProfilePosts({ item }: any) {
                <AppText>You have no posts</AppText>
             </View>
          ) : (
-            <View className="bg-red-700">
+            <View style={{ backgroundColor: appColors.extralightOlive }} className="gap-2">
                {item?.map((item: any) => (
                   <PostCard key={item?.id} post={item} comments={undefined} loading={false} />
                ))}

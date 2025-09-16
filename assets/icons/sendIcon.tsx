@@ -1,10 +1,10 @@
 import Svg, { Path } from "react-native-svg";
 
-export const BackIcon = ({ color = "#1f1f1f", size = 24, ...props }) => {
+export const SendIcon = ({ color = "#1f1f1f", size = 24, ...props }) => {
    return (
       <Svg viewBox="0 -960 960 960" fill={color} width={size} height={size} {...props}>
          <Path
-            d="m294.92-450 227.85 227.85L480-180 180-480l300-300 42.77 42.15L294.92-510H780v60H294.92Z"
+            d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"
             fill={color}
          />
       </Svg>

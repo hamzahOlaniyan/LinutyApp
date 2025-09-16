@@ -1,6 +1,6 @@
 import HomeHeaderMenu from "@/src/components/HomeHeaderMenu";
 import PostCard from "@/src/components/post/PostCard";
-import PostSkeleton from "@/src/components/post/PostSkeleton";
+// import PostSkeleton from "@/src/components/post/PostSkeleton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import AppText from "@/src/components/ui/AppText";
 import { appColors } from "@/src/constant/colors";
@@ -12,15 +12,15 @@ import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import React, { useMemo, useState } from "react";
 
-import { FlatList, SafeAreaView, View } from "react-native";
+import { ActivityIndicator, FlatList, SafeAreaView, View } from "react-native";
 
 export default function index() {
    // const [showComments, setShowComments] = useState(false);
    const [postID, setPostID] = useState<string>("");
-   const [showKeyboard, setShowKeyboard] = useState(false);
-   const [replyToName, setReplyToName] = useState<string | null>(null);
-   const [replyToId, setReplyToId] = useState<string | null>(null);
-   const [lastOffset, setLastOffset] = useState(0);
+   // const [showKeyboard, setShowKeyboard] = useState(false);
+   // const [replyToName, setReplyToName] = useState<string | null>(null);
+   // const [replyToId, setReplyToId] = useState<string | null>(null);
+   // const [lastOffset, setLastOffset] = useState(0);
 
    // only top-level posts
 
@@ -53,15 +53,16 @@ export default function index() {
       return injectSponsoredBlocks(topLevelPosts as any, PRODUCT as any, 2);
    }, [topLevelPosts, PRODUCT as any]);
 
-   const skeleton = Array.from({ length: 6 }, (_, i) => <PostSkeleton key={i} />);
+   // const skeleton = Array.from({ length: 6 }, (_, i) => <PostSkeleton key={i} />);
    if (isLoading)
       return (
-         <View className="gap-8">
-            <View style={{ backgroundColor: appColors.extralightOlive }} className="gap-2">
-               <View className="w-full h-[114px] bg-white rounded-md"></View>
-               {skeleton}
-            </View>
-         </View>
+         <ActivityIndicator />
+         // <View className="gap-8">
+         //    <View style={{ backgroundColor: appColors.extralightOlive }} className="gap-2">
+         //       <View className="w-full h-[114px] bg-white rounded-md"></View>
+         //       {skeleton}
+         //    </View>
+         // </View>
       );
 
    return (

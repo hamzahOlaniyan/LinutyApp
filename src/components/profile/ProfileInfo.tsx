@@ -20,7 +20,7 @@ const InfoDetails = ({ label, value, icon }: { label?: string; icon?: React.Reac
 };
 
 export default function ProfileInfo({ item }: any) {
-   console.log("ProfileInfo", JSON.stringify(item, null, 2));
+   // console.log("ProfileInfo", JSON.stringify(item, null, 2));
 
    return (
       <View className="flex-1 px-4 gap-6">

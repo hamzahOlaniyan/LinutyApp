@@ -38,7 +38,7 @@ export default function ProductDetailsScreen() {
 
    return (
       <ScrollView contentContainerStyle={{ paddingBottom: 150 }} style={{ backgroundColor: appColors.white }}>
-         <FlatList
+         <Animated.FlatList
             data={PRODUCT_DETAIL?.images || []}
             renderItem={({ item }) => (
                <View

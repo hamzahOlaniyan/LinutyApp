@@ -12,19 +12,25 @@ export const createNotification = async (notification: any) => {
 export const getNotfication = async (recieverId: string) => {
    const { data, error } = await supabase
       .from("notification")
-      .select("*,sender: senderId(id,full_name,username,avatar_url)")
+      .select("*,sender:senderId(id,firstName, lastName,username,avatarUrl)")
       .eq("receiverId", recieverId)
       .order("created_at", { ascending: false })
       .throwOnError();
    return data;
 };
 
-export const markNotificationsAsRead = async (userId: string) => {
-   const { error } = await supabase
-      .from("notification")
-      .update({ read: true })
-      .eq("receiverId", userId)
-      .eq("read", false);
+// export const markNotificationsAsRead = async (userId: string) => {
+//    const { error } = await supabase
+//       .from("notification")
+//       .update({ read: true })
+//       .eq("receiverId", userId)
+//       .eq("read", false);
+
+//    if (error) throw new Error(error.message);
+// };
+
+export const deleteNotification = async (id: string) => {
+   const { error } = await supabase.from("notification").delete().eq("id", id);
 
    if (error) throw new Error(error.message);
 };
