@@ -39,11 +39,11 @@ export default function AppText({
       xxxl: hp(2.8),
       xxl: hp(2.6),
       xl: hp(2.3),
-      lg: hp(1.9),
-      md: hp(1.7),
-      sm: hp(1.5),
-      xs: hp(1.3),
-      xxs: hp(0.9),
+      lg: hp(2),
+      md: hp(1.8),
+      sm: hp(1.6),
+      xs: hp(1.4),
+      xxs: hp(1),
    }[size];
 
    const fontFamilyMap: Record<TextWeight, TextStyle["fontFamily"]> = {

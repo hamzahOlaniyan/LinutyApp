@@ -3,7 +3,7 @@ import ScreenWrapper from "@/src/components/ScreenWrapper";
 import FriendList from "@/src/components/search/FriendList";
 import FriendSearch from "@/src/components/search/FriendSearch";
 import ScreenHeader from "@/src/components/ui/ScreenHeader";
-import StickyTabs from "@/src/components/ui/Tab";
+import StickyTabs from "@/src/components/ui/StickyTabs";
 import { appColors } from "@/src/constant/colors";
 import React, { useState } from "react";
 

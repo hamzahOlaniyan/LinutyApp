@@ -25,10 +25,12 @@ export default function HomeHeaderMenu() {
    const router = useRouter();
 
    // const { data: notifications } = useQuery({
-   //    queryKey: ["notification", currentUser?.id],
-   //    queryFn: () => getNotfication(currentUser?.id ?? ""),
-   //    enabled: !!currentUser?.id,
+   //    queryKey: ["notification", profile?.id],
+   //    queryFn: () => getNotfication(profile?.id ?? ""),
+   //    enabled: !!profile?.id,
    // });
+
+   // console.log("notifications", JSON.stringify(notifications, null, 2));
 
    // const unreadCount = notifications?.filter((n: any) => !n.read)?.length || 0;
 
@@ -36,7 +38,7 @@ export default function HomeHeaderMenu() {
    //    if (!currentUser?.id) return;
 
    //    const notificationChannel = supabase
-   //       .channel("public:notifications")
+   //       .channel("public:notification")
    //       .on(
    //          "postgres_changes",
    //          {

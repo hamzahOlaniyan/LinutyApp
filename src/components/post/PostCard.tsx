@@ -10,6 +10,7 @@ import { createPostLike, deleteComment, deletePost, removePostLike } from "../..
 // import { PostLike, PostWithUser } from "../../types/types";
 // import SupabaseImage from "../SupabaseImage";
 import { appColors } from "@/src/constant/colors";
+import { createNotification, deleteNotification } from "@/src/Services/Notification";
 import { useAuthStore } from "@/src/store/authStore";
 import { Image } from "expo-image";
 import AppText from "../ui/AppText";
@@ -39,9 +40,11 @@ export default function Post({
    loading: boolean;
 }) {
    const { profile } = useAuthStore();
-   // const { currentTheme } = useThemeStore();
 
-   const [likes, setPostLikes] = useState<any[]>([]);
+   // const [liked, setLiked] = useState(false);
+   const [postLikes, setPostLikes] = useState<any[]>([]);
+   const [noticeMap, setNoticeMap] = useState<{ [postId: string]: string }>({});
+
    const [modalVisible, setModalVisible] = useState(false);
 
    const [showComments, setShowComments] = useState(false);
@@ -50,7 +53,7 @@ export default function Post({
 
    const router = useRouter();
 
-   const fullName = post.author.firstName + post.author.lastName;
+   const fullName = `${post.author.firstName.trim()} ${post.author.lastName.trim()}`;
    const isComment = post.parent_id !== null;
    const isUserOwner = profile?.id === post?.author?.id;
 
@@ -101,16 +104,41 @@ export default function Post({
       setPostLikes(post?.postLikes);
    }, []);
 
-   const liked = likes?.filter((like) => like?.userId === profile?.id)[0] ? true : false;
+   const liked = postLikes?.some((like) => like?.userId === profile?.id);
+
+   console.log({ senderId: profile?.id, receiverId: post.author?.id, postId: post?.id, type: "like" });
 
    const likeMutation = useMutation({
       mutationFn: async () => {
-         return createPostLike({ userId: post?.author?.id, postId: post?.id });
+         return createPostLike({ userId: profile?.id, postId: post?.id });
       },
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
+         queryClient.invalidateQueries({ queryKey: ["posts"] });
+         queryClient.invalidateQueries({ queryKey: ["postLikes", profile?.id] });
+         queryClient.invalidateQueries({ queryKey: ["Notification"] });
+
          if (data) {
-            setPostLikes([...likes, data]);
+            setPostLikes((prev) => {
+               const filtered = prev.filter((like) => like.userId !== profile?.id);
+               return [...filtered, data];
+            });
+            try {
+               const res = await createNotification({
+                  senderId: profile?.id,
+                  receiverId: post.author?.id,
+                  postId: post?.id,
+                  type: "like",
+               });
+               setNoticeMap((prev) => ({
+                  ...prev,
+                  [post?.id]: res.id ?? res,
+               }));
+               console.log("👍🏾 Like Notification SENT=====>", res);
+            } catch (error) {
+               console.log("Notification error", error);
+            }
          }
+
          console.log("LIKED ❤️", data);
       },
       onError: (error) => Alert.alert("Error", error.message),
@@ -120,8 +148,21 @@ export default function Post({
       mutationFn: async () => {
          return removePostLike(post.id, profile?.id ?? "");
       },
-      onSuccess: () => {
+      onSuccess: async () => {
+         queryClient.invalidateQueries({ queryKey: ["postLikes", profile?.id] });
          queryClient.invalidateQueries({ queryKey: ["posts"] });
+         queryClient.invalidateQueries({ queryKey: ["Notification"] });
+
+         const idToDelete = noticeMap[post?.id];
+
+         if (idToDelete) {
+            await deleteNotification(idToDelete);
+            setNoticeMap((prev) => {
+               const { [post.id]: _, ...rest } = prev;
+               return rest;
+            });
+         }
+
          setPostLikes((prev) => prev.filter((like) => like.userId !== profile?.id));
          console.log("Unliked");
       },
@@ -132,10 +173,10 @@ export default function Post({
       <>
          <View style={{ backgroundColor: appColors.white }} className="overflow-hidden">
             <PostHeader
-               id={post?.author.id}
-               avatar={post?.author.avatarUrl}
+               id={post?.author?.id}
+               avatar={post?.author?.avatarUrl}
                name={fullName}
-               username={post?.author.username}
+               username={post?.author?.username}
                date={post?.created_at}
                postInfo={() => setModalVisible(true)}
             />
@@ -165,7 +206,7 @@ export default function Post({
                      else likeMutation.mutate();
                   }}
                   liked={liked}
-                  likes={likes.length || null}
+                  likes={postLikes.length || null}
                   showComment={() => {
                      if (!showMoreIcon) return null;
                      setPostID(post?.id), setShowComments(true);
@@ -178,7 +219,7 @@ export default function Post({
             isOpen={showComments}
             onClose={() => setShowComments(false)}
             heading={`${count} Comments`}
-            children={<Comments data={comments} loading={loading} />}
+            children={<Comments postAuthor={comments?.author} data={comments} loading={loading} />}
          />
          <BottomSheet
             isOpen={modalVisible}

@@ -19,9 +19,14 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
 
    return (
       <View style={{ paddingHorizontal: wp(3) }} className="gap-2 mb-6">
-         <View className="w-full h-36 rounded-lg overflow-hidden">
+         <View className="w-full h-48 rounded-lg overflow-hidden">
             {userProfile?.cover_photo ? (
-               <Image source={userProfile?.cover_photo} transition={100} style={{ width: "100%", height: "100%" }} />
+               <Image
+                  source={{ uri: userProfile?.cover_photo }}
+                  transition={100}
+                  style={{ width: "100%", height: "100%" }}
+                  contentPosition="center"
+               />
             ) : (
                <View className="w-full h-full bg-neutral-200"></View>
             )}
@@ -31,11 +36,11 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                <Avatar path={userProfile?.avatarUrl} size={80} />
                <View className="gap-2">
                   <View>
-                     <View className="flex-row gap-">
-                        <AppText size="xl" weight="semi" cap="capitalize">
+                     <View className="flex-row gap-1">
+                        <AppText size="xxl" weight="semi" cap="capitalize">
                            {userProfile?.firstName}
                         </AppText>
-                        <AppText size="xl" weight="semi" cap="capitalize">
+                        <AppText size="xxl" weight="semi" cap="capitalize">
                            {userProfile?.lastName}
                         </AppText>
                      </View>
@@ -48,16 +53,16 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                </View>
             </View>
             {!readmore ? (
-               <AppText weight="reg">
+               <AppText size="lg" weight="reg">
                   {sampleText.substring(0, 90)}...{" "}
-                  <AppText weight="semi" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
+                  <AppText size="lg" weight="semi" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
                      more
                   </AppText>
                </AppText>
             ) : (
-               <AppText weight="reg">
+               <AppText size="lg" weight="reg">
                   {sampleText}{" "}
-                  <AppText weight="semi" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
+                  <AppText size="lg" weight="semi" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
                      less
                   </AppText>
                </AppText>

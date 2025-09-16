@@ -1,7 +1,7 @@
 import ProfileGallery from "@/src/components/profile/ProfileGallery";
 import ProfileInfo from "@/src/components/profile/ProfileInfo";
 import ProfilePosts from "@/src/components/profile/ProfilePosts";
-import StickyTabs from "@/src/components/ui/Tab";
+import StickyTabs from "@/src/components/ui/StickyTabs";
 import UserHeader from "@/src/components/user/UserHeader";
 import { getPostsUserById } from "@/src/Services/posts";
 import { getProfileById } from "@/src/Services/profiles";

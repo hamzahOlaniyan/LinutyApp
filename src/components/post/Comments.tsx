@@ -5,7 +5,7 @@ import AppText from "../ui/AppText";
 import CommentCard from "./CommentCard";
 import CommentInput from "./CommentInput";
 
-export default function Comments({ data, loading }: { data: any; loading: boolean }) {
+export default function Comments({ data, loading, postAuthor }: { data: any; loading: boolean; postAuthor: string }) {
    const [showKeyboard, setShowKeyboard] = useState(false);
    const [replyToName, setReplyToName] = useState<string | null>(null);
    const [replyToId, setReplyToId] = useState<string | null>(null);
@@ -14,6 +14,8 @@ export default function Comments({ data, loading }: { data: any; loading: boolea
 
    // const skeleton = Array.from({ length: 5 }, (_, i) => <CommentSkeletion key={i} />);
    if (loading) return <View className="gap-8">{<ActivityIndicator />}</View>;
+
+   // console.log(JSON.stringify(data, null, 2));
 
    return (
       <View
@@ -24,7 +26,7 @@ export default function Comments({ data, loading }: { data: any; loading: boolea
       >
          {data?.comments?.length < 1 && (
             <View className="px-6">
-               <AppText weight="med">be the first to comment</AppText>{" "}
+               <AppText weight="med">be the first to comment</AppText>
             </View>
          )}
          <FlatList
@@ -46,7 +48,8 @@ export default function Comments({ data, loading }: { data: any; loading: boolea
          />
          <CommentInput
             postId={data?.id}
-            postUserID={data?.author?.id}
+            postAuthor={postAuthor}
+            // postUserID={data?.author?.id}
             showKeyboard={showKeyboard}
             replyToName={replyToName}
             parentId={replyToId}

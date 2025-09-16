@@ -16,13 +16,15 @@ type PostAction = {
 };
 
 export default function PostAction({ like, liked, likes, showComment, commentCount }: PostAction) {
+   console.log("liked", liked);
+
    return (
       <View className="">
          {likes || commentCount ? (
             <View className="flex-row gap-6 p-2 px-4 ">
                {likes && (
                   <AppText size="sm" color={appColors.grey}>
-                     {likes} likes
+                     {` ${likes} ${likes.length > 1 ? "likes" : "like"}`}
                   </AppText>
                )}
                {commentCount && (
