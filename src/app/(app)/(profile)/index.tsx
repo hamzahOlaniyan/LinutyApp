@@ -32,7 +32,7 @@ export default function index() {
       queryFn: async () => getProfileById(profile.id),
    });
 
-   console.log("PROFILE", JSON.stringify(PROFILE, null, 2));
+   // console.log("PROFILE", JSON.stringify(PROFILE, null, 2));
 
    return (
       <StickyTabs

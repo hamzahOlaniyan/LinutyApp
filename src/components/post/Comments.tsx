@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AppText from "../ui/AppText";
 import CommentCard from "./CommentCard";
 import CommentInput from "./CommentInput";
-import CommentSkeletion from "./CommentSkeletion";
 
 export default function Comments({ data, loading }: { data: any; loading: boolean }) {
    const [showKeyboard, setShowKeyboard] = useState(false);
@@ -13,8 +12,8 @@ export default function Comments({ data, loading }: { data: any; loading: boolea
 
    const { bottom } = useSafeAreaInsets();
 
-   const skeleton = Array.from({ length: 5 }, (_, i) => <CommentSkeletion key={i} />);
-   if (loading) return <View className="gap-8">{skeleton}</View>;
+   // const skeleton = Array.from({ length: 5 }, (_, i) => <CommentSkeletion key={i} />);
+   if (loading) return <View className="gap-8">{<ActivityIndicator />}</View>;
 
    return (
       <View

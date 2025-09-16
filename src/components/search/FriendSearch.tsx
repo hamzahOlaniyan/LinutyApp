@@ -2,8 +2,8 @@ import { wp } from "@/src/constant/common";
 import { getProfiles } from "@/src/Services/profiles";
 import { useAuthStore } from "@/src/store/authStore";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
-import { FlatList, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import Searchbar from "../ui/Searchbar";
 import FriendsCard from "./FriendsCard";
@@ -11,6 +11,7 @@ import FriendsCard from "./FriendsCard";
 export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean }) {
    const { profile } = useAuthStore();
    const [searchText, setSearchText] = useState("");
+   const [renderSearch, setRenderSearch] = useState(showSearchBar);
 
    const {
       data: PROFILES,
@@ -24,11 +25,10 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
    const height = useSharedValue(0);
    const opacity = useSharedValue(0);
 
-   //   const toggleSearch = () => {
-   //  setVisible(!visible);
-   height.value = withTiming(showSearchBar ? 0 : 50, { duration: 300 });
-   opacity.value = withTiming(showSearchBar ? 0 : 1, { duration: 300 });
-   //   };
+   useEffect(() => {
+      height.value = withTiming(showSearchBar ? 50 : 0, { duration: 300 });
+      opacity.value = withTiming(showSearchBar ? 1 : 0, { duration: 300 });
+   }, [showSearchBar]);
 
    const animatedStyle = useAnimatedStyle(() => {
       return {
@@ -49,18 +49,20 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                />
             </Animated.View>
          )}
-         <FlatList
-            data={PROFILES?.data?.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))}
-            renderItem={({ item }) => (
-               <FriendsCard
-                  id={item?.id}
-                  avatar={item?.avatarUrl}
-                  name={item?.firstName + item?.lastName}
-                  username={item?.username}
-               />
-            )}
-            contentContainerStyle={{ rowGap: 20, marginVertical: 15 }}
-         />
+         <View className="gap-6 my-4">
+            {PROFILES?.data
+
+               ?.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))
+               .map((item, idx) => (
+                  <FriendsCard
+                     key={idx}
+                     id={item?.id}
+                     avatar={item?.avatarUrl}
+                     name={item?.firstName + item?.lastName}
+                     username={item?.username}
+                  />
+               ))}
+         </View>
       </View>
    );
 }

@@ -1,6 +1,7 @@
 import { Comment } from "@/assets/icons/comment";
 import { ShareIcon } from "@/assets/icons/shareIcon";
 import { Thumbsup } from "@/assets/icons/thumbsup";
+import { ThumbsupSolid } from "@/assets/icons/thumbsup-solid";
 import { appColors } from "@/src/constant/colors";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -43,10 +44,12 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                      style={{ borderRightColor: appColors.bordersLight, borderRightWidth: 0.5 }}
                      className="flex-row justify-center items-center gap-2 p-3 px-4"
                   >
-                     <View className="top-[1px]">
-                        <Thumbsup size={18} color={liked ? appColors.primary : ""} />
-                     </View>
-                     <AppText>Like</AppText>
+                     {liked ? (
+                        <ThumbsupSolid size={18} color={appColors.primary} />
+                     ) : (
+                        <Thumbsup size={18} color={appColors.grey} />
+                     )}
+                     <AppText color={appColors.grey}>Like</AppText>
                   </TouchableOpacity>
 
                   <TouchableOpacity
@@ -55,9 +58,9 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                      className="flex-row justify-center items-center gap-2 p-3 px-2"
                   >
                      <View className="top-[1px]">
-                        <Comment size={18} />
+                        <Comment size={18} color={appColors.grey} />
                      </View>
-                     <AppText className="relative">Comments</AppText>
+                     <AppText color={appColors.grey}>Comments</AppText>
                   </TouchableOpacity>
                </View>
 
@@ -67,9 +70,9 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                   className="flex-row justify-center items-center gap-2 p-3 px-2"
                >
                   <View className="top-[1px]">
-                     <ShareIcon size={18} />
+                     <ShareIcon size={18} color={appColors.grey} />
                   </View>
-                  <AppText className="relative">Share</AppText>
+                  <AppText color={appColors.grey}>Share</AppText>
                </TouchableOpacity>
             </View>
          </View>

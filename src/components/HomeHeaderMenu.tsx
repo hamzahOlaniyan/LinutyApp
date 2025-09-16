@@ -3,7 +3,7 @@
 // import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Animated, Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 // import { useAuthStore } from "../context/authStore";
 // import { useThemeStore } from "../context/themeStore";
 // import { getNotfication } from "../Services/Notification";
@@ -11,6 +11,7 @@ import { Animated, Pressable, View } from "react-native";
 import { AddCircleIcon } from "@/assets/icons/addCircle";
 import { Notification } from "@/assets/icons/notification";
 import { Image } from "expo-image";
+import Animated from "react-native-reanimated";
 import { appColors } from "../constant/colors";
 import { GLOBAL_STYLES } from "../constant/globalStyles";
 import { useAuthStore } from "../store/authStore";
