@@ -39,7 +39,7 @@ export default function PostHeader({ id, avatar, name, username, date, postInfo 
                <View className="">
                   <View className="flex-row items-center gap-2">
                      <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                        <AppText size="lg" weight="semi" cap="capitalize">
+                        <AppText weight="semi" cap="capitalize">
                            {name.trim()}
                         </AppText>
                      </Pressable>

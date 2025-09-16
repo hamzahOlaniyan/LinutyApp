@@ -8,7 +8,6 @@ import { appColors } from "@/src/constant/colors";
 import { getPostById } from "@/src/Services/posts";
 import { useAuthStore } from "@/src/store/authStore";
 import { Octicons } from "@expo/vector-icons";
-import { Image } from "expo-image";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 
@@ -39,7 +38,7 @@ export default function NotificationCard({ item, router }: { item: any; router?:
       queryFn: () => getPostById(item?.postId),
    });
 
-   console.log("POST", JSON.stringify(POST, null, 2));
+   // console.log("POST", JSON.stringify(POST, null, 2));
 
    return (
       <>
@@ -66,7 +65,7 @@ export default function NotificationCard({ item, router }: { item: any; router?:
                   <AppText>{item.title}</AppText>
                </View>
             </View>
-            <Image source={{ uri: POST?.images[0] }} style={{ width: 50, height: 50 }} />
+            {/* <Image source={{ uri: POST?.images[0] }} style={{ width: 50, height: 50 }} /> */}
             {/* <Text>{JSON.stringify(item, null, 2)}</Text> */}
 
             {/* <Button title="Accept" size="xs" onPress={() => acceptFriendMutation.mutate(item?.senderId)} /> */}
