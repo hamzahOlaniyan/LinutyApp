@@ -38,13 +38,14 @@ export default function NotificationCard({ item, router }: { item: any; router?:
       queryFn: () => getPostById(item?.postId),
    });
 
-   // console.log("POST", JSON.stringify(POST, null, 2));
+   console.log("POST", JSON.stringify(POST, null, 2));
+   console.log("postid", item?.postId);
 
    return (
       <>
          {/* {item?.type === "comment" ? ( */}
          <View className="">
-            <View className="w-full flex-row gap-3 items-start justify-start">
+            <View className="w-full flex-row gap-3 items-start justify-start bg-yellow-400">
                <Avatar path={item?.sender?.avatarUrl} size={45} />
                <View>
                   <View className="flex-row gap-1 items-center">
@@ -62,7 +63,8 @@ export default function NotificationCard({ item, router }: { item: any; router?:
                   <View className="flex-row gap-1 items-center">
                      <AppText color={appColors.grey}>commented on your post</AppText>
                   </View>
-                  <AppText>{item.title}</AppText>
+                  <AppText>{item?.title}</AppText>
+                  <AppText>{POST?.content}</AppText>
                </View>
             </View>
             {/* <Image source={{ uri: POST?.images[0] }} style={{ width: 50, height: 50 }} /> */}
