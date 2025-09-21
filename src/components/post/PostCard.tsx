@@ -106,8 +106,6 @@ export default function Post({
 
    const liked = postLikes?.some((like) => like?.userId === profile?.id);
 
-   console.log({ senderId: profile?.id, receiverId: post.author?.id, postId: post?.id, type: "like" });
-
    const likeMutation = useMutation({
       mutationFn: async () => {
          return createPostLike({ userId: profile?.id, postId: post?.id });

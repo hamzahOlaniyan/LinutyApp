@@ -27,6 +27,9 @@ export default function AppLayout() {
       );
    }
 
+   console.log("Supabase URL (APK):", process.env.EXPO_PUBLIC_SUPABASE_URL);
+   console.log("Supabase Key (APK):", process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY?.slice(0, 8) + "...");
+
    return (
       <Stack>
          <Stack.Screen

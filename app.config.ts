@@ -8,7 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       ...config,
       name: "LinutyApp",
       slug: "LinutyApp",
-      version: "1.0.7",
+      version: "1.0.9",
       orientation: "portrait",
       icon: "./assets/images/icon.png",
       scheme: "linutyapp",

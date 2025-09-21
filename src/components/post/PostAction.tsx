@@ -16,8 +16,6 @@ type PostAction = {
 };
 
 export default function PostAction({ like, liked, likes, showComment, commentCount }: PostAction) {
-   console.log("liked", liked);
-
    return (
       <View className="">
          {likes || commentCount ? (

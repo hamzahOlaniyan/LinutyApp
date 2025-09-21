@@ -32,13 +32,18 @@ export default function Notification() {
             gap: 10,
          }}
       >
-         {notifications?.length === 0 && <AppText weight="med">You have no notifications</AppText>}
-         <AppText color={appColors.grey}>NEW</AppText>
-         <FlatList
-            data={notifications}
-            renderItem={({ item }) => <NotificationCard item={item} />}
-            contentContainerStyle={{ rowGap: 40 }}
-         />
+         {notifications?.length === 0 ? (
+            <AppText weight="med">You have no notifications</AppText>
+         ) : (
+            <View className="gap-4">
+               <AppText color={appColors.grey}>NEW</AppText>
+               <FlatList
+                  data={notifications}
+                  renderItem={({ item }) => <NotificationCard item={item} />}
+                  contentContainerStyle={{ rowGap: 10 }}
+               />
+            </View>
+         )}
       </View>
    );
 }

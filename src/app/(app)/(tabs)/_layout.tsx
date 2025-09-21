@@ -21,17 +21,14 @@ export default function TabLayout() {
             tabBarShowLabel: false,
             headerShadowVisible: false,
             tabBarStyle: {
-               height: 35 + insets.bottom,
+               height: 40 + insets.bottom,
                position: "absolute",
                elevation: 0,
                borderTopColor: appColors.bordersLight,
                borderTopWidth: 0.5,
                shadowOpacity: 0,
                backgroundColor: appColors.white,
-               // backgroundColor: "green",
-            },
-            tabBarItemStyle: {
-               // paddingVertical: 1,
+               paddingTop: 4,
             },
          }}
       >

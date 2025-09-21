@@ -92,7 +92,7 @@ export default function HomeHeaderMenu() {
             source={require("@/assets/images/linuty.png")}
             style={{
                width: 80,
-               height: 30,
+               height: 40,
             }}
             contentFit="contain"
          />
