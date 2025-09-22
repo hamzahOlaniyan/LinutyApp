@@ -10,13 +10,16 @@ import { fetchPost, getPostById } from "@/src/Services/posts";
 import { getStoreProduct } from "@/src/Services/store";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
-import React, { useMemo, useState } from "react";
+import { useLocalSearchParams } from "expo-router";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { ActivityIndicator, FlatList, SafeAreaView, View } from "react-native";
 
 export default function index() {
-   // const [showComments, setShowComments] = useState(false);
+   const { postId, openComments } = useLocalSearchParams();
    const [postID, setPostID] = useState<string>("");
+   const [activeCommentsPostId, setActiveCommentsPostId] = useState<string | null>(null);
+
    // const [showKeyboard, setShowKeyboard] = useState(false);
    // const [replyToName, setReplyToName] = useState<string | null>(null);
    // const [replyToId, setReplyToId] = useState<string | null>(null);
@@ -53,6 +56,13 @@ export default function index() {
       return injectSponsoredBlocks(topLevelPosts as any, PRODUCT as any, 2);
    }, [topLevelPosts, PRODUCT as any]);
 
+   useEffect(() => {
+      if (postId && openComments === "true") {
+         setPostID(postId as string); // for fetching comments
+         setActiveCommentsPostId(postId as string); // tells PostCard to open BottomSheet
+      }
+   }, [postId, openComments]);
+
    // const skeleton = Array.from({ length: 6 }, (_, i) => <PostSkeleton key={i} />);
    if (isLoading)
       return (
@@ -86,6 +96,7 @@ export default function index() {
                               setPostID={setPostID}
                               comments={COMMENTS}
                               loading={commentsLoading}
+                              openComments={activeCommentsPostId === item?.id}
                            />
                         );
 

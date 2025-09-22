@@ -1,26 +1,17 @@
-// import { colors } from "@/src/constant/colors";
-// import { useAuthStore } from "@/src/context/authStore";
-// import { useThemeStore } from "@/src/context/themeStore";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
-// import { hp, wp } from "../../common";
-import { createPostLike, deleteComment, deletePost, removePostLike } from "../../Services/posts";
-// import { PostLike, PostWithUser } from "../../types/types";
-// import SupabaseImage from "../SupabaseImage";
 import { appColors } from "@/src/constant/colors";
 import { createNotification, deleteNotification } from "@/src/Services/Notification";
 import { useAuthStore } from "@/src/store/authStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
+import React, { useEffect, useState } from "react";
+import { Alert, View } from "react-native";
+import { createPostLike, deleteComment, deletePost, removePostLike } from "../../Services/posts";
 import AppText from "../ui/AppText";
 import BottomSheet from "../ui/BottomSheet";
 import Comments from "./Comments";
 import PostAction from "./PostAction";
 import PostHeader from "./PostHeader";
 import PostInfo from "./PostInfo";
-
-// import PostInfo from "./PostInfo";
 
 export default function Post({
    post,
@@ -30,6 +21,7 @@ export default function Post({
    comments,
    setPostID,
    loading,
+   openComments,
 }: {
    post: any;
    showMoreIcon?: boolean;
@@ -38,20 +30,22 @@ export default function Post({
    comments: any;
    setPostID?: any;
    loading: boolean;
+   openComments?: boolean;
 }) {
    const { profile } = useAuthStore();
 
-   // const [liked, setLiked] = useState(false);
    const [postLikes, setPostLikes] = useState<any[]>([]);
    const [noticeMap, setNoticeMap] = useState<{ [postId: string]: string }>({});
-
    const [modalVisible, setModalVisible] = useState(false);
-
    const [showComments, setShowComments] = useState(false);
 
    const queryClient = useQueryClient();
 
-   const router = useRouter();
+   useEffect(() => {
+      if (openComments) {
+         setShowComments(true);
+      }
+   }, [openComments]);
 
    const fullName = `${post.author.firstName.trim()} ${post.author.lastName.trim()}`;
    const isComment = post.parent_id !== null;
@@ -236,13 +230,3 @@ export default function Post({
       </>
    );
 }
-
-const styles = StyleSheet.create({
-   background: {
-      position: "absolute",
-      left: 0,
-      right: 0,
-      top: 0,
-      height: 300,
-   },
-});

@@ -1,6 +1,6 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 // import { TiktokFont } from "../assets/fonts/FontFamily";
 // import { hp } from "../common";
 // import { colors } from "../constant/colors";
@@ -9,6 +9,8 @@ import { Pressable, View } from "react-native";
 // import { createNotification } from "../Services/Notification";
 // import { deleteFriendRequest, sendFriendRequest } from "../Services/relationships";
 import { appColors } from "@/src/constant/colors";
+import { getFriendship } from "@/src/Services/relationships";
+import { useAuthStore } from "@/src/store/authStore";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
@@ -24,41 +26,32 @@ type FriendsCardProps = {
 
 export default function FriendsCard({ id, avatar, name, username }: FriendsCardProps) {
    const [remove, setRemove] = useState(false);
-   // const { currentUser } = useAuthStore();
-   // const { currentTheme } = useThemeStore();
+   const { profile } = useAuthStore();
    const queryClient = useQueryClient();
 
-   // const addFriendMutation = useMutation({
-   //    mutationFn: async (id: string | null): Promise<any> => {
-   //       return sendFriendRequest({ follower_id: currentUser?.id, following_id: id!, status: "pending" });
-   //    },
-   //    onSuccess: async (data: any) => {
-   //       Alert.alert("friend request has been sent");
+   const [friendship, setFriendship] = useState<any>(null);
 
-   //       let notify = {
-   //          senderId: currentUser?.id,
-   //          receiverId: data?.following_id,
-   //          type: "friend request",
-   //       };
-   //       await createNotification(notify);
-   //       setRemove(true);
-   //       console.log("success", { data });
-   //       queryClient.invalidateQueries({ queryKey: ["friendRequests"] });
-   //    },
-   //    onError: (error: any) => Alert.alert("Error", error.message),
-   // });
+   console.log(profile?.id);
 
-   // const removeFriendMutation = useMutation({
-   //    mutationFn: async (id: string | null): Promise<any> => {
-   //       return deleteFriendRequest({ follower_id: currentUser, following_id: id, status: null });
-   //    },
-   //    onSuccess: async (data: any) => {
-   //       console.log({ data });
-   //       setRemove(false);
-   //       queryClient.invalidateQueries({ queryKey: ["friendRequests"] });
-   //    },
-   //    onError: (error: any) => Alert.alert("Error", error.message),
-   // });
+   const { data: friendshipData } = useQuery({
+      queryKey: ["friendships", profile?.id, id],
+      queryFn: async () => getFriendship({profile?.id, id}),
+      // const { data, error } = await supabase
+      //    .from("friendships")
+      //    .select("*")
+      //    .or(`and(requester.eq.${profile?.id},receiver.eq.${id}),and(requester.eq.${id},receiver.eq.${profile?.id})`)
+      //    .maybeSingle();
+
+      // if (error && error.code !== "PGRST116") throw error; // ignore "no rows found"
+      // return data;
+      // },
+   });
+
+   // useEffect(() => {
+   //    setFriendship(friendshipData);
+   // }, [friendshipData]);
+
+   // console.log(friendshipData);
 
    return (
       <View className="flex-row flex-1 justify-between items-start">
@@ -76,13 +69,7 @@ export default function FriendsCard({ id, avatar, name, username }: FriendsCardP
                </AppText>
             </View>
          </View>
-         {remove ? (
-            <Pressable onPress={() => setRemove(false)}>
-               <AppText>Remove</AppText>
-            </Pressable>
-         ) : (
-            <Button text="Add friend" size="xs" onPress={() => ""} />
-         )}
+         <Button text="Add friend" size="xs" />
       </View>
    );
 }

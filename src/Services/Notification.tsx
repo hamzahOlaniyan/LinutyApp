@@ -19,15 +19,15 @@ export const getNotfication = async (recieverId: string) => {
    return data;
 };
 
-// export const markNotificationsAsRead = async (userId: string) => {
-//    const { error } = await supabase
-//       .from("notification")
-//       .update({ read: true })
-//       .eq("receiverId", userId)
-//       .eq("read", false);
+export const markNotificationsAsRead = async (userId: string) => {
+   const { error } = await supabase
+      .from("notification")
+      .update({ read: true })
+      .eq("receiverId", userId)
+      .eq("read", false);
 
-//    if (error) throw new Error(error.message);
-// };
+   if (error) throw new Error(error.message);
+};
 
 export const deleteNotification = async (id: string) => {
    const { error } = await supabase.from("notification").delete().eq("id", id);
