@@ -1,5 +1,5 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 // import { TiktokFont } from "../assets/fonts/FontFamily";
 // import { hp } from "../common";
@@ -9,7 +9,13 @@ import { View } from "react-native";
 // import { createNotification } from "../Services/Notification";
 // import { deleteFriendRequest, sendFriendRequest } from "../Services/relationships";
 import { appColors } from "@/src/constant/colors";
-import { getFriendship } from "@/src/Services/relationships";
+import {
+   acceptFriendRequest,
+   deleteFriendRequest,
+   getFriendship,
+   rejectFriendRequest,
+   sendFriendRequest,
+} from "@/src/Services/relationships";
 import { useAuthStore } from "@/src/store/authStore";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
@@ -31,45 +37,74 @@ export default function FriendsCard({ id, avatar, name, username }: FriendsCardP
 
    const [friendship, setFriendship] = useState<any>(null);
 
-   console.log(profile?.id);
-
    const { data: friendshipData } = useQuery({
       queryKey: ["friendships", profile?.id, id],
-      queryFn: async () => getFriendship({profile?.id, id}),
-      // const { data, error } = await supabase
-      //    .from("friendships")
-      //    .select("*")
-      //    .or(`and(requester.eq.${profile?.id},receiver.eq.${id}),and(requester.eq.${id},receiver.eq.${profile?.id})`)
-      //    .maybeSingle();
-
-      // if (error && error.code !== "PGRST116") throw error; // ignore "no rows found"
-      // return data;
-      // },
+      queryFn: async () => getFriendship({ requester: profile?.id, reciever: id }),
    });
 
-   // useEffect(() => {
-   //    setFriendship(friendshipData);
-   // }, [friendshipData]);
+   useEffect(() => {
+      setFriendship(friendshipData);
+   }, [friendshipData]);
 
-   // console.log(friendshipData);
+   console.log("friendship", { friendship });
+
+   const sendRequest = useMutation({
+      mutationFn: async () => sendFriendRequest({ requester: profile?.id, receiver: id }),
+      onSuccess: async () => {
+         console.log("✅friend request sent");
+         queryClient.invalidateQueries({ queryKey: ["friendship", profile?.id, id] });
+      },
+      onError: (error: any) => console.error(" ❌ friend request fail", error),
+   });
+
+   const acceptRequest = useMutation({
+      mutationFn: async () => acceptFriendRequest({ id: friendship?.id, receiver: profile?.id }),
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: ["friendship", profile?.id, id] }),
+   });
+
+   const rejectRequest = useMutation({
+      mutationFn: async () => rejectFriendRequest({ id: friendship?.id, receiver: profile?.id }),
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: ["friendship", profile?.id, id] }),
+   });
+
+   const unfriend = useMutation({
+      mutationFn: async () => deleteFriendRequest({ id: friendship?.id }),
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: ["friendship", profile?.id, id] }),
+   });
+
+   let button = <Button text="Add Friend" size="xs" onPress={() => sendRequest.mutate()} />;
+
+   if (friendship) {
+      if (friendship.status === "pending") {
+         if (friendship.requester === profile?.id) {
+            button = <Button text="Cancel Request" size="xs" onPress={() => unfriend.mutate()} />;
+         } else if (friendship.receiver === profile?.id) {
+            button = (
+               <View style={{ flexDirection: "row", gap: 8 }}>
+                  <Button text="Accept" size="xs" onPress={() => acceptRequest.mutate()} />
+                  <Button text="Reject" size="xs" onPress={() => rejectRequest.mutate()} />
+               </View>
+            );
+         }
+      } else if (friendship.status === "accepted") {
+         button = <Button text="Unfriend" size="xs" onPress={() => unfriend.mutate()} />;
+      }
+   }
 
    return (
       <View className="flex-row flex-1 justify-between items-start">
          <View className="flex-row flex-1 gap-3 items-start">
             <Avatar path={avatar} size={45} />
             <View>
-               <View className="flex-row gap-1 items-center w-full">
-                  <AppText weight="semi" cap="capitalize">
-                     {name}
-                  </AppText>
-                  {/* <Octicons name="dot-fill" size={6} className="relative top-[2px]" /> */}
-               </View>
+               <AppText weight="semi" cap="capitalize">
+                  {name}
+               </AppText>
                <AppText size="sm" weight="light" color={appColors.grey}>
                   @{username}
                </AppText>
             </View>
          </View>
-         <Button text="Add friend" size="xs" />
+         {button}
       </View>
    );
 }
