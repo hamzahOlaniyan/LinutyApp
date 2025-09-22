@@ -27,14 +27,20 @@ export const acceptFriendRequest = async ({ id, currentUserId }: RelationshipInp
 };
 
 export const rejectFriendRequest = async ({ id, currentUserId }: RelationshipInput) => {
-   await supabase.from("relationships").update({ status: "rejected" }).eq("id", id).eq("receiver", currentUserId);
+   await supabase
+      .from("relationships")
+      .update({ status: "rejected" })
+      .eq("id", id)
+      .eq("receiver", currentUserId)
+      .single();
 };
 
 export const deleteFriendRequest = async ({ id, currentUserId }: RelationshipInput) => {
    await supabase
       .from("relationships")
       .delete()
-      .or(`and(requester.eq.${currentUserId},receiver.eq.${id}),and(requester.eq.${id},receiver.eq.${currentUserId})`);
+      .or(`and(requester.eq.${currentUserId},receiver.eq.${id}),and(requester.eq.${id},receiver.eq.${currentUserId})`)
+      .single();
 };
 
 export const getFriends = async ({ currentUserId }: RelationshipInput) => {

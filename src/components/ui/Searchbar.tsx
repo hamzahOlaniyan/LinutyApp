@@ -22,11 +22,11 @@ export default function Searchbar({ value, onChangeText, onPress, placeholder, .
          }}
          className={`w-full flex-row bg-offwightGreen items-center justify-center px-4 rounded-full gap-3`}
       >
-         <Feather name="search" size={18} color="gray" />
+         <Feather name="search" size={20} />
          <TextInput
             value={value}
             onChangeText={onChangeText}
-            style={{ fontSize: hp(1.8), fontFamily: TiktokFont.TiktokLight }}
+            style={{ fontSize: hp(1.9), fontFamily: TiktokFont.TiktokRegular }}
             className="flex-1"
             placeholder={placeholder}
             placeholderTextColor={appColors.placeholder}

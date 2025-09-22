@@ -33,13 +33,11 @@ export default function FriendList() {
    if (!FRIENDS?.length)
       return (
          <View className="px-4">
-            <AppText>You have no friends</AppText>
+            <AppText weight="med">You have no friends</AppText>
          </View>
       );
 
    const filteredList = (FRIENDS || []).map((f: any) => (f.requester?.id === profile?.id ? f.receiver : f.requester));
-
-   // console.log(JSON.stringify(FRIENDS, null, 2));
 
    return (
       <View className="gap-5 p-4">

@@ -11,7 +11,6 @@ import FriendsCard from "./FriendsCard";
 export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean }) {
    const { profile } = useAuthStore();
    const [searchText, setSearchText] = useState("");
-   const [renderSearch, setRenderSearch] = useState(showSearchBar);
 
    const {
       data: PROFILES,
@@ -58,7 +57,8 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                      key={idx}
                      id={item?.id}
                      avatar={item?.avatarUrl}
-                     name={item?.firstName + item?.lastName}
+                     firstName={item?.firstName.trim()}
+                     lastName={item?.lastName.trim()}
                      username={item?.username}
                   />
                ))}

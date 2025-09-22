@@ -1,6 +1,6 @@
 import { EditIcon } from "@/assets/icons/edit";
 import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
+import { hp, wp } from "@/src/constant/common";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -19,7 +19,7 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
 
    return (
       <View style={{ paddingHorizontal: wp(3) }} className="gap-2 mb-6">
-         <View className="w-full h-48 rounded-lg overflow-hidden">
+         <View style={{ height: hp(25) }} className="w-full rounded-lg overflow-hidden">
             {userProfile?.cover_photo ? (
                <Image
                   source={{ uri: userProfile?.cover_photo }}
@@ -31,10 +31,30 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                <View className="w-full h-full bg-neutral-200"></View>
             )}
          </View>
-         <View className="gap-2">
-            <View className="flex-row items-center gap-3">
-               <Avatar path={userProfile?.avatarUrl} size={80} />
-               <View className="gap-2">
+         <View className="">
+            <View className="flex-row items-center gap-3 relative">
+               <View
+                  style={{
+                     position: "relative",
+                     top: -30,
+                     borderRadius: 100,
+                     borderColor: appColors.white,
+                     backgroundColor: appColors.white,
+                     justifyContent: "center",
+                     alignItems: "center",
+                     width: 120,
+                     height: 120,
+                  }}
+               >
+                  <Avatar path={userProfile?.avatarUrl} size={110} />
+               </View>
+               <View
+                  style={{
+                     position: "relative",
+                     top: -15,
+                  }}
+                  className="gap-2"
+               >
                   <View>
                      <View className="flex-row gap-1">
                         <AppText size="xxl" weight="semi" cap="capitalize">
@@ -53,16 +73,16 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                </View>
             </View>
             {!readmore ? (
-               <AppText size="lg" weight="reg">
+               <AppText weight="med">
                   {sampleText.substring(0, 90)}...{" "}
-                  <AppText size="lg" weight="semi" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
+                  <AppText weight="light" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
                      more
                   </AppText>
                </AppText>
             ) : (
-               <AppText size="lg" weight="reg">
+               <AppText weight="med">
                   {sampleText}{" "}
-                  <AppText size="lg" weight="semi" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
+                  <AppText weight="light" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
                      less
                   </AppText>
                </AppText>
