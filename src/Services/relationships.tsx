@@ -14,74 +14,58 @@ export const sendFriendRequest = async ({ requester, receiver }: RelationshipInp
    return data;
 };
 
-export const acceptFriendRequest = async ({ friendshipId, currentUserId }: RelationshipInput) => {
+export const acceptFriendRequest = async ({ id, currentUserId }: RelationshipInput) => {
    const { data } = await supabase
-      .from("friendships")
+      .from("relationships")
       .update({ status: "accepted" })
-      .eq("id", friendshipId)
-      .eq("receiver", currentUserId);
+      .eq("id", id)
+      .eq("receiver", currentUserId)
+      .select()
+      .single();
 
    return data;
 };
 
-export const rejectFriendRequest = async ({ friendshipId, currentUserId }: RelationshipInput) => {
-   await supabase
-      .from("friendships")
-      .update({ status: "rejected" })
-      .eq("id", friendshipId)
-      .eq("receiver", currentUserId);
+export const rejectFriendRequest = async ({ id, currentUserId }: RelationshipInput) => {
+   await supabase.from("relationships").update({ status: "rejected" }).eq("id", id).eq("receiver", currentUserId);
 };
 
-export const deleteFriendRequest = async ({ friendId, currentUserId }: RelationshipInput) => {
+export const deleteFriendRequest = async ({ id, currentUserId }: RelationshipInput) => {
    await supabase
-      .from("friendships")
+      .from("relationships")
       .delete()
-      .or(
-         `and(requester.eq.${currentUserId},receiver.eq.${friendId}),and(requester.eq.${friendId},receiver.eq.${currentUserId})`
-      );
+      .or(`and(requester.eq.${currentUserId},receiver.eq.${id}),and(requester.eq.${id},receiver.eq.${currentUserId})`);
 };
 
-// export const getFriends = async ({ currentUserId }: RelationshipInput) => {
-//    const { data } = await supabase
-//       .from("relationships")
-//       .select(
-//          `
-//          id,
-//          status,
-//          follower:profiles!follower_id (
-//             id, full_name, username, avatar_url
-//          ),
-//          following:profiles!following_id (
-//             id, full_name, username, avatar_url
-//          )
-//       `
-//       )
-//       .or(`follower_id.eq.${currentUserId},following_id.eq.${currentUserId}`)
-//       .eq("status", "accepted")
-//       .throwOnError();
+export const getFriends = async ({ currentUserId }: RelationshipInput) => {
+   const { data } = await await supabase
+      .from("relationships")
+      .select(
+         "id, status, requester( id, username, firstName, lastName, avatarUrl ), receiver( id, username, firstName, lastName, avatarUrl )"
+      )
+      .or(`requester.eq.${currentUserId},receiver.eq.${currentUserId}`)
+      .eq("status", "accepted");
 
-//    return data;
-// };
+   return data;
+};
 
-export const getFriendship = async ({ requesterId, recieverId }: { requesterId: string; recieverId: string }) => {
+export const getFriendship = async ({ requester, receiver }: { requester: string; receiver: string }) => {
    const { data, error } = await supabase
-      .from("friendships")
+      .from("relationships")
       .select("*")
-      .in("requester", [requesterId, recieverId])
-      .in("receiver", [requesterId, recieverId])
+      .in("requester", [requester, receiver])
+      .in("receiver", [requester, receiver])
       .limit(1)
       .single();
 
    return data;
 };
 
-// export const getFollower = async ({ currentUserId }: RelationshipInput) => {
-//    const { data } = await supabase
-//       .from("relationships")
-//       .select("following_id")
-//       .eq("follower_id", currentUserId)
-//       .eq("status", "accepted")
-//       .throwOnError();
-
-//    return data;
-// };
+export const getRequests = async ({ receiver }: { receiver: string }) => {
+   const { data, error } = await supabase
+      .from("relationships")
+      .select("*,requester( id, username, firstName, lastName, avatarUrl )")
+      .eq("receiver", receiver)
+      .eq("status", "pending");
+   return data;
+};

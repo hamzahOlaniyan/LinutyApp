@@ -20,8 +20,6 @@ import { useAuthStore } from "@/src/store/authStore";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
-// import SupabaseImage from "./SupabaseImage";
-// import AppText from "./ui/AppText";
 
 type FriendsCardProps = {
    id: string;
@@ -31,63 +29,80 @@ type FriendsCardProps = {
 };
 
 export default function FriendsCard({ id, avatar, name, username }: FriendsCardProps) {
-   const [remove, setRemove] = useState(false);
    const { profile } = useAuthStore();
    const queryClient = useQueryClient();
 
-   const [friendship, setFriendship] = useState<any>(null);
+   const [relationship, setRelationship] = useState<any>(null);
 
-   const { data: friendshipData } = useQuery({
-      queryKey: ["friendships", profile?.id, id],
-      queryFn: async () => getFriendship({ requester: profile?.id, reciever: id }),
+   const { data: RELATIONSHIP_DATA } = useQuery({
+      queryKey: ["relationships", profile?.id, id],
+      queryFn: async () => getFriendship({ requester: profile?.id, receiver: id }),
    });
 
    useEffect(() => {
-      setFriendship(friendshipData);
-   }, [friendshipData]);
-
-   console.log("friendship", { friendship });
+      setRelationship(RELATIONSHIP_DATA);
+   }, [RELATIONSHIP_DATA]);
 
    const sendRequest = useMutation({
       mutationFn: async () => sendFriendRequest({ requester: profile?.id, receiver: id }),
       onSuccess: async () => {
          console.log("✅friend request sent");
-         queryClient.invalidateQueries({ queryKey: ["friendship", profile?.id, id] });
+         queryClient.invalidateQueries({ queryKey: ["relationships", profile?.id, id] });
       },
       onError: (error: any) => console.error(" ❌ friend request fail", error),
    });
 
    const acceptRequest = useMutation({
-      mutationFn: async () => acceptFriendRequest({ id: friendship?.id, receiver: profile?.id }),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ["friendship", profile?.id, id] }),
+      mutationFn: async ({ id }: { id: string }) => acceptFriendRequest({ id, currentUserId: profile?.id }),
+      onSuccess: async (data) => {
+         console.log("✅friend request acceptes 👍🏾");
+         queryClient.invalidateQueries({ queryKey: ["relationships", profile?.id] });
+         queryClient.invalidateQueries({ queryKey: ["friendRequests", profile?.id] });
+      },
+      onError: (error: any) => console.error(" ❌ friend accepted fail", error),
    });
 
    const rejectRequest = useMutation({
-      mutationFn: async () => rejectFriendRequest({ id: friendship?.id, receiver: profile?.id }),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ["friendship", profile?.id, id] }),
+      mutationFn: async () => rejectFriendRequest({ id: relationship?.id, receiver: profile?.id }),
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: ["relationships", profile?.id, id] }),
    });
 
    const unfriend = useMutation({
-      mutationFn: async () => deleteFriendRequest({ id: friendship?.id }),
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ["friendship", profile?.id, id] }),
+      mutationFn: async ({ id }: { id: string }) => deleteFriendRequest({ id, currentUserId: profile?.id }),
+      onSuccess: () => {
+         console.log("unfriended 💔");
+         queryClient.invalidateQueries({ queryKey: ["relationships", profile?.id] });
+      },
    });
 
    let button = <Button text="Add Friend" size="xs" onPress={() => sendRequest.mutate()} />;
 
-   if (friendship) {
-      if (friendship.status === "pending") {
-         if (friendship.requester === profile?.id) {
-            button = <Button text="Cancel Request" size="xs" onPress={() => unfriend.mutate()} />;
-         } else if (friendship.receiver === profile?.id) {
+   if (relationship) {
+      if (relationship.status === "pending") {
+         if (relationship.relationship === profile?.id) {
+            button = (
+               <Button
+                  text="Cancel Request"
+                  size="xs"
+                  onPress={() => unfriend.mutate({ id: relationship.receiver?.id })}
+               />
+            );
+         } else if (relationship.receiver === profile?.id) {
             button = (
                <View style={{ flexDirection: "row", gap: 8 }}>
-                  <Button text="Accept" size="xs" onPress={() => acceptRequest.mutate()} />
+                  <Button
+                     text="Accept"
+                     size="xs"
+                     onPress={() => acceptRequest.mutate({ id: relationship?.relationship.id })}
+                  />
                   <Button text="Reject" size="xs" onPress={() => rejectRequest.mutate()} />
                </View>
             );
          }
-      } else if (friendship.status === "accepted") {
-         button = <Button text="Unfriend" size="xs" onPress={() => unfriend.mutate()} />;
+      } else if (relationship.status === "accepted") {
+         button = (
+            <Button text="Unfriend" size="xs" onPress={() => unfriend.mutate({ id: relationship.receiver?.id })} />
+         );
       }
    }
 
