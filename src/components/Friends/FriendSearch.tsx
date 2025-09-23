@@ -50,11 +50,10 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
          )}
          <View className="gap-6 my-4">
             {PROFILES?.data
-
                ?.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))
-               .map((item, idx) => (
+               .map((item) => (
                   <FriendsCard
-                     key={idx}
+                     key={item?.id}
                      id={item?.id}
                      avatar={item?.avatarUrl}
                      firstName={item?.firstName.trim()}

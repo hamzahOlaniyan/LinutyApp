@@ -10,6 +10,7 @@ import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 // import { deleteFriendRequest, sendFriendRequest } from "../Services/relationships";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
+import { createNotification } from "@/src/Services/Notification";
 import { deleteFriendRequest, getFriendship, sendFriendRequest } from "@/src/Services/relationships";
 import { useAuthStore } from "@/src/store/authStore";
 import Avatar from "../Avatar";
@@ -28,6 +29,7 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
    const queryClient = useQueryClient();
 
    const [relationship, setRelationship] = useState<any>(null);
+   const [notificationReceiver, setNotificationReceiver] = useState("");
 
    const { data: RELATIONSHIP_DATA } = useQuery({
       queryKey: ["relationships", profile?.id, id],
@@ -41,13 +43,10 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
    const sendRequest = useMutation({
       mutationFn: async () => sendFriendRequest({ requester: profile?.id, receiver: id }),
       onMutate: async () => {
-         // cancel outgoing fetches
          await queryClient.cancelQueries({ queryKey: ["relationships", profile?.id, id] });
 
-         // snapshot current state
          const previous = queryClient.getQueryData(["relationships", profile?.id, id]);
 
-         // set optimistic state
          queryClient.setQueryData(["relationships", profile?.id, id], {
             requester: profile?.id,
             receiver: id,
@@ -59,10 +58,20 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
       onSuccess: async () => {
          console.log("✅friend request sent");
          queryClient.invalidateQueries({ queryKey: ["relationships", profile?.id, id] });
+         try {
+            let notify = {
+               senderId: profile?.id,
+               receiverId: notificationReceiver,
+               type: "request",
+            };
+            await createNotification(notify);
+            console.log("✅ Notification created CREATE=====>", JSON.stringify(notify, null, 2));
+         } catch (error) {
+            console.log("❌ friend request Notification failed", error);
+         }
       },
 
       onError: (_err, _variables, context) => {
-         // rollback if fail
          if (context?.previous) {
             queryClient.setQueryData(["relationships", profile?.id, id], context.previous);
          }
@@ -71,21 +80,6 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
          queryClient.invalidateQueries({ queryKey: ["relationships", profile?.id, id] });
       },
    });
-
-   // const acceptRequest = useMutation({
-   //    mutationFn: async ({ id }: { id: string }) => acceptFriendRequest({ id, currentUserId: profile?.id }),
-   //    onSuccess: async (data) => {
-   //       console.log("✅friend request acceptes 👍🏾");
-   //       queryClient.invalidateQueries({ queryKey: ["relationships", profile?.id] });
-   //       queryClient.invalidateQueries({ queryKey: ["friendRequests", profile?.id] });
-   //    },
-   //    onError: (error: any) => console.error(" ❌ friend accepted fail", error),
-   // });
-
-   // const rejectRequest = useMutation({
-   //    mutationFn: async () => rejectFriendRequest({ id: relationship?.id, receiver: profile?.id }),
-   //    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["relationships", profile?.id, id] }),
-   // });
 
    const unfriend = useMutation({
       mutationFn: async ({ id }: { id?: string }) => deleteFriendRequest({ id, currentUserId: profile?.id }),
@@ -132,7 +126,10 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
             borderRadius: 50,
             paddingHorizontal: 8,
          }}
-         onPress={() => sendRequest.mutate()}
+         onPress={() => {
+            sendRequest.mutate();
+            setNotificationReceiver(id);
+         }}
       >
          {sendRequest.isPending ? (
             <ActivityIndicator />
@@ -145,18 +142,18 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
    );
 
    if (RELATIONSHIP_DATA) {
-      if (RELATIONSHIP_DATA.status === "pending") {
-         if (RELATIONSHIP_DATA.requester === profile?.id) {
+      if (RELATIONSHIP_DATA?.status === "pending") {
+         if (RELATIONSHIP_DATA?.requester === profile?.id) {
             button = (
                <TouchableOpacity
-                  onPress={() =>
+                  onPress={() => {
                      unfriend.mutate({
                         id:
-                           RELATIONSHIP_DATA.receiver === profile?.id
-                              ? RELATIONSHIP_DATA.requester
-                              : RELATIONSHIP_DATA.receiver,
-                     })
-                  }
+                           RELATIONSHIP_DATA?.receiver === profile?.id
+                              ? RELATIONSHIP_DATA?.requester
+                              : RELATIONSHIP_DATA?.receiver,
+                     });
+                  }}
                   style={{
                      borderWidth: 1.5,
                      minWidth: 130,

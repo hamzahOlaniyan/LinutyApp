@@ -6,6 +6,7 @@ import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { Linking } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
@@ -83,13 +84,15 @@ export default function RootLayout() {
    const queryClient = new QueryClient();
 
    return (
-      <SafeAreaProvider>
-         <QueryClientProvider client={queryClient}>
-            <GluestackUIProvider>
-               <StatusBar style="auto" />
-               <Stack screenOptions={{ headerShown: false }} />
-            </GluestackUIProvider>
-         </QueryClientProvider>
-      </SafeAreaProvider>
+      <GestureHandlerRootView className="flex-1 bg-yellow-500">
+         <SafeAreaProvider>
+            <QueryClientProvider client={queryClient}>
+               <GluestackUIProvider>
+                  <StatusBar style="auto" />
+                  <Stack screenOptions={{ headerShown: false }} />
+               </GluestackUIProvider>
+            </QueryClientProvider>
+         </SafeAreaProvider>
+      </GestureHandlerRootView>
    );
 }
