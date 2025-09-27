@@ -1,51 +1,38 @@
-import { Image } from "expo-image";
+// src/app/index.tsx
 import { useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect } from "react";
-import { View } from "react-native";
-import { supabase } from "../lib/supabase";
+import { useEffect } from "react";
+import { Image, View } from "react-native";
 import { useAuthStore } from "../store/authStore";
-
-SplashScreen.setOptions({
-   duration: 500,
-   fade: true,
-});
-SplashScreen.preventAutoHideAsync();
+import { fetchSessionProfile } from "../utils/fetchSessionProfile";
+import { getNextRoute } from "../utils/getNextRoute";
 
 export default function AnimatedSplash() {
    const setSession = useAuthStore((s) => s.setSession);
    const fetchProfile = useAuthStore((s) => s.fetchProfile);
-   const { session, profile } = useAuthStore();
+   const { profile } = useAuthStore();
    const router = useRouter();
 
    useEffect(() => {
-      const checkAuth = async () => {
-         await supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session);
-            if (session?.user) fetchProfile(session.user.id);
-         });
+      // Move all native calls inside useEffect
+      SplashScreen.setOptions({ duration: 500, fade: true });
+      SplashScreen.hideAsync();
 
-         setTimeout(() => {
-            if (!session) {
-               router.replace("/(auth)");
-            } else if (profile?.isComplete === false) {
-               router.replace("/(new-user)/PartTwo/step-4.0");
-            } else {
-               router.replace("/(app)/(tabs)");
-            }
-         }, 2000);
+      const checkAuth = async () => {
+         const currentSession = await fetchSessionProfile(setSession, fetchProfile);
+         const route = getNextRoute(currentSession, profile);
+         router.replace(route);
       };
 
       checkAuth();
-      SplashScreen.hideAsync();
    }, []);
 
    return (
       <View className="flex-1 justify-center items-center bg-white">
          <Image
             source={require("@/assets/images/tree-icon.png")}
-            style={{ width: "100%", height: 100, alignSelf: "center", justifyContent: "center", borderRadius: 100 }}
-            contentFit="contain"
+            style={{ width: "100%", height: 100, alignSelf: "center", borderRadius: 100 }}
+            accessibilityRole="image"
          />
       </View>
    );

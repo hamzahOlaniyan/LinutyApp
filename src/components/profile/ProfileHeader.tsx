@@ -3,7 +3,7 @@ import { appColors } from "@/src/constant/colors";
 import { hp, wp } from "@/src/constant/common";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
@@ -18,20 +18,21 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias obcaecati tempora saepe deleniti ipsa eveniet numquam modi reiciendis dolore nemo perspiciatis totam debitis.";
 
    return (
-      <View style={{ paddingHorizontal: wp(3) }} className="gap-2 mb-6">
-         <View style={{ height: hp(25) }} className="w-full rounded-lg overflow-hidden">
+      <View className="gap-2 mb-6">
+         <View style={{ height: hp(25) }} className="w-full overflow-hidden">
             {userProfile?.cover_photo ? (
                <Image
                   source={{ uri: userProfile?.cover_photo }}
                   transition={100}
                   style={{ width: "100%", height: "100%" }}
-                  contentPosition="center"
+                  contentPosition="top"
+                  contentFit="cover"
                />
             ) : (
                <View className="w-full h-full bg-neutral-200"></View>
             )}
          </View>
-         <View className="">
+         <View style={{ paddingHorizontal: wp(3) }} className="">
             <View className="flex-row items-center gap-3 relative">
                <View
                   style={{
@@ -57,10 +58,10 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                >
                   <View>
                      <View className="flex-row gap-1">
-                        <AppText size="xxl" weight="semi" cap="capitalize">
+                        <AppText size="xxxl" weight="bold" cap="capitalize">
                            {userProfile?.firstName}
                         </AppText>
-                        <AppText size="xxl" weight="semi" cap="capitalize">
+                        <AppText size="xxxl" weight="bold" cap="capitalize">
                            {userProfile?.lastName}
                         </AppText>
                      </View>

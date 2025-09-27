@@ -1,12 +1,10 @@
 import { ThreeDots } from "@/assets/icons/threedots";
 import { appColors } from "@/src/constant/colors";
 import { hp, wp } from "@/src/constant/common";
-import { TimeAgo } from "@/src/hooks/timeAgo";
 import { Octicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useRouter } from "expo-router";
-import React from "react";
 import { Pressable, View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
@@ -34,29 +32,31 @@ export default function PostHeader({ id, avatar, name, username, date, postInfo 
          <View className="flex-row justify-between items-start">
             <View className="flex-row items-center gap-2">
                <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                  <Avatar path={avatar} size={37} />
+                  <Avatar path={avatar} size={50} />
                </Pressable>
                <View className="">
-                  <View className="flex-row items-center gap-2">
+                  <View className="flex-row items-center gap-1">
                      <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                        <AppText weight="semi" cap="capitalize">
+                        <AppText size="lg" weight="bold" cap="capitalize">
                            {name.trim()}
                         </AppText>
                      </Pressable>
-                     <Octicons name="dot-fill" size={6} className="relative top-[2px]" />
-                     <AppText className="top-[2px]">
-                        <TimeAgo time={dayjs(date).fromNow()} />
-                     </AppText>
+                     <View className="flex-row items-center gap-1 relative -top-[px]">
+                        <Octicons name="dot-fill" size={5} color={appColors.lightGrey} className="relative" />
+                        <AppText color={appColors.lightGrey} size="xxs" className="">
+                           {dayjs(date).fromNow(true)}
+                        </AppText>
+                     </View>
                   </View>
                   <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                     <AppText size="sm" color={appColors.grey}>
+                     <AppText size="sm" color={appColors.lightGrey}>
                         @{username}
                      </AppText>
                   </Pressable>
                </View>
             </View>
             <Pressable onPress={postInfo} className="h-full relative">
-               <ThreeDots color={appColors.grey} />
+               <ThreeDots color={appColors.lightGrey} />
             </Pressable>
          </View>
       </View>

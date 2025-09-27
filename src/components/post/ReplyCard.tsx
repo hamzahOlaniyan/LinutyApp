@@ -1,5 +1,4 @@
 import { appColors } from "@/src/constant/colors";
-import { TimeAgo } from "@/src/hooks/timeAgo";
 import { Octicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -22,7 +21,9 @@ export default function ReplyCard({ reply }: { reply: any }) {
                      {reply?.author?.lastName}
                   </AppText>
                   <Octicons name="dot-fill" size={5} color={appColors.grey} className="relative top-[2px] " />
-                  <TimeAgo time={reply?.created_at} size="sm" color={appColors.grey} />
+                  <AppText color={appColors.lightGrey} size="xxs" className="">
+                     {dayjs(reply?.created_at).fromNow(true)}
+                  </AppText>
                </View>
             </View>
             <AppText weight="reg" size="lg">

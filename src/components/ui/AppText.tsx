@@ -1,7 +1,6 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
-// import { useThemeStore } from "@/src/context/themeStore";
 import React from "react";
 import { Text, TextStyle } from "react-native";
 
@@ -43,7 +42,7 @@ export default function AppText({
       md: hp(1.8),
       sm: hp(1.6),
       xs: hp(1.4),
-      xxs: hp(1),
+      xxs: 12,
    }[size];
 
    const fontFamilyMap: Record<TextWeight, TextStyle["fontFamily"]> = {
@@ -67,7 +66,6 @@ export default function AppText({
                fontFamily,
                textTransform: cap,
                color: color,
-               // color: appColors.text,
                textAlign: align,
             },
          ]}

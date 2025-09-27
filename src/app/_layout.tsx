@@ -26,13 +26,13 @@ export default function RootLayout() {
    const router = useRouter();
 
    const [loaded] = useFonts({
-      [TiktokFont.TiktokBlack]: require("@/assets/fonts/TikTokSans-Black.ttf"),
-      [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/TikTokSans-ExtraBold.ttf"),
-      [TiktokFont.TiktokBold]: require("@/assets/fonts/TikTokSans-Bold.ttf"),
-      [TiktokFont.TiktokSemiBold]: require("@/assets/fonts/TikTokSans-SemiBold.ttf"),
-      [TiktokFont.TiktokMedium]: require("@/assets/fonts/TikTokSans-Medium.ttf"),
-      [TiktokFont.TiktokRegular]: require("@/assets/fonts/TikTokSans-Regular.ttf"),
-      [TiktokFont.TiktokLight]: require("@/assets/fonts/TikTokSans-Light.ttf"),
+      [TiktokFont.TiktokBlack]: require("@/assets/fonts/Roboto-Black.ttf"),
+      [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/Roboto-ExtraBold.ttf"),
+      [TiktokFont.TiktokBold]: require("@/assets/fonts/Roboto-SemiBold.ttf"),
+      [TiktokFont.TiktokSemiBold]: require("@/assets/fonts/Roboto-SemiBold.ttf"),
+      [TiktokFont.TiktokMedium]: require("@/assets/fonts/Roboto-Medium.ttf"),
+      [TiktokFont.TiktokRegular]: require("@/assets/fonts/Roboto-Regular.ttf"),
+      [TiktokFont.TiktokLight]: require("@/assets/fonts/Roboto-Light.ttf"),
    });
 
    // useEffect(() => {

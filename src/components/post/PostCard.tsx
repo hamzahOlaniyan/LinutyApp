@@ -3,8 +3,8 @@ import { createNotification, deleteNotification } from "@/src/Services/Notificat
 import { useAuthStore } from "@/src/store/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
-import React, { useEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Alert, Dimensions, FlatList, StyleSheet, View, ViewabilityConfig, ViewToken } from "react-native";
 import { createPostLike, deleteComment, deletePost, removePostLike } from "../../Services/posts";
 import AppText from "../ui/AppText";
 import BottomSheet from "../ui/BottomSheet";
@@ -38,6 +38,16 @@ export default function Post({
    const [noticeMap, setNoticeMap] = useState<{ [postId: string]: string }>({});
    const [modalVisible, setModalVisible] = useState(false);
    const [showComments, setShowComments] = useState(false);
+
+   const [currentIndex, setCurrentIndex] = useState(0);
+
+   const viewabilityConfig = useRef<ViewabilityConfig>({ viewAreaCoveragePercentThreshold: 60 }).current;
+   const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
+      const idx = (viewableItems?.[0]?.index ?? 0) as number | null;
+      setCurrentIndex(idx ?? 0);
+   }).current;
+
+   const { width: screenWidth } = Dimensions.get("window");
 
    const queryClient = useQueryClient();
 
@@ -176,18 +186,52 @@ export default function Post({
                <AppText size="lg">{post?.content}</AppText>
             </View>
 
-            {post?.images?.length > 0 && (
+            {post?.images?.length <= 1 && (
                <View className="flex-row flex-wrap">
                   {post?.images.map((pics: any, idx: number) => (
                      <View key={idx} style={{ width: post?.images.length === 1 ? "100%" : "50%" }}>
                         <Image
-                           source={pics}
+                           source={{ uri: pics }}
                            style={{
-                              height: 250,
+                              aspectRatio: 1 / 1,
                            }}
+                           contentPosition="center"
+                           contentFit="cover"
                         />
                      </View>
                   ))}
+               </View>
+            )}
+            {post?.images?.length > 1 && (
+               <View style={s.mediaContainer}>
+                  <FlatList
+                     data={post?.images}
+                     keyExtractor={(index) => index.toString()}
+                     horizontal
+                     pagingEnabled
+                     showsHorizontalScrollIndicator={false}
+                     renderItem={({ item }) => (
+                        <Image
+                           source={{ uri: item }}
+                           style={{ width: screenWidth, height: screenWidth, aspectRatio: 1 / 1 }}
+                           contentPosition="center"
+                           contentFit="contain"
+                        />
+                     )}
+                     contentContainerStyle={{ backgroundColor: appColors.black }}
+                     onViewableItemsChanged={onViewableItemsChanged}
+                     viewabilityConfig={viewabilityConfig}
+                  />
+                  <View style={s.mediaCounter}>
+                     <AppText size="sm" color={appColors.white} style={s.mediaCounterText}>
+                        {currentIndex + 1} / {post?.images?.length}
+                     </AppText>
+                  </View>
+                  <View style={s.dotsRow}>
+                     {post?.images?.map((_: string, i: number) => (
+                        <View key={i} style={[s.dot, i === currentIndex && s.dotActive]} />
+                     ))}
+                  </View>
                </View>
             )}
 
@@ -230,3 +274,29 @@ export default function Post({
       </>
    );
 }
+
+const s = StyleSheet.create({
+   mediaContainer: { position: "relative" },
+   // mediaImage: { width: screenWidth, height: screenWidth, backgroundColor: "#F5F5F5" },
+   mediaCounter: {
+      position: "absolute",
+      right: 12,
+      top: 12,
+      backgroundColor: "rgba(0,0,0,0.45)",
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 10,
+   },
+   mediaCounterText: { color: "#fff", fontSize: 12, fontWeight: "600" },
+   dotsRow: {
+      position: "absolute",
+      bottom: 10,
+      left: 0,
+      right: 0,
+      flexDirection: "row",
+      justifyContent: "center",
+      gap: 6,
+   },
+   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.5)" },
+   dotActive: { backgroundColor: "#FFFFFF" },
+});

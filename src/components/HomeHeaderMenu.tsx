@@ -3,7 +3,7 @@ import { Notification } from "@/assets/icons/notification";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { appColors } from "../constant/colors";
@@ -13,7 +13,6 @@ import { getNotfication } from "../Services/Notification";
 import { useAuthStore } from "../store/authStore";
 import Avatar from "./Avatar";
 import AppText from "./ui/AppText";
-import Menu from "./ui/Menu";
 
 export default function HomeHeaderMenu() {
    const { profile } = useAuthStore();
@@ -68,9 +67,10 @@ export default function HomeHeaderMenu() {
                zIndex: 10,
                borderBottomColor: appColors.bordersLight,
                borderBottomWidth: 1,
+               backgroundColor: appColors.white,
             },
          ]}
-         className="flex-row items-center justify-between py-1 gap-10 bg-white"
+         className="flex-row items-center justify-between py-1"
       >
          <Image
             source={require("@/assets/images/linuty.png")}
@@ -80,10 +80,7 @@ export default function HomeHeaderMenu() {
             }}
             contentFit="contain"
          />
-         <View className="flex-row items-center justify-between w-full flex-1">
-            <View className="relative">
-               <Menu />
-            </View>
+         <View className="flex-row items-center justify-between gap-4">
             <Pressable onPress={() => router.push("/(app)/new-post")}>
                <AddCircleIcon />
             </Pressable>

@@ -1,7 +1,6 @@
 import { ThreeDots } from "@/assets/icons/threedots";
 import { Thumbsup } from "@/assets/icons/thumbsup";
 import { appColors } from "@/src/constant/colors";
-import { TimeAgo } from "@/src/hooks/timeAgo";
 import { fetchComments } from "@/src/Services/comment";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
@@ -67,7 +66,9 @@ export default function CommentCard({
                </AppText>
                <View className="flex-row items-center justify-between">
                   <View className="flex-row items-center gap-4">
-                     <TimeAgo time={item?.created_at} size="sm" color={appColors.grey} />
+                     <AppText color={appColors.lightGrey} size="xxs" className="">
+                        {dayjs(item?.created_at).fromNow(true)}
+                     </AppText>
                      <TouchableOpacity
                         className="flex-row items-center gap-1 my-2"
                         onPress={() => {

@@ -18,7 +18,9 @@ export const appColors = {
    buttonOutline: "#006891",
    text: "#262626",
    grey: "#353535",
+   lightGrey: "#717171",
    bordersLight: "#e8edeb",
+   border: "#d6d6d6",
 
    gradients: {
       primary: ["#68be91", "#006891", "#36326c"] as const,

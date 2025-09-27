@@ -8,7 +8,6 @@ import { Store } from "@/assets/icons/store";
 import { StoreSolid } from "@/assets/icons/store-solid";
 import { appColors } from "@/src/constant/colors";
 import { Tabs } from "expo-router";
-import React from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

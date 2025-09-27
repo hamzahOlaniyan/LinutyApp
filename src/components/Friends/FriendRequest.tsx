@@ -1,9 +1,9 @@
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
-import { TimeAgo } from "@/src/hooks/timeAgo";
 import { acceptFriendRequest, getRequests, rejectFriendRequest } from "@/src/Services/relationships";
 import { useAuthStore } from "@/src/store/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import { TouchableOpacity, View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
@@ -83,7 +83,9 @@ export default function FriendRequest() {
                               @{item?.requester?.username}
                            </AppText>
                         </View>
-                        <View>{TimeAgo(item?.created_at)}</View>
+                        <AppText color={appColors.lightGrey} size="xxs" className="">
+                           {dayjs(item?.created_at).fromNow(true)}
+                        </AppText>
                      </View>
                      <View className="flex-row gap-4">
                         <TouchableOpacity

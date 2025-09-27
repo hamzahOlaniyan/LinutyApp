@@ -1,5 +1,4 @@
 import { Image } from "expo-image";
-import React from "react";
 import { ImageStyle, StyleProp } from "react-native";
 
 export default function Avatar({
@@ -11,5 +10,5 @@ export default function Avatar({
    size?: number;
    style?: StyleProp<ImageStyle>;
 }) {
-   return <Image source={path} style={{ width: size, height: size, borderRadius: 100 }} />;
+   return <Image source={path} style={{ width: size, height: size, borderRadius: 200 }} />;
 }

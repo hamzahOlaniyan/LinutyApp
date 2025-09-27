@@ -4,7 +4,6 @@ import { appColors } from "@/src/constant/colors";
 import { getNotfication } from "@/src/Services/Notification";
 import { useAuthStore } from "@/src/store/authStore";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import { FlatList, View } from "react-native";
 
 export default function Notification() {
