@@ -3,6 +3,7 @@ import { createNotification, deleteNotification } from "@/src/Services/Notificat
 import { useAuthStore } from "@/src/store/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
+import { Link } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Alert, Dimensions, FlatList, StyleSheet, View, ViewabilityConfig, ViewToken } from "react-native";
 import { createPostLike, deleteComment, deletePost, removePostLike } from "../../Services/posts";
@@ -174,6 +175,7 @@ export default function Post({
    return (
       <>
          <View style={{ backgroundColor: appColors.white }} className="overflow-hidden">
+            <Link href={"/"}>home</Link>
             <PostHeader
                id={post?.author?.id}
                avatar={post?.author?.avatarUrl}

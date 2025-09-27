@@ -1,8 +1,9 @@
 // src/app/index.tsx
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { Image, View } from "react-native";
+import { View } from "react-native";
 import { useAuthStore } from "../store/authStore";
 import { fetchSessionProfile } from "../utils/fetchSessionProfile";
 import { getNextRoute } from "../utils/getNextRoute";
@@ -31,7 +32,8 @@ export default function AnimatedSplash() {
       <View className="flex-1 justify-center items-center bg-white">
          <Image
             source={require("@/assets/images/tree-icon.png")}
-            style={{ width: "100%", height: 100, alignSelf: "center", borderRadius: 100 }}
+            style={{ width: 150, height: 150 }}
+            contentFit="contain"
             accessibilityRole="image"
          />
       </View>
