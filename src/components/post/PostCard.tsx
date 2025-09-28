@@ -1,18 +1,18 @@
 import { appColors } from "@/src/constant/colors";
 import { createNotification, deleteNotification } from "@/src/Services/Notification";
 import { useAuthStore } from "@/src/store/authStore";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
-import { Link } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert, Dimensions, FlatList, StyleSheet, View, ViewabilityConfig, ViewToken } from "react-native";
 import { createPostLike, deleteComment, deletePost, removePostLike } from "../../Services/posts";
 import AppText from "../ui/AppText";
-import BottomSheet from "../ui/BottomSheet";
+import { CustomBottomSheet } from "../ui/CustomBottomSheet";
 import Comments from "./Comments";
 import PostAction from "./PostAction";
 import PostHeader from "./PostHeader";
-import PostInfo from "./PostInfo";
 
 export default function Post({
    post,
@@ -37,10 +37,12 @@ export default function Post({
 
    const [postLikes, setPostLikes] = useState<any[]>([]);
    const [noticeMap, setNoticeMap] = useState<{ [postId: string]: string }>({});
-   const [modalVisible, setModalVisible] = useState(false);
    const [showComments, setShowComments] = useState(false);
+   const [modalVisible, setModalVisible] = useState(false);
 
    const [currentIndex, setCurrentIndex] = useState(0);
+
+   const bottomSheetRef = useRef<BottomSheet>(null);
 
    const viewabilityConfig = useRef<ViewabilityConfig>({ viewAreaCoveragePercentThreshold: 60 }).current;
    const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
@@ -48,7 +50,7 @@ export default function Post({
       setCurrentIndex(idx ?? 0);
    }).current;
 
-   const { width: screenWidth } = Dimensions.get("window");
+   const { width: screenWidth } = Dimensions.get("screen");
 
    const queryClient = useQueryClient();
 
@@ -172,10 +174,13 @@ export default function Post({
       onError: (error) => Alert.alert("Error", error.message),
    });
 
+   // const handleCloseSheet = () => bottomSheetRef.current?.close();
+   const handleOpenSheet = () => bottomSheetRef.current?.expand();
+   // const snapToIndex = (idx: number) => bottomSheetRef.current?.snapToIndex(idx);
+
    return (
       <>
          <View style={{ backgroundColor: appColors.white }} className="overflow-hidden">
-            <Link href={"/"}>home</Link>
             <PostHeader
                id={post?.author?.id}
                avatar={post?.author?.avatarUrl}
@@ -187,7 +192,6 @@ export default function Post({
             <View className="px-4 pb-3">
                <AppText size="lg">{post?.content}</AppText>
             </View>
-
             {post?.images?.length <= 1 && (
                <View className="flex-row flex-wrap">
                   {post?.images.map((pics: any, idx: number) => (
@@ -247,19 +251,59 @@ export default function Post({
                   likes={postLikes.length || null}
                   showComment={() => {
                      if (!showMoreIcon) return null;
-                     setPostID(post?.id), setShowComments(true);
+                     setPostID(post?.id), handleOpenSheet();
                   }}
                   commentCount={count || null}
                />
             </View>
          </View>
-         <BottomSheet
-            isOpen={showComments}
+         <Portal hostName="root">
+            <CustomBottomSheet
+               ref={bottomSheetRef}
+               title={`${count} Comments`}
+               children={<Comments postAuthor={comments?.author} data={comments} loading={loading} />}
+            />
+         </Portal>
+      </>
+   );
+}
+
+const s = StyleSheet.create({
+   mediaContainer: { position: "relative" },
+   mediaCounter: {
+      position: "absolute",
+      right: 12,
+      top: 12,
+      backgroundColor: "rgba(0,0,0,0.45)",
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 10,
+   },
+   mediaCounterText: { color: appColors.white, fontSize: 12, fontWeight: "600" },
+   dotsRow: {
+      position: "absolute",
+      bottom: 10,
+      left: 0,
+      right: 0,
+      flexDirection: "row",
+      justifyContent: "center",
+      gap: 6,
+   },
+   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.5)" },
+   dotActive: { backgroundColor: appColors.white },
+});
+
+{
+   /* <BottomSheetTwo
+            visible={showComments}
+            sheetHeight={90}
             onClose={() => setShowComments(false)}
-            heading={`${count} Comments`}
+            // heading={`${count} Comments`}
             children={<Comments postAuthor={comments?.author} data={comments} loading={loading} />}
-         />
-         <BottomSheet
+         /> */
+}
+{
+   /* <BottomSheet
             isOpen={modalVisible}
             onClose={() => setModalVisible(false)}
             heading={`Info`}
@@ -272,33 +316,5 @@ export default function Post({
                   onClose={() => setModalVisible(false)}
                />
             }
-         />
-      </>
-   );
+         /> */
 }
-
-const s = StyleSheet.create({
-   mediaContainer: { position: "relative" },
-   // mediaImage: { width: screenWidth, height: screenWidth, backgroundColor: "#F5F5F5" },
-   mediaCounter: {
-      position: "absolute",
-      right: 12,
-      top: 12,
-      backgroundColor: "rgba(0,0,0,0.45)",
-      paddingHorizontal: 8,
-      paddingVertical: 4,
-      borderRadius: 10,
-   },
-   mediaCounterText: { color: "#fff", fontSize: 12, fontWeight: "600" },
-   dotsRow: {
-      position: "absolute",
-      bottom: 10,
-      left: 0,
-      right: 0,
-      flexDirection: "row",
-      justifyContent: "center",
-      gap: 6,
-   },
-   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.5)" },
-   dotActive: { backgroundColor: "#FFFFFF" },
-});

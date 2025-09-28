@@ -8,10 +8,11 @@ import { wp } from "@/src/constant/common";
 import { injectSponsoredBlocks } from "@/src/hooks/injecSponsoredBloacks";
 import { fetchPost, getPostById } from "@/src/Services/posts";
 import { getStoreProduct } from "@/src/Services/store";
+import BottomSheet from "@gorhom/bottom-sheet";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { ActivityIndicator, FlatList, SafeAreaView, View } from "react-native";
 
@@ -19,6 +20,15 @@ export default function index() {
    const { postId, openComments } = useLocalSearchParams();
    const [postID, setPostID] = useState<string>("");
    const [activeCommentsPostId, setActiveCommentsPostId] = useState<string | null>(null);
+   const [showComments, setShowComments] = useState(false);
+   const [showKeyboard, setShowKeyboard] = useState(false);
+   const [replyToName, setReplyToName] = useState<string | null>(null);
+   const [replyToId, setReplyToId] = useState<string | null>(null);
+
+   const bottomSheetRef = useRef<BottomSheet>(null);
+
+   const handleCloseSheet = () => bottomSheetRef.current?.close();
+   const handleOpenSheet = () => bottomSheetRef.current?.expand();
 
    // const [showKeyboard, setShowKeyboard] = useState(false);
    // const [replyToName, setReplyToName] = useState<string | null>(null);
@@ -76,121 +86,124 @@ export default function index() {
       );
 
    return (
-      <ScreenWrapper paddingHorizontal={0}>
-         <SafeAreaView style={{ paddingHorizontal: wp(0), backgroundColor: appColors.extralightOlive }}>
-            <HomeHeaderMenu />
-            <FlatList
-               data={feedData}
-               keyExtractor={(item, index) => item.id ?? `feed-${index}`}
-               contentContainerStyle={{ rowGap: 8 }}
-               decelerationRate={0.6}
-               showsVerticalScrollIndicator={false}
-               renderItem={({ item }) => {
-                  switch (item.type) {
-                     case "post":
-                        return (
-                           <PostCard
-                              post={item}
-                              showMoreIcon
-                              count={item.comments?.filter((c: any) => c.parentId === null).length ?? 0}
-                              setPostID={setPostID}
-                              comments={COMMENTS}
-                              loading={commentsLoading}
-                              openComments={activeCommentsPostId === item?.id}
-                           />
-                        );
+      <>
+         <ScreenWrapper paddingHorizontal={0}>
+            <SafeAreaView style={{ paddingHorizontal: wp(0), backgroundColor: appColors.extralightOlive }}>
+               <HomeHeaderMenu />
 
-                     case "product-single":
-                        return (
-                           <View style={{ padding: 12, backgroundColor: "#fff", borderRadius: 10, gap: 8 }}>
-                              <AppText weight="bold" color={appColors.primary}>
-                                 🛍️ Sponsored Ad
-                              </AppText>
-                              {/* <AppText>{item.item?.description ?? "Sponsored"}</AppText> */}
-                              {item?.item?.images && (
-                                 <Image
-                                    source={{ uri: item?.item?.images[0] }}
-                                    style={{ width: "100%", height: 160, borderRadius: 8 }}
-                                 />
-                              )}
-                              <AppText weight="semi">{item.item?.name ?? item.item?.title}</AppText>
-                           </View>
-                        );
-
-                     case "product-group":
-                        return (
-                           <View style={{ backgroundColor: appColors.white }}>
-                              <View className="p-4">
-                                 <AppText weight="semi">Market Place</AppText>
-                              </View>
-
-                              <FlatList
-                                 horizontal
-                                 data={item.items}
-                                 keyExtractor={(p, i) => `product-${p.id ?? i}`}
-                                 showsHorizontalScrollIndicator={false}
-                                 contentContainerStyle={{ gap: 6, paddingHorizontal: 12, paddingBottom: 5 }}
-                                 renderItem={({ item: product }) => (
-                                    <View
-                                       style={{
-                                          width: 175,
-                                          height: 300,
-                                          backgroundColor: "#fff",
-                                          borderRadius: 10,
-                                          position: "relative",
-                                       }}
-                                    >
-                                       {/* <AppText>{product.description ?? "Sponsored"}</AppText> */}
-                                       {product.images && (
-                                          <Image
-                                             source={{ uri: product?.images[0] }}
-                                             style={{ width: "100%", height: "85%", borderRadius: 8 }}
-                                          />
-                                       )}
-                                       <AppText size="sm" weight="semi">
-                                          {product.name ?? product.title}
-                                       </AppText>
-                                    </View>
-                                 )}
+               <FlatList
+                  data={feedData}
+                  keyExtractor={(item, index) => item.id ?? `feed-${index}`}
+                  contentContainerStyle={{ rowGap: 8 }}
+                  decelerationRate={0.6}
+                  showsVerticalScrollIndicator={false}
+                  renderItem={({ item }) => {
+                     switch (item.type) {
+                        case "post":
+                           return (
+                              <PostCard
+                                 post={item}
+                                 showMoreIcon
+                                 count={item.comments?.filter((c: any) => c.parentId === null).length ?? 0}
+                                 setPostID={setPostID}
+                                 comments={COMMENTS}
+                                 loading={commentsLoading}
+                                 openComments={activeCommentsPostId === item?.id}
                               />
-                           </View>
-                        );
+                           );
 
-                     case "info":
-                        return (
-                           <View
-                              style={{
-                                 padding: 16,
-                                 backgroundColor: appColors.white,
-                              }}
-                           >
-                              <AppText weight="semi" color={appColors.primary}>
-                                 {item.title}
-                              </AppText>
-                              <AppText>{item.description}</AppText>
-                           </View>
-                        );
+                        case "product-single":
+                           return (
+                              <View style={{ padding: 12, backgroundColor: "#fff", borderRadius: 10, gap: 8 }}>
+                                 <AppText weight="bold" color={appColors.primary}>
+                                    🛍️ Sponsored Ad
+                                 </AppText>
+                                 {/* <AppText>{item.item?.description ?? "Sponsored"}</AppText> */}
+                                 {item?.item?.images && (
+                                    <Image
+                                       source={{ uri: item?.item?.images[0] }}
+                                       style={{ width: "100%", height: 160, borderRadius: 8 }}
+                                    />
+                                 )}
+                                 <AppText weight="semi">{item.item?.name ?? item.item?.title}</AppText>
+                              </View>
+                           );
 
-                     default:
-                        return null;
+                        case "product-group":
+                           return (
+                              <View style={{ backgroundColor: appColors.white }}>
+                                 <View className="p-4">
+                                    <AppText weight="semi">Market Place</AppText>
+                                 </View>
+
+                                 <FlatList
+                                    horizontal
+                                    data={item.items}
+                                    keyExtractor={(p, i) => `product-${p.id ?? i}`}
+                                    showsHorizontalScrollIndicator={false}
+                                    contentContainerStyle={{ gap: 6, paddingHorizontal: 12, paddingBottom: 5 }}
+                                    renderItem={({ item: product }) => (
+                                       <View
+                                          style={{
+                                             width: 175,
+                                             height: 300,
+                                             backgroundColor: "#fff",
+                                             borderRadius: 10,
+                                             position: "relative",
+                                          }}
+                                       >
+                                          {/* <AppText>{product.description ?? "Sponsored"}</AppText> */}
+                                          {product.images && (
+                                             <Image
+                                                source={{ uri: product?.images[0] }}
+                                                style={{ width: "100%", height: "85%", borderRadius: 8 }}
+                                             />
+                                          )}
+                                          <AppText size="sm" weight="semi">
+                                             {product.name ?? product.title}
+                                          </AppText>
+                                       </View>
+                                    )}
+                                 />
+                              </View>
+                           );
+
+                        case "info":
+                           return (
+                              <View
+                                 style={{
+                                    padding: 16,
+                                    backgroundColor: appColors.white,
+                                 }}
+                              >
+                                 <AppText weight="semi" color={appColors.primary}>
+                                    {item.title}
+                                 </AppText>
+                                 <AppText>{item.description}</AppText>
+                              </View>
+                           );
+
+                        default:
+                           return null;
+                     }
+                  }}
+                  ListHeaderComponent={
+                     <View style={{ backgroundColor: appColors.white }} className="p-4">
+                        <AppText weight="semi" color={appColors.primary}>
+                           Sponsor Ad
+                        </AppText>
+                        <AppText>
+                           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius laudantium minus facilis
+                           officiis quibusdam!
+                        </AppText>
+                     </View>
                   }
-               }}
-               ListHeaderComponent={
-                  <View style={{ backgroundColor: appColors.white }} className="p-4">
-                     <AppText weight="semi" color={appColors.primary}>
-                        Sponsor Ad
-                     </AppText>
-                     <AppText>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius laudantium minus facilis officiis
-                        quibusdam!
-                     </AppText>
-                  </View>
-               }
-               ListFooterComponent={
-                  <View style={{ marginVertical: feedData?.length === 0 ? 200 : 30 }}>{/* <Loading /> */}</View>
-               }
-            />
-         </SafeAreaView>
-      </ScreenWrapper>
+                  ListFooterComponent={
+                     <View style={{ marginVertical: feedData?.length === 0 ? 200 : 30 }}>{/* <Loading /> */}</View>
+                  }
+               />
+            </SafeAreaView>
+         </ScreenWrapper>
+      </>
    );
 }

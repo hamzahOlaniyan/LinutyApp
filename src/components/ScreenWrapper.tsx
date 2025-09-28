@@ -8,19 +8,19 @@ export default function ScreenWrapper({
    paddingHorizontal = 4,
    innerPadding = 0,
    bg = "white",
+   innerbg,
 }: {
    children: React.ReactNode;
    paddingHorizontal?: number;
    innerPadding?: number;
    bg?: string;
+   innerbg?: string;
 }) {
    const { bottom } = useSafeAreaInsets();
 
    return (
       <View
          style={{
-            position: "relative",
-            marginBottom: bottom,
             overflow: "hidden",
             paddingHorizontal: wp(paddingHorizontal),
             backgroundColor: bg,
@@ -30,7 +30,8 @@ export default function ScreenWrapper({
          <SafeAreaView
             style={{
                flex: 1,
-               overflow: "hidden",
+               // overflow: "hidden",
+               backgroundColor: innerbg,
             }}
          >
             {children}

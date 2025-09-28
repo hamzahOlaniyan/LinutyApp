@@ -64,7 +64,7 @@ export default function HomeHeaderMenu() {
          style={[
             GLOBAL_STYLES.screenPadding,
             {
-               zIndex: 10,
+               // zIndex: 10,
                borderBottomColor: appColors.bordersLight,
                borderBottomWidth: 1,
                backgroundColor: appColors.white,

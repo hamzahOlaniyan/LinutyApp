@@ -2,7 +2,7 @@ import React from "react";
 import { Animated, Dimensions, View } from "react-native";
 
 export default function Indicator({ item, scrollX }: { item: any; scrollX: any }) {
-   const { width } = Dimensions.get("window");
+   const { width } = Dimensions.get("screen");
 
    return (
       <View className="flex-row rounded-full p-1 px-2 bg-black/30 absolute bottom-10 left-1/2 -translate-x-1/2">

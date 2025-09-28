@@ -22,7 +22,7 @@ export default function Comments({ data, loading, postAuthor }: { data: any; loa
          style={{
             paddingBottom: bottom,
          }}
-         className="flex-1 justify-between"
+         className="flex-1 h-full justify-between w-full"
       >
          {data?.comments?.length < 1 && (
             <View className="px-6">

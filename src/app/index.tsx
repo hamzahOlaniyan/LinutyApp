@@ -32,7 +32,7 @@ export default function AnimatedSplash() {
       <View className="flex-1 justify-center items-center bg-white">
          <Image
             source={require("@/assets/images/tree-icon.png")}
-            style={{ width: 150, height: 150 }}
+            style={{ width: 100, height: 100 }}
             contentFit="contain"
             accessibilityRole="image"
          />

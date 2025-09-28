@@ -1,10 +1,11 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { PortalHost, PortalProvider } from "@gorhom/portal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Linking } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -84,15 +85,18 @@ export default function RootLayout() {
    const queryClient = new QueryClient();
 
    return (
-      <GestureHandlerRootView className="flex-1 bg-yellow-500">
-         <SafeAreaProvider>
-            <QueryClientProvider client={queryClient}>
-               <GluestackUIProvider>
-                  <StatusBar style="auto" />
-                  <Stack screenOptions={{ headerShown: false }} />
-               </GluestackUIProvider>
-            </QueryClientProvider>
-         </SafeAreaProvider>
-      </GestureHandlerRootView>
+      <QueryClientProvider client={queryClient}>
+         <GestureHandlerRootView className="flex-1">
+            <PortalProvider>
+               <PortalHost name="root" />
+               <SafeAreaProvider>
+                  <GluestackUIProvider>
+                     <StatusBar style="auto" />
+                     <Stack screenOptions={{ headerShown: false }} />
+                  </GluestackUIProvider>
+               </SafeAreaProvider>
+            </PortalProvider>
+         </GestureHandlerRootView>
+      </QueryClientProvider>
    );
 }

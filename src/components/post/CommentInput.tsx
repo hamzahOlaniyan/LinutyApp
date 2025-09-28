@@ -1,20 +1,16 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useRef, useState } from "react";
-import { Alert, KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
-// import { hp } from "../common";
-// import { colors } from "../constant/colors";
-// import { useThemeStore } from "../context/themeStore";
 import { SendIcon } from "@/assets/icons/sendIcon";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { createComment } from "@/src/Services/comment";
 import { createNotification } from "@/src/Services/Notification";
 import { useAuthStore } from "@/src/store/authStore";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
-// import { createNotification } from "../Services/Notification";
 
 export default function CommentInput({
    postId,
@@ -102,7 +98,7 @@ export default function CommentInput({
             {replyToName && (
                <View
                   style={{ backgroundColor: appColors.selectedTeply, borderRadius: 10 }}
-                  className="w-full items-center justify-between flex-row py-4 my-1"
+                  className="w-full items-center justify-between flex-row py-4 my-1 "
                >
                   <AppText color={appColors.primary} weight="semi" className="px-4">
                      relpy to @{replyToName}
@@ -121,11 +117,11 @@ export default function CommentInput({
                </View>
             )}
             <View
-               style={{ borderTopColor: appColors.bordersLight, borderTopWidth: 1 }}
+               style={{ borderTopColor: appColors.border, borderTopWidth: 1 }}
                className="w-full items-center flex-row gap-2 py-3"
             >
                <Avatar path={profile?.avatarUrl} size={35} />
-               <View className="h-12  flex-1 justify-center w-full rounded-full">
+               <View style={{ height: hp(6) }} className="flex-1 justify-center w-full rounded-full">
                   <TextInput
                      ref={inputRef}
                      style={{

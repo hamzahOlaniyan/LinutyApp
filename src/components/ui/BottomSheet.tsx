@@ -1,8 +1,6 @@
 import React from "react";
-// import { useThemeStore } from "../context/themeStore";
 
 import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIndicator } from "./actionsheet";
 import AppText from "./AppText";
 
@@ -23,10 +21,6 @@ export default function BottomSheet({
    onClose,
    heading,
 }: BottomSheetProps) {
-   // const { currentTheme } = useThemeStore();
-
-   const { bottom } = useSafeAreaInsets();
-
    const handleClose = () => {
       onClose?.();
    };

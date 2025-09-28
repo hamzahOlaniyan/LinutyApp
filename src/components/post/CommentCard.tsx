@@ -53,9 +53,8 @@ export default function CommentCard({
             <Avatar path={item?.author?.avatarUrl} size={35} />
             <View className="flex-1">
                <View className="flex-row  gap-1 items-center justify-between">
-                  <AppText weight="med" color={appColors.grey} cap="capitalize">
-                     {item?.author?.firstName}
-                     {item?.author?.lastName}
+                  <AppText weight="med" color={appColors.lightGrey} cap="capitalize">
+                     {item?.author?.firstName} {item?.author?.lastName}
                   </AppText>
                   <Pressable onPress={() => setModalVisible(true)}>
                      <ThreeDots color={appColors.grey} size={24} />

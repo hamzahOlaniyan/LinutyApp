@@ -12,7 +12,7 @@ import { Animated, Dimensions, FlatList, ScrollView, View } from "react-native";
 
 export default function ProductDetailsScreen() {
    const { id } = useLocalSearchParams<{ id: string }>();
-   const { width } = Dimensions.get("window");
+   const { width } = Dimensions.get("screen");
    // const { currentTheme } = useThemeStore();
 
    const [activeIndex, setActiveIndex] = useState<number>(0);

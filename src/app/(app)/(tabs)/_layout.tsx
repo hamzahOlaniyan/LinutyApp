@@ -1,5 +1,3 @@
-import { Community } from "@/assets/icons/community";
-import { CommunityOtline } from "@/assets/icons/community-outline";
 import { GroupIcon } from "@/assets/icons/groupIcon";
 import { GroupIconSolid } from "@/assets/icons/groupIconSolid";
 import { Home } from "@/assets/icons/home";
@@ -36,9 +34,7 @@ export default function TabLayout() {
             options={{
                title: "Home",
                headerShown: false,
-               tabBarIcon: ({ size, color, focused }) => (
-                  <View>{focused ? <HomeSolid color={appColors.primary} /> : <Home />}</View>
-               ),
+               tabBarIcon: ({ focused }) => <View>{focused ? <HomeSolid color={appColors.primary} /> : <Home />}</View>,
             }}
          />
          <Tabs.Screen
@@ -46,7 +42,7 @@ export default function TabLayout() {
             options={{
                title: "Find friends",
                headerShown: false,
-               tabBarIcon: ({ size, color, focused }) => (
+               tabBarIcon: ({ focused }) => (
                   <View>{focused ? <GroupIconSolid color={appColors.primary} /> : <GroupIcon />}</View>
                ),
             }}
@@ -57,18 +53,8 @@ export default function TabLayout() {
                title: "market",
                headerShown: false,
                popToTopOnBlur: true,
-               tabBarIcon: ({ size, color, focused }) => (
+               tabBarIcon: ({ focused }) => (
                   <View>{focused ? <StoreSolid color={appColors.primary} /> : <Store />}</View>
-               ),
-            }}
-         />
-         <Tabs.Screen
-            name="(community)"
-            options={{
-               title: "comunity",
-               headerShown: false,
-               tabBarIcon: ({ size, color, focused }) => (
-                  <View>{focused ? <Community color={appColors.primary} /> : <CommunityOtline />}</View>
                ),
             }}
          />

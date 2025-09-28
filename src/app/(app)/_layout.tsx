@@ -28,13 +28,16 @@ export default function AppLayout() {
    }
 
    return (
-      <Stack>
+      <Stack
+         screenOptions={{
+            headerShadowVisible: false,
+         }}
+      >
          <Stack.Screen
             name="(profile)"
             options={{
                title: "Profile",
                headerShown: false,
-               headerShadowVisible: false,
             }}
          />
          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -57,6 +60,19 @@ export default function AppLayout() {
                animation: "none",
             }}
          />
+         {/* <Stack.Screen
+            name="sheet-test"
+            options={{
+               title: "sheet-test",
+               // headerShown: false,
+               // animation: "shift",
+               
+               presentation: 'pageSheet',
+               animation: "slide", 
+               animationMatchesGesture: true,
+               animationDuration: 100,
+            }}
+         /> */}
       </Stack>
    );
 }
