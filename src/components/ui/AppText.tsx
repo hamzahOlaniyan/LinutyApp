@@ -2,7 +2,7 @@ import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import React from "react";
-import { Text, TextStyle } from "react-native";
+import { StyleProp, Text, TextStyle } from "react-native";
 
 type TextWeight = "black" | "bold" | "semi" | "med" | "reg" | "light";
 type TextSize = "xxxxxl" | "xxxxl" | "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs" | "xxs";
@@ -13,7 +13,7 @@ type AppTextProps = {
    weight?: TextWeight;
    cap?: "capitalize" | "uppercase";
    color?: string;
-   style?: any;
+   style?: StyleProp<TextStyle>;
    align?: "left" | "right" | "center";
    className?: string;
    onPress?: () => void;
@@ -37,11 +37,11 @@ export default function AppText({
       xxxxl: hp(3.4),
       xxxl: hp(2.8),
       xxl: hp(2.6),
-      xl: hp(2.3),
-      lg: hp(2),
-      md: hp(1.8),
-      sm: hp(1.6),
-      xs: hp(1.4),
+      xl: hp(2.2),
+      lg: hp(1.9),
+      md: hp(1.7),
+      sm: hp(1.5),
+      xs: hp(1.3),
       xxs: 12,
    }[size];
 

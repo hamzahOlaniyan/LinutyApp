@@ -1,10 +1,10 @@
 import HomeHeaderMenu from "@/src/components/HomeHeaderMenu";
 import PostCard from "@/src/components/post/PostCard";
+import PostSkeleton from "@/src/components/post/PostSkeleton";
 // import PostSkeleton from "@/src/components/post/PostSkeleton";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import AppText from "@/src/components/ui/AppText";
 import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
 import { injectSponsoredBlocks } from "@/src/hooks/injecSponsoredBloacks";
 import { fetchPost, getPostById } from "@/src/Services/posts";
 import { getStoreProduct } from "@/src/Services/store";
@@ -14,7 +14,7 @@ import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { ActivityIndicator, FlatList, SafeAreaView, View } from "react-native";
+import { FlatList, View } from "react-native";
 
 export default function index() {
    const { postId, openComments } = useLocalSearchParams();
@@ -73,30 +73,25 @@ export default function index() {
       }
    }, [postId, openComments]);
 
-   // const skeleton = Array.from({ length: 6 }, (_, i) => <PostSkeleton key={i} />);
    if (isLoading)
       return (
-         <ActivityIndicator />
-         // <View className="gap-8">
-         //    <View style={{ backgroundColor: appColors.extralightOlive }} className="gap-2">
-         //       <View className="w-full h-[114px] bg-white rounded-md"></View>
-         //       {skeleton}
-         //    </View>
-         // </View>
+         <ScreenWrapper paddingHorizontal={0}>
+            <PostSkeleton />
+         </ScreenWrapper>
       );
 
    return (
       <>
          <ScreenWrapper paddingHorizontal={0}>
-            <SafeAreaView style={{ paddingHorizontal: wp(0), backgroundColor: appColors.extralightOlive }}>
-               <HomeHeaderMenu />
-
+            <HomeHeaderMenu />
+            <View style={{ flex: 1, backgroundColor: appColors.extralightOlive }}>
                <FlatList
                   data={feedData}
                   keyExtractor={(item, index) => item.id ?? `feed-${index}`}
                   contentContainerStyle={{ rowGap: 8 }}
                   decelerationRate={0.6}
                   showsVerticalScrollIndicator={false}
+                  refreshing
                   renderItem={({ item }) => {
                      switch (item.type) {
                         case "post":
@@ -202,7 +197,7 @@ export default function index() {
                      <View style={{ marginVertical: feedData?.length === 0 ? 200 : 30 }}>{/* <Loading /> */}</View>
                   }
                />
-            </SafeAreaView>
+            </View>
          </ScreenWrapper>
       </>
    );

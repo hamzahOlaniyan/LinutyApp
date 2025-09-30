@@ -229,7 +229,7 @@ export default function Post({
                      viewabilityConfig={viewabilityConfig}
                   />
                   <View style={s.mediaCounter}>
-                     <AppText size="sm" color={appColors.white} style={s.mediaCounterText}>
+                     <AppText size="sm" color={appColors.white}>
                         {currentIndex + 1} / {post?.images?.length}
                      </AppText>
                   </View>

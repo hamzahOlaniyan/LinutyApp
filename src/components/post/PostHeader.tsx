@@ -5,7 +5,7 @@ import { Octicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useRouter } from "expo-router";
-import { Pressable, View } from "react-native";
+import { Pressable, TouchableOpacity, View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 
@@ -31,13 +31,13 @@ export default function PostHeader({ id, avatar, name, username, date, postInfo 
       >
          <View className="flex-row justify-between items-start">
             <View className="flex-row items-center gap-2">
-               <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                  <Avatar path={avatar} size={50} />
-               </Pressable>
+               <TouchableOpacity onPress={() => router.push(`/(app)/(user)/${id}`)}>
+                  <Avatar path={avatar} size={47} />
+               </TouchableOpacity>
                <View className="">
                   <View className="flex-row items-center gap-1">
                      <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                        <AppText size="lg" weight="bold" cap="capitalize">
+                        <AppText size="lg" weight="bold" cap="capitalize" style={{ letterSpacing: -0.5 }}>
                            {name.trim()}
                         </AppText>
                      </Pressable>
@@ -56,7 +56,7 @@ export default function PostHeader({ id, avatar, name, username, date, postInfo 
                </View>
             </View>
             <Pressable onPress={postInfo} className="h-full relative">
-               <ThreeDots color={appColors.lightGrey} />
+               <ThreeDots color={appColors.lightGrey} size={24} />
             </Pressable>
          </View>
       </View>

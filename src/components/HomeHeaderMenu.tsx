@@ -64,7 +64,7 @@ export default function HomeHeaderMenu() {
          style={[
             GLOBAL_STYLES.screenPadding,
             {
-               // zIndex: 10,
+               zIndex: 10,
                borderBottomColor: appColors.bordersLight,
                borderBottomWidth: 1,
                backgroundColor: appColors.white,
@@ -81,11 +81,14 @@ export default function HomeHeaderMenu() {
             contentFit="contain"
          />
          <View className="flex-row items-center justify-between gap-4">
-            <Pressable onPress={() => router.push("/(app)/new-post")}>
-               <AddCircleIcon />
+            <Pressable
+               onPress={() => router.push("/(app)/new-post")}
+               style={{ backgroundColor: appColors.extralightOlive, borderRadius: 60, padding: 3 }}
+            >
+               <AddCircleIcon size={28} />
             </Pressable>
             <Pressable onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
-               <Notification />
+               <Notification size={28} />
                {unreadCount > 0 && (
                   <View
                      style={{ borderWidth: 3, borderColor: appColors.white }}

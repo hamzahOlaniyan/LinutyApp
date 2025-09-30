@@ -1,4 +1,4 @@
-import { FavoriteIcon } from "@/assets/icons/favoriteIcon";
+import { FavoriteIcon } from "@/assets/icons/FavoriteIcon";
 import { ShareIcon } from "@/assets/icons/shareIcon";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";

@@ -7,6 +7,7 @@ import { View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import Searchbar from "../ui/Searchbar";
 import FriendsCard from "./FriendsCard";
+import FriendsSkeletion from "./FriendsSkeletion";
 
 export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean }) {
    const { profile } = useAuthStore();
@@ -49,18 +50,22 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
             </Animated.View>
          )}
          <View className="gap-6 my-4">
-            {PROFILES?.data
-               ?.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))
-               .map((item) => (
-                  <FriendsCard
-                     key={item?.id}
-                     id={item?.id}
-                     avatar={item?.avatarUrl}
-                     firstName={item?.firstName.trim()}
-                     lastName={item?.lastName.trim()}
-                     username={item?.username}
-                  />
-               ))}
+            {isLoading ? (
+               <FriendsSkeletion />
+            ) : (
+               PROFILES?.data
+                  ?.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))
+                  .map((item) => (
+                     <FriendsCard
+                        key={item?.id}
+                        id={item?.id}
+                        avatar={item?.avatarUrl}
+                        firstName={item?.firstName.trim()}
+                        lastName={item?.lastName.trim()}
+                        username={item?.username}
+                     />
+                  ))
+            )}
          </View>
       </View>
    );

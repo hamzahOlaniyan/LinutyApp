@@ -12,20 +12,6 @@ import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import ReplyCard from "./ReplyCard";
 
-// type CommentCardProps = {
-//    content: string | null;
-//    created_at: string;
-//    id: string;
-//    postId: string | null;
-//    userId: string | null;
-//    user: {
-//       id: string;
-//       full_name: string | null;
-//       username: string | null;
-//       avatar_url: string | null;
-//    } | null;
-// };
-
 dayjs.extend(relativeTime);
 
 export default function CommentCard({
@@ -48,26 +34,36 @@ export default function CommentCard({
    });
 
    return (
-      <View className="flex-row gap-5 justify-between items-start w-full">
+      <View className="flex-row gap-5 justify-between items-start w-full px-4">
          <View className="flex-row gap-2">
-            <Avatar path={item?.author?.avatarUrl} size={35} />
+            <Avatar path={item?.author?.avatarUrl} size={40} />
             <View className="flex-1">
-               <View className="flex-row  gap-1 items-center justify-between">
-                  <AppText weight="med" color={appColors.lightGrey} cap="capitalize">
-                     {item?.author?.firstName} {item?.author?.lastName}
+               <View className="gap-3">
+                  <View>
+                     <View className="flex-row  gap-1 items-center justify-between">
+                        <AppText weight="med" cap="capitalize">
+                           {item?.author?.firstName}
+                           {item?.author?.lastName}
+                        </AppText>
+                        <Pressable onPress={() => setModalVisible(true)}>
+                           <ThreeDots color={appColors.grey} size={24} />
+                        </Pressable>
+                     </View>
+                     <AppText cap="capitalize" size="sm" color={appColors.lightGrey}>
+                        @{item?.author?.username}
+                     </AppText>
+                  </View>
+
+                  <AppText weight="reg" size="lg">
+                     {item.content!!}
                   </AppText>
-                  <Pressable onPress={() => setModalVisible(true)}>
-                     <ThreeDots color={appColors.grey} size={24} />
-                  </Pressable>
                </View>
-               <AppText weight="reg" size="lg">
-                  {item.content!!}
-               </AppText>
                <View className="flex-row items-center justify-between">
                   <View className="flex-row items-center gap-4">
-                     <AppText color={appColors.lightGrey} size="xxs" className="">
-                        {dayjs(item?.created_at).fromNow(true)}
+                     <AppText color={appColors.lightGrey} size="xxs">
+                        {dayjs(item?.created_at).fromNow(true)} |
                      </AppText>
+
                      <TouchableOpacity
                         className="flex-row items-center gap-1 my-2"
                         onPress={() => {
@@ -83,7 +79,7 @@ export default function CommentCard({
                   </View>
                   <View>
                      <Pressable className="flex-row gap-2 justify-center items-center">
-                        <Thumbsup size={18} color={appColors.grey} />
+                        <Thumbsup size={16} color={appColors.grey} />
                         <AppText color={appColors.grey} size="sm">
                            0
                         </AppText>

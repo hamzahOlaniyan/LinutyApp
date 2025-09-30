@@ -1,5 +1,4 @@
 import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { forwardRef, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -31,12 +30,12 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
          enablePanDownToClose
          backdropComponent={renderBackdrop}
          handleIndicatorStyle={{
-            height: 10,
-            width: 75,
+            height: 6,
+            width: 50,
             backgroundColor: "black",
             borderRadius: 200,
             position: "relative",
-            top: 3,
+            top: 8,
          }}
       >
          <BottomSheetView style={[styles.contentContainer, { paddingBottom: bottom }]}>
@@ -63,7 +62,6 @@ const styles = StyleSheet.create({
    contentContainer: {
       flex: 1,
       alignItems: "center",
-      paddingHorizontal: wp(4),
       height: "100%",
       width: "100%",
    },

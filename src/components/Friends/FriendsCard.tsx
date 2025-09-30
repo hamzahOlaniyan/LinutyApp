@@ -13,6 +13,7 @@ import { hp } from "@/src/constant/common";
 import { createNotification } from "@/src/Services/Notification";
 import { deleteFriendRequest, getFriendship, sendFriendRequest } from "@/src/Services/relationships";
 import { useAuthStore } from "@/src/store/authStore";
+import { useRouter } from "expo-router";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 
@@ -27,6 +28,8 @@ type FriendsCardProps = {
 export default function FriendsCard({ id, avatar, firstName, lastName, username }: FriendsCardProps) {
    const { profile } = useAuthStore();
    const queryClient = useQueryClient();
+
+   const router = useRouter();
 
    const [relationship, setRelationship] = useState<any>(null);
    const [notificationReceiver, setNotificationReceiver] = useState("");
@@ -119,7 +122,7 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
       <TouchableOpacity
          style={{
             backgroundColor: appColors.searchBar,
-            minWidth: 130,
+            minWidth: 110,
             height: hp(4),
             alignItems: "center",
             justifyContent: "center",
@@ -201,17 +204,21 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
    }
 
    return (
-      <View className="flex-row flex-1 justify-between items-center">
-         <View className="flex-row flex-1 gap-3 items-center">
-            <Avatar path={avatar} size={60} />
-            <View>
-               <AppText weight="semi" cap="capitalize">
-                  {firstName} {lastName}
-               </AppText>
-               <AppText weight="light">@{username}</AppText>
+      <>
+         <View className="flex-row flex-1 justify-between items-center">
+            <View className="flex-row flex-1 gap-3 items-center">
+               <TouchableOpacity onPress={() => router.push(`/(app)/(user)/${id}`)}>
+                  <Avatar path={avatar} size={60} />
+               </TouchableOpacity>
+               <View>
+                  <AppText weight="semi" size="xl" cap="capitalize">
+                     {firstName} {lastName}
+                  </AppText>
+                  <AppText>@{username}</AppText>
+               </View>
             </View>
+            <View>{button}</View>
          </View>
-         <View>{button}</View>
-      </View>
+      </>
    );
 }

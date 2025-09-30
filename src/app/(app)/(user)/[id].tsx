@@ -27,11 +27,13 @@ export default function id() {
       queryFn: async () => getProfileById(id),
    });
 
+   const fullName = PROFILE?.firstName + PROFILE?.firstName;
+
    return (
       <>
          <Stack.Screen
             options={{
-               title: PROFILE?.firstName,
+               title: fullName,
                headerShadowVisible: false,
             }}
          />

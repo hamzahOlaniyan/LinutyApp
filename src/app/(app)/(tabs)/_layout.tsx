@@ -1,3 +1,5 @@
+import { Community } from "@/assets/icons/community";
+import { CommunityOtline } from "@/assets/icons/community-outline";
 import { GroupIcon } from "@/assets/icons/groupIcon";
 import { GroupIconSolid } from "@/assets/icons/groupIconSolid";
 import { Home } from "@/assets/icons/home";
@@ -6,6 +8,7 @@ import { Store } from "@/assets/icons/store";
 import { StoreSolid } from "@/assets/icons/store-solid";
 import { appColors } from "@/src/constant/colors";
 import { Tabs } from "expo-router";
+import React from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -34,16 +37,20 @@ export default function TabLayout() {
             options={{
                title: "Home",
                headerShown: false,
-               tabBarIcon: ({ focused }) => <View>{focused ? <HomeSolid color={appColors.primary} /> : <Home />}</View>,
+               tabBarIcon: ({ focused }) => (
+                  <View>{focused ? <HomeSolid size={28} color={appColors.primary} /> : <Home size={28} />}</View>
+               ),
             }}
          />
          <Tabs.Screen
-            name="Friends"
+            name="friends"
             options={{
                title: "Find friends",
                headerShown: false,
                tabBarIcon: ({ focused }) => (
-                  <View>{focused ? <GroupIconSolid color={appColors.primary} /> : <GroupIcon />}</View>
+                  <View>
+                     {focused ? <GroupIconSolid size={28} color={appColors.primary} /> : <GroupIcon size={28} />}
+                  </View>
                ),
             }}
          />
@@ -54,7 +61,19 @@ export default function TabLayout() {
                headerShown: false,
                popToTopOnBlur: true,
                tabBarIcon: ({ focused }) => (
-                  <View>{focused ? <StoreSolid color={appColors.primary} /> : <Store />}</View>
+                  <View>{focused ? <StoreSolid size={28} color={appColors.primary} /> : <Store size={28} />}</View>
+               ),
+            }}
+         />
+         <Tabs.Screen
+            name="(community)"
+            options={{
+               title: "comunity",
+               headerShown: false,
+               tabBarIcon: ({ focused }) => (
+                  <View>
+                     {focused ? <Community size={28} color={appColors.primary} /> : <CommunityOtline size={28} />}
+                  </View>
                ),
             }}
          />

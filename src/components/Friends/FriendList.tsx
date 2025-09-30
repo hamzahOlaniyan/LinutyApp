@@ -6,6 +6,7 @@ import { View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
+import FriendsSkeletion from "./FriendsSkeletion";
 
 export default function FriendList() {
    const { profile } = useAuthStore();
@@ -29,7 +30,10 @@ export default function FriendList() {
       },
    });
 
-   if (isLoading) return <AppText>Loading...</AppText>;
+   if (isLoading) {
+      return <FriendsSkeletion />;
+   }
+
    if (!FRIENDS?.length)
       return (
          <View className="px-4">
@@ -41,19 +45,26 @@ export default function FriendList() {
 
    return (
       <View className="gap-5 p-4">
-         {filteredList?.map((item: any, idx: number) => (
-            <View key={item?.id} className="flex-row gap-3 items-start">
-               <Avatar path={item?.avatarUrl} size={60} />
-               <View className="flex-1">
-                  <AppText size="xl" weight="semi" cap="capitalize">
-                     {item?.firstName}
-                     {item?.lastName}
-                  </AppText>
-                  <AppText size="lg">@{item?.username}</AppText>
-               </View>
-               <Button text="Unfriend" onPress={() => unfriend.mutate({ id: item?.id })} />
+         {!FRIENDS?.length ? (
+            <View className="px-4">
+               <AppText weight="med">You have no friends</AppText>
             </View>
-         ))}
+         ) : (
+            filteredList?.map((item: any) => (
+               <View key={item?.id} className="flex-row gap-3 items-start">
+                  <Avatar path={item?.avatarUrl} size={60} />
+                  <View className="flex-1">
+                     <AppText size="xl" weight="semi" cap="capitalize">
+                        {item?.firstName}
+                        {item?.lastName}
+                     </AppText>
+                     <AppText size="lg">@{item?.username}</AppText>
+                  </View>
+                  <Button text="Unfriend" onPress={() => unfriend.mutate({ id: item?.id })} />
+               </View>
+            ))
+         )}
+         {/* )} */}
       </View>
    );
 }
