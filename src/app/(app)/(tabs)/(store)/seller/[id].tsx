@@ -33,8 +33,7 @@ export default function seller() {
       queryFn: () => getProfileById(id),
    });
 
-   // console.log("PRODUCTS", JSON.stringify(PRODUCTS, null, 2));
-   // console.log("SELLER", JSON.stringify(SELLER, null, 2));
+   const fullName = SELLER?.firstName + SELLER?.lastName;
 
    return (
       <View style={{ backgroundColor: appColors.white }} className="flex-1">
@@ -42,17 +41,16 @@ export default function seller() {
             data={PRODUCTS || []}
             renderItem={({ item }) => <StoreCard item={item} />}
             numColumns={2}
-            scrollToOverflowEnabled
+            scrollToOverflowEnabled={true}
             columnWrapperStyle={{ gap: 10 }}
             contentContainerStyle={{ flex: 1, paddingHorizontal: wp(3) }}
             ListHeaderComponent={
-               <View style={{}}>
+               <View>
                   <View className="flex-row items-start gap-3 justify-between">
-                     <Avatar path={SELLER?.avatarUrl} size={60} />
+                     <Avatar path={SELLER?.avatarUrl} size={120} />
                      <View className="w-full flex-1">
                         <AppText weight="semi" size="xxl" cap="capitalize">
-                           {SELLER?.firstName}
-                           {SELLER?.lastName}
+                           {fullName}
                         </AppText>
                         <AppText weight="semi" color={appColors.grey}>
                            @{SELLER?.username}

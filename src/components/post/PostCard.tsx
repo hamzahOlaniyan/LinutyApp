@@ -292,29 +292,3 @@ const s = StyleSheet.create({
    dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.5)" },
    dotActive: { backgroundColor: appColors.white },
 });
-
-{
-   /* <BottomSheetTwo
-            visible={showComments}
-            sheetHeight={90}
-            onClose={() => setShowComments(false)}
-            // heading={`${count} Comments`}
-            children={<Comments postAuthor={comments?.author} data={comments} loading={loading} />}
-         /> */
-}
-{
-   /* <BottomSheet
-            isOpen={modalVisible}
-            onClose={() => setModalVisible(false)}
-            heading={`Info`}
-            height={30}
-            children={
-               <PostInfo
-                  isVisible={modalVisible}
-                  isUserOwner={isUserOwner}
-                  handleDelete={handleDelete}
-                  onClose={() => setModalVisible(false)}
-               />
-            }
-         /> */
-}

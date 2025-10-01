@@ -1,7 +1,7 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -12,6 +12,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
 import { supabase } from "../lib/supabase";
+import { QueryProvider } from "../provider/QueryProvider";
 import { useAuthStore } from "../store/authStore";
 
 // const logoutAndClearSession = async () => {
@@ -85,7 +86,8 @@ export default function RootLayout() {
    const queryClient = new QueryClient();
 
    return (
-      <QueryClientProvider client={queryClient}>
+      <QueryProvider>
+         {/* <QueryClientProvider client={queryClient}> */}
          <GestureHandlerRootView className="flex-1">
             <PortalProvider>
                <PortalHost name="root" />
@@ -97,6 +99,7 @@ export default function RootLayout() {
                </SafeAreaProvider>
             </PortalProvider>
          </GestureHandlerRootView>
-      </QueryClientProvider>
+         {/* </QueryClientProvider> */}
+      </QueryProvider>
    );
 }

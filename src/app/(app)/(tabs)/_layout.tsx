@@ -1,9 +1,9 @@
-import { Community } from "@/assets/icons/community";
-import { CommunityOtline } from "@/assets/icons/community-outline";
 import { GroupIcon } from "@/assets/icons/groupIcon";
 import { GroupIconSolid } from "@/assets/icons/groupIconSolid";
 import { Home } from "@/assets/icons/home";
 import { HomeSolid } from "@/assets/icons/home-solid";
+import { NewsIcon } from "@/assets/icons/NewsIcon";
+import { NewsIconSolid } from "@/assets/icons/NewsIconSolid";
 import { Store } from "@/assets/icons/store";
 import { StoreSolid } from "@/assets/icons/store-solid";
 import { appColors } from "@/src/constant/colors";
@@ -38,7 +38,7 @@ export default function TabLayout() {
                title: "Home",
                headerShown: false,
                tabBarIcon: ({ focused }) => (
-                  <View>{focused ? <HomeSolid size={28} color={appColors.primary} /> : <Home size={28} />}</View>
+                  <View>{focused ? <HomeSolid size={26} color={appColors.primary} /> : <Home size={26} />}</View>
                ),
             }}
          />
@@ -49,7 +49,7 @@ export default function TabLayout() {
                headerShown: false,
                tabBarIcon: ({ focused }) => (
                   <View>
-                     {focused ? <GroupIconSolid size={28} color={appColors.primary} /> : <GroupIcon size={28} />}
+                     {focused ? <GroupIconSolid size={26} color={appColors.primary} /> : <GroupIcon size={26} />}
                   </View>
                ),
             }}
@@ -61,18 +61,18 @@ export default function TabLayout() {
                headerShown: false,
                popToTopOnBlur: true,
                tabBarIcon: ({ focused }) => (
-                  <View>{focused ? <StoreSolid size={28} color={appColors.primary} /> : <Store size={28} />}</View>
+                  <View>{focused ? <StoreSolid size={26} color={appColors.primary} /> : <Store size={26} />}</View>
                ),
             }}
          />
          <Tabs.Screen
-            name="(community)"
+            name="(news)"
             options={{
                title: "comunity",
                headerShown: false,
                tabBarIcon: ({ focused }) => (
                   <View>
-                     {focused ? <Community size={28} color={appColors.primary} /> : <CommunityOtline size={28} />}
+                     {focused ? <NewsIconSolid size={26} color={appColors.primary} /> : <NewsIcon size={26} />}
                   </View>
                ),
             }}

@@ -8,7 +8,7 @@ export default function StoreCard({ item }: any) {
    return (
       <Link href={`/productDetail/${item?.id}`} asChild className="flex-1">
          <Pressable className="flex-1 gap-2 relative">
-            <Image source={item?.images[0]} style={{ borderRadius: 10, aspectRatio: 1 / 1 }} />
+            <Image source={item?.images[0]} style={{ borderRadius: 8, aspectRatio: 1 / 1 }} />
             <View>
                <AppText weight="med" cap="capitalize">
                   {item?.name.trim()}

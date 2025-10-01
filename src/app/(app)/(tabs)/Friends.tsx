@@ -1,4 +1,4 @@
-import { Search2Outline } from "@/assets/icons/search-2-outline";
+import { Search2 } from "@/assets/icons/search2";
 import FriendList from "@/src/components/Friends/FriendList";
 import FriendRequest from "@/src/components/Friends/FriendRequest";
 import FriendSearch from "@/src/components/Friends/FriendSearch";
@@ -20,11 +20,7 @@ export default function Friends() {
                <ScreenHeader
                   headerTitle="Your friends"
                   leftAction={
-                     <Search2Outline
-                        size={32}
-                        color={appColors.black}
-                        onPress={() => setShowSearchbar(!showSearchBar)}
-                     />
+                     <Search2 size={32} color={appColors.black} onPress={() => setShowSearchbar(!showSearchBar)} />
                   }
                />
             }

@@ -4,7 +4,7 @@ import { hp } from "@/src/constant/common";
 import React from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
 
-type TextWeight = "black" | "bold" | "semi" | "med" | "reg" | "light";
+type TextWeight = "black" | "extraBold" | "bold" | "semi" | "med" | "reg" | "light";
 type TextSize = "xxxxxl" | "xxxxl" | "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs" | "xxs";
 
 type AppTextProps = {
@@ -47,6 +47,7 @@ export default function AppText({
 
    const fontFamilyMap: Record<TextWeight, TextStyle["fontFamily"]> = {
       black: TiktokFont.TiktokBlack,
+      extraBold: TiktokFont.TiktokExtraBold,
       bold: TiktokFont.TiktokBold,
       semi: TiktokFont.TiktokSemiBold,
       med: TiktokFont.TiktokMedium,

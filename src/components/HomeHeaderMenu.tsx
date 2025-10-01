@@ -85,10 +85,10 @@ export default function HomeHeaderMenu() {
                onPress={() => router.push("/(app)/new-post")}
                style={{ backgroundColor: appColors.extralightOlive, borderRadius: 60, padding: 3 }}
             >
-               <AddCircleIcon size={28} />
+               <AddCircleIcon size={24} />
             </Pressable>
             <Pressable onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
-               <Notification size={28} />
+               <Notification size={24} />
                {unreadCount > 0 && (
                   <View
                      style={{ borderWidth: 3, borderColor: appColors.white }}

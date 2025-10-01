@@ -58,7 +58,7 @@ export default function NotificationCard({ item }: { item: any }) {
                });
             if (item?.type === "request")
                router.push({
-                  pathname: "/(app)/(tabs)/Friends",
+                  pathname: "/(app)/(tabs)/friends",
                   params: { initialTab: item?.type === "request" ? "FriendRequest" : undefined },
                });
             return null;
