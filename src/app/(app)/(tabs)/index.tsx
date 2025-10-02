@@ -117,7 +117,7 @@ export default function index() {
                                  {item?.item?.images && (
                                     <Image
                                        source={{ uri: item?.item?.images[0] }}
-                                       style={{ width: "100%", height: 160, borderRadius: 8 }}
+                                       style={{ borderRadius: 8, aspectRatio: 1 }}
                                     />
                                  )}
                                  <AppText weight="semi">{item.item?.name ?? item.item?.title}</AppText>
@@ -140,18 +140,21 @@ export default function index() {
                                     renderItem={({ item: product }) => (
                                        <View
                                           style={{
-                                             width: 175,
-                                             height: 300,
-                                             backgroundColor: "#fff",
+                                             backgroundColor: appColors.white,
                                              borderRadius: 10,
-                                             position: "relative",
+                                             width: 180,
+                                             gap: 4,
+                                             overflow: "hidden",
                                           }}
                                        >
                                           {/* <AppText>{product.description ?? "Sponsored"}</AppText> */}
                                           {product.images && (
                                              <Image
                                                 source={{ uri: product?.images[0] }}
-                                                style={{ width: "100%", height: "85%", borderRadius: 8 }}
+                                                style={{
+                                                   aspectRatio: 1 / 2,
+                                                   backgroundColor: "yellow",
+                                                }}
                                              />
                                           )}
                                           <AppText size="sm" weight="semi">

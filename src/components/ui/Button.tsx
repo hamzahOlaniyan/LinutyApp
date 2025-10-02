@@ -72,7 +72,7 @@ export default function Button({
          {isLoading ? (
             <ActivityIndicator color={indicatorColor} size={"small"} />
          ) : (
-            <View className="flex-row justify-center items-center gap-3">
+            <View className="flex-row justify-center items-center gap-2">
                {icon && icon}
                {text && (
                   <Text

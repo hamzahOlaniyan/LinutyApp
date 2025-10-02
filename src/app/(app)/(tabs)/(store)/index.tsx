@@ -60,7 +60,7 @@ export default function StorePage() {
                   <AppText weight="extraBold" size="xxl">
                      Comunity Store
                   </AppText>
-                  <View className="flex-row gap-1 items-center">
+                  <View className="flex-row gap-2 items-center">
                      <TouchableOpacity onPress={() => setShowSearchBar(!showSearchBar)}>
                         <Search2 size={28} />
                      </TouchableOpacity>
@@ -69,9 +69,9 @@ export default function StorePage() {
                         variant="secondary"
                         size="sm"
                         text="Category"
-                        icon={<MenuIcon />}
+                        icon={<MenuIcon size={18} />}
                      />
-                     <Button size="sm" onPress={() => router.push("/new-product")} icon={<Plus size={24} />} />
+                     <Button size="sm" onPress={() => router.push("/new-product")} icon={<Plus size={28} />} />
                   </View>
                </View>
                {showSearchBar && (

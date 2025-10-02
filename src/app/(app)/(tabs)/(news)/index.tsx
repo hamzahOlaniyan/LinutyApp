@@ -77,22 +77,27 @@ export default function CommunityScreen() {
                         style={{ width: 80, height: 80, backgroundColor: "yellow", borderRadius: 10 }}
                      />
                      <View className="flex-1 gap-1">
-                        <AppText color={appColors.lightGrey} cap="capitalize">
-                           {item?.category}
-                        </AppText>
+                        {/* <AppText size="sm" color={appColors.lightGrey} cap="capitalize"> */}
+                        <View className="flex-row gap-1">
+                           {item?.category.map((cat: string) => (
+                              <AppText size="sm" color={appColors.lightGrey} cap="capitalize">
+                                 {cat}
+                              </AppText>
+                           ))}
+                        </View>
+                        {/* </AppText> */}
                         <AppText weight="semi">{item?.title}</AppText>
-                        {/* <AppText>{item?.description.substring(0, 100)}...</AppText> */}
                         <View className="flex-row justify-between">
                            <AppText size="sm" color={appColors.lightGrey}>
                               {item?.source_name}
-                           </AppText>
-                           <AppText size="sm" color={appColors.lightGrey}>
-                              {item?.source_url.replace(/^https?:\/\//, "")}
                            </AppText>
                            <AppText size="sm" color={appColors.lightGrey} align="right">
                               {dayjs(item?.pubDate).format("ddd DD MMM YYYY")}
                            </AppText>
                         </View>
+                        <AppText size="sm" color={appColors.lightGrey}>
+                           {item?.source_url.replace(/^https?:\/\//, "")}
+                        </AppText>
                      </View>
                   </TouchableOpacity>
                )}
