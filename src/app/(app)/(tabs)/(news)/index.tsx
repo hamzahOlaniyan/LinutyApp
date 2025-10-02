@@ -80,7 +80,7 @@ export default function CommunityScreen() {
                         {/* <AppText size="sm" color={appColors.lightGrey} cap="capitalize"> */}
                         <View className="flex-row gap-1">
                            {item?.category.map((cat: string) => (
-                              <AppText size="sm" color={appColors.lightGrey} cap="capitalize">
+                              <AppText key={cat} size="sm" color={appColors.lightGrey} cap="capitalize">
                                  {cat}
                               </AppText>
                            ))}

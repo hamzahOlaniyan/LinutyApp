@@ -55,24 +55,33 @@ export default function StorePage() {
    return (
       <View style={{ backgroundColor: appColors.white }}>
          <SafeAreaView>
-            <View style={{ paddingHorizontal: wp(3) }} className="my-2">
-               <View className="flex-row justify-between items-center">
-                  <AppText weight="extraBold" size="xxl">
-                     Comunity Store
-                  </AppText>
-                  <View className="flex-row gap-2 items-center">
-                     <TouchableOpacity onPress={() => setShowSearchBar(!showSearchBar)}>
-                        <Search2 size={28} />
-                     </TouchableOpacity>
-                     <Button
-                        onPress={() => handleOpenSheet()}
-                        variant="secondary"
-                        size="sm"
-                        text="Category"
-                        icon={<MenuIcon size={18} />}
-                     />
-                     <Button size="sm" onPress={() => router.push("/new-product")} icon={<Plus size={28} />} />
+            <View className="px-4 pb-2 gap-2">
+               <View className="flex-row items-end">
+                  <View className="flex-1">
+                     <AppText size="xxxxl" weight="extraBold">
+                        Comunity Store
+                     </AppText>
+                     <AppText size="lg">Supports local creators, small businesses, and community initiatives.</AppText>
                   </View>
+                  <TouchableOpacity onPress={() => setShowSearchBar(!showSearchBar)}>
+                     <Search2 size={28} />
+                  </TouchableOpacity>
+               </View>
+               <View className="flex-row justify-between gap-2 items-center">
+                  <Button
+                     onPress={() => handleOpenSheet()}
+                     variant="secondary"
+                     size="sm"
+                     text="Category"
+                     icon={<MenuIcon size={18} />}
+                     className="flex-1"
+                  />
+                  <Button
+                     size="sm"
+                     onPress={() => router.push("/new-product")}
+                     icon={<Plus size={28} />}
+                     className="flex-1"
+                  />
                </View>
                {showSearchBar && (
                   <Animated.View style={animatedStyle} className="mt-3">

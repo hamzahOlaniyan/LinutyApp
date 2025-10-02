@@ -2,7 +2,7 @@ import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import React from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, StyleProp, Text, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 
 type ButtonProps = {
    text?: React.ReactNode;
@@ -15,6 +15,7 @@ type ButtonProps = {
    variant?: "outline" | "plain" | "secondary";
    indicatorColor?: string;
    icon?: React.ReactNode;
+   style?: StyleProp<TouchableOpacityProps>;
 };
 
 export default function Button({
@@ -28,44 +29,47 @@ export default function Button({
    variant,
    indicatorColor,
    icon,
+   style,
 }: ButtonProps) {
    return (
       <TouchableOpacity
          className={`${className}`}
-         style={{
-            borderRadius: 100,
-            justifyContent: "center",
-            paddingHorizontal:
-               size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 10 : hp(5),
-            shadowColor: "#000",
-            shadowOffset: {
-               width: 0,
-               height: 3,
+         style={[
+            {
+               borderRadius: 100,
+               justifyContent: "center",
+               paddingHorizontal:
+                  size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 10 : hp(5),
+               shadowColor: "#000",
+               shadowOffset: {
+                  width: 0,
+                  height: 3,
+               },
+               shadowOpacity: 0.25,
+               shadowRadius: 6,
+               elevation: 0.3,
+               borderWidth: variant === "outline" ? 1.2 : 0,
+               borderColor: appColors.buttonOutline,
+               backgroundColor:
+                  variant === "outline"
+                     ? "transparent"
+                     : variant === "plain"
+                     ? "transparent"
+                     : variant === "secondary"
+                     ? appColors.searchBar
+                     : appColors.lightOlive,
+               height:
+                  size === "lg"
+                     ? hp(5.6)
+                     : size === "md"
+                     ? hp(5)
+                     : size === "sm"
+                     ? hp(4.5)
+                     : size === "xs"
+                     ? hp(3.7)
+                     : hp(5),
             },
-            shadowOpacity: 0.25,
-            shadowRadius: 6,
-            elevation: 0.3,
-            borderWidth: variant === "outline" ? 1.2 : 0,
-            borderColor: appColors.buttonOutline,
-            backgroundColor:
-               variant === "outline"
-                  ? "transparent"
-                  : variant === "plain"
-                  ? "transparent"
-                  : variant === "secondary"
-                  ? appColors.searchBar
-                  : appColors.lightOlive,
-            height:
-               size === "lg"
-                  ? hp(5.6)
-                  : size === "md"
-                  ? hp(5)
-                  : size === "sm"
-                  ? hp(4.5)
-                  : size === "xs"
-                  ? hp(3.7)
-                  : hp(5),
-         }}
+         ]}
          onPress={onPress}
          disabled={disabled}
       >
