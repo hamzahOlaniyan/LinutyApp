@@ -1,10 +1,9 @@
 import { AddCircleIcon } from "@/assets/icons/addCircle";
 import { Notification } from "@/assets/icons/notification";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
-import { Pressable, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { appColors } from "../constant/colors";
 import { GLOBAL_STYLES } from "../constant/globalStyles";
@@ -72,37 +71,47 @@ export default function HomeHeaderMenu() {
          ]}
          className="flex-row items-center justify-between py-1"
       >
-         <Image
+         <AppText size="xxxl" weight="black">
+            Linuty
+         </AppText>
+         {/* <Image
             source={require("@/assets/images/linuty.png")}
             style={{
-               width: 80,
+               width: 70,
                height: 40,
             }}
             contentFit="contain"
-         />
-         <View className="flex-row items-center justify-between gap-4">
-            <Pressable
+         /> */}
+         <View className="flex-row items-center justify-between gap-2">
+            <TouchableOpacity
                onPress={() => router.push("/(app)/new-post")}
-               style={{ backgroundColor: appColors.extralightOlive, borderRadius: 60, padding: 3 }}
+               style={{
+                  borderRadius: 60,
+                  padding: 3,
+                  borderWidth: 1,
+                  paddingHorizontal: 15,
+               }}
+               className="flex-row items-center gap-2"
             >
-               <AddCircleIcon size={24} />
-            </Pressable>
-            <Pressable onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
+               <AddCircleIcon size={18} />
+               <AppText weight="med">Add post</AppText>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
                <Notification size={24} />
                {unreadCount > 0 && (
                   <View
                      style={{ borderWidth: 3, borderColor: appColors.white }}
-                     className="bg-sky-500 w-7 h-7 rounded-full absolute -top-1 -right-1 justify-center items-center"
+                     className="bg-sky-500 w-7 h-7 rounded-full absolute -top-[2px] -right-[2px] justify-center items-center"
                   >
                      <AppText size="xs" weight="semi" color="white">
                         {unreadCount}
                      </AppText>
                   </View>
                )}
-            </Pressable>
-            <Pressable onPress={() => router.push("/(app)/(profile)")}>
-               <Avatar path={profile?.avatarUrl} size={40} />
-            </Pressable>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/(app)/(profile)")}>
+               <Avatar path={profile?.avatarUrl} size={30} />
+            </TouchableOpacity>
          </View>
       </Animated.View>
    );

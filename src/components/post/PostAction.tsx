@@ -54,7 +54,7 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                      ) : (
                         <Thumbsup size={18} color={appColors.grey} />
                      )}
-                     <AppText size="sm" weight="med" color={appColors.grey}>
+                     <AppText weight="med" color={appColors.grey}>
                         Like
                      </AppText>
                   </TouchableOpacity>
@@ -66,7 +66,7 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                      <View className="top-[1px]">
                         <CommentIcon size={18} color={appColors.grey} />
                      </View>
-                     <AppText size="sm" weight="med" color={appColors.grey}>
+                     <AppText weight="med" color={appColors.grey}>
                         Comments
                      </AppText>
                   </TouchableOpacity>
@@ -76,7 +76,7 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                   <View className="top-[1px]">
                      <ShareIcon size={18} color={appColors.grey} />
                   </View>
-                  <AppText size="sm" weight="med" color={appColors.grey}>
+                  <AppText weight="med" color={appColors.grey}>
                      Share
                   </AppText>
                </TouchableOpacity>

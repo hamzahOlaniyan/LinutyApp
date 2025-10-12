@@ -42,7 +42,7 @@ export default function PostHeader({ id, avatar, name, username, date, postInfo 
                         </AppText>
                      </Pressable>
                      <View className="flex-row items-center gap-1 relative -top-[px]">
-                        <Octicons name="dot-fill" size={5} color={appColors.lightGrey} className="relative" />
+                        <Octicons name="dot-fill" size={5} color={appColors.lightGrey} className="relative " />
                         <AppText color={appColors.lightGrey} size="xxs" className="">
                            {dayjs(date).fromNow(true)}
                         </AppText>

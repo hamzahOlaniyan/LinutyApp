@@ -5,6 +5,7 @@ import StoreCard from "@/src/components/store/StoreCard";
 import AppText from "@/src/components/ui/AppText";
 import Button from "@/src/components/ui/Button";
 import { CustomBottomSheet } from "@/src/components/ui/CustomBottomSheet";
+import ScreenHeader from "@/src/components/ui/ScreenHeader";
 import Searchbar from "@/src/components/ui/Searchbar";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
@@ -15,7 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProductCategory } from "./new-product";
@@ -55,18 +56,14 @@ export default function StorePage() {
    return (
       <View style={{ backgroundColor: appColors.white }}>
          <SafeAreaView>
-            <View className="px-4 pb-2 gap-2">
-               <View className="flex-row items-end">
-                  <View className="flex-1">
-                     <AppText size="xxxxl" weight="extraBold">
-                        Comunity Store
-                     </AppText>
-                     <AppText size="lg">Supports local creators, small businesses, and community initiatives.</AppText>
-                  </View>
-                  <TouchableOpacity onPress={() => setShowSearchBar(!showSearchBar)}>
-                     <Search2 size={28} />
-                  </TouchableOpacity>
-               </View>
+            <View className=" pb-2 px-4 gap-2">
+               <ScreenHeader
+                  headerTitle="Comunity Store"
+                  subHeading="Supports local creators, small businesses, and community initiatives"
+                  leftAction={
+                     <Search2 size={32} color={appColors.black} onPress={() => setShowSearchBar(!showSearchBar)} />
+                  }
+               />
                <View className="flex-row justify-between gap-2 items-center">
                   <Button
                      onPress={() => handleOpenSheet()}
@@ -81,6 +78,8 @@ export default function StorePage() {
                      onPress={() => router.push("/new-product")}
                      icon={<Plus size={28} />}
                      className="flex-1"
+                     style={{ backgroundColor: "red" }}
+                     variant="outline"
                   />
                </View>
                {showSearchBar && (

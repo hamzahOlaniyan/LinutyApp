@@ -8,22 +8,31 @@ import StickyTabs from "@/src/components/ui/StickyTabs";
 import { appColors } from "@/src/constant/colors";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
+import { View } from "react-native";
 
 export default function Friends() {
    const [showSearchBar, setShowSearchbar] = useState(false);
    const { initialTab } = useLocalSearchParams<{ initialTab?: string }>();
    return (
       <ScreenWrapper paddingHorizontal={0}>
+         <View className="px-4">
+            <ScreenHeader
+               headerTitle="Your friends"
+               leftAction={
+                  <Search2 size={32} color={appColors.black} onPress={() => setShowSearchbar(!showSearchBar)} />
+               }
+            />
+         </View>
          <StickyTabs
             initialKey={initialTab}
-            header={
-               <ScreenHeader
-                  headerTitle="Your friends"
-                  leftAction={
-                     <Search2 size={32} color={appColors.black} onPress={() => setShowSearchbar(!showSearchBar)} />
-                  }
-               />
-            }
+            // header={
+            //    <ScreenHeader
+            //       headerTitle="Your friends"
+            //       leftAction={
+            //          <Search2 size={32} color={appColors.black} onPress={() => setShowSearchbar(!showSearchBar)} />
+            //       }
+            //    />
+            // }
             routes={[
                { key: "Search", title: "Search friends" },
                { key: "Yourfriends", title: "Your friends" },

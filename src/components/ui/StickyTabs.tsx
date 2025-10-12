@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 type TabRoute = { key: string; title: string };
 
 type Props = {
-   header: React.ReactNode;
+   header?: React.ReactNode;
    routes: TabRoute[];
    scenes: { [key: string]: React.ReactNode };
    initialKey?: string;

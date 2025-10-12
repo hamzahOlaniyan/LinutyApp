@@ -4,17 +4,21 @@ import AppText from "./AppText";
 
 type PageHeaderProps = {
    headerTitle?: string;
+   subHeading?: string;
    color?: string;
    leftAction?: React.ReactNode;
 };
 
-export default function ScreenHeader({ headerTitle, color, leftAction }: PageHeaderProps) {
+export default function ScreenHeader({ headerTitle, color, subHeading, leftAction }: PageHeaderProps) {
    return (
-      <View className="mb-2 px-4 flex-row justify-between">
-         <AppText size="xxl" weight="bold">
-            {headerTitle}
-         </AppText>
-         {leftAction && leftAction}
+      <View style={{ alignItems: subHeading ? "flex-end" : "center" }} className="mb-2 flex-row justify-between">
+         <View className="gap-2 flex-1">
+            <AppText size="xxxl" weight="extraBold">
+               {headerTitle}
+            </AppText>
+            {subHeading && <AppText weight="med">{subHeading}</AppText>}
+         </View>
+         {leftAction && <View>{leftAction}</View>}
       </View>
    );
 }

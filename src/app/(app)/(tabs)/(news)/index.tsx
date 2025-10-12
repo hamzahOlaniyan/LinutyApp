@@ -26,7 +26,7 @@ export default function CommunityScreen() {
       <View style={{ backgroundColor: appColors.white }}>
          <SafeAreaView>
             <View className="px-4 pb-2">
-               <AppText size="xxxxl" weight="extraBold">
+               <AppText size="xxxl" weight="bold">
                   Discover
                </AppText>
                <AppText size="lg">News from the comunity</AppText>

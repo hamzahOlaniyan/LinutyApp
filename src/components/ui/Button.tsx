@@ -2,7 +2,7 @@ import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import React from "react";
-import { ActivityIndicator, StyleProp, Text, TouchableOpacity, TouchableOpacityProps, View } from "react-native";
+import { ActivityIndicator, StyleProp, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 
 type ButtonProps = {
    text?: React.ReactNode;
@@ -15,7 +15,7 @@ type ButtonProps = {
    variant?: "outline" | "plain" | "secondary";
    indicatorColor?: string;
    icon?: React.ReactNode;
-   style?: StyleProp<TouchableOpacityProps>;
+   style?: StyleProp<ViewStyle>;
 };
 
 export default function Button({
@@ -35,21 +35,22 @@ export default function Button({
       <TouchableOpacity
          className={`${className}`}
          style={[
+            style,
             {
                borderRadius: 100,
                justifyContent: "center",
                paddingHorizontal:
                   size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 10 : hp(5),
-               shadowColor: "#000",
-               shadowOffset: {
-                  width: 0,
-                  height: 3,
-               },
-               shadowOpacity: 0.25,
-               shadowRadius: 6,
-               elevation: 0.3,
+               // shadowColor: "#000",
+               // shadowOffset: {
+               //    width: 0,
+               //    height: 3,
+               // },
+               // shadowOpacity: 0.25,
+               // shadowRadius: 6,
+               // elevation: 0.3,
                borderWidth: variant === "outline" ? 1.2 : 0,
-               borderColor: appColors.buttonOutline,
+               borderColor: appColors.black,
                backgroundColor:
                   variant === "outline"
                      ? "transparent"

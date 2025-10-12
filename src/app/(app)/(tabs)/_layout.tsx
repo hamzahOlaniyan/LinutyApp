@@ -38,7 +38,7 @@ export default function TabLayout() {
                title: "Home",
                headerShown: false,
                tabBarIcon: ({ focused }) => (
-                  <View>{focused ? <HomeSolid size={26} color={appColors.primary} /> : <Home size={26} />}</View>
+                  <View>{focused ? <HomeSolid size={24} color={appColors.primary} /> : <Home size={24} />}</View>
                ),
             }}
          />
@@ -49,7 +49,7 @@ export default function TabLayout() {
                headerShown: false,
                tabBarIcon: ({ focused }) => (
                   <View>
-                     {focused ? <GroupIconSolid size={26} color={appColors.primary} /> : <GroupIcon size={26} />}
+                     {focused ? <GroupIconSolid size={24} color={appColors.primary} /> : <GroupIcon size={24} />}
                   </View>
                ),
             }}
@@ -61,7 +61,7 @@ export default function TabLayout() {
                headerShown: false,
                popToTopOnBlur: true,
                tabBarIcon: ({ focused }) => (
-                  <View>{focused ? <StoreSolid size={26} color={appColors.primary} /> : <Store size={26} />}</View>
+                  <View>{focused ? <StoreSolid size={24} color={appColors.primary} /> : <Store size={24} />}</View>
                ),
             }}
          />
@@ -72,7 +72,7 @@ export default function TabLayout() {
                headerShown: false,
                tabBarIcon: ({ focused }) => (
                   <View>
-                     {focused ? <NewsIconSolid size={26} color={appColors.primary} /> : <NewsIcon size={26} />}
+                     {focused ? <NewsIconSolid size={24} color={appColors.primary} /> : <NewsIcon size={24} />}
                   </View>
                ),
             }}
