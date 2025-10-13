@@ -34,7 +34,7 @@ export default function CommentCard({
    });
 
    return (
-      <View className="flex-row gap-5 justify-between items-start w-full px-4">
+      <View className="flex-row gap-5 justify-between items-start w-full">
          <View className="flex-row gap-2">
             <Avatar path={item?.author?.avatarUrl} size={40} />
             <View className="flex-1">

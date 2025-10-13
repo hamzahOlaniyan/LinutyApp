@@ -100,8 +100,8 @@ export default function HomeHeaderMenu() {
                <Notification size={24} />
                {unreadCount > 0 && (
                   <View
-                     style={{ borderWidth: 3, borderColor: appColors.white }}
-                     className="bg-sky-500 w-7 h-7 rounded-full absolute -top-[2px] -right-[2px] justify-center items-center"
+                     style={{ borderWidth: 2, borderColor: appColors.white }}
+                     className="bg-sky-500 w-6 h-6 rounded-full absolute -top-[2px] -right-[2px] justify-center items-center"
                   >
                      <AppText size="xs" weight="semi" color="white">
                         {unreadCount}

@@ -19,37 +19,37 @@ export default function Comments({ data, loading, postAuthor }: { data: any; loa
    if (loading) return <CommentSkeletion />;
 
    return (
-      <View style={{ paddingBottom: bottom }} className="flex-1 justify-between w-full">
-         <View style={{ paddingBottom: bottom }} className="flex-1">
-            {data?.comments?.length < 1 && (
-               <View className="flex-1">
-                  <Image
-                     source={require("@/assets/images/comment_pic.png")}
-                     style={{ width: screenHeight, height: 200, top: 100, opacity: 0.2 }}
-                  />
-                  <AppText align="center" size="lg">
-                     Be the first to comment
-                  </AppText>
-               </View>
+      <View style={{ flex: 1 }} className=" w-full">
+         {/* <View style={{ paddingBottom: bottom }} className="bg-red-200"> */}
+         {data?.comments?.length < 1 && (
+            <View className="flex-1">
+               <Image
+                  priority={"high"}
+                  source={require("@/assets/images/comment_pic.png")}
+                  style={{ width: screenHeight, height: 200, top: 100, opacity: 0.2 }}
+               />
+               <AppText align="center" size="lg">
+                  Be the first to comment
+               </AppText>
+            </View>
+         )}
+         <FlatList
+            data={data?.comments?.reverse().filter((c: any) => c.parentId === null)}
+            renderItem={({ item }) => (
+               <CommentCard
+                  item={item}
+                  setShowKeyboard={setShowKeyboard}
+                  setReplyToName={setReplyToName}
+                  setReplyToId={setReplyToId}
+               />
             )}
-            <FlatList
-               data={data?.comments?.reverse().filter((c: any) => c.parentId === null)}
-               renderItem={({ item }) => (
-                  <CommentCard
-                     item={item}
-                     setShowKeyboard={setShowKeyboard}
-                     setReplyToName={setReplyToName}
-                     setReplyToId={setReplyToId}
-                  />
-               )}
-               showsVerticalScrollIndicator={false}
-               scrollEventThrottle={4}
-               contentContainerStyle={{
-                  rowGap: 20,
-                  flex: 1,
-               }}
-            />
-         </View>
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle={4}
+            contentContainerStyle={{
+               rowGap: 20,
+            }}
+         />
+         {/* </View> */}
          <CommentInput
             postId={data?.id}
             postAuthor={postAuthor}

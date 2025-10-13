@@ -3,11 +3,13 @@ import { getProfiles } from "@/src/Services/profiles";
 import { useAuthStore } from "@/src/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { Animated, ScrollView, View } from "react-native";
+import { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import AppText from "../ui/AppText";
 import Searchbar from "../ui/Searchbar";
 import FriendsCard from "./FriendsCard";
 import FriendsSkeletion from "./FriendsSkeletion";
+import SurgestionCard from "./SurgestionCard";
 
 export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean }) {
    const { profile } = useAuthStore();
@@ -49,7 +51,22 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                />
             </Animated.View>
          )}
-         <View className="gap-6 my-4">
+         <View className="gap-10 my-4">
+            <View className="gap-2">
+               <AppText weight="semi">People you my know</AppText>
+               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {PROFILES?.data.map((item) => (
+                     <SurgestionCard
+                        key={item?.id}
+                        id={item?.id}
+                        avatar={item?.avatarUrl}
+                        firstName={item?.firstName.trim()}
+                        lastName={item?.lastName.trim()}
+                        username={item?.username}
+                     />
+                  ))}
+               </ScrollView>
+            </View>
             {isLoading ? (
                <FriendsSkeletion />
             ) : (

@@ -1,5 +1,4 @@
 import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { forwardRef, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -40,32 +39,21 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
          }}
       >
          <BottomSheetView style={[styles.contentContainer, { paddingBottom: bottom }]}>
-            <View
-               style={{ borderBottomColor: appColors.border, borderBottomWidth: 0.5, width: "100%", flex: 1 }}
-               className="py-3 mb-4"
-            >
+            <View style={{ borderBottomColor: appColors.border, borderBottomWidth: 0.5 }} className="py-3 mb-4">
                <AppText align="center" size="lg" weight="semi" cap="capitalize">
                   {props.title}
                </AppText>
             </View>
-            <View style={{ paddingHorizontal: wp(4) }} className="flex-1 w-full">
-               {props.children}
-            </View>
+            <View style={{ flex: 1 }}>{props.children}</View>
          </BottomSheetView>
       </BottomSheet>
    );
 });
 
 const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      backgroundColor: "grey",
-      width: "100%",
-   },
    contentContainer: {
       flex: 1,
-      alignItems: "center",
-      height: "100%",
-      width: "100%",
+      // height: "100%",
+      backgroundColor: "red",
    },
 });

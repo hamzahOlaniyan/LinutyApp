@@ -17,7 +17,7 @@ export default function Friends() {
       <ScreenWrapper paddingHorizontal={0}>
          <View className="px-4">
             <ScreenHeader
-               headerTitle="Your friends"
+               headerTitle="Explore"
                leftAction={
                   <Search2 size={32} color={appColors.black} onPress={() => setShowSearchbar(!showSearchBar)} />
                }

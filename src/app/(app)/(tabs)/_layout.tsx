@@ -1,5 +1,5 @@
-import { GroupIcon } from "@/assets/icons/groupIcon";
-import { GroupIconSolid } from "@/assets/icons/groupIconSolid";
+import { DiscoverIcon } from "@/assets/icons/DiscoverIcon";
+import { DiscoverIconSolid } from "@/assets/icons/DiscoverIconSolid";
 import { Home } from "@/assets/icons/home";
 import { HomeSolid } from "@/assets/icons/home-solid";
 import { NewsIcon } from "@/assets/icons/NewsIcon";
@@ -49,7 +49,7 @@ export default function TabLayout() {
                headerShown: false,
                tabBarIcon: ({ focused }) => (
                   <View>
-                     {focused ? <GroupIconSolid size={24} color={appColors.primary} /> : <GroupIcon size={24} />}
+                     {focused ? <DiscoverIconSolid size={24} color={appColors.primary} /> : <DiscoverIcon size={24} />}
                   </View>
                ),
             }}

@@ -1,6 +1,7 @@
 export const appColors = {
    // primary: "#1e9187",
    primary: "#319295",
+   secondary: "#353535",
    lightOlive: "#daf2ea",
    extralightOlive: "#e1e7e5",
    selectedTeply: "#f3fbf8",

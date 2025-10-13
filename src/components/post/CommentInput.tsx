@@ -95,7 +95,6 @@ export default function CommentInput({
             style={{
                zIndex: 999,
                width: "100%",
-               paddingBottom: 30 + bottom,
             }}
          >
             {replyToName && (
@@ -121,7 +120,7 @@ export default function CommentInput({
             )}
             <View
                style={{ borderTopColor: appColors.border, borderTopWidth: 1 }}
-               className="w-full items-center flex-row gap-2 py-2 px-4"
+               className="w-full items-center flex-row gap-2 py-2"
             >
                <Avatar path={profile?.avatarUrl} size={35} />
                <View style={{ height: hp(4.5) }} className="flex-1 justify-center w-full rounded-full">

@@ -122,12 +122,12 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
       <TouchableOpacity
          style={{
             backgroundColor: appColors.searchBar,
-            minWidth: 110,
+            // minWidth: 110,
             height: hp(4),
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 50,
-            paddingHorizontal: 8,
+            paddingHorizontal: 16,
          }}
          onPress={() => {
             sendRequest.mutate();
@@ -159,7 +159,7 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
                   }}
                   style={{
                      borderWidth: 1.5,
-                     minWidth: 130,
+                     // minWidth: 130,
                      height: hp(4),
                      alignItems: "center",
                      justifyContent: "center",
@@ -208,13 +208,17 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
          <View className="flex-row flex-1 justify-between items-center">
             <View className="flex-row flex-1 gap-3 items-center">
                <TouchableOpacity onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                  <Avatar path={avatar} size={55} />
+                  <Avatar
+                     path={avatar || ""}
+                     size={60}
+                     initails={firstName.slice(0, 1).trim() + lastName.slice(0, 1).trim()}
+                  />
                </TouchableOpacity>
                <View>
-                  <AppText weight="semi" size="lg" cap="capitalize">
+                  <AppText weight="med" size="xl" cap="capitalize">
                      {firstName} {lastName}
                   </AppText>
-                  <AppText>@{username}</AppText>
+                  <AppText color={appColors.secondary}>@{username}</AppText>
                </View>
             </View>
             <View>{button}</View>

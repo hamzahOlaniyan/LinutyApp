@@ -1,4 +1,5 @@
 import AppText from "@/src/components/ui/AppText";
+import ScreenHeader from "@/src/components/ui/ScreenHeader";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
 import { useNews } from "@/src/hooks/useNews";
@@ -26,10 +27,7 @@ export default function CommunityScreen() {
       <View style={{ backgroundColor: appColors.white }}>
          <SafeAreaView>
             <View className="px-4 pb-2">
-               <AppText size="xxxl" weight="bold">
-                  Discover
-               </AppText>
-               <AppText size="lg">News from the comunity</AppText>
+               <ScreenHeader headerTitle="Discover" subHeading="News from the comunity" />
                <View>
                   <FlatList
                      horizontal
