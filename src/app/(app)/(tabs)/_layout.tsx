@@ -43,9 +43,8 @@ export default function TabLayout() {
             }}
          />
          <Tabs.Screen
-            name="friends"
+            name="(explore)"
             options={{
-               title: "Find friends",
                headerShown: false,
                tabBarIcon: ({ focused }) => (
                   <View>

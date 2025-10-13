@@ -1,9 +1,11 @@
+import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
 import { getProfiles } from "@/src/Services/profiles";
 import { useAuthStore } from "@/src/store/authStore";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Animated, ScrollView, View } from "react-native";
+import { Animated, ScrollView, TouchableOpacity, View } from "react-native";
 import { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import AppText from "../ui/AppText";
 import Searchbar from "../ui/Searchbar";
@@ -23,6 +25,8 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
       queryKey: ["profile"],
       queryFn: () => getProfiles(profile?.id),
    });
+
+   const router = useRouter();
 
    const height = useSharedValue(0);
    const opacity = useSharedValue(0);
@@ -51,11 +55,25 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                />
             </Animated.View>
          )}
-         <View className="gap-10 my-4">
+         <View className="gap-5 my-4">
             <View className="gap-2">
-               <AppText weight="semi">People you my know</AppText>
-               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  {PROFILES?.data.map((item) => (
+               <View className="flex-row justify-between">
+                  <AppText weight="semi" color={appColors.secondary}>
+                     surggested
+                  </AppText>
+
+                  <AppText weight="semi">People you my know</AppText>
+                  <TouchableOpacity onPress={() => router.push("/(app)/(tabs)/(explore)/suggested")}>
+                     <AppText color={appColors.secondary}>{`see more >`}</AppText>
+                  </TouchableOpacity>
+               </View>
+
+               <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  style={{ borderBottomColor: appColors.border, borderBottomWidth: 0.5, paddingBottom: 24 }}
+               >
+                  {PROFILES?.data.slice(0, 6).map((item) => (
                      <SurgestionCard
                         key={item?.id}
                         id={item?.id}
