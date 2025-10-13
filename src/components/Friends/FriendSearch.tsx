@@ -44,7 +44,7 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
    });
 
    return (
-      <View style={{ paddingHorizontal: wp(3) }} className="flex-1">
+      <View className="flex-1">
          {showSearchBar && (
             <Animated.View style={animatedStyle}>
                <Searchbar
@@ -55,23 +55,29 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                />
             </Animated.View>
          )}
-         <View className="gap-5 my-4">
+         <View className="gap-5">
             <View className="gap-2">
-               <View className="flex-row justify-between">
-                  <AppText weight="semi" color={appColors.secondary}>
-                     surggested
+               <View style={{ paddingHorizontal: wp(3), gap: 6 }}>
+                  <AppText weight="semi" size="lg" color={appColors.grey}>
+                     Suggested
                   </AppText>
-
-                  <AppText weight="semi">People you my know</AppText>
-                  <TouchableOpacity onPress={() => router.push("/(app)/(tabs)/(explore)/suggested")}>
-                     <AppText color={appColors.secondary}>{`see more >`}</AppText>
-                  </TouchableOpacity>
+                  <View className="flex-row justify-between">
+                     <AppText weight="semi">People you my know</AppText>
+                     <TouchableOpacity onPress={() => router.push("/(app)/(tabs)/(explore)/suggested")}>
+                        <AppText color={appColors.grey}>{`see more >`}</AppText>
+                     </TouchableOpacity>
+                  </View>
                </View>
 
                <ScrollView
                   horizontal
                   showsHorizontalScrollIndicator={false}
-                  style={{ borderBottomColor: appColors.border, borderBottomWidth: 0.5, paddingBottom: 24 }}
+                  style={{
+                     borderBottomColor: appColors.border,
+                     borderBottomWidth: 0.5,
+                     paddingBottom: 24,
+                     paddingLeft: 10,
+                  }}
                >
                   {PROFILES?.data.slice(0, 6).map((item) => (
                      <SurgestionCard
@@ -85,22 +91,24 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                   ))}
                </ScrollView>
             </View>
-            {isLoading ? (
-               <FriendsSkeletion />
-            ) : (
-               PROFILES?.data
-                  ?.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))
-                  .map((item) => (
-                     <FriendsCard
-                        key={item?.id}
-                        id={item?.id}
-                        avatar={item?.avatarUrl}
-                        firstName={item?.firstName.trim()}
-                        lastName={item?.lastName.trim()}
-                        username={item?.username}
-                     />
-                  ))
-            )}
+            <View style={{ paddingHorizontal: wp(3) }}>
+               {isLoading ? (
+                  <FriendsSkeletion />
+               ) : (
+                  PROFILES?.data
+                     ?.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))
+                     .map((item) => (
+                        <FriendsCard
+                           key={item?.id}
+                           id={item?.id}
+                           avatar={item?.avatarUrl}
+                           firstName={item?.firstName.trim()}
+                           lastName={item?.lastName.trim()}
+                           username={item?.username}
+                        />
+                     ))
+               )}
+            </View>
          </View>
       </View>
    );
