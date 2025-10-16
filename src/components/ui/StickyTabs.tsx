@@ -57,7 +57,7 @@ export default function StickyTabs({
             </View>
          </View>
 
-         <View style={{ paddingVertical: 16 }}>{scenes[activeKey]}</View>
+         <View>{scenes[activeKey]}</View>
       </ScrollView>
    );
 }

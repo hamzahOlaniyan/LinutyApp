@@ -1,17 +1,14 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { QueryClient } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
-import { Linking } from "react-native";
+import React from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
-import { supabase } from "../lib/supabase";
 import { QueryProvider } from "../provider/QueryProvider";
 import { useAuthStore } from "../store/authStore";
 
@@ -56,32 +53,39 @@ export default function RootLayout() {
    //    checkGhostSession();
    // }, []);
 
-   useEffect(() => {
-      const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
-         setSession(session);
-         if (session?.user) {
-            fetchProfile(session?.user?.id);
-         } else {
-            await AsyncStorage.removeItem("auth-store");
-         }
-      });
+   // useEffect(() => {
+   //    const unsub = useAuthStore.persist.onFinishHydration(() => {
+   //       useAuthStore.setState({ hasHydrated: true, loading: false });
+   //    });
+   //    return unsub;
+   // }, []);
 
-      return () => {
-         authListener.subscription.unsubscribe();
-      };
-   }, []);
+   // useEffect(() => {
+   //    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
+   //       setSession(session);
+   //       if (session?.user) {
+   //          fetchProfile(session?.user?.id);
+   //       } else {
+   //          await AsyncStorage.removeItem("auth-store");
+   //       }
+   //    });
 
-   useEffect(() => {
-      const subscription = Linking.addEventListener("url", async ({ url }: { url: string }) => {
-         const { data } = await supabase.auth.exchangeCodeForSession(url);
-         if (data.session) {
-            console.log("Password reset session started!");
-            router.replace("/(auth)/reset-password");
-         }
-      });
+   //    return () => {
+   //       authListener.subscription.unsubscribe();
+   //    };
+   // }, []);
 
-      return () => subscription.remove();
-   }, []);
+   // useEffect(() => {
+   //    const subscription = Linking.addEventListener("url", async ({ url }: { url: string }) => {
+   //       const { data } = await supabase.auth.exchangeCodeForSession(url);
+   //       if (data.session) {
+   //          console.log("Password reset session started!");
+   //          router.replace("/(auth)/reset-password");
+   //       }
+   //    });
+
+   //    return () => subscription.remove();
+   // }, []);
 
    const queryClient = new QueryClient();
 

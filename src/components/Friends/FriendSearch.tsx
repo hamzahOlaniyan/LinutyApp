@@ -46,18 +46,23 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
    return (
       <View className="flex-1">
          {showSearchBar && (
-            <Animated.View style={animatedStyle}>
-               <Searchbar
-                  placeholder="search your friends"
-                  value={searchText}
-                  onChangeText={setSearchText}
-                  onPress={() => setSearchText("")}
-               />
-            </Animated.View>
+            <View style={{ paddingHorizontal: wp(3) }}>
+               <Animated.View style={[animatedStyle, { paddingVertical: 10 }]}>
+                  <Searchbar
+                     placeholder="search your friends"
+                     value={searchText}
+                     onChangeText={setSearchText}
+                     onPress={() => setSearchText("")}
+                  />
+               </Animated.View>
+            </View>
          )}
-         <View className="gap-5">
-            <View className="gap-2">
-               <View style={{ paddingHorizontal: wp(3), gap: 6 }}>
+         <View>
+            <View className="">
+               <View
+                  style={{ paddingHorizontal: wp(3), gap: 6, backgroundColor: appColors.whitesmoke }}
+                  className="py-3"
+               >
                   <AppText weight="semi" size="lg" color={appColors.grey}>
                      Suggested
                   </AppText>
@@ -75,23 +80,27 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                   style={{
                      borderBottomColor: appColors.border,
                      borderBottomWidth: 0.5,
-                     paddingBottom: 24,
+                     paddingBottom: 18,
                      paddingLeft: 10,
+                     gap: 12,
+                     columnGap: 12,
+                     backgroundColor: appColors.whitesmoke,
                   }}
                >
                   {PROFILES?.data.slice(0, 6).map((item) => (
-                     <SurgestionCard
-                        key={item?.id}
-                        id={item?.id}
-                        avatar={item?.avatarUrl}
-                        firstName={item?.firstName.trim()}
-                        lastName={item?.lastName.trim()}
-                        username={item?.username}
-                     />
+                     <View key={item?.id} style={{ width: 160, marginRight: 6 }}>
+                        <SurgestionCard
+                           id={item?.id}
+                           avatar={item?.avatarUrl}
+                           firstName={item?.firstName.trim()}
+                           lastName={item?.lastName.trim()}
+                           username={item?.username}
+                        />
+                     </View>
                   ))}
                </ScrollView>
             </View>
-            <View style={{ paddingHorizontal: wp(3) }}>
+            <View style={{ paddingHorizontal: wp(3), gap: 18, marginTop: 24 }}>
                {isLoading ? (
                   <FriendsSkeletion />
                ) : (

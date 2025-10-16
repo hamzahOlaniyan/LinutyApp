@@ -34,12 +34,16 @@ export default function suggested() {
                   username={item?.username}
                />
             )}
-            contentContainerStyle={{ rowGap: 16, paddingHorizontal: wp(2) }}
+            contentContainerStyle={{
+               rowGap: 16,
+               paddingHorizontal: wp(2),
+            }}
             showsVerticalScrollIndicator={false}
             maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
             contentInsetAdjustmentBehavior="automatic"
             removeClippedSubviews
             numColumns={2}
+            columnWrapperStyle={{ gap: 12 }}
             bounces
             alwaysBounceVertical
             overScrollMode="always"

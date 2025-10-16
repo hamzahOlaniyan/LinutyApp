@@ -4,29 +4,35 @@ import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 
 export default function AppLayout() {
-   const { session, profile, loading, user } = useAuthStore();
+   const { session, profile, loading, hasHydrated } = useAuthStore();
    const router = useRouter();
 
    useEffect(() => {
+      // Only run redirect logic AFTER hydration completes
+      if (!hasHydrated) return;
+
+      // Optional: skip redirects while still loading async stuff
       if (loading) return;
+
       if (!session) {
          router.replace("/(auth)");
          return;
       }
+
       if (session && profile?.isComplete === false) {
          router.replace("/(new-user)/PartTwo/step-4.0");
          return;
       }
-   }, [session, profile, loading]);
+   }, [hasHydrated, loading, session, profile]);
 
-   if (loading || (session && profile?.isComplete === false)) {
+   // Loading state or hydration pending → show spinner
+   if (!hasHydrated || loading) {
       return (
-         <View className="flex-1 items-center justify-center">
+         <View className="flex-1 items-center justify-center bg-white">
             <ActivityIndicator size="large" />
          </View>
       );
    }
-
    return (
       <Stack
          screenOptions={{

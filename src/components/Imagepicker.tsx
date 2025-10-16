@@ -2,7 +2,7 @@ import { Fontisto } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import { Alert, Pressable, StyleSheet, View } from "react-native";
+import { Alert, Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 
 interface Props {
    size: number;
@@ -10,6 +10,8 @@ interface Props {
    onPickLocal?: (uri: any) => void;
    picker: React.ReactNode;
 }
+
+const { width: screenWidth } = Dimensions.get("screen");
 
 export default function Imagepicker({ url, size = 200, onPickLocal, picker }: Props) {
    const [uploading, setUploading] = useState(false);
@@ -21,7 +23,7 @@ export default function Imagepicker({ url, size = 200, onPickLocal, picker }: Pr
          let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images", "videos"],
             allowsMultipleSelection: true,
-            aspect: [4, 3],
+            aspect: [1, 1],
             quality: 1,
          });
          if (result.canceled || !result.assets || result.assets.length === 0) {
@@ -35,7 +37,13 @@ export default function Imagepicker({ url, size = 200, onPickLocal, picker }: Pr
                mimeType: asset.mimeType,
                height: asset.height,
                width: asset.width,
+               duration: asset.duration,
+               fileName: asset.fileName,
+               size: asset.fileSize,
+               type: asset.type,
             }));
+            // console.log(JSON.stringify(result.assets, null, 2));
+
             setImage((prev) => [...prev, ...newImages]);
 
             const uris = newImages.map((u) => u.uri);
@@ -66,7 +74,10 @@ export default function Imagepicker({ url, size = 200, onPickLocal, picker }: Pr
                      <Image
                         source={{ uri: pic?.uri }}
                         transition={100}
-                        style={{ borderRadius: 10, aspectRatio: 1 / 1 }}
+                        style={{
+                           borderRadius: 10,
+                           aspectRatio: 1 / 1,
+                        }}
                      />
                      <Fontisto
                         onPress={() => removeImage(pic.uri)}
@@ -78,7 +89,7 @@ export default function Imagepicker({ url, size = 200, onPickLocal, picker }: Pr
                   </View>
                ))}
          </View>
-         <Pressable onPress={pickAvatar}>{picker}</Pressable>
+         <TouchableOpacity onPress={pickAvatar}>{picker}</TouchableOpacity>
       </View>
    );
 }

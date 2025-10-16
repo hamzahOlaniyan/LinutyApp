@@ -19,6 +19,8 @@ export default function Searchbar({ value, onChangeText, onPress, placeholder, .
          style={{
             height: hp(5),
             backgroundColor: appColors.searchBar,
+            borderWidth: 1,
+            borderColor: appColors.border,
          }}
          className={`w-full flex-row bg-offwightGreen items-center justify-center px-4 rounded-full gap-3`}
       >

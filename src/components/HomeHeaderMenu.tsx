@@ -1,6 +1,7 @@
 import { AddCircleIcon } from "@/assets/icons/addCircle";
 import { Notification } from "@/assets/icons/notification";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -30,7 +31,7 @@ export default function HomeHeaderMenu() {
    const unreadCount = NOTIFICATION?.filter((n: any) => !n.read)?.length || 0;
 
    useEffect(() => {
-      if (!profile.id) return;
+      if (!profile?.id) return;
 
       const notificationChannel = supabase
          .channel("notification")
@@ -71,17 +72,15 @@ export default function HomeHeaderMenu() {
          ]}
          className="flex-row items-center justify-between py-1"
       >
-         <AppText size="xxxl" weight="black">
-            Linuty
-         </AppText>
-         {/* <Image
+         <Image
             source={require("@/assets/images/linuty.png")}
             style={{
-               width: 70,
-               height: 40,
+               height: 25,
+               aspectRatio: 3 / 1,
+               alignSelf: "flex-end",
             }}
             contentFit="contain"
-         /> */}
+         />
          <View className="flex-row items-center justify-between gap-2">
             <TouchableOpacity
                onPress={() => router.push("/(app)/new-post")}
@@ -89,12 +88,12 @@ export default function HomeHeaderMenu() {
                   borderRadius: 60,
                   padding: 3,
                   borderWidth: 1,
-                  paddingHorizontal: 15,
+                  paddingHorizontal: 8,
                }}
-               className="flex-row items-center gap-2"
+               className="flex-row items-center gap-1"
             >
-               <AddCircleIcon size={18} />
-               <AppText weight="med">Add post</AppText>
+               <AddCircleIcon size={20} />
+               <AppText weight="med">Post</AppText>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
                <Notification size={24} />

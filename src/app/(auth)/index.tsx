@@ -18,7 +18,6 @@ export default function index() {
    const [loading, setLoading] = useState(false);
 
    const setSession = useAuthStore((s) => s.setSession);
-   // const setUserProfile = useAuthStore((s) => s.setUserProfile);
 
    const router = useRouter();
 

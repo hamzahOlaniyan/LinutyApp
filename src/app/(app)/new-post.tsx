@@ -4,7 +4,7 @@ import Avatar from "@/src/components/Avatar";
 import Imagepicker from "@/src/components/Imagepicker";
 import AppText from "@/src/components/ui/AppText";
 import Button from "@/src/components/ui/Button";
-import { UploadImage } from "@/src/components/UploadImage";
+import { uploadMediaSmart } from "@/src/components/UploadImage";
 import { appColors } from "@/src/constant/colors";
 import { hp, wp } from "@/src/constant/common";
 import { createPost } from "@/src/Services/posts";
@@ -28,11 +28,17 @@ export default function NewPost() {
 
    const { mutate, isPending, error } = useMutation({
       mutationFn: async () => {
-         const imageRes = await UploadImage(profile.id, preview as any, "media");
+         const mediaRes = await uploadMediaSmart(profile?.id, preview as string[]);
+
+         // split uploaded URLs into separate fields if needed
+         const imageUrls = mediaRes.filter((m) => m.type === "image").map((m) => m.url);
+         const videoUrls = mediaRes.filter((m) => m.type === "video").map((m) => m.url);
+
          return createPost({
             content: postText,
             author: profile!.id,
-            images: imageRes,
+            images: imageUrls,
+            videos: videoUrls,
          });
       },
       onSuccess: (data) => {
@@ -49,19 +55,20 @@ export default function NewPost() {
          style={{
             paddingHorizontal: wp(4),
             paddingBottom: bottom,
+            position: "relative",
+            backgroundColor: "blue",
          }}
          className="flex-1 bg-white relative"
       >
-         <View className="gap-4">
+         <View className="gap-4 relative bg-green-200">
             <View className="flex-row items-center gap-4">
                <Avatar path={profile?.avatarUrl} size={45} />
                <View>
                   <AppText weight="semi" cap="capitalize">
-                     {profile?.firstName}
-                     {profile?.lastName}
+                     {profile?.firstName} {profile?.lastName}
                   </AppText>
                   <View className="flex-row gap-3">
-                     <AppText weight="med" size="sm">
+                     <AppText weight="med" size="sm" color={appColors.grey}>
                         @{profile?.username}
                      </AppText>
                   </View>
@@ -89,13 +96,14 @@ export default function NewPost() {
                   />
                </View>
             </KeyboardAvoidingView>
+
             <Imagepicker
                size={100}
                url={null}
                onPickLocal={(uri: string[]) => setPreview(uri)}
                picker={
-                  <View className="self-end bg-orange-100  p-1 rounded-md">
-                     <ImageIcon size={32} color="#ea580c" />
+                  <View className="self-end">
+                     <ImageIcon size={32} />
                   </View>
                }
             />

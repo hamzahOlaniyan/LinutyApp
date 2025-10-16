@@ -20,10 +20,10 @@ export default function SurgestionCard({ id, avatar, firstName, lastName, userna
    return (
       <TouchableOpacity
          onPress={() => router.push(`/(app)/(user)/${id}`)}
-         className="mr-3 rounded-lg overflow-hidden h-full flex-1"
-         style={{ borderWidth: 1, borderColor: appColors.kkkk }}
+         className="rounded-xl overflow-hidden h-full flex-1"
+         style={{ borderWidth: 1, borderColor: appColors.kkkk, backgroundColor: appColors.white }}
       >
-         <View style={{ width: screenWidth / 2, height: 200 }}>
+         <View style={{ width: "100%", height: 200 }}>
             {avatar ? (
                <Image source={{ uri: avatar }} style={{ width: "100%", height: "100%" }} contentPosition="center" />
             ) : (
@@ -50,7 +50,7 @@ export default function SurgestionCard({ id, avatar, firstName, lastName, userna
                </AppText>
                <AppText color={appColors.secondary}>@{username}</AppText>
             </View>
-            <Button size="sm" text="add friend" variant="outline" />
+            <Button size="sm" text="Add friend" />
          </View>
       </TouchableOpacity>
    );
