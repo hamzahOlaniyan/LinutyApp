@@ -12,72 +12,168 @@ export type Ethnicity = {
 
 export const ETHNICITIES: Ethnicity[] = [
    {
-      id: "somali",
+      id: "SO",
       name: "Somali",
       clans: [
          {
-            id: "darood",
+            id: "DAR",
             name: "Darood",
             children: [
                {
-                  id: "harti",
-                  name: "harti",
+                  id: "HAR",
+                  name: "Harti",
                   children: [
-                     { id: "Majeerteen", name: "Majeerteen" },
-                     { id: "Dhulbahnte", name: "Dhulbahnte" },
-                     { id: "Warsangeli", name: "Warsangeli" },
-                     { id: "Dishiishe", name: "Dishiishe" },
+                     {
+                        id: "MAJ",
+                        name: "Majeerteen",
+                        children: [
+                           { id: "CLSL", name: "Cali Saleebaan" },
+                           {
+                              id: "MXSL",
+                              name: "Maxamuud Saleebaan",
+                              children: [
+                                 { id: "CIS", name: "Ciise" },
+                                 { id: "CMR", name: "Cumar" },
+                                 { id: "CSM", name: "Cisman" },
+                              ],
+                           },
+                           { id: "USL", name: "Ugaar Saleebaan" },
+                        ],
+                     },
+                     {
+                        id: "DHU",
+                        name: "Dhulbahnte",
+                        children: [
+                           { id: "MXGR", name: "Maxamuud Garaad" },
+                           { id: "FXGR", name: "Faarax Garaad" },
+                           { id: "QYD", name: "Qayaad" },
+                        ],
+                     },
+                     {
+                        id: "WAR",
+                        name: "Warsangeli",
+                        children: [
+                           { id: "OGL", name: "Ogeyslabe" },
+                           { id: "DUB", name: "Dubays" },
+                           { id: "CMR", name: "Cumar" },
+                           { id: "HJY", name: "Hinjiye" },
+                           { id: "WRL", name: "Warlabe" },
+                           { id: "QSII", name: "Waqad Siinye" },
+                        ],
+                     },
+                     {
+                        id: "DIS",
+                        name: "Dishiishe",
+                        children: [
+                           {
+                              id: "MKD",
+                              name: "Makadoor",
+                              children: [
+                                 { id: "CBD", name: "Cabdikariim" },
+                                 { id: "ISC", name: "Reer Boqor" },
+                              ],
+                           },
+                           {
+                              id: "ISC",
+                              name: "Ismaaciil",
+                              children: [
+                                 { id: "YNS", name: "Yuunis" },
+                                 { id: "SIC", name: "Siciid" },
+                                 { id: "UGR", name: "Ugar" },
+                              ],
+                           },
+                        ],
+                     },
                   ],
                },
                {
-                  id: "Absame",
+                  id: "ABS",
                   name: "Absame",
                   children: [
-                     { id: "Ogaden", name: "Ogaden" },
-                     { id: "Jidwaq", name: "Jidwaq" },
-                     { id: "Bartire", name: "Bartire" },
-                     { id: "Yabare", name: "Yabare" },
-                     { id: "Geri Koombe", name: "Geri Koombe" },
-                     { id: "Aulihan", name: "Aulihan" },
+                     {
+                        id: "OGA",
+                        name: "Ogaadeen",
+                        children: [
+                           {
+                              id: "MAKB",
+                              name: "Makabuul",
+                              children: [
+                                 { id: "MAKH", name: "Makahill" },
+                                 { id: "RRS", name: "Reer Sacad" },
+                              ],
+                           },
+                           {
+                              id: "MYWAL",
+                              name: "Miyir Waalal",
+                              children: [
+                                 { id: "TOLM", name: "Tolomogge" },
+                                 { id: "BHL", name: "Bahale" },
+                              ],
+                           },
+                        ],
+                     },
+                     {
+                        id: "JIDW",
+                        name: "Jidwaaq",
+                        children: [
+                           { id: "ABSK", name: "Abaskuul" },
+                           { id: "YAB", name: "Yabare" },
+                           { id: "BRT", name: "Bartire" },
+                        ],
+                     },
                   ],
                },
                {
-                  id: "Saade",
+                  id: "SDE",
                   name: "Saade",
                   children: [
-                     { id: "Marehan", name: "Marehan" },
-                     { id: "Reer Xassan", name: "Reer Xassan" },
-                     { id: "Reer Ugaas Shermarke", name: "Reer Ugaas Shermarke" },
+                     {
+                        id: "MARX",
+                        name: "Mareexaan",
+                        children: [
+                           { id: "RSIY", name: "Reer Siyaad" },
+                           { id: "RXAS", name: "Reer Xasan" },
+                           { id: "RDIN", name: "Reer Diini" },
+                        ],
+                     },
+                     { id: "RUS", name: "Reer Ugaas" },
                   ],
                },
                {
-                  id: "Tanaad",
+                  id: "TND",
                   name: "Tanaad",
                   children: [
-                     { id: "Leelkase", name: "Leelkase" },
-                     { id: "Fardood", name: "Fardood" },
+                     {
+                        id: "LEK",
+                        name: "Leelkase",
+                        children: [
+                           { id: "MXCA", name: "Maxamuud Cali" },
+                           { id: "MUCA", name: "Muuse Cali" },
+                        ],
+                     },
+                     { id: "FRD", name: "Fardood" },
                   ],
                },
                {
-                  id: "Yusuf",
+                  id: "YUS",
                   name: "Yusuf",
                   children: [
-                     { id: "Awrtable", name: "Awrtable" },
-                     { id: "Dabarre", name: "Dabarre" },
-                     { id: "Fiqi Cumar", name: "Fiqi Cumar" },
+                     { id: "AWT", name: "Awrtable" },
+                     { id: "DAB", name: "Dabarre" },
+                     { id: "FQC", name: "Fiqi Cumar" },
                   ],
                },
                {
-                  id: "Ciise",
+                  id: "CII",
                   name: "Ciise",
                   children: [
                      {
-                        id: "Ciise Maxamud",
+                        id: "CMD Maxamud",
                         name: "Ciise Maxamud",
                         children: [
-                           { id: "Musse", name: "Musse" },
-                           { id: "Maxamed", name: "Maxamed" },
-                           { id: "Abokor", name: "Abokor" },
+                           { id: "MUS", name: "Musse" },
+                           { id: "MXD", name: "Maxamed" },
+                           { id: "ABK", name: "Abokor" },
                         ],
                      },
                   ],
@@ -85,125 +181,78 @@ export const ETHNICITIES: Ethnicity[] = [
             ],
          },
          {
-            id: "Hawiye",
+            id: "HAW",
             name: "Hawiye",
             children: [
                {
-                  id: "Karanle",
+                  id: "KAR",
                   name: "Karanle",
                   children: [
-                     { id: "Wadere", name: "Wadere" },
-                     { id: "Kadiir", name: "Kadiir" },
-                     { id: "Murusade", name: "Murusade" },
-                     { id: "Sahaawle", name: "Sahaawle" },
+                     { id: "WAD", name: "Wadere" },
+                     { id: "KDR", name: "Kadiir" },
+                     { id: "MRS", name: "Murusade" },
+                     { id: "SHW", name: "Sahaawle" },
                   ],
                },
                {
-                  id: "Gorgaarte",
+                  id: "GOR",
                   name: "Gorgaarte",
                   children: [
                      {
-                        id: "Duduble",
+                        id: "DUB",
                         name: "Duduble",
                         children: [
-                           { id: "Basin", name: "Basin" },
-                           { id: "Celi", name: "Celi" },
-                           { id: "Maqlisame", name: "Maqlisame" },
-                           { id: "Habar Awradeen", name: "Habar Awradeen" },
-                           { id: "Iijecle", name: "Iijecle" },
-                           { id: "Aarsade", name: "Aarsade" },
-                           { id: "Maxamed Camal", name: "Maxamed Camal" },
-                           { id: "Da’uud", name: "Da’uud" },
-                           { id: "Qadhoob", name: "Qadhoob" },
+                           { id: "BSN", name: "Basin" },
+                           { id: "CEL", name: "Celi" },
+                           { id: "MQL", name: "Maqlisame" },
+                           { id: "HAW", name: "Habar Awradeen" },
+                           { id: "IJE", name: "Iijecle" },
+                           { id: "ASD", name: "Aarsade" },
+                           { id: "MXC", name: "Maxamed Camal" },
+                           { id: "DUD", name: "Da’uud" },
+                           { id: "QDB", name: "Qadhoob" },
                         ],
                      },
                      {
-                        id: "Mertiile",
+                        id: "MER",
                         name: "Mertiile",
                         children: [
-                           { id: "Maxamed Aantin", name: "Maxamed Aantin" },
-                           { id: "Wahbiye ", name: "Wahbiye " },
-                           { id: "Camateen ", name: "Camateen " },
-                           { id: "Fiqi Cumar ", name: "Fiqi Cumar " },
+                           { id: "MXA", name: "Maxamed Aantin" },
+                           { id: "WHB ", name: "Wahbiye " },
+                           { id: "CMT ", name: "Camateen " },
+                           { id: "FQC", name: "Fiqi Cumar " },
                         ],
                      },
                   ],
                },
                {
-                  id: "Gugundhabe",
+                  id: "GUG",
                   name: "Gugundhabe",
                   children: [
                      {
-                        id: "Gaaljecel",
-                        name: "Gaaljecel",
-                        children: [
-                           { id: "Makahiil Cumar", name: "Makahiil Cumar" },
-                           { id: "Lahube", name: "Lahube" },
-                           { id: "Abtisame", name: "Abtisame" },
-                           { id: "Dirissame", name: "Dirissame" },
-                           { id: "Aarwaaq", name: "Aarwaaq" },
-                           { id: "Sooraanle", name: "Sooraanle" },
-                           { id: "Haadow", name: "Haadow" },
-                           { id: "Hilowle", name: "Hilowle" },
-                           { id: "Qalafow", name: "Qalafow" },
-                           { id: "Mugurmal", name: "Mugurmal" },
-                           { id: "Barsame", name: "Barsame" },
-                           { id: "Jijeele", name: "Jijeele" },
-                        ],
-                     },
-                     {
-                        id: "Baadicadde",
+                        id: "BDI",
                         name: "Baadicadde",
                         children: [
-                           { id: "Samaroob", name: "Samaroob" },
-                           { id: "Maamiye", name: "Maamiye" },
-                           { id: "Ilaabe", name: "Ilaabe" },
-                           { id: "Ibraahim", name: "Ibraahim" },
-                           { id: "Subeer", name: "Subeer" },
-                           { id: "Caryahan", name: "Caryahan" },
-                           { id: "Xaamud", name: "Xaamud" },
-                           { id: "Afgaab", name: "Afgaab" },
+                           { id: "SMR", name: "Samaroob" },
+                           { id: "MMY", name: "Maamiye" },
+                           { id: "ILA", name: "Ilaabe" },
+                           { id: "IBH", name: "Ibraahim" },
+                           { id: "SUB", name: "Subeer" },
+                           { id: "CYA", name: "Caryahan" },
+                           { id: "XMD", name: "Xaamud" },
+                           { id: "AFG", name: "Afgaab" },
+                           { id: "QRW", name: "Quurwaayle" },
+                           { id: "BYD", name: "Baydiisle" },
                         ],
-                     },
-                     {
-                        id: "Garre",
-                        name: "Garre",
-                        children: [
-                           { id: "Tuuf", name: "Tuuf" },
-                           { id: "Quranyow", name: "Quranyow" },
-                        ],
-                     },
-                     {
-                        id: "Degoodi",
-                        name: "Degoodi",
-                        children: [
-                           { id: "Fardanow", name: "Fardanow" },
-                           { id: "Midhimaal", name: "Midhimaal" },
-                           { id: "Samatar", name: "Samatar" },
-                           { id: "Maw", name: "Maw" },
-                           { id: "Reer Maxamuud", name: "Reer Maxamuud" },
-                           { id: "Fau", name: "Fau" },
-                           { id: "Jibra’iil", name: "Jibra’iil" },
-                           { id: "Dumaal", name: "Dumaal" },
-                           { id: "Gelible", name: "Gelible" },
-                        ],
-                     },
-                     {
-                        id: "Masarre",
-                        name: "Masarre",
-                     },
-                     {
-                        id: "Ciise",
-                        name: "Ciise",
                      },
                   ],
                },
                {
-                  id: "Jambeelle",
+                  id: "JAM",
                   name: "Jambeelle",
                   children: [
                      {
-                        id: "Ajuuraan",
+                        id: "AJU",
                         name: "Ajuuraan",
                         children: [
                            { id: "Gareen", name: "Gareen" },
@@ -215,7 +264,7 @@ export const ETHNICITIES: Ethnicity[] = [
                         ],
                      },
                      {
-                        id: "Moorshe",
+                        id: "MOO",
                         name: "Moorshe",
                         children: [
                            { id: "Garure", name: "Garure" },
@@ -227,7 +276,7 @@ export const ETHNICITIES: Ethnicity[] = [
                   ],
                },
                {
-                  id: "Xaskul",
+                  id: "XAS",
                   name: "Xaskul",
                   children: [
                      { id: "Cali", name: "Cali" },
@@ -237,11 +286,11 @@ export const ETHNICITIES: Ethnicity[] = [
                   ],
                },
                {
-                  id: "Raarane",
+                  id: "RAA",
                   name: "Raarane",
                },
                {
-                  id: "Xawaadle",
+                  id: "XAW",
                   name: "Xawaadle",
                   children: [
                      {
@@ -257,15 +306,15 @@ export const ETHNICITIES: Ethnicity[] = [
                   ],
                },
                {
-                  id: "Hiraab",
+                  id: "HIR",
                   name: "Hiraab",
                   children: [
                      {
-                        id: "Mudulood",
+                        id: "MUD",
                         name: "Mudulood",
                         children: [
                            {
-                              id: "Udeejeen",
+                              id: "UDE",
                               name: "Udeejeen",
                               children: [
                                  { id: "Maxamed Samatar", name: "Maxamed Samatar" },
@@ -277,7 +326,7 @@ export const ETHNICITIES: Ethnicity[] = [
                               ],
                            },
                            {
-                              id: "Wacdaan",
+                              id: "WAC",
                               name: "Wacdaan",
                               children: [
                                  { id: "Warqab", name: "Warqab" },
@@ -289,7 +338,7 @@ export const ETHNICITIES: Ethnicity[] = [
                               ],
                            },
                            {
-                              id: "Abgaal",
+                              id: "ABG",
                               name: "Abgaal",
                               children: [
                                  { id: "Ceynato", name: "Ceynato" },
@@ -304,7 +353,7 @@ export const ETHNICITIES: Ethnicity[] = [
                               ],
                            },
                            {
-                              id: "Moobleen",
+                              id: "MOO",
                               name: "Moobleen",
                               children: [
                                  { id: "Magacle", name: "Magacle" },
@@ -392,10 +441,10 @@ export const ETHNICITIES: Ethnicity[] = [
                   id: "Degoodi",
                   name: "Degoodi",
                   children: [
-                     { id: "Fardanow", name: "Fardanow" },
-                     { id: "Midhimaal", name: "Midhimaal" },
-                     { id: "Samatar", name: "Samatar" },
-                     { id: "Maw", name: "Maw" },
+                     { id: "FRD", name: "Fardanow" },
+                     { id: "MDH", name: "Midhimaal" },
+                     { id: "STR", name: "Samatar" },
+                     { id: "MAW", name: "Maw" },
                      { id: "Reer Maxamud", name: "Reer Maxamud" },
                      { id: "Faw", name: "Faw" },
                      { id: "Jabra'il", name: "Qalafow" },

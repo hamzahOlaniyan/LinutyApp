@@ -1,4 +1,5 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Plus } from "@/assets/icons/plus";
 import StepContainer from "@/src/components/StepContainer";
 import AppText from "@/src/components/ui/AppText";
 import GradientButton from "@/src/components/ui/GradientButton";
@@ -8,10 +9,9 @@ import { hp, wp } from "@/src/constant/common";
 import { ClanNode, ETHNICITIES, Ethnicity } from "@/src/data/ClanTree";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Step6_1() {
    const { form, errors, updateField, nextStep, setError } = useRegistrationStore();
@@ -23,6 +23,8 @@ export default function Step6_1() {
    const [currentLevel, setCurrentLevel] = useState<ClanNode[]>([]);
 
    const router = useRouter();
+
+   console.log(JSON.stringify(form, null, 2));
 
    // pick ethnicity (Select stays visible because we always render it)
    const handleEthnicitySelect = (ethnicity: Ethnicity) => {
@@ -73,6 +75,17 @@ export default function Step6_1() {
    const atLeaf = currentLevel.length === 0 && path.length > 0;
    const lastSelected = path.length > 0 ? `${path[path.length - 1].name}` : "";
 
+   const resetClanTree = () => {
+      const ethnicity = ETHNICITIES.find((e) => e.name === selectedEthnicityName);
+      // if (ethnicity) handleEthnicitySelect(ethnicity);
+      if (path.length > 0) {
+         setPath([]);
+         setCurrentLevel(ethnicity?.clans as []);
+         updateField("lineage_names", "");
+         updateField("lineage_ids", "");
+      }
+   };
+
    const handleNext = () => {
       updateField("lineage_ids", path.map((n) => n.id) as any);
       updateField("lineage_names", [...path.map((n) => n.name)].filter(Boolean) as any);
@@ -111,7 +124,7 @@ export default function Step6_1() {
                         {path.length > 0 && (
                            <View
                               style={{
-                                 backgroundColor: appColors.extralightOlive,
+                                 backgroundColor: appColors.lightOlive,
                                  borderRadius: 12,
                                  paddingHorizontal: 10,
                                  paddingVertical: 20,
@@ -129,27 +142,20 @@ export default function Step6_1() {
                         <View className="flex-row justify-between">
                            {!atLeaf && (
                               <AppText size="lg" weight="semi">
-                                 Select your clans
+                                 * Select your sub clans
                               </AppText>
                            )}
                            {path.length > 0 && (
-                              <Pressable
-                                 onPress={handleBack}
-                                 style={{
-                                    borderWidth: 0.8,
-                                    borderRadius: 6,
-                                    padding: 5,
-                                    borderColor: appColors.placeholder,
-                                 }}
-                                 className="flex-row items-center gap-1 justify-center"
-                              >
+                              <Pressable onPress={handleBack} className="flex-row items-center gap-1 justify-center">
                                  <Ionicons
                                     name="arrow-back-sharp"
                                     size={12}
                                     color="black"
                                     className="relative top-[1px]"
                                  />
-                                 <AppText size="xs">back</AppText>
+                                 <AppText weight="semi" size="xs">
+                                    back 1 step
+                                 </AppText>
                               </Pressable>
                            )}
                         </View>
@@ -159,6 +165,16 @@ export default function Step6_1() {
                   <View className="flex-row flex-wrap w-full justify-center gap-2">
                      {currentLevel.map((clan) => (
                         <TouchableOpacity
+                           key={clan.id}
+                           onPress={() => handleClanSelect(clan)}
+                           style={[{ borderWidth: 1.5, borderColor: appColors.border }, style.selectabaleBtn]}
+                        >
+                           <AppText size="lg" weight="med" cap="capitalize">
+                              {clan.name}
+                           </AppText>
+                           <Plus size={22} />
+                        </TouchableOpacity>
+                        /* { <TouchableOpacity
                            key={clan.id}
                            onPress={() => handleClanSelect(clan)}
                            className="p-3 px-8 rounded-md relative overflow-hidden"
@@ -184,9 +200,16 @@ export default function Step6_1() {
                            >
                               {clan.name}
                            </Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity>*/
                      ))}
                   </View>
+                  {path.length > 0 && (
+                     <TouchableOpacity onPress={resetClanTree} style={{ alignSelf: "center" }}>
+                        <AppText size="lg" weight="med" cap="capitalize">
+                           reset
+                        </AppText>
+                     </TouchableOpacity>
+                  )}
 
                   {atLeaf && (
                      <View className="gap-4">
@@ -232,3 +255,15 @@ export default function Step6_1() {
       </ScrollView>
    );
 }
+
+const style = StyleSheet.create({
+   selectabaleBtn: {
+      height: hp(4.5),
+      paddingHorizontal: 20,
+      borderRadius: 400,
+      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "row",
+      gap: 6,
+   },
+});
