@@ -1,9 +1,8 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import AppText from "@/src/components/ui/AppText";
 import GradientButton from "@/src/components/ui/GradientButton";
 import { appColors } from "@/src/constant/colors";
-import { hp } from "@/src/constant/common";
+import { hp, wp } from "@/src/constant/common";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
@@ -61,7 +60,7 @@ export default function Step4() {
    };
 
    return (
-      <ScreenWrapper>
+      <View style={{ paddingHorizontal: wp(4), flex: 1, backgroundColor: appColors.white }}>
          <StepContainer
             heading="What's is your date of birth?"
             paragraph="Choose your date of birth. You can always make this private later."
@@ -94,6 +93,6 @@ export default function Step4() {
                <GradientButton onPress={handleNext} text="Next" size="lg" />
             </View>
          </StepContainer>
-      </ScreenWrapper>
+      </View>
    );
 }

@@ -1,4 +1,3 @@
-// src/app/index.tsx
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -15,7 +14,6 @@ export default function AnimatedSplash() {
    const router = useRouter();
 
    useEffect(() => {
-      // Move all native calls inside useEffect
       SplashScreen.setOptions({ duration: 500, fade: true });
       SplashScreen.hideAsync();
 
@@ -24,7 +22,6 @@ export default function AnimatedSplash() {
          const route = getNextRoute(currentSession, profile);
          router.replace(route);
       };
-
       checkAuth();
    }, []);
 

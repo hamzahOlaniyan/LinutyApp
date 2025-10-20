@@ -1,15 +1,23 @@
 export const appColors = {
-   // primary: "#1e9187",
-   primary: "#319295",
+   primary: "#1e9187",
+   // // primary: "#319295",
+   // primary: "#0D0042",
+   // primary1: "#170D66",
+   // primary2: "#290163",
+   // primary3: "#EE5BC2",
+   // primary4: "#D822AE",
+
    secondary: "#353535",
    lightOlive: "#daf2ea",
    extralightOlive: "#e1e7e5",
    selectedTeply: "#f3fbf8",
+   colouredText: "#dbf5ff",
+   purple: "#e9ddf0",
 
    offWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",
    kkkk: "#e1e1e1",
-   searchBar: "#f4f4f4",
+   searchBar: "#f6f6f6",
    white: "#fff",
    black: "#000000",
    placeholder: "#767f86",
@@ -22,10 +30,11 @@ export const appColors = {
    lightGrey: "#717171",
    bordersLight: "#e8edeb",
    border: "#d6d6d6",
+   searchBorder: "#f4f4f4",
 
    gradients: {
+      // primary: ["#0D0042", "#170D66", "#3e1a72"] as const,
       primary: ["#68be91", "#006891", "#36326c"] as const,
-      primaryLight: ["#68be9150", "#00689150", "#36326c50"] as const,
    },
 
    // dark: {

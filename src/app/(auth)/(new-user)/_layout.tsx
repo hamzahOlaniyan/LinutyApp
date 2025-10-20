@@ -35,10 +35,7 @@ export default function NewUserLayout() {
                fontFamily: TiktokFont.TiktokSemiBold,
                // color: currentTheme === "light" ? appColors.light.text : appColors.dark.text,
             },
-            headerStyle: {
-               // backgroundColor: currentTheme === "light" ? appColors.light.background : appColors.dark.background,
-            },
          }}
-      />
+      ></Stack>
    );
 }

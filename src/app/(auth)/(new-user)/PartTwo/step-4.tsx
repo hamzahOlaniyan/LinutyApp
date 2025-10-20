@@ -1,8 +1,8 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import AppText from "@/src/components/ui/AppText";
 import GradientButton from "@/src/components/ui/GradientButton";
 import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -48,7 +48,7 @@ export default function Step4() {
    };
 
    return (
-      <ScreenWrapper>
+      <View style={{ paddingHorizontal: wp(4), flex: 1, backgroundColor: appColors.white }}>
          <StepContainer
             heading="What's your gender?"
             paragraph="Tell us your gender to help personalize your experience on Linuty. This information can make your profile more complete and help others connect with you in a way that feels authentic."
@@ -65,6 +65,6 @@ export default function Step4() {
                <GradientButton onPress={handleNext} text="Next" size="lg" />
             </View>
          </StepContainer>
-      </ScreenWrapper>
+      </View>
    );
 }

@@ -1,17 +1,16 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
+import { CheckIcon } from "@/assets/icons/CheckIcon";
 import StepContainer from "@/src/components/StepContainer";
 import AppText from "@/src/components/ui/AppText";
 import GradientButton from "@/src/components/ui/GradientButton";
 import Searchbar from "@/src/components/ui/Searchbar";
 import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { PROFESSIONS } from "@/src/data/ProfileData";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
-import { FontAwesome } from "@expo/vector-icons";
-import MaskedView from "@react-native-masked-view/masked-view";
-import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { FlatList, Pressable, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Step6_2() {
    const { form, errors, updateField, nextStep, setError } = useRegistrationStore();
@@ -19,7 +18,11 @@ export default function Step6_2() {
    const [selected, setSelected] = useState("");
    const [showButton, setShowButton] = useState(false);
 
+   const { bottom } = useSafeAreaInsets();
+
    const router = useRouter();
+
+   console.log({ bottom });
 
    const handlePress = (item: string) => {
       updateField("profession", item);
@@ -34,7 +37,15 @@ export default function Step6_2() {
    };
 
    return (
-      <ScreenWrapper>
+      <View
+         style={{
+            paddingHorizontal: wp(4),
+            flex: 1,
+            backgroundColor: appColors.white,
+            marginBottom: bottom,
+            overflow: "hidden",
+         }}
+      >
          <StepContainer
             heading="What is your Occupation"
             paragraph="Share your nationality and country of birth to help."
@@ -46,21 +57,16 @@ export default function Step6_2() {
                   data={PROFESSIONS?.sort().filter((item) => item.toLowerCase().includes(searchText.toLowerCase()))}
                   keyExtractor={(item) => item}
                   showsVerticalScrollIndicator={false}
-                  contentContainerStyle={{ rowGap: 10, paddingBottom: 750 }}
+                  contentContainerStyle={{ rowGap: 10, paddingBottom: 650, marginBottom: bottom }}
                   renderItem={({ item }) => (
                      <Pressable onPress={() => handlePress(item)} className="flex-row justify-between py-2">
                         <AppText size="lg" weight="med">
                            {item}
                         </AppText>
                         {selected === item && (
-                           <MaskedView maskElement={<FontAwesome name="check-circle" size={24} color="black" />}>
-                              <LinearGradient
-                                 colors={appColors.gradients.primary}
-                                 start={{ x: 0, y: 0 }}
-                                 end={{ x: 1, y: 0 }}
-                                 style={{ width: 24, height: 24 }}
-                              />
-                           </MaskedView>
+                           <View style={{ borderWidth: 1.5, borderRadius: 50 }}>
+                              <CheckIcon />
+                           </View>
                         )}
                      </Pressable>
                   )}
@@ -72,6 +78,6 @@ export default function Step6_2() {
                <GradientButton text="Next" onPress={handleNext} />
             </View>
          )}
-      </ScreenWrapper>
+      </View>
    );
 }

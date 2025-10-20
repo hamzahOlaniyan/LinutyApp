@@ -20,6 +20,7 @@ export type RegistrationState = {
       app_interest: string[];
       interests: string[];
       avatarUrl: string;
+      isFather: "Yes" | "No" | null;
    };
    errors: Partial<Record<keyof RegistrationState["form"], string>>;
    nextStep: () => void;
@@ -50,6 +51,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
       app_interest: [],
       interests: [],
       avatarUrl: "",
+      isFather: null,
    },
    errors: {},
    nextStep: () => set((s) => ({ step: s.step + 1 })),
@@ -82,6 +84,7 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
             app_interest: [],
             interests: [],
             avatarUrl: "",
+            isFather: null,
          },
          errors: {},
       }),

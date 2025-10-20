@@ -1,7 +1,8 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import GradientButton from "@/src/components/ui/GradientButton";
 import { Input } from "@/src/components/ui/Input";
+import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { validatePassword } from "@/src/hooks/validatePassword";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
@@ -55,7 +56,7 @@ export default function Step2() {
    };
 
    return (
-      <ScreenWrapper>
+      <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white, flex: 1 }}>
          <StepContainer
             heading="Create a password"
             paragraph="Your password should be at least 8 characters long. Avoid using easily guessed information. (Password must a contain uppercase,lowercase, digits & symbol)"
@@ -86,6 +87,6 @@ export default function Step2() {
                <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
             </View>
          </StepContainer>
-      </ScreenWrapper>
+      </View>
    );
 }

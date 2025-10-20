@@ -11,7 +11,7 @@ import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Pressable, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Step6_1() {
    const { form, errors, updateField, nextStep, setError } = useRegistrationStore();
@@ -24,7 +24,9 @@ export default function Step6_1() {
 
    const router = useRouter();
 
-   console.log(JSON.stringify(form, null, 2));
+   // console.log(JSON.stringify(form, null, 2));
+
+   const handleIsFather = () => {};
 
    // pick ethnicity (Select stays visible because we always render it)
    const handleEthnicitySelect = (ethnicity: Ethnicity) => {
@@ -77,7 +79,6 @@ export default function Step6_1() {
 
    const resetClanTree = () => {
       const ethnicity = ETHNICITIES.find((e) => e.name === selectedEthnicityName);
-      // if (ethnicity) handleEthnicitySelect(ethnicity);
       if (path.length > 0) {
          setPath([]);
          setCurrentLevel(ethnicity?.clans as []);
@@ -87,6 +88,9 @@ export default function Step6_1() {
    };
 
    const handleNext = () => {
+      if (form.isFather === "No") {
+         router.push("/PartTwo/step-6.2");
+      }
       updateField("lineage_ids", path.map((n) => n.id) as any);
       updateField("lineage_names", [...path.map((n) => n.name)].filter(Boolean) as any);
 
@@ -106,6 +110,7 @@ export default function Step6_1() {
          <StepContainer heading="What is your lineage" paragraph="Share your nationality and country of birth to help.">
             <View className="flex-1 gap-4">
                <Select
+                  label="Your ethnicity"
                   height={90}
                   options={ETHNICITIES.map((item) => item.name)}
                   placeholder="Ethnicity"
@@ -118,103 +123,101 @@ export default function Step6_1() {
                   error={!!errors.ethnicity}
                   errorMessage={errors.ethnicity}
                />
+               {selectedEthnicityName && selectedEthnicityId && (
+                  <Select
+                     label={`Is your father ${selectedEthnicityName} ?`}
+                     height={90}
+                     options={["Yes", "No"]}
+                     placeholder={`Is your father ${selectedEthnicityName} ?`}
+                     selectedValue={form.isFather ?? undefined}
+                     onSelect={(value) => updateField("isFather", value)}
+                     error={!!errors.ethnicity}
+                     errorMessage={errors.ethnicity}
+                  />
+               )}
                <View className="gap-6 flex-1">
-                  {selectedEthnicityName && (
+                  {selectedEthnicityName && form.isFather === "Yes" && (
                      <View className="gap-6">
                         {path.length > 0 && (
-                           <View
-                              style={{
-                                 backgroundColor: appColors.lightOlive,
-                                 borderRadius: 12,
-                                 paddingHorizontal: 10,
-                                 paddingVertical: 20,
-                                 gap: 10,
-                              }}
+                           <ImageBackground
+                              source={require("@/assets/images/19_dhans11.jpg")}
+                              style={style.image}
+                              borderRadius={15}
                            >
-                              {atLeaf && <AppText weight="semi">Your selected clan</AppText>}
+                              {atLeaf && <AppText color={appColors.colouredText}>Your selected clan</AppText>}
 
-                              <AppText size="lg" weight="bold" cap="capitalize">
-                                 {path.map((p, idx) => `${idx + 1}. ${p.name}  `).join("")}
+                              <AppText
+                                 style={{ flex: 1, width: "100%" }}
+                                 size="xl"
+                                 weight="bold"
+                                 cap="capitalize"
+                                 color={appColors.white}
+                              >
+                                 {path.map((p, idx) => `${idx + 1}. ${p.name}    `).join("")}
                               </AppText>
-                           </View>
+                           </ImageBackground>
                         )}
 
-                        <View className="flex-row justify-between">
+                        <View className="flex-row justify-between items-center gap-12">
                            {!atLeaf && (
                               <AppText size="lg" weight="semi">
                                  * Select your sub clans
                               </AppText>
                            )}
                            {path.length > 0 && (
-                              <Pressable onPress={handleBack} className="flex-row items-center gap-1 justify-center">
-                                 <Ionicons
-                                    name="arrow-back-sharp"
-                                    size={12}
-                                    color="black"
-                                    className="relative top-[1px]"
-                                 />
-                                 <AppText weight="semi" size="xs">
-                                    back 1 step
-                                 </AppText>
-                              </Pressable>
+                              <View
+                                 style={{
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    flex: 1,
+                                 }}
+                              >
+                                 <Pressable
+                                    onPress={handleBack}
+                                    className="flex-row items-center gap-1 justify-center self-end"
+                                 >
+                                    <Ionicons
+                                       name="arrow-back-sharp"
+                                       size={12}
+                                       color="black"
+                                       className="relative top-[1px]"
+                                    />
+                                    <AppText weight="semi" size="sm">
+                                       back 1 step
+                                    </AppText>
+                                 </Pressable>
+                                 <TouchableOpacity onPress={resetClanTree} style={{ alignSelf: "center" }}>
+                                    <AppText size="sm" color={appColors.error} weight="med" cap="capitalize">
+                                       reset
+                                    </AppText>
+                                 </TouchableOpacity>
+                              </View>
                            )}
                         </View>
                      </View>
                   )}
-
-                  <View className="flex-row flex-wrap w-full justify-center gap-2">
-                     {currentLevel.map((clan) => (
-                        <TouchableOpacity
-                           key={clan.id}
-                           onPress={() => handleClanSelect(clan)}
-                           style={[{ borderWidth: 1.5, borderColor: appColors.border }, style.selectabaleBtn]}
-                        >
-                           <AppText size="lg" weight="med" cap="capitalize">
-                              {clan.name}
-                           </AppText>
-                           <Plus size={22} />
-                        </TouchableOpacity>
-                        /* { <TouchableOpacity
-                           key={clan.id}
-                           onPress={() => handleClanSelect(clan)}
-                           className="p-3 px-8 rounded-md relative overflow-hidden"
-                           style={{
-                              borderRadius: 8,
-                           }}
-                        >
-                           <LinearGradient
-                              colors={appColors.gradients.primaryLight}
-                              start={{ x: 0, y: 0 }}
-                              end={{ x: 1, y: 0 }}
-                              style={{
-                                 ...StyleSheet.absoluteFillObject,
-                              }}
-                           />
-                           <Text
-                              style={{
-                                 fontFamily: TiktokFont.TiktokSemiBold,
-                                 textTransform: "capitalize",
-                                 textAlign: "center",
-                                 fontSize: 15,
-                              }}
+                  {form.isFather === "Yes" ? (
+                     <View className="flex-row flex-wrap w-full justify-center gap-2">
+                        {currentLevel.map((clan) => (
+                           <TouchableOpacity
+                              key={clan.id}
+                              onPress={() => handleClanSelect(clan)}
+                              style={[{ borderWidth: 1, borderColor: appColors.border }, style.selectabaleBtn]}
                            >
-                              {clan.name}
-                           </Text>
-                        </TouchableOpacity>*/
-                     ))}
-                  </View>
-                  {path.length > 0 && (
-                     <TouchableOpacity onPress={resetClanTree} style={{ alignSelf: "center" }}>
-                        <AppText size="lg" weight="med" cap="capitalize">
-                           reset
-                        </AppText>
-                     </TouchableOpacity>
-                  )}
+                              <AppText size="lg" cap="capitalize">
+                                 {clan.name}
+                              </AppText>
+                              <Plus size={18} />
+                           </TouchableOpacity>
+                        ))}
+                     </View>
+                  ) : null}
 
                   {atLeaf && (
                      <View className="gap-4">
                         <AppText weight="semi" size="lg">
-                           Please enter your abtiriis
+                           * Please enter your abtiriis
                         </AppText>
                         <View
                            style={{
@@ -223,6 +226,7 @@ export default function Step6_1() {
                               marginBottom: 3,
                               borderColor: appColors.placeholder,
                               borderRadius: 15,
+                              flex: 1,
                            }}
                            className=" flex-1 flex-row justify-between items-center gap-1 p-2 border rounded-lg"
                         >
@@ -248,6 +252,7 @@ export default function Step6_1() {
 
                   <View className="my-6">
                      {atLeaf && <GradientButton text="Next" onPress={handleNext} size="lg" />}
+                     {form.isFather === "No" && <GradientButton text="Next" onPress={handleNext} size="lg" />}
                   </View>
                </View>
             </View>
@@ -258,12 +263,18 @@ export default function Step6_1() {
 
 const style = StyleSheet.create({
    selectabaleBtn: {
-      height: hp(4.5),
-      paddingHorizontal: 20,
+      height: hp(5),
+      paddingHorizontal: 16,
       borderRadius: 400,
       justifyContent: "center",
       alignItems: "center",
       flexDirection: "row",
       gap: 6,
+   },
+   image: {
+      flex: 1,
+      justifyContent: "center",
+      padding: 20,
+      gap: 10,
    },
 });

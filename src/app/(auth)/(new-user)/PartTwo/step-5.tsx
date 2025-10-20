@@ -1,7 +1,8 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import GradientButton from "@/src/components/ui/GradientButton";
 import Select from "@/src/components/ui/Select";
+import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { COUNTRIES } from "@/src/data/ProfileData";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
@@ -29,7 +30,7 @@ export default function Step5() {
    };
 
    return (
-      <ScreenWrapper>
+      <View style={{ paddingHorizontal: wp(4), flex: 1, backgroundColor: appColors.white }}>
          <StepContainer
             heading="Background Information"
             paragraph="Share your nationality and country of birth to help us build meaningful connections through lineage and community."
@@ -49,6 +50,6 @@ export default function Step5() {
                </View>
             </View>
          </StepContainer>
-      </ScreenWrapper>
+      </View>
    );
 }

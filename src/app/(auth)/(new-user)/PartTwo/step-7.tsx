@@ -1,8 +1,9 @@
 import AvatarPicker from "@/src/components/AvatarPicker";
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import GradientButton from "@/src/components/ui/GradientButton";
 import { UploadAvatar } from "@/src/components/UploadAvatar";
+import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { supabase } from "@/src/lib/supabase";
 import { useAuthStore } from "@/src/store/authStore";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
@@ -77,18 +78,26 @@ export default function Step7() {
    };
 
    return (
-      <ScreenWrapper>
+      <View
+         style={{
+            paddingHorizontal: wp(4),
+            flex: 1,
+            backgroundColor: appColors.white,
+         }}
+      >
          <StepContainer
             heading="Add a profile picture"
             paragraph="Add a profile picture so that friends know it's you. Everyone will be able to see your picture."
          >
-            <AvatarPicker size={200} url={""} onPickLocal={(uri: string) => onUpload(uri as any)} />
+            <View style={{ marginVertical: 40 }}>
+               <AvatarPicker size={200} url={""} onPickLocal={(uri: string) => onUpload(uri as any)} />
+            </View>
             {avatarUrl && (
                <View className="gap-2 my-6">
                   <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
                </View>
             )}
          </StepContainer>
-      </ScreenWrapper>
+      </View>
    );
 }

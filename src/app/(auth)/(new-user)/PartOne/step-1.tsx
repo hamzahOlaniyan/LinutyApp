@@ -1,7 +1,8 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import GradientButton from "@/src/components/ui/GradientButton";
 import { Input } from "@/src/components/ui/Input";
+import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { supabase } from "@/src/lib/supabase";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
@@ -74,7 +75,7 @@ export default function Step1() {
    };
 
    return (
-      <ScreenWrapper>
+      <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white, flex: 1 }}>
          <StepContainer
             heading="What's your email address?"
             paragraph="Enter a valid email address to continue. We’ll use this email to verify your identity and send important
@@ -93,6 +94,6 @@ export default function Step1() {
                <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
             </View>
          </StepContainer>
-      </ScreenWrapper>
+      </View>
    );
 }

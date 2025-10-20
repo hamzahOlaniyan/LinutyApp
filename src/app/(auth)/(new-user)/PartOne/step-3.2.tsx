@@ -1,8 +1,8 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import GradientButton from "@/src/components/ui/GradientButton";
 import { Input } from "@/src/components/ui/Input";
 import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { supabase } from "@/src/lib/supabase";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -53,7 +53,7 @@ export default function Step3() {
    };
 
    return (
-      <ScreenWrapper>
+      <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white, flex: 1 }}>
          <StepContainer
             heading="Create a username"
             paragraph="Pick a unique username that represents you on Linuty. This will be your identity across the app, making it easy for others to find and connect with you."
@@ -71,6 +71,6 @@ export default function Step3() {
                <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
             </View>
          </StepContainer>
-      </ScreenWrapper>
+      </View>
    );
 }

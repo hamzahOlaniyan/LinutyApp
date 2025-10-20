@@ -1,7 +1,8 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import AppText from "@/src/components/ui/AppText";
 import GradientButton from "@/src/components/ui/GradientButton";
+import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { supabase } from "@/src/lib/supabase";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
@@ -44,7 +45,7 @@ export default function Agreement() {
    };
 
    return (
-      <ScreenWrapper>
+      <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white, flex: 1 }}>
          <StepContainer heading="Agree to Linuty's terms and policies">
             <View className="gap-3">
                <AppText>
@@ -71,6 +72,6 @@ export default function Agreement() {
                <GradientButton onPress={handleNext} text="I agree" size="lg" isLoading={loading} />
             </View>
          </StepContainer>
-      </ScreenWrapper>
+      </View>
    );
 }

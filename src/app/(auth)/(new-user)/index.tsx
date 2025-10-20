@@ -1,8 +1,8 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import AppText from "@/src/components/ui/AppText";
 import Button from "@/src/components/ui/Button";
 import GradientButton from "@/src/components/ui/GradientButton";
 import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -11,7 +11,7 @@ import { View } from "react-native";
 export default function NewUser() {
    const router = useRouter();
    return (
-      <ScreenWrapper>
+      <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white, flex: 1 }}>
          <View className="gap-6">
             <AppText size="xxxl" weight="bold">
                Join Linuty
@@ -36,9 +36,9 @@ export default function NewUser() {
             </AppText>
             <View className="gap-4 my-6">
                <GradientButton onPress={() => router.push("/PartOne/step-1")} text="Get started" size="lg" />
-               <Button onPress={() => router.back()} text="Already have an account" size="lg" />
+               <Button onPress={() => router.back()} text="Already have an account" size="lg" variant="outline" />
             </View>
          </View>
-      </ScreenWrapper>
+      </View>
    );
 }

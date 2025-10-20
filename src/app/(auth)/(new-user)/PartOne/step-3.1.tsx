@@ -1,9 +1,9 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import StepContainer from "@/src/components/StepContainer";
 import AppText from "@/src/components/ui/AppText";
 import GradientButton from "@/src/components/ui/GradientButton";
 import { Input } from "@/src/components/ui/Input";
 import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import { useRegistrationStore } from "@/src/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -38,14 +38,14 @@ export default function Step3() {
    };
 
    return (
-      <ScreenWrapper>
+      <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white, flex: 1 }}>
          <View className="gap-6">
             <StepContainer
                heading="Whats your name?"
                paragraph="This helps your friends, family, and community to easily recognize and connect."
             >
                <View className="gap-2">
-                  <AppText color={appColors.primary} weight="semi">
+                  <AppText color={appColors.secondary}>
                      * Use the names you are known by among family and friends back home.
                   </AppText>
                   <Input
@@ -70,6 +70,6 @@ export default function Step3() {
                <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
             </View>
          </View>
-      </ScreenWrapper>
+      </View>
    );
 }

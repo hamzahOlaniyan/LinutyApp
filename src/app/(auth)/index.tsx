@@ -1,16 +1,16 @@
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import AppText from "@/src/components/ui/AppText";
 import Button from "@/src/components/ui/Button";
 import GradientButton from "@/src/components/ui/GradientButton";
 import { Input } from "@/src/components/ui/Input";
 import { appColors } from "@/src/constant/colors";
-import { hp } from "@/src/constant/common";
+import { hp, wp } from "@/src/constant/common";
 import { supabase } from "@/src/lib/supabase";
 import { useAuthStore } from "@/src/store/authStore";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Pressable, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function index() {
    const [email, setEmail] = useState("");
@@ -18,6 +18,7 @@ export default function index() {
    const [loading, setLoading] = useState(false);
 
    const setSession = useAuthStore((s) => s.setSession);
+   // const setUserProfile = useAuthStore((s) => s.setUserProfile);
 
    const router = useRouter();
 
@@ -57,8 +58,8 @@ export default function index() {
    };
 
    return (
-      <ScreenWrapper>
-         <View style={{ position: "relative", marginTop: hp(18) }}>
+      <SafeAreaView style={{ paddingHorizontal: wp(4), flex: 1, backgroundColor: appColors.white }}>
+         <View style={{ position: "relative", marginTop: hp(16) }}>
             <Image
                source={require("@/assets/images/tree-icon.png")}
                style={{ width: 80, height: 80, alignSelf: "center" }}
@@ -84,7 +85,7 @@ export default function index() {
                      isPassword={true}
                   />
                   <Pressable onPress={() => router.push("/password-recovery")}>
-                     <AppText align="right" size="sm" weight="med" color={appColors.inputActive}>
+                     <AppText align="right" size="sm" color={appColors.inputActive}>
                         Forgot password?
                      </AppText>
                   </Pressable>
@@ -92,8 +93,18 @@ export default function index() {
                <GradientButton text="Sign in" onPress={handleSignIn} isLoading={loading} size="lg" />
             </View>
             <View className="w-full absolute bottom-5 gap-4">
-               <Button text="Create new account" onPress={() => router.push("/(new-user)")} size="lg" />
-               <Button text="skip" onPress={() => router.push("/(new-user)/PartTwo/step-6.1")} size="lg" />
+               <Button
+                  text="Create new account"
+                  onPress={() => router.push("/(new-user)")}
+                  size="lg"
+                  variant="outline"
+               />
+               {/* <Button
+                  text="skip"
+                  onPress={() => router.push("/(new-user)/PartTwo/step-8")}
+                  size="lg"
+                  variant="outline"
+               /> */}
                <View className="w-2/3 flex-row items-center justify-center flex-wrap self-center">
                   <AppText size="xs" align="center">
                      By signing in, you agree to our{" "}
@@ -114,6 +125,6 @@ export default function index() {
                </View>
             </View>
          </View>
-      </ScreenWrapper>
+      </SafeAreaView>
    );
 }

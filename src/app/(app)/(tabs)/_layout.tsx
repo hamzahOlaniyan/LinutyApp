@@ -1,5 +1,7 @@
 import { DiscoverIcon } from "@/assets/icons/DiscoverIcon";
 import { DiscoverIconSolid } from "@/assets/icons/DiscoverIconSolid";
+import { GroupIcon } from "@/assets/icons/groupIcon";
+import { GroupIconSolid } from "@/assets/icons/groupIconSolid";
 import { Home } from "@/assets/icons/home";
 import { HomeSolid } from "@/assets/icons/home-solid";
 import { NewsIcon } from "@/assets/icons/NewsIcon";
@@ -20,15 +22,28 @@ export default function TabLayout() {
             headerTitleAlign: "center",
             tabBarShowLabel: false,
             headerShadowVisible: false,
+            tabBarActiveTintColor: appColors.primary,
+            tabBarItemStyle: {
+               height: 43,
+            },
+            tabBarIconStyle: {
+               width: "100%",
+               height: "100%",
+               borderRadius: 500,
+            },
             tabBarStyle: {
-               height: 40 + insets.bottom,
+               height: 43,
                position: "absolute",
-               elevation: 0,
-               borderTopColor: appColors.bordersLight,
-               borderTopWidth: 0.5,
-               shadowOpacity: 0,
+               bottom: insets.bottom + 10,
+               elevation: 3,
+               borderTopWidth: 0,
+               shadowOpacity: 0.7,
                backgroundColor: appColors.white,
-               paddingTop: 4,
+               marginHorizontal: 15,
+               borderRadius: 500,
+               justifyContent: "center",
+               alignContent: "center",
+               flex: 1,
             },
          }}
       >
@@ -38,7 +53,18 @@ export default function TabLayout() {
                title: "Home",
                headerShown: false,
                tabBarIcon: ({ focused }) => (
-                  <View>{focused ? <HomeSolid size={24} color={appColors.primary} /> : <Home size={24} />}</View>
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <HomeSolid size={22} color={appColors.white} /> : <Home size={22} />}
+                  </View>
                ),
             }}
          />
@@ -47,8 +73,38 @@ export default function TabLayout() {
             options={{
                headerShown: false,
                tabBarIcon: ({ focused }) => (
-                  <View>
-                     {focused ? <DiscoverIconSolid size={24} color={appColors.primary} /> : <DiscoverIcon size={24} />}
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <DiscoverIconSolid size={22} color={appColors.white} /> : <DiscoverIcon size={22} />}
+                  </View>
+               ),
+            }}
+         />
+         <Tabs.Screen
+            name="(friends)"
+            options={{
+               title: "comunity",
+               headerShown: false,
+               tabBarIcon: ({ focused }) => (
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <GroupIconSolid size={22} color={appColors.white} /> : <GroupIcon size={22} />}
                   </View>
                ),
             }}
@@ -60,7 +116,18 @@ export default function TabLayout() {
                headerShown: false,
                popToTopOnBlur: true,
                tabBarIcon: ({ focused }) => (
-                  <View>{focused ? <StoreSolid size={24} color={appColors.primary} /> : <Store size={24} />}</View>
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <StoreSolid size={22} color={appColors.white} /> : <Store size={22} />}
+                  </View>
                ),
             }}
          />
@@ -70,8 +137,17 @@ export default function TabLayout() {
                title: "comunity",
                headerShown: false,
                tabBarIcon: ({ focused }) => (
-                  <View>
-                     {focused ? <NewsIconSolid size={24} color={appColors.primary} /> : <NewsIcon size={24} />}
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <NewsIconSolid size={22} color={appColors.white} /> : <NewsIcon size={22} />}
                   </View>
                ),
             }}

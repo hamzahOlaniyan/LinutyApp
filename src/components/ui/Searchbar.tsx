@@ -17,10 +17,10 @@ export default function Searchbar({ value, onChangeText, onPress, placeholder, .
    return (
       <View
          style={{
-            height: hp(5),
+            height: hp(5.5),
             backgroundColor: appColors.searchBar,
             borderWidth: 1,
-            borderColor: appColors.border,
+            borderColor: appColors.searchBorder,
          }}
          className={`w-full flex-row bg-offwightGreen items-center justify-center px-4 rounded-full gap-3`}
       >
@@ -29,7 +29,7 @@ export default function Searchbar({ value, onChangeText, onPress, placeholder, .
             value={value}
             onChangeText={onChangeText}
             style={{ fontSize: hp(1.9), fontFamily: TiktokFont.TiktokRegular }}
-            className="flex-1"
+            className="flex-1 h-full"
             placeholder={placeholder}
             placeholderTextColor={appColors.placeholder}
             autoCapitalize="none"

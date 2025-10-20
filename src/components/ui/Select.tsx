@@ -2,7 +2,7 @@ import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Pressable, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
    Actionsheet,
@@ -62,12 +62,8 @@ export default function Select({
    };
 
    return (
-      <View className="flex-1 h-full">
-         {label && (
-            <Text style={{ fontSize: hp(1.7) }} className="text-text font-SansMed capitalize">
-               {label}
-            </Text>
-         )}
+      <View className="flex-1 h-full gap-2">
+         {label && <AppText weight="med">{label}</AppText>}
          <View>
             <TouchableOpacity
                onPress={() => setShowActionsheet(true)}
