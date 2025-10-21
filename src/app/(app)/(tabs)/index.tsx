@@ -1,7 +1,6 @@
 import HomeHeaderMenu from "@/src/components/HomeHeaderMenu";
 import PostCard from "@/src/components/post/PostCard";
 import PostSkeleton from "@/src/components/post/PostSkeleton";
-import ScreenWrapper from "@/src/components/ScreenWrapper";
 import AppText from "@/src/components/ui/AppText";
 import { appColors } from "@/src/constant/colors";
 import { injectSponsoredBlocks } from "@/src/hooks/injecSponsoredBloacks";
@@ -13,6 +12,7 @@ import { useLocalSearchParams } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { FlatList, RefreshControl, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function index() {
    const { postId, openComments } = useLocalSearchParams();
@@ -88,8 +88,8 @@ export default function index() {
    const viewabilityConfig = useMemo(() => ({ itemVisiblePercentThreshold: 20 }), []);
 
    return (
-      <>
-         <ScreenWrapper paddingHorizontal={0}>
+      <View style={{ backgroundColor: appColors.white, flex: 1 }}>
+         <SafeAreaView style={{ flex: 1 }}>
             <HomeHeaderMenu />
             <View style={{ flex: 1, backgroundColor: appColors.extralightOlive }}>
                {isFetching ? (
@@ -222,7 +222,7 @@ export default function index() {
                   />
                )}
             </View>
-         </ScreenWrapper>
-      </>
+         </SafeAreaView>
+      </View>
    );
 }

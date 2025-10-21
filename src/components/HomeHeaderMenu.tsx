@@ -59,6 +59,8 @@ export default function HomeHeaderMenu() {
       };
    }, [profile?.id]);
 
+   // console.log(JSON.stringify(profile, null, 2));
+
    return (
       <Animated.View
          style={[

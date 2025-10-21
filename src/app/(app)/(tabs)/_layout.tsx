@@ -1,7 +1,7 @@
 import { DiscoverIcon } from "@/assets/icons/DiscoverIcon";
 import { DiscoverIconSolid } from "@/assets/icons/DiscoverIconSolid";
-import { GroupIcon } from "@/assets/icons/groupIcon";
-import { GroupIconSolid } from "@/assets/icons/groupIconSolid";
+import { FriendsIcon } from "@/assets/icons/friendsIcon";
+import { FriendsIconSolid } from "@/assets/icons/friendsIconSolid";
 import { Home } from "@/assets/icons/home";
 import { HomeSolid } from "@/assets/icons/home-solid";
 import { NewsIcon } from "@/assets/icons/NewsIcon";
@@ -104,7 +104,7 @@ export default function TabLayout() {
                         borderRadius: 500,
                      }}
                   >
-                     {focused ? <GroupIconSolid size={22} color={appColors.white} /> : <GroupIcon size={22} />}
+                     {focused ? <FriendsIconSolid size={22} color={appColors.white} /> : <FriendsIcon size={22} />}
                   </View>
                ),
             }}

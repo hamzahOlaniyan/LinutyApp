@@ -65,9 +65,10 @@ export default function RootLayout() {
    //       setSession(session);
    //       if (session?.user) {
    //          fetchProfile(session?.user?.id);
-   //       } else {
-   //          await AsyncStorage.removeItem("auth-store");
    //       }
+   //       // else {
+   //       //    await AsyncStorage.removeItem("auth-store");
+   //       // }
    //    });
 
    //    return () => {

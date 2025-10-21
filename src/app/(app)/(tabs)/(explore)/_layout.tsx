@@ -7,23 +7,16 @@ export default function CommunityLayout() {
             name="index"
             options={{
                headerShown: false,
-               // headerTitleAlign: "left",
-               // headerShadowVisible: false,
-               // headerTitleStyle: { fontSize: 20, fontFamily: TiktokFont.TiktokSemiBold },
-               // animation: "slide_from_bottom",
             }}
          />
+         <Stack.Screen name="clans" />
+         <Stack.Screen name="clanTree" />
+         <Stack.Screen name="discover" />
          <Stack.Screen
-            name="suggested"
-            options={
-               {
-                  // headerShown: false,
-                  // headerTitleAlign: "left",
-                  // headerShadowVisible: false,
-                  // headerTitleStyle: { fontSize: 20, fontFamily: TiktokFont.TiktokSemiBold },
-                  // animation: "slide_from_bottom",
-               }
-            }
+            name="(stories)"
+            options={{
+               headerShown: false,
+            }}
          />
       </Stack>
    );
