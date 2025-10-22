@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { appColors } from "../constant/colors";
@@ -13,29 +14,32 @@ type Props = {
    node: Node;
    level?: number;
 };
-const COLORS = ["#000000", "#ec4899", "#a855f7", "#3b82f6", "#c084fc"];
+
 const LineageBranch = ({ node, level = 0 }: Props) => {
+   const router = useRouter();
+
+   const COLORS = ["#092b28", "#125751", "#1b8279", "#4aa79f", "#8ec8c3"];
+   const glowColors = ["#00f7e1", "#00f7ef", "#00f7c4", "#00f78d", "#00e8f7"];
+   const glowColor = glowColors[level % glowColors.length];
    const lineColor = COLORS[level % COLORS.length];
+
    return (
-      <View style={[styles.branch, { marginLeft: level * 12 }]}>
+      <View style={[styles.branch, { marginLeft: level }]}>
          <TouchableOpacity
+            onPress={() => router.push(`/(app)/(tabs)/(explore)/${node.name}`)}
             style={[
                styles.name,
                {
                   backgroundColor: lineColor,
+                  borderColor: glowColor,
+                  shadowColor: glowColor,
+                  borderTopRightRadius: 50,
+                  borderBottomRightRadius: 50,
+                  width: 200,
                },
             ]}
          >
-            <AppText
-               size={level === 0 ? "xxl" : level === 1 ? "xl" : level === 2 ? "lg" : level === 3 ? "md" : "md"}
-               weight={
-                  level === 0 ? "extraBold" : level === 1 ? "bold" : level === 2 ? "semi" : level === 3 ? "med" : "reg"
-               }
-               //    color={lineColor}
-               color={appColors.white}
-            >
-               {node.name}
-            </AppText>
+            <AppText color={appColors.white}>{node.name}</AppText>
          </TouchableOpacity>
          <View style={[styles.line, { backgroundColor: lineColor }]}></View>
 
@@ -62,9 +66,16 @@ export default function LineageTree({ data }: { data: Node[] }) {
 
 const styles = StyleSheet.create({
    name: {
-      padding: 5,
-      paddingHorizontal: 12,
-      flex: 1,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      marginBottom: 10,
+      borderWidth: 1,
+      borderColor: "transparent",
+      // shadowColor: "#ffffff", // purple glow
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 1,
+      shadowRadius: 10,
+      elevation: 12, // Android shadow
    },
    branch: {
       marginVertical: 5,
@@ -85,7 +96,5 @@ const styles = StyleSheet.create({
       backgroundColor: "green",
       position: "absolute",
       left: 0,
-      //   top: 5,
-      borderRadius: 50,
    },
 });

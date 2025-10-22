@@ -13,7 +13,7 @@ export default function ScreenHeader({ headerTitle, color, subHeading, leftActio
    return (
       <View style={{ alignItems: subHeading ? "flex-end" : "center" }} className="mb-2 flex-row justify-between">
          <View className="gap-2 flex-1">
-            <AppText size="xxxl" weight="bold">
+            <AppText size="xxxl" weight="bold" color={color}>
                {headerTitle}
             </AppText>
             {subHeading && <AppText weight="med">{subHeading}</AppText>}
