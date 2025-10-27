@@ -1,6 +1,8 @@
 export const appColors = {
    primary: "#1e9187",
-   backgroundTheme: "#18746c",
+   backgroundTheme: "#125751",
+   foregroundTheme: "#18746c",
+   textTheme: "#d2e9e7",
    // // primary: "#319295",
    // primary: "#0D0042",
    // primary1: "#170D66",

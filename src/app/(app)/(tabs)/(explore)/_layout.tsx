@@ -22,6 +22,8 @@ export default function CommunityLayout() {
             options={{ headerStyle: { backgroundColor: "#18746c" }, headerTitleStyle: { color: appColors.white } }}
          />
          <Stack.Screen name="discover" />
+         <Stack.Screen name="clan-members" />
+         <Stack.Screen name="gathering" />
          <Stack.Screen
             name="(stories)"
             options={{
