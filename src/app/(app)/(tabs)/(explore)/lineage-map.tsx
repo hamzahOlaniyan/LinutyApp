@@ -18,7 +18,7 @@ export default function clans() {
    // console.log(profile.lineage_names);
 
    return (
-      <View style={{ backgroundColor: appColors.backgroundTheme, flex: 1 }}>
+      <View style={{ backgroundColor: appColors.white, flex: 1 }}>
          <StatusBar style="light" />
          <ScrollView scrollEnabled style={[s.root, { marginBottom: bottom }]}>
             <LineageChain profile={profile} />
@@ -33,6 +33,5 @@ const s = StyleSheet.create({
       flex: 1,
       paddingHorizontal: wp(4),
       paddingBottom: 200,
-      backgroundColor: "#18746c",
    },
 });

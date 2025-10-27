@@ -22,19 +22,13 @@ export default function LineageChain({ profile }: { profile: any }) {
 
 const s = StyleSheet.create({
    btn: {
-      borderWidth: 0.5,
+      borderWidth: 1,
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 100,
       justifyContent: "center",
       alignContent: "center",
       backgroundColor: appColors.white,
-      borderColor: "#00e8f7",
-      shadowColor: "#00f7ef",
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 1,
-      shadowRadius: 10,
-      elevation: 12,
    },
-   connection: { width: 3, height: 40, backgroundColor: "#00e8f7", marginVertical: 0 },
+   connection: { width: 3, height: 40, backgroundColor: appColors.black, marginVertical: 0 },
 });

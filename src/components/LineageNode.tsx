@@ -1,7 +1,6 @@
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { appColors } from "../constant/colors";
 import AppText from "./ui/AppText";
 
 type Node = {
@@ -18,30 +17,22 @@ type Props = {
 const LineageBranch = ({ node, level = 0 }: Props) => {
    const router = useRouter();
 
-   const COLORS = ["#092b28", "#125751", "#1b8279", "#4aa79f", "#8ec8c3"];
-   const glowColors = ["#00f7e1", "#00f7ef", "#00f7c4", "#00f78d", "#00e8f7"];
-   const glowColor = glowColors[level % glowColors.length];
+   const COLORS = ["#FF9914", "#F21B3F", "#08BDBD", "#B084CC", "#2D7DD2"];
+   // const glowColors = ["#00f7e1", "#00f7ef", "#00f7c4", "#00f78d", "#00e8f7"];
+   // const glowColor = glowColors[level % glowColors.length];
    const lineColor = COLORS[level % COLORS.length];
 
    return (
       <View style={[styles.branch, { marginLeft: level }]}>
          <TouchableOpacity
             onPress={() => router.push(`/(app)/(tabs)/(explore)/${node.name}`)}
-            style={[
-               styles.name,
-               {
-                  backgroundColor: lineColor,
-                  borderColor: glowColor,
-                  shadowColor: glowColor,
-                  borderTopRightRadius: 50,
-                  borderBottomRightRadius: 50,
-                  width: 200,
-               },
-            ]}
+            style={{ padding: 4, marginHorizontal: 4 }}
+            className="flex-row gap-2 items-center"
          >
-            <AppText color={appColors.white}>{node.name}</AppText>
+            <View style={[styles.index, { backgroundColor: lineColor }]}></View>
+            <AppText size="lg">{node.name}</AppText>
          </TouchableOpacity>
-         <View style={[styles.line, { backgroundColor: lineColor }]}></View>
+         {/* <View style={[styles.line, { backgroundColor: lineColor }]}></View> */}
 
          {node.children && node.children.length > 0 && (
             <View style={[styles.children]}>
@@ -65,17 +56,11 @@ export default function LineageTree({ data }: { data: Node[] }) {
 }
 
 const styles = StyleSheet.create({
-   name: {
-      paddingVertical: 8,
-      paddingHorizontal: 16,
-      marginBottom: 10,
-      borderWidth: 1,
-      borderColor: "transparent",
-      // shadowColor: "#ffffff", // purple glow
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 1,
-      shadowRadius: 10,
-      elevation: 12, // Android shadow
+   index: {
+      width: 14,
+      height: 14,
+      flexDirection: "row",
+      borderRadius: 4,
    },
    branch: {
       marginVertical: 5,

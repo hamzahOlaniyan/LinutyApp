@@ -9,12 +9,10 @@ import { View } from "react-native";
 export default function index() {
    const { id } = useLocalSearchParams();
    return (
-      <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.backgroundTheme, flex: 1 }}>
+      <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white, flex: 1 }}>
          <Stack.Screen
             options={{
                title: `${id}`,
-               headerStyle: { backgroundColor: appColors.backgroundTheme },
-               headerTitleStyle: { color: appColors.white },
             }}
          />
          <AppText color={appColors.white}>

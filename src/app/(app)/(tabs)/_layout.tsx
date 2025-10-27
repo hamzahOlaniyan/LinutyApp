@@ -24,7 +24,7 @@ export default function TabLayout() {
             headerShadowVisible: false,
             tabBarActiveTintColor: appColors.primary,
             tabBarItemStyle: {
-               height: 43,
+               height: 50,
             },
             tabBarIconStyle: {
                width: "100%",
@@ -32,7 +32,7 @@ export default function TabLayout() {
                borderRadius: 500,
             },
             tabBarStyle: {
-               height: 43,
+               height: 50,
                position: "absolute",
                bottom: insets.bottom + 10,
                elevation: 3,

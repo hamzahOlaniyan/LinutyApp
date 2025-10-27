@@ -579,6 +579,116 @@ export const ETHNICITIES: Ethnicity[] = [
                },
             ],
          },
+         {
+            id: "RXWY",
+            name: "Raxanweyn",
+            children: [
+               {
+                  id: "DGL",
+                  name: "Digil",
+                  children: [
+                     {
+                        id: "TNI",
+                        name: "Tunni",
+                     },
+                     {
+                        id: "GLDI",
+                        name: "Geledi",
+                     },
+                     {
+                        id: "JIID",
+                        name: "Jiiddu",
+                     },
+                     {
+                        id: "DBAR",
+                        name: "Dabarre",
+                     },
+                  ],
+               },
+               {
+                  id: "MRFL",
+                  name: "Mirifle",
+                  children: [
+                     {
+                        id: "HDAM",
+                        name: "Hadame",
+                     },
+                     {
+                        id: "HRN",
+                        name: "Harin",
+                     },
+                     {
+                        id: "LWY",
+                        name: "Luwaay",
+                     },
+                     {
+                        id: "ELY",
+                        name: "Eelay",
+                     },
+                     {
+                        id: "JRN",
+                        name: "Jiron",
+                     },
+                     {
+                        id: "HBR",
+                        name: "Hubeer",
+                     },
+                     {
+                        id: "GSGD",
+                        name: "Gasaargude",
+                     },
+                     {
+                        id: "LYSN",
+                        name: "Leeysan",
+                     },
+                  ],
+               },
+            ],
+         },
+         {
+            id: "SHKL",
+            name: "Sheekhal",
+            children: [
+               { id: "JZRA", name: "Jaziira" },
+               {
+                  id: "REWQD",
+                  name: "Reer Aw Qudub",
+                  children: [
+                     { id: "AWCLM", name: "Aw Cilmi" },
+                     { id: "AWLBN", name: "Aw Liibaan" },
+                     { id: "AWFRX", name: "Aw Faarax" },
+                     { id: "AWSDQ", name: "Aw Sidiiq" },
+                     { id: "AWAHD", name: "Aw Ahmed" },
+                     { id: "AWSMR", name: "Aw Samire" },
+                     { id: "AWCDNI", name: "Aw Cumar Diini" },
+                     { id: "AWCSYD", name: "Aw Cumar Siyaad" },
+                     { id: "AWCDLE", name: "Aw Cabdale" },
+                  ],
+               },
+               {
+                  id: "LBGE",
+                  name: "Looboge",
+                  children: [
+                     { id: "CBD", name: "Cabdi" },
+                     { id: "SCDI", name: "Sacdi" },
+                     { id: "CGNE", name: "Caagane" },
+                     { id: "TLWY", name: "Tolweyne (mahadalle) " },
+                  ],
+               },
+               { id: "GDER", name: "Gendershe" },
+               { id: "GDLE", name: "Guudle" },
+               { id: "CASAM", name: "Cabdi Samad" },
+               { id: "CASFI", name: "Cabdi Suufi" },
+               { id: "CASHKH", name: "Cabdi Sheekh" },
+               { id: "CACFF", name: "Cali Cafiif" },
+               { id: "ABIB", name: "Abiib" },
+               { id: "TDAN", name: "Teedan" },
+               { id: "QLU", name: "Qaalu" },
+               { id: "ASACD", name: "Aw Saciid " },
+               { id: "AAYB", name: "Aw Ayuub" },
+               { id: "GMDLE", name: "Gaameedle" },
+            ],
+         },
       ],
    },
    // {

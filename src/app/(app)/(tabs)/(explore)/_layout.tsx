@@ -1,4 +1,3 @@
-import { appColors } from "@/src/constant/colors";
 import { Stack } from "expo-router";
 
 export default function CommunityLayout() {
@@ -12,15 +11,13 @@ export default function CommunityLayout() {
          />
          <Stack.Screen
             name="clans"
-            options={{
-               headerStyle: { backgroundColor: "#18746c" },
-               headerTitleStyle: { color: appColors.white },
-            }}
+            options={
+               {
+                  // headerShown: false,
+               }
+            }
          />
-         <Stack.Screen
-            name="lineage-map"
-            options={{ headerStyle: { backgroundColor: "#18746c" }, headerTitleStyle: { color: appColors.white } }}
-         />
+         <Stack.Screen name="lineage-map" />
          <Stack.Screen name="discover" />
          <Stack.Screen name="clan-members" />
          <Stack.Screen name="gathering" />
