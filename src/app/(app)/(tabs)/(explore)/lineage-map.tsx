@@ -22,7 +22,7 @@ export default function clans() {
          <StatusBar style="light" />
          <ScrollView scrollEnabled style={[s.root, { marginBottom: bottom }]}>
             <LineageChain profile={profile} />
-            <ClanInfo name={profile.lineage_names[0]} />
+            <ClanInfo name={profile?.lineage_names[0]} />
          </ScrollView>
       </View>
    );

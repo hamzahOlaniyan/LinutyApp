@@ -99,12 +99,12 @@ export default function index() {
                   size="lg"
                   variant="outline"
                />
-               {/* <Button
+               <Button
                   text="skip"
-                  onPress={() => router.push("/(new-user)/PartTwo/step-8")}
+                  onPress={() => router.push("/(new-user)/PartTwo/step-6.1")}
                   size="lg"
                   variant="outline"
-               /> */}
+               />
                <View className="w-2/3 flex-row items-center justify-center flex-wrap self-center">
                   <AppText size="xs" align="center">
                      By signing in, you agree to our{" "}
