@@ -39,8 +39,6 @@ export default function Post({
 
    const { width: screenWidth } = Dimensions.get("screen");
 
-   // const queryClient = useQueryClient();
-
    useEffect(() => {
       if (openComments) {
          setShowComments(true);
