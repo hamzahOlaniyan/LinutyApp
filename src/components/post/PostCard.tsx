@@ -1,7 +1,9 @@
 import { appColors } from "@/src/constant/colors";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, FlatList, StyleSheet, View, ViewabilityConfig, ViewToken } from "react-native";
+import { Alert, Dimensions, FlatList, StyleSheet, View, ViewabilityConfig, ViewToken } from "react-native";
+import { deleteComment, deletePost } from "../../Services/posts";
 import AppText from "../ui/AppText";
 import CBottomSheet from "../ui/BottomSheet";
 import Comments from "./Comments";
@@ -11,7 +13,7 @@ import PostHeader from "./PostHeader";
 export default function Post({
    post,
    showMoreIcon = false,
-   // isPostDetails = false,
+   isPostDetails = false,
    count,
    comments,
    setPostID,
@@ -39,6 +41,8 @@ export default function Post({
 
    const { width: screenWidth } = Dimensions.get("screen");
 
+   const queryClient = useQueryClient();
+
    useEffect(() => {
       if (openComments) {
          setShowComments(true);
@@ -48,27 +52,27 @@ export default function Post({
    const fullName = `${post.author.firstName.trim()} ${post.author.lastName.trim()}`;
    const isComment = post.parent_id !== null;
 
-   // const deletePostMutation = useMutation({
-   //    mutationFn: (postId: string) => deletePost(postId),
-   //    onSuccess: () => {
-   //       Alert.alert("Success", "Post deleted");
-   //       queryClient.invalidateQueries({ queryKey: ["posts"] });
-   //    },
-   //    onError: () => {
-   //       Alert.alert("Error", "Failed to delete post");
-   //    },
-   // });
+   const deletePostMutation = useMutation({
+      mutationFn: (postId: string) => deletePost(postId),
+      onSuccess: () => {
+         Alert.alert("Success", "Post deleted");
+         queryClient.invalidateQueries({ queryKey: ["posts"] });
+      },
+      onError: () => {
+         Alert.alert("Error", "Failed to delete post");
+      },
+   });
 
-   // const deleteCommentMutation = useMutation({
-   //    mutationFn: (commentId: string) => deleteComment(commentId),
-   //    onSuccess: () => {
-   //       Alert.alert("Success", "Comment deleted");
-   //       queryClient.invalidateQueries({ queryKey: ["posts"] });
-   //    },
-   //    onError: () => {
-   //       Alert.alert("Error", "Failed to delete comment");
-   //    },
-   // });
+   const deleteCommentMutation = useMutation({
+      mutationFn: (commentId: string) => deleteComment(commentId),
+      onSuccess: () => {
+         Alert.alert("Success", "Comment deleted");
+         queryClient.invalidateQueries({ queryKey: ["posts"] });
+      },
+      onError: () => {
+         Alert.alert("Error", "Failed to delete comment");
+      },
+   });
 
    // const handleDelete = () => {
    //    Alert.alert(
@@ -90,6 +94,73 @@ export default function Post({
    //       ]
    //    );
    // };
+
+   // useEffect(() => {
+   //    setPostLikes(post?.postLikes);
+   // }, []);
+
+   // const liked = postLikes?.some((like) => like?.userId === profile?.id);
+
+   // const likeMutation = useMutation({
+   //    mutationFn: async () => {
+   //       return createPostLike({ userId: profile?.id, postId: post?.id });
+   //    },
+   //    onSuccess: async (data) => {
+   //       queryClient.invalidateQueries({ queryKey: ["posts"] });
+   //       queryClient.invalidateQueries({ queryKey: ["postLikes", profile?.id] });
+   //       queryClient.invalidateQueries({ queryKey: ["Notification"] });
+
+   //       if (data) {
+   //          setPostLikes((prev) => {
+   //             const filtered = prev.filter((like) => like.userId !== profile?.id);
+   //             return [...filtered, data];
+   //          });
+   //          try {
+   //             const res = await createNotification({
+   //                senderId: profile?.id,
+   //                receiverId: post.author?.id,
+   //                postId: post?.id,
+   //                type: "like",
+   //             });
+   //             setNoticeMap((prev) => ({
+   //                ...prev,
+   //                [post?.id]: res.id ?? res,
+   //             }));
+   //             console.log("👍🏾 Like Notification SENT=====>", res);
+   //          } catch (error) {
+   //             console.log("Notification error", error);
+   //          }
+   //       }
+
+   //       console.log("LIKED ❤️", data);
+   //    },
+   //    onError: (error) => Alert.alert("Error", error.message),
+   // });
+
+   // const removeLikeMutation = useMutation({
+   //    mutationFn: async () => {
+   //       return removePostLike(post.id, profile?.id ?? "");
+   //    },
+   //    onSuccess: async () => {
+   //       queryClient.invalidateQueries({ queryKey: ["postLikes", profile?.id] });
+   //       queryClient.invalidateQueries({ queryKey: ["posts"] });
+   //       queryClient.invalidateQueries({ queryKey: ["Notification"] });
+
+   //       const idToDelete = noticeMap[post?.id];
+
+   //       if (idToDelete) {
+   //          await deleteNotification(idToDelete);
+   //          setNoticeMap((prev) => {
+   //             const { [post.id]: _, ...rest } = prev;
+   //             return rest;
+   //          });
+   //       }
+
+   //       setPostLikes((prev) => prev.filter((like) => like.userId !== profile?.id));
+   //       console.log("Unliked");
+   //    },
+   //    onError: (error) => Alert.alert("Error", error.message),
+   // });
 
    // const handleCloseSheet = () => bottomSheetRef.current?.close();
    // const handleOpenSheet = () => bottomSheetRef.current?.expand();
@@ -160,6 +231,7 @@ export default function Post({
             <View className="w-full flex-row items-center justify-between">
                <PostAction
                   post_id={post?.id}
+                  authorId={post.author?.id}
                   showComment={() => {
                      if (!showMoreIcon) return null;
                      setPostID(post?.id), setShowComments(true);

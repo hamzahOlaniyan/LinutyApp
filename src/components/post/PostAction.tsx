@@ -11,15 +11,16 @@ import { TouchableOpacity, View } from "react-native";
 import AppText from "../ui/AppText";
 
 type PostAction = {
+   authorId: string;
    post_id: string;
    showComment: () => any;
    commentCount: any;
 };
 
-export default function PostAction({ post_id, showComment, commentCount }: PostAction) {
+export default function PostAction({ post_id, showComment, commentCount, authorId }: PostAction) {
    const { profile } = useAuthStore();
 
-   const { isLiked, handleLike, likeCount } = usePostLikes(post_id, profile?.id);
+   const { isLiked, handleLike, likeCount } = usePostLikes(post_id, profile?.id, authorId);
 
    return (
       <View className="">

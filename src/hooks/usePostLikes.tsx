@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { createNotification } from "../Services/Notification";
 import { createPostLike, getPostLikes, removePostLike } from "../Services/posts";
 
 // Replace with your real Supabase functions:
 
-export const usePostLikes = (post_id: string, profile_id: string) => {
+export const usePostLikes = (post_id: string, profile_id: string, post_author_id: string) => {
    const queryClient = useQueryClient();
    const [likes, setLikes] = useState([]);
 
@@ -45,6 +46,35 @@ export const usePostLikes = (post_id: string, profile_id: string) => {
                return [...prev, newLike];
             }
          });
+      },
+      onSuccess: async (data) => {
+         //   queryClient.invalidateQueries({ queryKey: ["posts"] });
+         //   queryClient.invalidateQueries({ queryKey: ["postLikes", profile?.id] });
+         //   queryClient.invalidateQueries({ queryKey: ["Notification"] });
+
+         //   if (data) {
+         //      setPostLikes((prev) => {
+         //         const filtered = prev.filter((like) => like.userId !== profile?.id);
+         //         return [...filtered, data];
+         //      });
+         try {
+            const res = await createNotification({
+               senderId: profile_id,
+               receiverId: post_author_id,
+               postId: post_id,
+               type: "like",
+            });
+            //   setNoticeMap((prev) => ({
+            //      ...prev,
+            //      [post?.id]: res.id ?? res,
+            //   }));
+            console.log("👍🏾 Like Notification SENT=====>", res);
+         } catch (error) {
+            console.log("Notification error", error);
+         }
+         //   }
+
+         console.log("LIKED ❤️", data);
       },
 
       onSettled: () => {
