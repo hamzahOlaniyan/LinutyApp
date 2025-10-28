@@ -9,6 +9,7 @@ import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ClanMembers from "../(explore)/clan-members";
 
 export default function Friends() {
    const [showSearchBar, setShowSearchbar] = useState(false);
@@ -36,6 +37,7 @@ export default function Friends() {
                // }
                routes={[
                   { key: "Search", title: "Search friends" },
+                  { key: "ClanMembers", title: "Clan Members" },
                   { key: "Yourfriends", title: "Your friends" },
                   { key: "FriendRequest", title: "Friend request" },
                ]}
@@ -43,6 +45,7 @@ export default function Friends() {
                   Search: <FriendSearch showSearchBar={showSearchBar} />,
                   Yourfriends: <FriendList />,
                   FriendRequest: <FriendRequest />,
+                  ClanMembers: <ClanMembers />,
                }}
             />
          </SafeAreaView>

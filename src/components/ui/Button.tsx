@@ -41,16 +41,16 @@ export default function Button({
                justifyContent: "center",
                paddingHorizontal:
                   size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 10 : hp(5),
-               borderWidth: variant === "outline" ? 0.9 : 0,
-               borderColor: appColors.primary2,
+               borderWidth: variant === "outline" || "secondary" ? 1.5 : 0,
+               borderColor: variant === "secondary" ? appColors.grey : appColors.black,
                backgroundColor:
                   variant === "outline"
                      ? "transparent"
                      : variant === "plain"
                      ? "transparent"
                      : variant === "secondary"
-                     ? appColors.searchBar
-                     : appColors.primary2,
+                     ? appColors.dark_whitesmoke
+                     : appColors.black,
                height:
                   size === "lg"
                      ? hp(5.6)
@@ -74,10 +74,9 @@ export default function Button({
                {text && (
                   <Text
                      style={{
-                        fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.6) : size === "xs" ? hp(1.3) : hp(1.6),
+                        fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.5) : size === "xs" ? hp(1.3) : hp(1.7),
                         textAlign: "center",
-                        fontFamily: TiktokFont.TiktokRegular,
-                        color: variant === "outline" ? appColors.primary2 : appColors.white,
+                        fontFamily: TiktokFont.TiktokMedium,
                      }}
                   >
                      {text}

@@ -186,7 +186,8 @@ export default function Post({
                name={fullName}
                username={post?.author?.username}
                date={post?.created_at}
-               postInfo={() => setModalVisible(true)}
+
+               // postInfo={() => setModalVisible(true)}
             />
             <View className="px-4 pb-3">
                <AppText size="lg">{post?.content}</AppText>

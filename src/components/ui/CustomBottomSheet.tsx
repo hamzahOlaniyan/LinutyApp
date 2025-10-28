@@ -1,4 +1,5 @@
 import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { forwardRef, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,12 +14,12 @@ interface Props {
 type Ref = BottomSheet;
 
 export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
-   const snapPoints = useMemo(() => ["30%", "50%", "91%"], []);
+   const snapPoints = useMemo(() => props.snapPoints ?? ["30%", "50%", "91%"], [props.snapPoints]);
 
    const { bottom } = useSafeAreaInsets();
 
    const renderBackdrop = useCallback(
-      (props: any) => <BottomSheetBackdrop appearsOnIndex={2} disappearsOnIndex={0} {...props} />,
+      (props: any) => <BottomSheetBackdrop appearsOnIndex={1} disappearsOnIndex={0} {...props} />,
       []
    );
 
@@ -44,7 +45,7 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
                   {props.title}
                </AppText>
             </View>
-            <View style={{ flex: 1 }}>{props.children}</View>
+            <View style={{ flex: 1, paddingHorizontal: wp(4) }}>{props.children}</View>
          </BottomSheetView>
       </BottomSheet>
    );
@@ -53,7 +54,5 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
 const styles = StyleSheet.create({
    contentContainer: {
       flex: 1,
-      // height: "100%",
-      backgroundColor: "red",
    },
 });

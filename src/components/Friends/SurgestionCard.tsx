@@ -18,11 +18,7 @@ const { width: screenWidth } = Dimensions.get("screen");
 
 export default function SurgestionCard({ id, avatar, firstName, lastName, username }: SurgestionCardProps) {
    return (
-      <TouchableOpacity
-         onPress={() => router.push(`/(app)/(user)/${id}`)}
-         className="rounded-xl overflow-hidden h-full flex-1"
-         style={{ borderWidth: 1, borderColor: appColors.kkkk, backgroundColor: appColors.white }}
-      >
+      <TouchableOpacity onPress={() => router.push(`/(app)/(user)/${id}`)} style={{ flex: 1 }}>
          <View style={{ width: "100%", height: 200 }}>
             {avatar ? (
                <Image source={{ uri: avatar }} style={{ width: "100%", height: "100%" }} contentPosition="center" />
@@ -35,22 +31,18 @@ export default function SurgestionCard({ id, avatar, firstName, lastName, userna
                      alignItems: "center",
                      backgroundColor: "red",
                   }}
-               >
-                  <AppText size="xxxxl" weight="med">
-                     {firstName.slice(0, 1).trim() + lastName.slice(0, 1).trim()}
-                  </AppText>
-               </View>
+               ></View>
             )}
          </View>
 
-         <View className="p-2 gap-3">
+         <View className="py-1 gap-3">
             <View>
-               <AppText weight="med" size="lg" cap="capitalize">
+               <AppText weight="med" cap="capitalize">
                   {firstName} {lastName}
                </AppText>
                <AppText color={appColors.secondary}>@{username}</AppText>
             </View>
-            <Button size="sm" text="Add friend" />
+            <Button size="xs" text="Add friend" variant="outline" />
          </View>
       </TouchableOpacity>
    );

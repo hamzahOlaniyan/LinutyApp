@@ -8,7 +8,6 @@ import { CustomBottomSheet } from "@/src/components/ui/CustomBottomSheet";
 import ScreenHeader from "@/src/components/ui/ScreenHeader";
 import Searchbar from "@/src/components/ui/Searchbar";
 import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
 import { getStoreProduct } from "@/src/Services/store";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
@@ -18,7 +17,7 @@ import { useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProductCategory } from "./new-product";
 
 export default function StorePage() {
@@ -28,6 +27,7 @@ export default function StorePage() {
 
    const router = useRouter();
    const bottomSheetRef = useRef<BottomSheet>(null);
+   const { bottom } = useSafeAreaInsets();
 
    const { data: PRODUCT } = useQuery({
       queryKey: ["store"],
@@ -55,13 +55,12 @@ export default function StorePage() {
 
    return (
       <View style={{ backgroundColor: appColors.white }}>
-         <SafeAreaView>
+         <SafeAreaView style={{ marginBottom: bottom }}>
             <View className=" pb-2 px-4 gap-2">
                <ScreenHeader
                   headerTitle="Comunity Store"
-                  subHeading="Supports local creators, small businesses, and community initiatives"
                   leftAction={
-                     <Search2 size={32} color={appColors.black} onPress={() => setShowSearchBar(!showSearchBar)} />
+                     <Search2 size={28} color={appColors.black} onPress={() => setShowSearchBar(!showSearchBar)} />
                   }
                />
                <View className="flex-row justify-between gap-2 items-center">
@@ -70,7 +69,7 @@ export default function StorePage() {
                      variant="secondary"
                      size="sm"
                      text="Category"
-                     icon={<MenuIcon size={18} />}
+                     icon={<MenuIcon size={20} />}
                      className="flex-1"
                   />
                   <Button
@@ -83,7 +82,7 @@ export default function StorePage() {
                   />
                </View>
                {showSearchBar && (
-                  <Animated.View style={animatedStyle} className="mt-3">
+                  <Animated.View style={animatedStyle} className="mt-1 mb-3">
                      <Searchbar
                         placeholder="search..."
                         value={searchText}
@@ -105,6 +104,7 @@ export default function StorePage() {
                         </View>
                         <FlatList
                            horizontal
+                           showsHorizontalScrollIndicator={false}
                            data={PRODUCT || []}
                            renderItem={({ item }) => (
                               <View
@@ -126,9 +126,10 @@ export default function StorePage() {
                                  <View
                                     style={{
                                        padding: 10,
+                                       gap: 6,
                                     }}
                                  >
-                                    <AppText weight="med" cap="capitalize">
+                                    <AppText size="sm" weight="med" cap="capitalize">
                                        {item?.name.trim()}
                                     </AppText>
                                     <AppText size="sm" cap="capitalize">
@@ -155,8 +156,8 @@ export default function StorePage() {
                decelerationRate={0.8}
                scrollEnabled
                showsVerticalScrollIndicator={false}
-               columnWrapperStyle={{ gap: 10, marginVertical: 8, paddingHorizontal: wp(3) }}
-               contentContainerStyle={{ paddingBottom: 200 }}
+               columnWrapperStyle={{ gap: 10, marginVertical: 8 }}
+               contentContainerStyle={{ paddingBottom: 250, backgroundColor: appColors.whitesmoke }}
             />
             <Portal hostName="root">
                <CustomBottomSheet
@@ -175,7 +176,11 @@ export default function StorePage() {
                                  {item}
                               </AppText>
                            )}
-                           contentContainerStyle={{ rowGap: 10, marginTop: 15 }}
+                           contentContainerStyle={{
+                              rowGap: 10,
+                              marginTop: 15,
+                              paddingBottom: 100,
+                           }}
                         />
                      </View>
                   }

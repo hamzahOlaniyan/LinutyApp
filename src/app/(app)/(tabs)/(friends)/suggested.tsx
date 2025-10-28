@@ -6,10 +6,13 @@ import { useAuthStore } from "@/src/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Dimensions, FlatList, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function suggested() {
    const { profile } = useAuthStore();
    const { width: screenWidth } = Dimensions.get("screen");
+
+   const { bottom } = useSafeAreaInsets();
 
    const {
       data: PROFILES,
@@ -20,7 +23,7 @@ export default function suggested() {
       queryFn: () => getProfiles(profile?.id),
    });
    return (
-      <View style={{ backgroundColor: appColors.white, flex: 1 }}>
+      <View style={{ backgroundColor: appColors.white, flex: 1, marginBottom: bottom }}>
          <FlatList
             data={PROFILES?.data}
             keyExtractor={(item, index) => item.id ?? `feed-${index}`}

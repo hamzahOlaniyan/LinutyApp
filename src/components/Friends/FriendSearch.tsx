@@ -68,7 +68,7 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                   </AppText>
                   <View className="flex-row justify-between">
                      <AppText weight="semi">People you my know</AppText>
-                     <TouchableOpacity onPress={() => router.push("/(app)/(tabs)/(explore)/suggested")}>
+                     <TouchableOpacity onPress={() => router.push("/(app)/(tabs)/(friends)/suggested")}>
                         <AppText color={appColors.grey}>{`see more >`}</AppText>
                      </TouchableOpacity>
                   </View>
@@ -78,8 +78,6 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   style={{
-                     borderBottomColor: appColors.border,
-                     borderBottomWidth: 0.5,
                      paddingBottom: 18,
                      paddingLeft: 10,
                      gap: 12,

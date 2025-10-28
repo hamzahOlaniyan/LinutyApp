@@ -6,7 +6,7 @@ import AppText from "./AppText";
 export default function LineageChain({ profile }: { profile: any }) {
    return (
       <View className="item-center py-5">
-         {profile.lineage_names.map((name: string, index: number) => (
+         {profile?.lineage_names.map((name: string, index: number) => (
             <View key={index} className="items-center">
                <TouchableOpacity style={s.btn}>
                   <AppText size="lg" weight="med" cap="capitalize">

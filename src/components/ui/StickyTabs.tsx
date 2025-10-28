@@ -41,7 +41,7 @@ export default function StickyTabs({
       >
          <View>{header}</View>
 
-         <View>
+         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={styles.tabBar}>
                {routes.map((route) => {
                   const isActive = route.key === activeKey;
@@ -55,7 +55,7 @@ export default function StickyTabs({
                   );
                })}
             </View>
-         </View>
+         </ScrollView>
 
          <View>{scenes[activeKey]}</View>
       </ScrollView>
