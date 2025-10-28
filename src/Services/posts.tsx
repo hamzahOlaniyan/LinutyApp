@@ -1,5 +1,4 @@
 import { supabase } from "../lib/supabase";
-// import { PostInput } from "../types/types";
 
 export const fetchPost = async () => {
    const { data, error } = await supabase
@@ -46,6 +45,11 @@ export const getPostComments = async (id: string) => {
       .not("author", "is", null)
       .eq("parent_id", id)
       .throwOnError();
+   return data;
+};
+
+export const getPostLikes = async (userId: string) => {
+   const { data } = await supabase.from("postLikes").select("*").eq("postId", userId).throwOnError();
    return data;
 };
 

@@ -7,6 +7,7 @@ export const appColors = {
    colouredText: "#dbf5ff",
    purple: "#e9ddf0",
    grey: "#ccc",
+   icons: "#505050",
 
    offWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",

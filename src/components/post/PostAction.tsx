@@ -4,25 +4,29 @@ import { ShareIcon } from "@/assets/icons/shareIcon";
 import { Thumbsup } from "@/assets/icons/thumbsup";
 import { ThumbsupSolid } from "@/assets/icons/thumbsup-solid";
 import { appColors } from "@/src/constant/colors";
+import { usePostLikes } from "@/src/hooks/usePostLikes";
+import { useAuthStore } from "@/src/store/authStore";
 import { Octicons } from "@expo/vector-icons";
 import { TouchableOpacity, View } from "react-native";
 import AppText from "../ui/AppText";
 
 type PostAction = {
-   like: () => any;
-   liked: boolean;
-   likes: any;
+   post_id: string;
    showComment: () => any;
    commentCount: any;
 };
 
-export default function PostAction({ like, liked, likes, showComment, commentCount }: PostAction) {
+export default function PostAction({ post_id, showComment, commentCount }: PostAction) {
+   const { profile } = useAuthStore();
+
+   const { isLiked, handleLike, likeCount } = usePostLikes(post_id, profile?.id);
+
    return (
       <View className="">
          <View className="flex-row justify-between items-center px-4 py-2">
             <View className="flex-row items-center">
                <View className="flex-row">
-                  <View className="w-6 h-6 rounded-full bg-sky-200 justify-center items-center border-2 border-white">
+                  <View className="w-6 h-6 rounded-full bg-green-300  bg-sky-220 justify-center items-center border-2 border-white">
                      <Thumbsup size={12} />
                   </View>
                   <View className="w-6 h-6 rounded-full bg-red-300 justify-center items-center relative right-2 border-2 border-white">
@@ -34,13 +38,19 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                </View>
                <AppText>129</AppText>
             </View>
-            {likes || commentCount ? (
+            {likeCount > 0 || commentCount ? (
                <View className="flex-row gap-1 p-2 items-center ">
-                  {likes && (
-                     <AppText color={appColors.lightGrey}>{` ${likes} ${likes.length > 1 ? "likes" : "like"}`}</AppText>
+                  {likeCount && (
+                     <AppText color={appColors.lightGrey}>{`${likeCount} ${likeCount > 1 ? "likes" : "like"}`}</AppText>
                   )}
-                  <Octicons name="dot-fill" size={8} color={appColors.lightGrey} className="relative top-[1px]" />
-                  {commentCount && <AppText color={appColors.lightGrey}>{commentCount} comments</AppText>}
+                  {commentCount < 0 && (
+                     <Octicons name="dot-fill" size={8} color={appColors.lightGrey} className="relative top-[1px]" />
+                  )}
+                  {commentCount && (
+                     <AppText color={appColors.lightGrey}>{`${commentCount} ${
+                        commentCount > 1 ? "comments" : "comment"
+                     }`}</AppText>
+                  )}
                </View>
             ) : null}
          </View>
@@ -48,13 +58,16 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
          <View style={{ borderTopColor: appColors.border, borderTopWidth: 0.5 }} className="flex-row justify-between">
             <View className="flex-row w-full">
                <View className="flex-row flex-1 items-center">
-                  <TouchableOpacity onPress={like} className="flex-row justify-center items-center gap-2 p-3 px-4">
-                     {liked ? (
-                        <ThumbsupSolid size={18} color={appColors.primary} />
+                  <TouchableOpacity
+                     onPress={() => handleLike.mutate()}
+                     className="flex-row justify-center items-center gap-2 p-3 px-4"
+                  >
+                     {isLiked ? (
+                        <ThumbsupSolid size={22} color={appColors.primary} />
                      ) : (
-                        <Thumbsup size={18} color={appColors.grey} />
+                        <Thumbsup size={22} color={appColors.icons} />
                      )}
-                     <AppText weight="med" color={appColors.grey}>
+                     <AppText weight="med" color={appColors.icons}>
                         Like
                      </AppText>
                   </TouchableOpacity>
@@ -64,9 +77,9 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
                      className="flex-row justify-center items-center gap-2 p-3 px-2"
                   >
                      <View className="top-[1px]">
-                        <CommentIcon size={18} color={appColors.grey} />
+                        <CommentIcon size={22} color={appColors.icons} />
                      </View>
-                     <AppText weight="med" color={appColors.grey}>
+                     <AppText weight="med" color={appColors.icons}>
                         Comments
                      </AppText>
                   </TouchableOpacity>
@@ -74,9 +87,9 @@ export default function PostAction({ like, liked, likes, showComment, commentCou
 
                <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-2 p-3 px-2">
                   <View className="top-[1px]">
-                     <ShareIcon size={18} color={appColors.grey} />
+                     <ShareIcon size={22} color={appColors.icons} />
                   </View>
-                  <AppText weight="med" color={appColors.grey}>
+                  <AppText weight="med" color={appColors.icons}>
                      Share
                   </AppText>
                </TouchableOpacity>

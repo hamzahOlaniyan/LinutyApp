@@ -159,7 +159,7 @@ export default function index() {
                               return (
                                  <View style={{ backgroundColor: appColors.white }}>
                                     <View className="p-4">
-                                       <AppText weight="semi">Market Place</AppText>
+                                       <AppText weight="semi">Community store</AppText>
                                     </View>
 
                                     <FlatList
