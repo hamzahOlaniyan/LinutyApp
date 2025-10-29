@@ -30,6 +30,7 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
          snapPoints={snapPoints}
          enablePanDownToClose
          backdropComponent={renderBackdrop}
+         backgroundStyle={{ flex: 1 }}
          handleIndicatorStyle={{
             height: 6,
             width: 50,
@@ -45,7 +46,7 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
                   {props.title}
                </AppText>
             </View>
-            <View style={{ paddingHorizontal: wp(4) }}>{props.children}</View>
+            <View style={{ paddingHorizontal: wp(4), flex: 1, height: "100%" }}>{props.children}</View>
          </BottomSheetView>
       </BottomSheet>
    );
@@ -54,5 +55,6 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
 const styles = StyleSheet.create({
    contentContainer: {
       flex: 1,
+      height: "100%",
    },
 });

@@ -1,4 +1,3 @@
-import { Image } from "expo-image";
 import React, { useState } from "react";
 import { Dimensions, FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -19,15 +18,9 @@ export default function Comments({ data, loading, postAuthor }: { data: any; loa
    if (loading) return <CommentSkeletion />;
 
    return (
-      <View style={{ flex: 1 }} className=" w-full relative">
-         {/* <View style={{ paddingBottom: bottom }} className="bg-red-200"> */}
+      <View className="justify-between flex-1 h-full">
          {data?.comments?.length < 1 && (
             <View className="flex-1">
-               <Image
-                  priority={"high"}
-                  source={require("@/assets/images/comment_pic.png")}
-                  style={{ width: screenHeight, height: 200, top: 100, opacity: 0.2 }}
-               />
                <AppText align="center" size="lg">
                   Be the first to comment
                </AppText>
@@ -47,11 +40,8 @@ export default function Comments({ data, loading, postAuthor }: { data: any; loa
             scrollEventThrottle={4}
             contentContainerStyle={{
                rowGap: 20,
-               flex: 1,
-               backgroundColor: "lime",
             }}
          />
-         {/* </View> */}
 
          <CommentInput
             postId={data?.id}

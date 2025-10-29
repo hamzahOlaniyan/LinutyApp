@@ -90,65 +90,63 @@ export default function CommentInput({
    });
 
    return (
-      <View className="absolute b-0">
-         <KeyboardAvoidingView keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 135} behavior="padding">
-            <View>
-               {replyToName && (
-                  <View
-                     style={{ backgroundColor: appColors.selectedTeply, borderRadius: 10 }}
-                     className="w-full items-center justify-between flex-row py-4 my-1 "
-                  >
-                     <AppText color={appColors.primary} weight="semi" className="px-4">
-                        relpy to @{replyToName}
-                     </AppText>
-                     <MaterialCommunityIcons
-                        onPress={() => {
-                           setReplyToId(null);
-                           setReplyToName(null);
-                           setShowKeyboard(false);
-                        }}
-                        name="close"
-                        size={18}
-                        color="black"
-                        className="relative top-[2px] -left-4"
-                     />
-                  </View>
-               )}
+      <KeyboardAvoidingView keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 135} behavior="padding">
+         <View>
+            {replyToName && (
                <View
-                  style={{ borderTopColor: appColors.border, borderTopWidth: 1 }}
-                  className="w-full items-center flex-row gap-2 py-2"
+                  style={{ backgroundColor: appColors.selectedTeply, borderRadius: 10 }}
+                  className="w-full items-center justify-between flex-row py-4 my-1 "
                >
-                  <Avatar path={profile?.avatarUrl} size={35} />
-                  <View style={{ height: hp(4.5) }} className="flex-1 justify-center w-full rounded-full">
-                     <TextInput
-                        ref={inputRef}
-                        style={{
-                           fontSize: hp(1.8),
-                           backgroundColor: appColors.searchBar,
-                           borderRadius: 100,
-                           paddingHorizontal: 10,
-                           borderWidth: 0.5,
-                           borderColor: appColors.border,
-                        }}
-                        value={commentText}
-                        onChangeText={setCommentText}
-                        className="flex-1 p-1 px-4"
-                        placeholder="Add comment..."
-                        placeholderTextColor={appColors.placeholder}
-                        autoFocus={false}
-                     />
-                  </View>
-                  <Button
-                     variant="secondary"
-                     size="sm"
-                     onPress={() => mutate()}
-                     isLoading={isPending}
-                     disabled={isPending || commentText.length === 0}
-                     icon={<SendIcon />}
+                  <AppText color={appColors.primary} weight="semi" className="px-4">
+                     relpy to @{replyToName}
+                  </AppText>
+                  <MaterialCommunityIcons
+                     onPress={() => {
+                        setReplyToId(null);
+                        setReplyToName(null);
+                        setShowKeyboard(false);
+                     }}
+                     name="close"
+                     size={18}
+                     color="black"
+                     className="relative top-[2px] -left-4"
                   />
                </View>
+            )}
+            <View
+               style={{ borderTopColor: appColors.border, borderTopWidth: 1 }}
+               className="w-full items-center flex-row gap-2 py-2"
+            >
+               <Avatar path={profile?.avatarUrl} size={35} />
+               <View style={{ height: hp(4.5) }} className="flex-1 justify-center w-full rounded-full">
+                  <TextInput
+                     ref={inputRef}
+                     style={{
+                        fontSize: hp(1.8),
+                        backgroundColor: appColors.searchBar,
+                        borderRadius: 100,
+                        paddingHorizontal: 10,
+                        borderWidth: 0.5,
+                        borderColor: appColors.border,
+                     }}
+                     value={commentText}
+                     onChangeText={setCommentText}
+                     className="flex-1 p-1 px-4"
+                     placeholder="Add comment..."
+                     placeholderTextColor={appColors.placeholder}
+                     autoFocus={false}
+                  />
+               </View>
+               <Button
+                  variant="secondary"
+                  size="sm"
+                  onPress={() => mutate()}
+                  isLoading={isPending}
+                  disabled={isPending || commentText.length === 0}
+                  icon={<SendIcon />}
+               />
             </View>
-         </KeyboardAvoidingView>
-      </View>
+         </View>
+      </KeyboardAvoidingView>
    );
 }
