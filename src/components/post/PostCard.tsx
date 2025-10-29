@@ -1,11 +1,13 @@
 import { appColors } from "@/src/constant/colors";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, Dimensions, FlatList, StyleSheet, View, ViewabilityConfig, ViewToken } from "react-native";
 import { deleteComment, deletePost } from "../../Services/posts";
 import AppText from "../ui/AppText";
-import CBottomSheet from "../ui/BottomSheet";
+import { CustomBottomSheet } from "../ui/CustomBottomSheet";
 import Comments from "./Comments";
 import PostAction from "./PostAction";
 import PostHeader from "./PostHeader";
@@ -42,6 +44,9 @@ export default function Post({
    const { width: screenWidth } = Dimensions.get("screen");
 
    const queryClient = useQueryClient();
+
+   const bottomSheetRef = useRef<BottomSheet>(null);
+   const handleOpenSheet = () => bottomSheetRef.current?.expand();
 
    useEffect(() => {
       if (openComments) {
@@ -234,18 +239,19 @@ export default function Post({
                   authorId={post.author?.id}
                   showComment={() => {
                      if (!showMoreIcon) return null;
-                     setPostID(post?.id), setShowComments(true);
+                     setPostID(post?.id), handleOpenSheet();
                   }}
                   commentCount={count || null}
                />
             </View>
          </View>
-         <CBottomSheet
-            visible={showComments}
-            onClose={() => setShowComments(false)}
-            heading={`${count} Comments`}
-            children={<Comments postAuthor={comments?.author} data={comments} loading={loading} />}
-         />
+         <Portal hostName="root">
+            <CustomBottomSheet
+               ref={bottomSheetRef}
+               title={`${count} Comments`}
+               children={<Comments postAuthor={comments?.author} data={comments} loading={loading} />}
+            />
+         </Portal>
       </>
    );
 }

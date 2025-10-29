@@ -20,15 +20,15 @@ export default function HomeHeaderMenu() {
    const router = useRouter();
    const queryClient = useQueryClient();
 
-   const { data: NOTIFICATION } = useQuery({
+   const { data: NOTIFICATION, refetch } = useQuery({
       queryKey: ["notification", profile?.id],
-      queryFn: () => getNotfication(profile?.id ?? ""),
+      queryFn: () => getNotfication(profile?.id),
       enabled: !!profile?.id,
    });
 
-   // console.log("notifications", JSON.stringify(notifications, null, 2));
+   refetch();
 
-   const unreadCount = NOTIFICATION?.filter((n: any) => !n.read)?.length || 0;
+   const unreadCount = NOTIFICATION?.filter((n: any) => !n.read)?.length ?? 0;
 
    useEffect(() => {
       if (!profile?.id) return;
@@ -37,7 +37,7 @@ export default function HomeHeaderMenu() {
          .channel("notification")
          .on(
             "postgres_changes",
-            { event: "INSERT", schema: "public", table: "notification", filter: `receiver_id=eq.${profile?.id}` },
+            { event: "*", schema: "public", table: "notification", filter: `receiver_id=eq.${profile?.id}` },
             (payload) => {
                console.log("New Notification:", payload.new);
                queryClient.invalidateQueries({ queryKey: ["notification", profile?.id] });
@@ -47,7 +47,7 @@ export default function HomeHeaderMenu() {
 
       const postChannel = supabase
          .channel("posts")
-         .on("postgres_changes", { event: "INSERT", schema: "public", table: "posts" }, (payload) => {
+         .on("postgres_changes", { event: "*", schema: "public", table: "posts" }, (payload) => {
             console.log("New posts:", payload.new);
             queryClient.invalidateQueries({ queryKey: ["posts", profile?.id] });
          })
@@ -58,8 +58,6 @@ export default function HomeHeaderMenu() {
          supabase.removeChannel(postChannel);
       };
    }, [profile?.id]);
-
-   // console.log(JSON.stringify(profile, null, 2));
 
    return (
       <Animated.View

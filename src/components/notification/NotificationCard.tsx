@@ -1,15 +1,13 @@
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
-import React from "react";
-import { TouchableOpacity, View } from "react-native";
-// import { useAuthStore } from "../context/authStore";
-// import { acceptFriendRequest } from "../Services/relationships";
 import { appColors } from "@/src/constant/colors";
 import { markNotificationsAsRead } from "@/src/Services/Notification";
 import { getPostById } from "@/src/Services/posts";
 import { useAuthStore } from "@/src/store/authStore";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
+import React from "react";
+import { TouchableOpacity, View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 
@@ -27,6 +25,7 @@ export default function NotificationCard({ item }: { item: any }) {
       queryKey: ["posts", item?.postId],
       queryFn: () => getPostById(item?.postId),
    });
+
    // useEffect(() => {
    //    if (!profile?.id) return;
    //    markNotificationsAsRead(profile?.id)
@@ -35,22 +34,24 @@ export default function NotificationCard({ item }: { item: any }) {
    // }, [profile?.id]);
 
    const markAsRead = useMutation({
-      mutationFn: async () => markNotificationsAsRead(profile?.id),
+      mutationFn: async () => markNotificationsAsRead(item.id, profile?.id),
       onMutate: async () => {
-         await queryClient.cancelQueries({ queryKey: ["relationships", profile?.id] });
+         await queryClient.cancelQueries({ queryKey: ["notification", profile?.id] });
       },
       onSuccess: async (id) => {
-         await queryClient.cancelQueries({ queryKey: ["relationships", profile?.id, id] });
+         await queryClient.cancelQueries({ queryKey: ["notification", profile?.id, id] });
       },
       onError: (error) => {
          console.log("❌ errorr marking read", error);
       },
    });
 
+   console.log(item?.id);
+
    return (
       <TouchableOpacity
          onPress={() => {
-            // markAsRead.mutate();
+            markAsRead.mutate();
             if (item?.type === "comment")
                router.push({
                   pathname: "/(app)/(tabs)",
@@ -58,12 +59,21 @@ export default function NotificationCard({ item }: { item: any }) {
                });
             if (item?.type === "request")
                router.push({
-                  pathname: "/(app)/(tabs)/friends",
+                  pathname: "/(app)/(tabs)/(friends)",
                   params: { initialTab: item?.type === "request" ? "FriendRequest" : undefined },
+               });
+
+            if (item?.type === "like")
+               router.push({
+                  pathname: "/(app)/(tabs)",
+                  params: {
+                     postId: item?.postId,
+                     scrollToPost: "true",
+                  },
                });
             return null;
          }}
-         style={{ backgroundColor: item?.read === "false" ? "red" : appColors.selectedTeply }}
+         style={{ backgroundColor: item?.read ? "yellow" : appColors.selectedTeply }}
          className="px-5 py-3"
       >
          <View className="flex-row justify-between items-center">

@@ -19,7 +19,7 @@ export default function Comments({ data, loading, postAuthor }: { data: any; loa
    if (loading) return <CommentSkeletion />;
 
    return (
-      <View style={{ flex: 1 }} className=" w-full">
+      <View style={{ flex: 1 }} className=" w-full relative">
          {/* <View style={{ paddingBottom: bottom }} className="bg-red-200"> */}
          {data?.comments?.length < 1 && (
             <View className="flex-1">
@@ -47,9 +47,12 @@ export default function Comments({ data, loading, postAuthor }: { data: any; loa
             scrollEventThrottle={4}
             contentContainerStyle={{
                rowGap: 20,
+               flex: 1,
+               backgroundColor: "lime",
             }}
          />
          {/* </View> */}
+
          <CommentInput
             postId={data?.id}
             postAuthor={postAuthor}

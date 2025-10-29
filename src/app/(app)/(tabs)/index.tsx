@@ -9,13 +9,12 @@ import { getStoreProduct } from "@/src/Services/store";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function index() {
-   const { postId, openComments } = useLocalSearchParams();
+   const { postId, openComments, scrollToPost } = useLocalSearchParams();
    const [postID, setPostID] = useState<string>("");
    const [activeCommentsPostId, setActiveCommentsPostId] = useState<string | null>(null);
    const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -35,6 +34,10 @@ export default function index() {
    // const [lastOffset, setLastOffset] = useState(0);
 
    // only top-level posts
+
+   const flatListRef = useRef<FlatList>(null);
+   // console.log(JSON.stringify(flatListRef.current, null, 2));
+   // console.log({ flatListRef });
 
    const { data: PRODUCT } = useQuery({
       queryKey: ["store"],
@@ -70,19 +73,30 @@ export default function index() {
    }, [topLevelPosts, PRODUCT as any]);
 
    useEffect(() => {
-      if (postId && openComments === "true") {
-         setPostID(postId as string); // for fetching comments
-         setActiveCommentsPostId(postId as string); // tells PostCard to open BottomSheet
+      if (!postId || !POSTS?.length) return;
+
+      const pid = postId as string;
+      const index = POSTS.findIndex((p) => p.id === pid);
+
+      if (index !== -1 && flatListRef.current) {
+         setTimeout(() => {
+            flatListRef.current?.scrollToIndex({
+               index,
+               animated: true,
+               viewPosition: 1,
+               viewOffset: 10,
+            });
+         }, 100);
       }
-   }, [postId, openComments]);
+
+      if (openComments === "true") {
+         setPostID(pid);
+         setActiveCommentsPostId(pid);
+      }
+   }, [postId, openComments, POSTS]);
 
    const onRefresh = useCallback(async () => {
       setRefreshing(true);
-      //  const loaded = await fetchPage(1, { append: false });
-      //  setRefreshing(false);
-      //  if (loaded > 0) {
-      //    setShowRefreshed(true);
-      //  }
    }, [, refreshing, setRefreshing]);
 
    const viewabilityConfig = useMemo(() => ({ itemVisiblePercentThreshold: 20 }), []);
@@ -123,6 +137,7 @@ export default function index() {
                      alwaysBounceVertical
                      overScrollMode="always"
                      viewabilityConfig={viewabilityConfig}
+                     ref={flatListRef}
                      renderItem={({ item }) => {
                         switch (item.type) {
                            case "post":

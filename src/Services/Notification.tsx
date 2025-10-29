@@ -19,10 +19,11 @@ export const getNotfication = async (recieverId: string) => {
    return data;
 };
 
-export const markNotificationsAsRead = async (userId: string) => {
+export const markNotificationsAsRead = async (id: string, userId: string) => {
    const { error } = await supabase
       .from("notification")
       .update({ read: true })
+      .eq("id", id)
       .eq("receiverId", userId)
       .eq("read", false);
 

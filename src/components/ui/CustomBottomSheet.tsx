@@ -45,7 +45,7 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
                   {props.title}
                </AppText>
             </View>
-            <View style={{ flex: 1, paddingHorizontal: wp(4) }}>{props.children}</View>
+            <View style={{ paddingHorizontal: wp(4) }}>{props.children}</View>
          </BottomSheetView>
       </BottomSheet>
    );

@@ -6,7 +6,6 @@ import { ThumbsupSolid } from "@/assets/icons/thumbsup-solid";
 import { appColors } from "@/src/constant/colors";
 import { usePostLikes } from "@/src/hooks/usePostLikes";
 import { useAuthStore } from "@/src/store/authStore";
-import { Octicons } from "@expo/vector-icons";
 import { TouchableOpacity, View } from "react-native";
 import AppText from "../ui/AppText";
 
@@ -39,21 +38,25 @@ export default function PostAction({ post_id, showComment, commentCount, authorI
                </View>
                <AppText>129</AppText>
             </View>
-            {likeCount > 0 || commentCount ? (
-               <View className="flex-row gap-1 p-2 items-center ">
-                  {likeCount && (
-                     <AppText color={appColors.lightGrey}>{`${likeCount} ${likeCount > 1 ? "likes" : "like"}`}</AppText>
-                  )}
-                  {commentCount < 0 && (
-                     <Octicons name="dot-fill" size={8} color={appColors.lightGrey} className="relative top-[1px]" />
-                  )}
-                  {commentCount && (
-                     <AppText color={appColors.lightGrey}>{`${commentCount} ${
-                        commentCount > 1 ? "comments" : "comment"
-                     }`}</AppText>
-                  )}
-               </View>
-            ) : null}
+            {/* <View className="flex-row gap-1 p-2 items-center ">
+               {likeCount > 0 || commentCount ? (
+                  <>
+                     {likeCount && (
+                        <AppText color={appColors.lightGrey}>{`${likeCount} ${
+                           likeCount > 1 ? "likes" : "like"
+                        }`}</AppText>
+                     )}
+                     {commentCount > 1 && (
+                        <Octicons name="dot-fill" size={8} color={appColors.lightGrey} className="relative top-[1px]" />
+                     )}
+                     {commentCount && (
+                        <AppText color={appColors.lightGrey}>{`${commentCount} ${
+                           commentCount > 1 ? "comments" : "comment"
+                        }`}</AppText>
+                     )}
+                  </>
+               ) : null}
+            </View> */}
          </View>
 
          <View style={{ borderTopColor: appColors.border, borderTopWidth: 0.5 }} className="flex-row justify-between">

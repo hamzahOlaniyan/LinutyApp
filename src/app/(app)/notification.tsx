@@ -10,7 +10,7 @@ export default function Notification() {
    const { profile } = useAuthStore();
 
    const { data: notifications, error } = useQuery({
-      queryKey: ["notifications"],
+      queryKey: ["notification", profile?.id],
       queryFn: async () => getNotfication(profile?.id),
    });
 
