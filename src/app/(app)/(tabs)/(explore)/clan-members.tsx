@@ -24,10 +24,15 @@ export default function ClanMembers({ showSearchBar }: { showSearchBar: boolean 
    });
 
    const clan =
-      PROFILES?.data?.filter(
-         (lin) => Array.isArray(lin?.lineage_names) && lin.lineage_names.length > 0 && lin.lineage_names[0] === "Darood"
-      ) ?? [];
+      PROFILES?.data?.filter((lin) => {
+         const lineage = Array.isArray(lin?.lineage_names)
+            ? lin.lineage_names
+            : typeof lin?.lineage_names === "string"
+            ? JSON.parse(lin.lineage_names)
+            : [];
 
+         return lineage[0] === "Darood";
+      }) ?? [];
    console.log("SELECTED CLAN", JSON.stringify(clan, null, 2));
 
    const router = useRouter();
