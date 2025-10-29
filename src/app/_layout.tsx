@@ -1,8 +1,7 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
-import { QueryClient } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -10,7 +9,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
 import { QueryProvider } from "../provider/QueryProvider";
-import { useAuthStore } from "../store/authStore";
 
 // const logoutAndClearSession = async () => {
 //    await supabase.auth.signOut(); // clear Supabase session
@@ -19,10 +17,10 @@ import { useAuthStore } from "../store/authStore";
 // };
 
 export default function RootLayout() {
-   const setSession = useAuthStore((s) => s.setSession);
-   const fetchProfile = useAuthStore((s) => s.fetchProfile);
+   // const setSession = useAuthStore((s) => s.setSession);
+   // const fetchProfile = useAuthStore((s) => s.fetchProfile);
 
-   const router = useRouter();
+   // const router = useRouter();
 
    const [loaded] = useFonts({
       [TiktokFont.TiktokBlack]: require("@/assets/fonts/Roboto-Black.ttf"),
@@ -88,7 +86,7 @@ export default function RootLayout() {
    //    return () => subscription.remove();
    // }, []);
 
-   const queryClient = new QueryClient();
+   // const queryClient = new QueryClient();
 
    return (
       <QueryProvider>

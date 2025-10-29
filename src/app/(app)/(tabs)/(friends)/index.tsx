@@ -45,7 +45,7 @@ export default function Friends() {
                   Search: <FriendSearch showSearchBar={showSearchBar} />,
                   Yourfriends: <FriendList />,
                   FriendRequest: <FriendRequest />,
-                  ClanMembers: <ClanMembers />,
+                  ClanMembers: <ClanMembers showSearchBar={showSearchBar} />,
                }}
             />
          </SafeAreaView>

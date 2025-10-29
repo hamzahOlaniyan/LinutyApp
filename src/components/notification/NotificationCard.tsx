@@ -1,8 +1,7 @@
 import { appColors } from "@/src/constant/colors";
-import { markNotificationsAsRead } from "@/src/Services/Notification";
 import { getPostById } from "@/src/Services/posts";
 import { useAuthStore } from "@/src/store/authStore";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
@@ -24,55 +23,76 @@ export default function NotificationCard({ item }: { item: any }) {
    } = useQuery({
       queryKey: ["posts", item?.postId],
       queryFn: () => getPostById(item?.postId),
+      enabled: !!item?.postId,
    });
 
-   // useEffect(() => {
-   //    if (!profile?.id) return;
-   //    markNotificationsAsRead(profile?.id)
-   //       .then(() => queryClient.invalidateQueries({ queryKey: ["notification", profile?.id] }))
-   //       .catch((err) => console.error("Failed to mark as read", err));
-   // }, [profile?.id]);
+   // const handleRedirect = async () => {
+   //    try {
+   //       switch (item?.type) {
+   //          case "comment":
+   //             router.push({
+   //                pathname: "/(app)/(tabs)",
+   //                params: {
+   //                   postId: item?.postId,
+   //                   openComments: "true",
+   //                },
+   //             });
+   //             break;
 
-   const markAsRead = useMutation({
-      mutationFn: async () => markNotificationsAsRead(item.id, profile?.id),
-      onMutate: async () => {
-         await queryClient.cancelQueries({ queryKey: ["notification", profile?.id] });
-      },
-      onSuccess: async (id) => {
-         await queryClient.cancelQueries({ queryKey: ["notification", profile?.id, id] });
-      },
-      onError: (error) => {
-         console.log("❌ errorr marking read", error);
-      },
-   });
+   //          case "request":
+   //             router.push({
+   //                pathname: "/(app)/(tabs)/(friends)",
+   //                params: {
+   //                   initialTab: "FriendRequest",
+   //                },
+   //             });
+   //             break;
 
-   console.log(item?.id);
+   //          case "like":
+   //             router.push({
+   //                pathname: "/(app)/(tabs)",
+   //                params: {
+   //                   postId: item?.postId,
+   //                   scrollToPost: "true",
+   //                },
+   //             });
+   //             break;
+
+   //          default:
+   //             console.warn("Unknown notification type:", item?.type);
+   //             break;
+   //       }
+   //    } catch (err) {
+   //       console.error("Failed to mark notification as read:", err);
+   //    }
+   // };
+
+   // const markAsRead = useMutation({
+   //    mutationFn: async () => markNotificationsAsRead(item.id, profile?.id),
+   //    onMutate: async (id) => {
+   //       const prev = queryClient.getQueryData(["notification", profile?.id]);
+   //       queryClient.setQueryData(["notification", profile?.id], (old: any) => {
+   //          if (!old || !Array.isArray(old)) return old; // ✅ Prevent error
+   //          return old.map((n: any) => (n.id === id ? { ...n, read: true } : n));
+   //       });
+   //       return { prev };
+   //    },
+
+   //    onSuccess: async (id) => {
+   //       // await queryClient.cancelQueries({ queryKey: ["notification", profile?.id, id] });
+   //       setTimeout(() => {
+   //          handleRedirect();
+   //       }, 1000);
+   //       console.log("📖 read");
+   //    },
+   //    onError: (error) => {
+   //       console.log("❌ errorr marking read", error);
+   //    },
+   // });
 
    return (
       <TouchableOpacity
-         onPress={() => {
-            markAsRead.mutate();
-            if (item?.type === "comment")
-               router.push({
-                  pathname: "/(app)/(tabs)",
-                  params: { postId: POST?.id, openComments: item?.type === "comment" ? "true" : "false" },
-               });
-            if (item?.type === "request")
-               router.push({
-                  pathname: "/(app)/(tabs)/(friends)",
-                  params: { initialTab: item?.type === "request" ? "FriendRequest" : undefined },
-               });
-
-            if (item?.type === "like")
-               router.push({
-                  pathname: "/(app)/(tabs)",
-                  params: {
-                     postId: item?.postId,
-                     scrollToPost: "true",
-                  },
-               });
-            return null;
-         }}
+         // onPress={() => markAsRead.mutate()}
          style={{ backgroundColor: item?.read ? "yellow" : appColors.selectedTeply }}
          className="px-5 py-3"
       >

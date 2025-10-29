@@ -11,7 +11,7 @@ import React from "react";
 const queryClient = new QueryClient({
    defaultOptions: {
       queries: {
-         // staleTime: 1000 * 60 * 30, // 30 min = data considered fresh
+         staleTime: 1000 * 60 * 30, // 30 min = data considered fresh
          refetchOnMount: false, // don’t refetch on every mount
          refetchOnReconnect: true, // safe for offline/online users
          retry: 1,

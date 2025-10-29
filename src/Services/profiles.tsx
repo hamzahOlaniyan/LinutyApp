@@ -4,7 +4,7 @@ import { supabase } from "../lib/supabase";
 export const getProfiles = async (id: any) => {
    const { data, count } = await supabase
       .from("profiles")
-      .select("id, username, firstName,lastName, avatarUrl", { count: "exact" })
+      .select("id, username, firstName,lastName, avatarUrl, lineage_names", { count: "exact" })
       .neq("id", id)
       .throwOnError();
    return { data, count };

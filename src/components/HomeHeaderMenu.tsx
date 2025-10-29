@@ -26,8 +26,6 @@ export default function HomeHeaderMenu() {
       enabled: !!profile?.id,
    });
 
-   refetch();
-
    const unreadCount = NOTIFICATION?.filter((n: any) => !n.read)?.length ?? 0;
 
    useEffect(() => {

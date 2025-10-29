@@ -9,7 +9,6 @@ import { hp, wp } from "@/src/constant/common";
 import { useAuthStore } from "@/src/store/authStore";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -24,7 +23,7 @@ export default function index() {
    const fullName = profile?.firstName + " " + profile?.lastName;
    return (
       <View style={{ backgroundColor: appColors.white, flex: 1 }}>
-         <StatusBar style="light" />
+         {/* <StatusBar style="dark" /> */}
          <SafeAreaView style={{ flex: 1 }}>
             <ScrollView
                scrollEnabled
@@ -40,27 +39,6 @@ export default function index() {
                      <AppText cap="capitalize">You belong to the lineage of the {fullName} clan</AppText>
                      <AppText cap="capitalize">Discover your roots. Connect with your people.</AppText>
                   </View>
-                  <TouchableOpacity onPress={() => router.push("/clans")} style={s.clan} className="gap-3">
-                     <Image
-                        source={require("@/assets/images/clan.png")}
-                        contentPosition={"right center"}
-                        contentFit="fill"
-                        // tintColor={"#1e9187"}
-                        style={{
-                           width: "100%",
-                           height: hp(20),
-                           borderRadius: 8,
-                           position: "absolute",
-                           top: 0,
-                           right: -70,
-                           opacity: 0.5,
-                           // opacity: 0.4,
-                        }}
-                     />
-                     <AppText size="lg" weight="med">
-                        Clans
-                     </AppText>
-                  </TouchableOpacity>
 
                   <TouchableOpacity onPress={() => router.push("/lineage-map")} style={s.clan}>
                      <Image
@@ -112,6 +90,27 @@ export default function index() {
                      <View style={s.discoverImage}>
                         <FramePersonIcon size={48} color={appColors.primary} />
                      </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => router.push("/clans")} style={s.clan} className="gap-3">
+                     {/* <Image
+                        source={require("@/assets/images/clan.png")}
+                        contentPosition={"right center"}
+                        contentFit="fill"
+                        // tintColor={"#1e9187"}
+                        style={{
+                           width: "100%",
+                           height: hp(20),
+                           borderRadius: 8,
+                           position: "absolute",
+                           top: 0,
+                           right: -70,
+                           opacity: 0.5,
+                           // opacity: 0.4,
+                        }}
+                     /> */}
+                     <AppText size="lg" weight="med">
+                        Qaaraan (coming soon)
+                     </AppText>
                   </TouchableOpacity>
                </View>
             </ScrollView>
