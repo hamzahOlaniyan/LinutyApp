@@ -40,8 +40,12 @@ export default function StickyTabs({
          decelerationRate={0.8}
       >
          <View>{header}</View>
-
-         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+         <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{ backgroundColor: appColors.white, borderBottomWidth: 1, borderBottomColor: "#ddd" }}
+            className="flex-1"
+         >
             <View style={styles.tabBar}>
                {routes.map((route) => {
                   const isActive = route.key === activeKey;
@@ -56,8 +60,7 @@ export default function StickyTabs({
                })}
             </View>
          </ScrollView>
-
-         <View>{scenes[activeKey]}</View>
+         <View className="flex-1">{scenes[activeKey]}</View>
       </ScrollView>
    );
 }
@@ -65,9 +68,8 @@ export default function StickyTabs({
 const styles = StyleSheet.create({
    tabBar: {
       flexDirection: "row",
-      backgroundColor: "#fff",
-      borderBottomWidth: 1,
-      borderBottomColor: "#ddd",
+      width: "100%",
+      flex: 1,
       paddingHorizontal: wp(4),
       gap: 20,
    },

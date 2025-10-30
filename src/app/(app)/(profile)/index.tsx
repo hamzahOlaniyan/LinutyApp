@@ -44,7 +44,7 @@ export default function index() {
          ]}
          scenes={{
             Posts: <ProfilePosts item={USER_POSTS} />,
-            profile: <ProfileGallery />,
+            Pictures: <ProfileGallery />,
             Info: <ProfileInfo item={PROFILE} />,
          }}
       />

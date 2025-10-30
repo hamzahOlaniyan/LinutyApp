@@ -1,6 +1,6 @@
 import { EditIcon } from "@/assets/icons/edit";
 import { appColors } from "@/src/constant/colors";
-import { hp, wp } from "@/src/constant/common";
+import { wp } from "@/src/constant/common";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -19,14 +19,14 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
 
    return (
       <View className="gap-2 mb-6">
-         <View style={{ height: hp(25) }} className="w-full overflow-hidden">
+         <View style={{}} className="w-full overflow-hidden">
             {userProfile?.cover_photo ? (
                <Image
                   source={{ uri: userProfile?.cover_photo }}
                   transition={100}
-                  style={{ width: "100%", height: "100%" }}
-                  contentPosition="top"
+                  style={{ width: "auto", height: "auto", aspectRatio: 2 / 2 }}
                   contentFit="cover"
+                  contentPosition="top"
                />
             ) : (
                <View className="w-full h-full bg-neutral-200"></View>
@@ -65,7 +65,7 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                            {userProfile?.lastName}
                         </AppText>
                      </View>
-                     <AppText color={appColors.grey}>@{userProfile?.username}</AppText>
+                     <AppText color={appColors.secondary}>@{userProfile?.username}</AppText>
                   </View>
                   <View className="flex-row gap-1">
                      <AppText weight="reg">Friends</AppText>
@@ -73,24 +73,26 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                   </View>
                </View>
             </View>
-            {!readmore ? (
-               <AppText weight="med">
-                  {sampleText.substring(0, 90)}...{" "}
-                  <AppText weight="light" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
-                     more
+            <View>
+               {!readmore ? (
+                  <AppText>
+                     {sampleText.substring(0, 90)}...{" "}
+                     <AppText weight="light" onPress={() => setReadMore(!readmore)} color={appColors.secondary}>
+                        more
+                     </AppText>
                   </AppText>
-               </AppText>
-            ) : (
-               <AppText weight="med">
-                  {sampleText}{" "}
-                  <AppText weight="light" onPress={() => setReadMore(!readmore)} color={appColors.grey}>
-                     less
+               ) : (
+                  <AppText>
+                     {sampleText}{" "}
+                     <AppText weight="light" onPress={() => setReadMore(!readmore)} color={appColors.secondary}>
+                        less
+                     </AppText>
                   </AppText>
-               </AppText>
-            )}
+               )}
+            </View>
          </View>
-         <View className="flex-row justify-between gap-2 mt-4">
-            <Button size="sm" text="Manage your profile" className="flex-1" />
+         <View className="flex-row justify-between gap-2 mt-4 px-4">
+            <Button size="sm" text="Manage your profile" className="flex-1" variant="secondary" />
             <Button
                text="Edit profile"
                icon={<EditIcon size={18} />}
