@@ -15,18 +15,21 @@ import Avatar from "./Avatar";
 import AppText from "./ui/AppText";
 
 export default function HomeHeaderMenu() {
-   const { profile } = useAuthStore();
+   const { profile, session } = useAuthStore();
 
    const router = useRouter();
    const queryClient = useQueryClient();
 
-   const { data: NOTIFICATION, refetch } = useQuery({
+   const { data: NOTIFICATION } = useQuery({
       queryKey: ["notification", profile?.id],
       queryFn: () => getNotfication(profile?.id),
       enabled: !!profile?.id,
    });
 
    const unreadCount = NOTIFICATION?.filter((n: any) => !n.read)?.length ?? 0;
+
+   // console.log("HomeHeaderMenu", JSON.stringify(profile, null, 2));
+   // console.log("HomeHeaderMenu SESSION", JSON.stringify(session, null, 2));
 
    useEffect(() => {
       if (!profile?.id) return;

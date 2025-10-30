@@ -9,6 +9,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
 import { QueryProvider } from "../provider/QueryProvider";
+import { useAuthStore } from "../store/authStore";
 
 // const logoutAndClearSession = async () => {
 //    await supabase.auth.signOut(); // clear Supabase session
@@ -17,8 +18,9 @@ import { QueryProvider } from "../provider/QueryProvider";
 // };
 
 export default function RootLayout() {
-   // const setSession = useAuthStore((s) => s.setSession);
-   // const fetchProfile = useAuthStore((s) => s.fetchProfile);
+   const setSession = useAuthStore((s) => s.setSession);
+   const fetchProfile = useAuthStore((s) => s.fetchProfile);
+   const reset = useAuthStore((state) => state.resetSession);
 
    // const router = useRouter();
 
@@ -60,13 +62,13 @@ export default function RootLayout() {
 
    // useEffect(() => {
    //    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
-   //       setSession(session);
    //       if (session?.user) {
-   //          fetchProfile(session?.user?.id);
+   //          setSession(session);
+   //          // fetchProfile(session?.user?.id);
+   //       } else {
+   //          await AsyncStorage.removeItem("auth-store");
+   //          reset();
    //       }
-   //       // else {
-   //       //    await AsyncStorage.removeItem("auth-store");
-   //       // }
    //    });
 
    //    return () => {

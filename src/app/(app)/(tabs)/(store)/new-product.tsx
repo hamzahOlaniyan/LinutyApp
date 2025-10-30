@@ -107,6 +107,7 @@ export default function NewProduct() {
             <Button
                size="sm"
                text="Publish"
+               variant="secondary"
                onPress={() => mutate()}
                isLoading={isPending}
                icon={<PublishIcon size={20} />}

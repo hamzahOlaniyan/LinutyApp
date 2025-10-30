@@ -18,6 +18,9 @@ export default function index() {
    const [loading, setLoading] = useState(false);
 
    const setSession = useAuthStore((s) => s.setSession);
+   const fetchProfile = useAuthStore((s) => s.fetchProfile);
+
+   // const { profile } = useAuthStore();
    // const setUserProfile = useAuthStore((s) => s.setUserProfile);
 
    const router = useRouter();
@@ -29,18 +32,22 @@ export default function index() {
       }
       try {
          setLoading(true);
-         const { error, data: session } = await supabase.auth.signInWithPassword({
+         const { error, data } = await supabase.auth.signInWithPassword({
             email,
             password,
          });
-         setSession(session?.session);
+         setSession(data?.session);
+         await fetchProfile(data?.user?.id as string);
 
-         const { data: profile } = await supabase
-            .from("profiles")
-            .select("*")
-            .eq("id", session?.user?.id as string)
-            .single();
+         // const currentProfile = get().profile;
 
+         // const { data: profile } = await supabase
+         //    .from("profiles")
+         //    .select("*")
+         //    .eq("id", session?.user?.id as string)
+         //    .single();
+
+         const profile = useAuthStore.getState().profile;
          if (profile && !profile.isComplete) {
             router.replace("/(new-user)/PartTwo/step-4.0");
          } else {

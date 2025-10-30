@@ -1,4 +1,3 @@
-import { ArrowLeftTopIcon } from "@/assets/icons/arrowLeftTopIcon";
 import { FavoriteIcon } from "@/assets/icons/FavoriteIcon";
 import { ShareIcon } from "@/assets/icons/shareIcon";
 import { appColors } from "@/src/constant/colors";
@@ -13,20 +12,18 @@ import Button from "../ui/Button";
 export default function ProductDetail({ item }: { item: any }) {
    const router = useRouter();
 
-   console.log(item?.profile_id);
-
    return (
       <View style={{ paddingHorizontal: wp(4) }}>
-         <View className="my-4">
+         <View className="">
             <AppText weight="semi" size="xl" cap="capitalize">
                {item?.name.trim()}
             </AppText>
-            <AppText size="xxl" weight="semi">
+            <AppText size="xxl" color={appColors.secondary}>
                {Intl.NumberFormat("en-UK", { style: "currency", currency: "GBP" }).format(item?.price)}
             </AppText>
          </View>
-         <View className="flex-row justify-between w-full my-4">
-            <Button text="Send seller a message" icon={<ArrowLeftTopIcon />} />
+         <View className="flex-row justify-between w-full my-4 items-center">
+            <Button text="Send seller a message" variant="secondary" />
             <View className="flex-row items-center gap-3">
                <Pressable className="justify-center items-center p-2 rounded-full">
                   <FavoriteIcon />
@@ -73,7 +70,7 @@ export default function ProductDetail({ item }: { item: any }) {
                            <AppText weight="med" cap="capitalize">
                               {item?.profiles?.firstName} {item?.profiles?.lastName}
                            </AppText>
-                           <AppText size="sm" color={appColors.grey}>
+                           <AppText size="sm" color={appColors.secondary}>
                               @{item?.profiles?.username}
                            </AppText>
                         </View>

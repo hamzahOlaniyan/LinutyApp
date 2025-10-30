@@ -1,7 +1,9 @@
 import { MenuIcon } from "@/assets/icons/MenuIcon";
 import { Plus } from "@/assets/icons/plus";
 import { Search2 } from "@/assets/icons/search2";
+import FeaturedCard from "@/src/components/store/FeaturedCard";
 import StoreCard from "@/src/components/store/StoreCard";
+import SuggestedProducts from "@/src/components/store/SuggestedProducts";
 import AppText from "@/src/components/ui/AppText";
 import Button from "@/src/components/ui/Button";
 import { CustomBottomSheet } from "@/src/components/ui/CustomBottomSheet";
@@ -12,11 +14,10 @@ import { getStoreProduct } from "@/src/Services/store";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 import { useQuery } from "@tanstack/react-query";
-import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, View } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { Animated, FlatList, View } from "react-native";
+import { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProductCategory } from "./new-product";
 
@@ -29,7 +30,7 @@ export default function StorePage() {
    const bottomSheetRef = useRef<BottomSheet>(null);
    const { bottom } = useSafeAreaInsets();
 
-   const { data: PRODUCT } = useQuery({
+   const { data: PRODUCT, isLoading } = useQuery({
       queryKey: ["store"],
       queryFn: async () => getStoreProduct(),
    });
@@ -49,13 +50,11 @@ export default function StorePage() {
       };
    });
 
-   // const handleCloseSheet = () => bottomSheetRef.current?.close();
    const handleOpenSheet = () => bottomSheetRef.current?.expand();
-   // const snapToIndex = (idx: number) => bottomSheetRef.current?.snapToIndex(idx);
 
    return (
-      <View style={{ backgroundColor: appColors.white }}>
-         <SafeAreaView style={{ marginBottom: bottom }}>
+      <View style={{ backgroundColor: appColors.white, flex: 1 }}>
+         <SafeAreaView style={{ marginBottom: bottom, flex: 1 }}>
             <View className=" pb-2 px-4 gap-2">
                <ScreenHeader
                   headerTitle="Comunity Store"
@@ -106,40 +105,7 @@ export default function StorePage() {
                            horizontal
                            showsHorizontalScrollIndicator={false}
                            data={PRODUCT || []}
-                           renderItem={({ item }) => (
-                              <View
-                                 style={{
-                                    backgroundColor: appColors.white,
-                                    borderRadius: 10,
-                                    width: 175,
-                                 }}
-                              >
-                                 <Image
-                                    source={item?.images[0]}
-                                    style={{
-                                       aspectRatio: 1,
-                                       borderRadius: 10,
-                                       backgroundColor: "white",
-                                    }}
-                                    contentPosition="center"
-                                 />
-                                 <View
-                                    style={{
-                                       padding: 10,
-                                       gap: 6,
-                                    }}
-                                 >
-                                    <AppText size="sm" weight="med" cap="capitalize">
-                                       {item?.name.trim()}
-                                    </AppText>
-                                    <AppText size="sm" cap="capitalize">
-                                       {Intl.NumberFormat("en-UK", { style: "currency", currency: "GBP" }).format(
-                                          item?.price
-                                       )}
-                                    </AppText>
-                                 </View>
-                              </View>
-                           )}
+                           renderItem={({ item }) => <FeaturedCard item={item} isLoading={isLoading} />}
                            contentContainerStyle={{ gap: 10, padding: 10 }}
                         />
                      </View>
@@ -148,17 +114,25 @@ export default function StorePage() {
                            Latest
                         </AppText>
                      </View>
+                     <FlatList
+                        showsHorizontalScrollIndicator={false}
+                        data={PRODUCT || []}
+                        numColumns={2}
+                        renderItem={({ item }) => <SuggestedProducts item={item} isLoading={isLoading} />}
+                        columnWrapperStyle={{ gap: 10, margin: 8 }}
+                        contentContainerStyle={{ gap: 10, padding: 10, backgroundColor: appColors.whitesmoke }}
+                     />
                   </>
                }
                data={PRODUCT || []}
-               renderItem={({ item }) => <StoreCard item={item} />}
+               renderItem={({ item }) => <StoreCard item={item} isLoading={isLoading} />}
                numColumns={2}
-               decelerationRate={0.8}
                scrollEnabled
                showsVerticalScrollIndicator={false}
                columnWrapperStyle={{ gap: 10, marginVertical: 8 }}
-               contentContainerStyle={{ paddingBottom: 250, backgroundColor: appColors.whitesmoke }}
+               contentContainerStyle={{ paddingBottom: 100, backgroundColor: appColors.whitesmoke }}
             />
+
             <Portal hostName="root">
                <CustomBottomSheet
                   ref={bottomSheetRef}

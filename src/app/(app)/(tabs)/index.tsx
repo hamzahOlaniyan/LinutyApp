@@ -6,6 +6,7 @@ import { appColors } from "@/src/constant/colors";
 import { injectSponsoredBlocks } from "@/src/hooks/injecSponsoredBloacks";
 import { fetchPost, getPostById } from "@/src/Services/posts";
 import { getStoreProduct } from "@/src/Services/store";
+import { useAuthStore } from "@/src/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
@@ -14,10 +15,15 @@ import { FlatList, RefreshControl, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function index() {
+   const { profile, session } = useAuthStore();
    const { postId, openComments, scrollToPost } = useLocalSearchParams();
    const [postID, setPostID] = useState<string>("");
    const [activeCommentsPostId, setActiveCommentsPostId] = useState<string | null>(null);
    const [refreshing, setRefreshing] = useState<boolean>(false);
+
+   // console.log(JSON.stringify(profile, null, 2));
+   // console.log(JSON.stringify(session, null, 2));
+
    // const [showComments, setShowComments] = useState(false);
    // const [showKeyboard, setShowKeyboard] = useState(false);
    // const [replyToName, setReplyToName] = useState<string | null>(null);

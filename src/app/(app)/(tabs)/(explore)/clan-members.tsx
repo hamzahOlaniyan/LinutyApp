@@ -5,7 +5,6 @@ import { wp } from "@/src/constant/common";
 import { getProfiles } from "@/src/Services/profiles";
 import { useAuthStore } from "@/src/store/authStore";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Animated, View } from "react-native";
 import { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
@@ -33,9 +32,6 @@ export default function ClanMembers({ showSearchBar }: { showSearchBar: boolean 
 
          return lineage[0] === "Darood";
       }) ?? [];
-   console.log("SELECTED CLAN", JSON.stringify(clan, null, 2));
-
-   const router = useRouter();
 
    const height = useSharedValue(0);
    const opacity = useSharedValue(0);
@@ -71,7 +67,7 @@ export default function ClanMembers({ showSearchBar }: { showSearchBar: boolean 
                {isLoading ? (
                   <FriendsSkeletion />
                ) : (
-                  PROFILES?.data
+                  clan
                      ?.filter((f: any) => f.firstName?.toLowerCase().includes(searchText.toLowerCase()))
                      .map((item) => (
                         <FriendsCard

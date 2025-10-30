@@ -269,14 +269,11 @@ const s = StyleSheet.create({
    },
    mediaCounterText: { color: appColors.white, fontSize: 12, fontWeight: "600" },
    dotsRow: {
-      position: "absolute",
-      bottom: 10,
-      left: 0,
-      right: 0,
       flexDirection: "row",
       justifyContent: "center",
       gap: 6,
+      paddingVertical: 12,
    },
-   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.5)" },
-   dotActive: { backgroundColor: appColors.white },
+   dot: { width: 8, height: 8, borderRadius: 12, backgroundColor: appColors.grey },
+   dotActive: { backgroundColor: appColors.black },
 });
