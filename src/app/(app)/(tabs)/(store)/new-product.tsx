@@ -82,8 +82,8 @@ export default function NewProduct() {
             profile_id: profile?.id,
          });
       },
-      onSuccess: () => {
-         createStore(profile?.id);
+      onSuccess: async () => {
+         await createStore(profile?.id);
          Alert.alert("New products has been added");
          setTitle("");
          setCategory(null);

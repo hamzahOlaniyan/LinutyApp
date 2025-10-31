@@ -1,13 +1,15 @@
 import { CommentIcon } from "@/assets/icons/comment";
-import { FavoriteIcon } from "@/assets/icons/FavoriteIcon";
 import { ShareIcon } from "@/assets/icons/shareIcon";
 import { Thumbsup } from "@/assets/icons/thumbsup";
 import { ThumbsupSolid } from "@/assets/icons/thumbsup-solid";
 import { appColors } from "@/src/constant/colors";
+import { hp, wp } from "@/src/constant/common";
 import { usePostLikes } from "@/src/hooks/usePostLikes";
 import { useAuthStore } from "@/src/store/authStore";
 import { TouchableOpacity, View } from "react-native";
 import AppText from "../ui/AppText";
+import ActionDetails from "./ActionDetails";
+import ActionInfo from "./ActionInfo";
 
 type PostAction = {
    authorId: string;
@@ -22,49 +24,18 @@ export default function PostAction({ post_id, showComment, commentCount, authorI
    const { isLiked, handleLike, likeCount } = usePostLikes(post_id, profile?.id, authorId);
 
    return (
-      <View className="">
-         <View className="flex-row justify-between items-center px-4 py-2">
-            <View className="flex-row items-center">
-               <View className="flex-row">
-                  <View className="w-6 h-6 rounded-full bg-green-300  bg-sky-220 justify-center items-center border-2 border-white">
-                     <Thumbsup size={12} />
-                  </View>
-                  <View className="w-6 h-6 rounded-full bg-red-300 justify-center items-center relative right-2 border-2 border-white">
-                     <FavoriteIcon size={12} />
-                  </View>
-                  <View className="w-6 h-6 rounded-full bg-slate-400 justify-center items-center relative right-4 border-2 border-white ">
-                     <ShareIcon size={12} />
-                  </View>
-               </View>
-               <AppText>129</AppText>
-            </View>
-            {/* <View className="flex-row gap-1 p-2 items-center ">
-               {likeCount > 0 || commentCount ? (
-                  <>
-                     {likeCount && (
-                        <AppText color={appColors.lightGrey}>{`${likeCount} ${
-                           likeCount > 1 ? "likes" : "like"
-                        }`}</AppText>
-                     )}
-                     {commentCount > 1 && (
-                        <Octicons name="dot-fill" size={8} color={appColors.lightGrey} className="relative top-[1px]" />
-                     )}
-                     {commentCount && (
-                        <AppText color={appColors.lightGrey}>{`${commentCount} ${
-                           commentCount > 1 ? "comments" : "comment"
-                        }`}</AppText>
-                     )}
-                  </>
-               ) : null}
-            </View> */}
+      <View style={{ paddingHorizontal: wp(4), paddingVertical: hp(1.7), gap: 14 }}>
+         <View className="flex-row justify-between items-center">
+            <ActionDetails />
+            <ActionInfo likeCount={likeCount} commentCount={commentCount} />
          </View>
-
-         <View style={{ borderTopColor: appColors.border, borderTopWidth: 0.5 }} className="flex-row justify-between">
+         <View style={{ width: "100%", backgroundColor: appColors.border, height: 0.5 }}></View>
+         <View className="flex-row justify-between items-center">
             <View className="flex-row w-full">
-               <View className="flex-row flex-1 items-center">
+               <View className="flex-row flex-1 items-center gap-3">
                   <TouchableOpacity
                      onPress={() => handleLike.mutate()}
-                     className="flex-row justify-center items-center gap-2 p-3 px-4"
+                     className="flex-row justify-center items-center gap-2"
                   >
                      {isLiked ? (
                         <ThumbsupSolid size={22} color={appColors.primary} />
@@ -76,10 +47,7 @@ export default function PostAction({ post_id, showComment, commentCount, authorI
                      </AppText>
                   </TouchableOpacity>
 
-                  <TouchableOpacity
-                     onPress={showComment}
-                     className="flex-row justify-center items-center gap-2 p-3 px-2"
-                  >
+                  <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-2">
                      <View className="top-[1px]">
                         <CommentIcon size={22} color={appColors.icons} />
                      </View>
@@ -89,7 +57,7 @@ export default function PostAction({ post_id, showComment, commentCount, authorI
                   </TouchableOpacity>
                </View>
 
-               <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-2 p-3 px-2">
+               <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-2">
                   <View className="top-[1px]">
                      <ShareIcon size={22} color={appColors.icons} />
                   </View>

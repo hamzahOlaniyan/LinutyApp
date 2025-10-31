@@ -74,7 +74,7 @@ export default function CommunityScreen() {
                         className="flex-row flex-1 items-center gap-3"
                      >
                         <Image
-                           source={item?.image_url}
+                           source={{ uri: item?.image_url }}
                            style={{ width: 80, height: 80, backgroundColor: "yellow", borderRadius: 10 }}
                         />
                         <View className="flex-1 gap-1">

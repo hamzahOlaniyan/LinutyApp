@@ -118,10 +118,10 @@ export default function index() {
                   <FlatList
                      ListHeaderComponent={
                         <View style={{ backgroundColor: appColors.white }} className="p-4">
-                           <AppText weight="semi" color={appColors.primary}>
+                           <AppText size="lg" weight="semi">
                               Sponsor Ad
                            </AppText>
-                           <AppText>
+                           <AppText size="lg">
                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius laudantium minus facilis
                               officiis quibusdam!
                            </AppText>
@@ -129,7 +129,7 @@ export default function index() {
                      }
                      data={feedData}
                      keyExtractor={(item, index) => item.id ?? `feed-${index}`}
-                     contentContainerStyle={{ rowGap: 8 }}
+                     contentContainerStyle={{ rowGap: 10 }}
                      showsVerticalScrollIndicator={false}
                      maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
                      contentInsetAdjustmentBehavior="automatic"

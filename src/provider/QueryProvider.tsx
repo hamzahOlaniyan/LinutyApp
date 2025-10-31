@@ -8,7 +8,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import React from "react";
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
    defaultOptions: {
       queries: {
          staleTime: 1000 * 60 * 30, // 30 min = data considered fresh

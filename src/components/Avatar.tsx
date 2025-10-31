@@ -30,7 +30,7 @@ export default function Avatar({
          ]}
       >
          {path ? (
-            <Image source={path} style={{ width: "100%", height: "100%", borderRadius: 200 }} />
+            <Image source={{ uri: path }} style={{ width: "100%", height: "100%", borderRadius: 200 }} />
          ) : (
             <AppText size="lg" weight="med">
                {initails}

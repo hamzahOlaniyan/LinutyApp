@@ -14,7 +14,7 @@ export default function UserHeader({ profile }: { profile: any }) {
          <View style={{ backgroundColor: appColors.offWhite }} className="h-36 rounded-lg justify-center items-center">
             {profile?.cover_photo ? (
                <Image
-                  source={profile?.cover_photo || profile?.cover_photo}
+                  source={{ uri: profile?.cover_photo || profile?.cover_photo }}
                   transition={100}
                   style={{ width: "100%", height: "100%" }}
                />

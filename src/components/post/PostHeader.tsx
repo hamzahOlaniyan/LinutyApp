@@ -20,11 +20,10 @@ type PostHeader = {
    name: string;
    username: string;
    date: string;
+   content: string;
 };
 
-// dayjs.extend(relativeTime);
-
-export default function PostHeader({ id, avatar, name, username, date }: PostHeader) {
+export default function PostHeader({ id, avatar, name, username, date, content }: PostHeader) {
    const { profile } = useAuthStore();
    const router = useRouter();
 
@@ -36,8 +35,9 @@ export default function PostHeader({ id, avatar, name, username, date }: PostHea
    return (
       <View
          style={{
-            paddingHorizontal: wp(2),
-            paddingVertical: hp(1),
+            paddingHorizontal: wp(4),
+            paddingVertical: hp(1.5),
+            gap: 10,
          }}
       >
          <View className="flex-row justify-between items-start">
@@ -69,6 +69,9 @@ export default function PostHeader({ id, avatar, name, username, date }: PostHea
             <Pressable onPress={handleOpenSheet} className="h-full relative">
                <ThreeDots color={appColors.lightGrey} size={24} />
             </Pressable>
+         </View>
+         <View className="">
+            <AppText size="lg">{content}</AppText>
          </View>
          <Portal hostName="root">
             <CustomBottomSheet

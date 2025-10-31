@@ -51,7 +51,7 @@ export default function NewDetail() {
          </View>
 
          <Image
-            source={item?.image_url}
+            source={{ uri: item?.image_url }}
             style={{
                marginVertical: 20,
                width: screenWidth,

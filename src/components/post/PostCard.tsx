@@ -54,6 +54,7 @@ export default function Post({
    }, [openComments]);
 
    const fullName = `${post.author.firstName.trim()} ${post.author.lastName.trim()}`;
+
    // const isComment = post.parent_id !== null;
 
    // console.log(JSON.stringify(post, null, 2));
@@ -175,16 +176,16 @@ export default function Post({
    return (
       <>
          <View style={{ backgroundColor: appColors.white }} className="overflow-hidden">
+            {/* HEADER*/}
             <PostHeader
                id={post?.author?.id}
                avatar={post?.author?.avatarUrl}
                name={fullName}
                username={post?.author?.username}
                date={post?.created_at}
+               content={post?.content}
             />
-            <View className="px-4 pb-3">
-               <AppText size="lg">{post?.content}</AppText>
-            </View>
+            {/* MEDIA*/}
             {post?.media?.length <= 1 && (
                <View className="flex-row flex-wrap">
                   {post?.media?.map((item: any, i: number) => {
@@ -240,25 +241,24 @@ export default function Post({
                      </AppText>
                   </View>
                   <View style={s.dotsRow}>
-                     {post?.images?.map((_: string, i: number) => (
+                     {post?.media?.map((_: string, i: number) => (
                         <View key={i} style={[s.dot, i === currentIndex && s.dotActive]} />
                      ))}
                   </View>
                </View>
             )}
-
-            <View className="w-full flex-row items-center justify-between">
-               <PostAction
-                  post_id={post?.id}
-                  authorId={post.author?.id}
-                  showComment={() => {
-                     if (!showMoreIcon) return null;
-                     setPostID(post?.id), handleOpenSheet();
-                  }}
-                  commentCount={count || null}
-               />
-            </View>
+            {/* ACTION*/}
+            <PostAction
+               post_id={post?.id}
+               authorId={post.author?.id}
+               showComment={() => {
+                  if (!showMoreIcon) return null;
+                  setPostID(post?.id), handleOpenSheet();
+               }}
+               commentCount={count || null}
+            />
          </View>
+         {/* MODAL*/}
          <Portal hostName="root">
             <CustomBottomSheet
                ref={bottomSheetRef}
@@ -281,13 +281,13 @@ const s = StyleSheet.create({
       paddingVertical: 4,
       borderRadius: 10,
    },
-   mediaCounterText: { color: appColors.white, fontSize: 12, fontWeight: "600" },
    dotsRow: {
+      flex: 1,
       flexDirection: "row",
       justifyContent: "center",
-      gap: 6,
-      paddingVertical: 12,
+      gap: 4,
+      paddingTop: 6,
    },
-   dot: { width: 8, height: 8, borderRadius: 12, backgroundColor: appColors.grey },
+   dot: { width: 6, height: 6, borderRadius: 12, backgroundColor: appColors.grey },
    dotActive: { backgroundColor: appColors.black },
 });

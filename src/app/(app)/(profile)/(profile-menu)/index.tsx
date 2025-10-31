@@ -2,9 +2,11 @@
 import AppText from "@/src/components/ui/AppText";
 import { appColors } from "@/src/constant/colors";
 import { hp, wp } from "@/src/constant/common";
+import { queryClient } from "@/src/provider/QueryProvider";
 import { useAuthStore } from "@/src/store/authStore";
 // import { useThemeStore } from "@/src/context/themeStore";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link } from "expo-router";
 import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
@@ -14,6 +16,21 @@ const mockArray = Array.from({ length: 10 }, (_, i) => `Time management ${i + 1}
 export default function ProfileMenu() {
    // const { currentTheme } = useThemeStore();
    const { signOut } = useAuthStore();
+
+   const handleClear = async () => {
+      try {
+         // 1️⃣ Clear async storage
+         await AsyncStorage.clear();
+         queryClient.clear();
+
+         // 2️⃣ Clear persisted Zustand stores
+         await useAuthStore.persist.clearStorage();
+
+         console.log("✅ All local data cleared!");
+      } catch (error) {
+         console.error("❌ Failed to clear local data:", error);
+      }
+   };
 
    return (
       <View
@@ -49,9 +66,18 @@ export default function ProfileMenu() {
             )}
             contentContainerStyle={{ rowGap: 20 }}
             ListFooterComponent={
-               <TouchableOpacity onPress={() => signOut()}>
-                  <AppText>logout</AppText>
-               </TouchableOpacity>
+               <View className="gap-4">
+                  <TouchableOpacity onPress={() => signOut()} className="bg-blue-500 p-4">
+                     <AppText size="xl" color={appColors.white}>
+                        logout
+                     </AppText>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handleClear} className="bg-red-500 p-4">
+                     <AppText size="xl" color={appColors.white}>
+                        Dev reset
+                     </AppText>
+                  </TouchableOpacity>
+               </View>
             }
          />
       </View>

@@ -44,6 +44,6 @@ export const getStoreProductByProfileId = async (profileId: string) => {
 };
 
 export const createStore = async (profile_id: string) => {
-   const { data, error } = await supabase.from("profile").update({ hasStore: "true" }).eq("id", profile_id).select();
+   const { data, error } = await supabase.from("profile").update({ hasStore: true }).eq("id", profile_id).select();
    return data;
 };

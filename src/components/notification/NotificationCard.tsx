@@ -119,7 +119,9 @@ export default function NotificationCard({ item }: { item: any }) {
                   <AppText size="xs">{dayjs(item?.created_at).fromNow(true)} ago</AppText>
                   <View className="flex-row gap-1 items-center"></View>
                </View>
-               {POST?.images && <Image source={POST?.images[0]} style={{ width: 50, height: 50, borderRadius: 10 }} />}
+               {POST?.images && (
+                  <Image source={{ uri: POST?.images[0] }} style={{ width: 50, height: 50, borderRadius: 10 }} />
+               )}
             </View>
          </View>
       </TouchableOpacity>

@@ -47,7 +47,7 @@ export default function FeaturedCard({ item, isLoading }: Props) {
          }}
       >
          <Image
-            source={item?.images[0]?.url}
+            source={{ uri: item?.images[0]?.url }}
             style={{
                aspectRatio: 1,
             }}
