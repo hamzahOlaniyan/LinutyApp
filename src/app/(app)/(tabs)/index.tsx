@@ -121,7 +121,7 @@ export default function index() {
                            <AppText size="lg" weight="semi">
                               Sponsor Ad
                            </AppText>
-                           <AppText size="lg">
+                           <AppText>
                               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius laudantium minus facilis
                               officiis quibusdam!
                            </AppText>

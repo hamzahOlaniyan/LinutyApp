@@ -2,7 +2,7 @@ import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import React from "react";
-import { ActivityIndicator, StyleProp, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { ActivityIndicator, ColorValue, StyleProp, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 
 type ButtonProps = {
    text?: React.ReactNode;
@@ -12,10 +12,11 @@ type ButtonProps = {
    className?: string;
    disabled?: boolean;
    size?: "lg" | "md" | "sm" | "xs";
-   variant?: "outline" | "plain" | "secondary";
-   indicatorColor?: string;
+   variant?: "primary" | "outline" | "plain" | "secondary";
+   indicatorColor?: ColorValue;
    icon?: React.ReactNode;
    style?: StyleProp<ViewStyle>;
+   color?: ColorValue;
 };
 
 export default function Button({
@@ -30,6 +31,7 @@ export default function Button({
    indicatorColor,
    icon,
    style,
+   color,
 }: ButtonProps) {
    return (
       <TouchableOpacity
@@ -41,15 +43,14 @@ export default function Button({
                justifyContent: "center",
                paddingHorizontal:
                   size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 10 : hp(5),
-               borderWidth: variant === "outline" || "secondary" ? 1.5 : variant === "plain" ? 0 : 0,
-               borderColor: variant === "secondary" ? appColors.grey : appColors.black,
+               borderWidth: variant === "outline" ? 0.8 : 0,
                backgroundColor:
-                  variant === "outline"
-                     ? "transparent"
-                     : variant === "plain"
-                     ? "transparent"
+                  variant === "primary"
+                     ? appColors.black
                      : variant === "secondary"
                      ? appColors.dark_whitesmoke
+                     : variant === "outline" || variant === "plain"
+                     ? "transparent"
                      : appColors.black,
                height:
                   size === "lg"
@@ -74,9 +75,10 @@ export default function Button({
                {text && (
                   <Text
                      style={{
-                        fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.7) : size === "xs" ? hp(1.5) : hp(1.7),
+                        fontSize: size === "lg" ? hp(2) : size === "sm" ? hp(1.8) : size === "xs" ? hp(1.6) : hp(1.8),
                         textAlign: "center",
                         fontFamily: TiktokFont.TiktokMedium,
+                        color: color,
                      }}
                   >
                      {text}

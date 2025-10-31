@@ -5,7 +5,7 @@ import { appColors } from "@/src/constant/colors";
 import { hp, wp } from "@/src/constant/common";
 import { Image } from "expo-image";
 import React from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
@@ -60,7 +60,7 @@ export default function UserHeader({ profile }: { profile: any }) {
                   </View>
                </View>
             </View>
-            <AppText weight="reg">
+            <AppText size="lg" weight="reg">
                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur officiis eius magnam cupiditate cum,
                voluptatum quam sed, odio dolorem voluptates at, repellat nostrum recusandae libero ipsa modi amet dolor.
                Quaerat.
@@ -69,15 +69,14 @@ export default function UserHeader({ profile }: { profile: any }) {
             <View className="gap-4 py-4">
                <View className="flex-row justify-between gap-2 ">
                   <View className="flex-row gap-2 flex-1">
-                     <Pressable
-                        style={{ backgroundColor: appColors.whitesmoke, borderRadius: 200 }}
-                        className="flex-row gap-2 justify-center items-center flex-1"
-                     >
-                        <Plus color={appColors.blue} />
-                        <AppText weight="med" color={appColors.blue}>
-                           Follow
-                        </AppText>
-                     </Pressable>
+                     <Button
+                        size="sm"
+                        text="Follow"
+                        icon={<Plus color={appColors.blue} />}
+                        className="flex-1"
+                        variant="secondary"
+                        color={appColors.blue}
+                     />
                      <Button size="sm" text="Message" className="flex-1" variant="outline" />
                   </View>
                   <Button size="sm" icon={<ThreeDots size={24} color={appColors.icons} />} variant="secondary" />

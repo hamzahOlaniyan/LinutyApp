@@ -55,13 +55,15 @@ export default function PostHeader({ id, avatar, name, username, date, content }
                         </TouchableOpacity>
                         <View className="flex-row items-center gap-1 relative -top-[px]">
                            <Octicons name="dot-fill" size={5} color={appColors.lightGrey} className="relative " />
-                           <AppText color={appColors.lightGrey} size="xxs" className="">
+                           <AppText color={appColors.lightGrey} size="xs" className="">
                               {dayjs(date).fromNow(true)}
                            </AppText>
                         </View>
                      </View>
                      <TouchableOpacity onPress={() => router.push(`/(user)/${id}`)}>
-                        <AppText color={appColors.lightGrey}>@{username}</AppText>
+                        <AppText size="sm" color={appColors.lightGrey}>
+                           @{username}
+                        </AppText>
                      </TouchableOpacity>
                   </View>
                </View>
@@ -70,7 +72,7 @@ export default function PostHeader({ id, avatar, name, username, date, content }
                </Pressable>
             </View>
             <View className="">
-               <AppText size="lg">{content}</AppText>
+               <AppText>{content}</AppText>
             </View>
          </View>
          <Portal hostName="root">

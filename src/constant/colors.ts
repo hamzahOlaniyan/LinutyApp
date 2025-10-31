@@ -9,10 +9,10 @@ export const appColors = {
    grey: "#ccc",
    icons: "#303030",
    blue: "#0072b1",
+   dark_whitesmoke: "#f1f1f1",
+   whitesmoke: "#f5f5f5",
 
    offWhite: "#f9f9f9",
-   whitesmoke: "#f5f5f5",
-   dark_whitesmoke: "#f1f1f1",
    kkkk: "#e1e1e1",
    searchBar: "#f6f6f6",
    white: "#fff",
