@@ -61,9 +61,9 @@ export default function ProductDetail({ item }: { item: any }) {
                   className="flex-row items-start justify-between"
                >
                   <View className="gap-2">
-                     <TouchableOpacity onPress={() => router.push(`/(app)/(user)/${item?.profile_id}`)}>
-                        <AppText weight="semi">Seller Information</AppText>
-                     </TouchableOpacity>
+                     {/* <TouchableOpacity onPress={() => router.push(`/(user)/${item?.profile_id}`)}> */}
+                     <AppText weight="semi">Seller Information</AppText>
+                     {/* </TouchableOpacity> */}
                      <View className="flex-row gap-3 items-start">
                         <Avatar path={item?.profiles?.avatarUrl} size={40} />
                         <View>

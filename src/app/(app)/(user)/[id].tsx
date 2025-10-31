@@ -1,17 +1,23 @@
 import ProfileGallery from "@/src/components/profile/ProfileGallery";
-import ProfileInfo from "@/src/components/profile/ProfileInfo";
 import ProfilePosts from "@/src/components/profile/ProfilePosts";
+import AppText from "@/src/components/ui/AppText";
 import StickyTabs from "@/src/components/ui/StickyTabs";
 import UserHeader from "@/src/components/user/UserHeader";
+import { appColors } from "@/src/constant/colors";
 import { getPostsUserById } from "@/src/Services/posts";
 import { getProfileById } from "@/src/Services/profiles";
 import { useQuery } from "@tanstack/react-query";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
+import { View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function id() {
+export default function UserProfile() {
    const { id } = useLocalSearchParams<{ id: string }>();
    const router = useRouter();
+
+   const { bottom } = useSafeAreaInsets();
 
    const {
       data: USER_POSTS,
@@ -27,29 +33,38 @@ export default function id() {
       queryFn: async () => getProfileById(id),
    });
 
-   const fullName = PROFILE?.firstName + PROFILE?.firstName;
+   const fullName = `${PROFILE?.firstName} ${PROFILE?.lastName}`;
 
    return (
-      <>
+      <ScrollView style={{ backgroundColor: appColors.extralightOlive, flex: 1, marginBottom: bottom }}>
          <Stack.Screen
             options={{
                title: fullName,
                headerShadowVisible: false,
             }}
          />
-         <StickyTabs
-            header={<UserHeader profile={PROFILE} />}
-            routes={[
-               { key: "Post", title: "Posts" },
-               { key: "Images", title: "Pictures" },
-               { key: "About", title: "About" },
-            ]}
-            scenes={{
-               Post: <ProfilePosts item={USER_POSTS} />,
-               Images: <ProfileGallery />,
-               About: <ProfileInfo profile={PROFILE} />,
-            }}
-         />
-      </>
+         <UserHeader profile={PROFILE} />
+         <View style={{ backgroundColor: appColors.white }} className="mt-2 gap-4">
+            <View style={{ backgroundColor: appColors.white }} className="p-4">
+               <AppText size="xxl" weight="semi">
+                  Activities
+               </AppText>
+            </View>
+
+            <StickyTabs
+               // header={<UserHeader profile={PROFILE} />}
+               routes={[
+                  { key: "Post", title: "Posts" },
+                  { key: "Images", title: "Pictures" },
+                  { key: "About", title: "About" },
+               ]}
+               scenes={{
+                  Post: <ProfilePosts item={USER_POSTS} />,
+                  Images: <ProfileGallery />,
+                  // About: <ProfileInfo profile={PROFILE} />,
+               }}
+            />
+         </View>
+      </ScrollView>
    );
 }

@@ -33,53 +33,53 @@ export default function PostHeader({ id, avatar, name, username, date, content }
    const isUserOwner = profile?.id === id;
 
    return (
-      <View
-         style={{
-            paddingHorizontal: wp(4),
-            paddingVertical: hp(1.5),
-            gap: 10,
-         }}
-      >
-         <View className="flex-row justify-between items-start">
-            <View className="flex-row items-center gap-2">
-               <TouchableOpacity onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                  <Avatar path={avatar} size={47} />
-               </TouchableOpacity>
-               <View className="">
-                  <View className="flex-row items-center gap-1">
-                     <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                        <AppText size="lg" weight="bold" cap="capitalize" style={{ letterSpacing: -0.5 }}>
-                           {name.trim()}
-                        </AppText>
-                     </Pressable>
-                     <View className="flex-row items-center gap-1 relative -top-[px]">
-                        <Octicons name="dot-fill" size={5} color={appColors.lightGrey} className="relative " />
-                        <AppText color={appColors.lightGrey} size="xxs" className="">
-                           {dayjs(date).fromNow(true)}
-                        </AppText>
+      <>
+         <View
+            style={{
+               paddingHorizontal: wp(4),
+               paddingVertical: hp(1.5),
+               gap: 10,
+            }}
+         >
+            <View className="flex-row justify-between items-start">
+               <View className="flex-row items-center gap-2">
+                  <TouchableOpacity onPress={() => router.push(`/(user)/${id}`)}>
+                     <Avatar path={avatar} size={50} />
+                  </TouchableOpacity>
+                  <View>
+                     <View className="flex-row items-center gap-1">
+                        <TouchableOpacity onPress={() => router.push(`/(user)/${id}`)}>
+                           <AppText size="lg" weight="bold" cap="capitalize" style={{ letterSpacing: -0.5 }}>
+                              {name.trim()}
+                           </AppText>
+                        </TouchableOpacity>
+                        <View className="flex-row items-center gap-1 relative -top-[px]">
+                           <Octicons name="dot-fill" size={5} color={appColors.lightGrey} className="relative " />
+                           <AppText color={appColors.lightGrey} size="xxs" className="">
+                              {dayjs(date).fromNow(true)}
+                           </AppText>
+                        </View>
                      </View>
+                     <TouchableOpacity onPress={() => router.push(`/(user)/${id}`)}>
+                        <AppText color={appColors.lightGrey}>@{username}</AppText>
+                     </TouchableOpacity>
                   </View>
-                  <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                     <AppText size="sm" color={appColors.lightGrey}>
-                        @{username}
-                     </AppText>
-                  </Pressable>
                </View>
+               <Pressable onPress={handleOpenSheet} className="h-full relative">
+                  <ThreeDots color={appColors.lightGrey} size={24} />
+               </Pressable>
             </View>
-            <Pressable onPress={handleOpenSheet} className="h-full relative">
-               <ThreeDots color={appColors.lightGrey} size={24} />
-            </Pressable>
-         </View>
-         <View className="">
-            <AppText size="lg">{content}</AppText>
+            <View className="">
+               <AppText size="lg">{content}</AppText>
+            </View>
          </View>
          <Portal hostName="root">
             <CustomBottomSheet
                ref={bottomSheetRef}
-               snapPoints={["35"]}
+               snapPoints={["35%"]}
                children={<PostOptions isUserOwner={isUserOwner} />}
             />
          </Portal>
-      </View>
+      </>
    );
 }

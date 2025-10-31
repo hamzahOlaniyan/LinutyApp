@@ -205,13 +205,13 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
       <>
          <View className="flex-row flex-1 justify-between items-center">
             <View className="flex-row flex-1 gap-3 items-center">
-               <TouchableOpacity onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                  <Avatar
-                     path={avatar || ""}
-                     size={50}
-                     initails={firstName.slice(0, 1).trim() + lastName.slice(0, 1).trim()}
-                  />
-               </TouchableOpacity>
+               {/* <TouchableOpacity onPress={() => router.push(`/(user)/${id}`)}> */}
+               <Avatar
+                  path={avatar || ""}
+                  size={50}
+                  initails={firstName.slice(0, 1).trim() + lastName.slice(0, 1).trim()}
+               />
+               {/* </TouchableOpacity> */}
                <View>
                   <AppText weight="med" cap="capitalize">
                      {firstName} {lastName}

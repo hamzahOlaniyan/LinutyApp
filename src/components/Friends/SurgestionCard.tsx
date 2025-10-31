@@ -1,6 +1,5 @@
 import { appColors } from "@/src/constant/colors";
 import { Image } from "expo-image";
-import { router } from "expo-router";
 import React from "react";
 import { Dimensions, TouchableOpacity, View } from "react-native";
 import AppText from "../ui/AppText";
@@ -18,7 +17,7 @@ const { width: screenWidth } = Dimensions.get("screen");
 
 export default function SurgestionCard({ id, avatar, firstName, lastName, username }: SurgestionCardProps) {
    return (
-      <TouchableOpacity onPress={() => router.push(`/(app)/(user)/${id}`)} style={{ flex: 1 }}>
+      <TouchableOpacity onPress={() => ""} style={{ flex: 1 }}>
          <View style={{ width: "100%", height: 200 }}>
             {avatar ? (
                <Image source={{ uri: avatar }} style={{ width: "100%", height: "100%" }} contentPosition="center" />

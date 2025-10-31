@@ -22,7 +22,7 @@ export default function StickyTabs({
    routes,
    scenes,
    initialKey,
-   activeColor = "#000",
+   activeColor = appColors.primary,
    inactiveColor = "#999",
    indicatorColor = "#000",
 }: Props) {
@@ -37,23 +37,26 @@ export default function StickyTabs({
          stickyHeaderIndices={[1]}
          showsVerticalScrollIndicator={false}
          ref={scrollRef}
-         decelerationRate={0.8}
       >
          <View>{header}</View>
-         <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{ backgroundColor: appColors.white, borderBottomWidth: 1, borderBottomColor: "#ddd" }}
-            className="flex-1"
-         >
+         <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-1">
             <View style={styles.tabBar}>
                {routes.map((route) => {
                   const isActive = route.key === activeKey;
                   return (
-                     <Pressable key={route.key} onPress={() => setActiveKey(route.key)} style={styles.tabButton}>
-                        <Text style={[styles.tabText, { color: isActive ? activeColor : inactiveColor }]}>
-                           {route.title}
-                        </Text>
+                     <Pressable
+                        key={route.key}
+                        onPress={() => setActiveKey(route.key)}
+                        style={[
+                           styles.tabButton,
+                           {
+                              backgroundColor: isActive ? activeColor : appColors.white,
+                              borderColor: appColors.grey,
+                              borderWidth: isActive ? 0 : 1,
+                           },
+                        ]}
+                     >
+                        <Text style={[styles.tabText, { color: isActive ? appColors.white : "" }]}>{route.title}</Text>
                         {isActive && <View style={[styles.indicator, { backgroundColor: indicatorColor }]} />}
                      </Pressable>
                   );
@@ -70,21 +73,25 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       width: "100%",
       flex: 1,
+      gap: 10,
+      marginBottom: 12,
       paddingHorizontal: wp(4),
-      gap: 20,
    },
    tabButton: {
-      paddingVertical: 12,
+      paddingVertical: 6,
+      paddingHorizontal: 16,
+      borderRadius: 40,
    },
    tabText: {
-      fontSize: hp(1.8),
+      fontSize: hp(2),
       fontFamily: TiktokFont.TiktokMedium,
+      color: appColors.secondary,
    },
    indicator: {
-      height: 3,
-      width: "100%",
-      position: "absolute",
-      bottom: -1.5,
-      borderRadius: 20,
+      // height: 3,
+      // width: "100%",
+      // position: "absolute",
+      // bottom: -1.5,
+      // borderRadius: 20,
    },
 });

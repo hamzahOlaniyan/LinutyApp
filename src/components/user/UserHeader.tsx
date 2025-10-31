@@ -1,17 +1,22 @@
 import { ImageIcon } from "@/assets/icons/ImageIcon";
+import { Plus } from "@/assets/icons/plus";
+import { ThreeDots } from "@/assets/icons/threedots";
 import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
+import { hp, wp } from "@/src/constant/common";
 import { Image } from "expo-image";
 import React from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
 
 export default function UserHeader({ profile }: { profile: any }) {
    return (
-      <View style={{ paddingHorizontal: wp(3) }} className="gap-4 mb-6">
-         <View style={{ backgroundColor: appColors.offWhite }} className="h-36 rounded-lg justify-center items-center">
+      <View className="">
+         <View
+            style={{ backgroundColor: appColors.white, height: hp(20), zIndex: 10 }}
+            className="rounded-lg justify-center items-center"
+         >
             {profile?.cover_photo ? (
                <Image
                   source={{ uri: profile?.cover_photo || profile?.cover_photo }}
@@ -22,10 +27,14 @@ export default function UserHeader({ profile }: { profile: any }) {
                <ImageIcon size={100} color={appColors.kkkk} />
             )}
          </View>
-         <View className="gap-2">
+         <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white }} className="gap-2 -top-1">
             <View className="flex-row items-center gap-3">
-               <Avatar path={profile?.avatarUrl} size={100} />
-               <View className="gap-2">
+               <Avatar
+                  path={profile?.avatarUrl}
+                  size={105}
+                  style={{ zIndex: 11, borderWidth: 5, borderColor: appColors.white }}
+               />
+               <View className="gap-4 flex-1">
                   <View className="gap-4">
                      <View>
                         <View className="flex-row gap-1">
@@ -36,17 +45,15 @@ export default function UserHeader({ profile }: { profile: any }) {
                               {profile?.lastName}
                            </AppText>
                         </View>
-                        <AppText size="lg" color={appColors.grey}>
-                           @{profile?.username}
-                        </AppText>
+                        <AppText color={appColors.secondary}>@{profile?.username}</AppText>
                      </View>
-                     <View className="flex-row gap-2">
-                        <View className="flex-row gap-1">
-                           <AppText color={appColors.grey}>Friends</AppText>
+                     <View className="flex-row justify-between">
+                        <View className="flex-row gap-2">
+                           <AppText color={appColors.secondary}>Friends</AppText>
                            <AppText weight="med">347</AppText>
                         </View>
-                        <View className="flex-row gap-1">
-                           <AppText color={appColors.grey}>Mutual friends</AppText>
+                        <View className="flex-row gap-2">
+                           <AppText color={appColors.secondary}>Mutual friends</AppText>
                            <AppText weight="semi">3</AppText>
                         </View>
                      </View>
@@ -58,9 +65,25 @@ export default function UserHeader({ profile }: { profile: any }) {
                voluptatum quam sed, odio dolorem voluptates at, repellat nostrum recusandae libero ipsa modi amet dolor.
                Quaerat.
             </AppText>
-         </View>
-         <View className="flex-row justify-between gap-2">
-            <Button size="sm" text="Add friend" className="flex-1" />
+
+            <View className="gap-4 py-4">
+               <View className="flex-row justify-between gap-2 ">
+                  <View className="flex-row gap-2 flex-1">
+                     <Pressable
+                        style={{ backgroundColor: appColors.whitesmoke, borderRadius: 200 }}
+                        className="flex-row gap-2 justify-center items-center flex-1"
+                     >
+                        <Plus color={appColors.blue} />
+                        <AppText weight="med" color={appColors.blue}>
+                           Follow
+                        </AppText>
+                     </Pressable>
+                     <Button size="sm" text="Message" className="flex-1" variant="outline" />
+                  </View>
+                  <Button size="sm" icon={<ThreeDots size={24} color={appColors.icons} />} variant="secondary" />
+               </View>
+               <Button size="sm" text={"Visit shop"} variant="secondary" />
+            </View>
          </View>
       </View>
    );

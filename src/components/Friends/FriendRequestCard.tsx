@@ -53,9 +53,9 @@ export default function FriendRequestCard({ item }: { item: any }) {
 
    return (
       <View key={item?.id} className="flex-row flex-1 gap-3 p-4 w-full">
-         <TouchableOpacity onPress={() => router.push(`/(app)/(user)/${item?.requester?.id}`)}>
-            <Avatar path={item?.requester?.avatarUrl} size={100} />
-         </TouchableOpacity>
+         {/* <TouchableOpacity onPress={() => router.push(`/(user)/${item?.requester?.id}`)}> */}
+         <Avatar path={item?.requester?.avatarUrl} size={100} />
+         {/* </TouchableOpacity> */}
          <View className="flex-1 gap-2">
             <View className="flex-row items-start justify-between">
                <View>
