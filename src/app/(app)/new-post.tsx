@@ -17,7 +17,7 @@ import { Alert, KeyboardAvoidingView, Platform, ScrollView, TextInput, View } fr
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function NewPost() {
-   const [preview, setPreview] = useState<string[]>([]);
+   const [preview, setPreview] = useState<any[]>([]);
    const [postText, setPostText] = useState("");
    const { profile } = useAuthStore();
 
@@ -28,17 +28,19 @@ export default function NewPost() {
 
    const { mutate, isPending, error } = useMutation({
       mutationFn: async () => {
-         const mediaRes = await uploadMediaSmart(profile?.id, preview as string[]);
+         const mediaRes = await uploadMediaSmart(profile?.id, preview, "media");
 
          // split uploaded URLs into separate fields if needed
-         const imageUrls = mediaRes.filter((m) => m.type === "image").map((m) => m.url);
-         const videoUrls = mediaRes.filter((m) => m.type === "video").map((m) => m.url);
+         // const imageUrls = mediaRes.filter((m) => m.type === "image").map((m) => m.url);
+         // const videoUrls = mediaRes.filter((m) => m.type === "video").map((m) => m.url);
 
          return createPost({
             content: postText,
             author: profile!.id,
-            images: imageUrls,
-            videos: videoUrls,
+            // images: imageUrls,
+            // videos: videoUrls,med
+
+            media: mediaRes,
          });
       },
       onSuccess: (data) => {
@@ -100,7 +102,7 @@ export default function NewPost() {
             <Imagepicker
                size={100}
                url={null}
-               onPickLocal={(uri: string[]) => setPreview(uri)}
+               onPickLocal={(assets) => setPreview(assets)}
                picker={
                   <View className="self-end">
                      <ImageIcon size={32} />

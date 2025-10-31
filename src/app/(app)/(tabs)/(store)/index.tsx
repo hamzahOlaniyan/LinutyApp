@@ -15,8 +15,8 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
-import { Animated, FlatList, View } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Animated, FlatList, RefreshControl, View } from "react-native";
 import { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProductCategory } from "./new-product";
@@ -26,14 +26,23 @@ export default function StorePage() {
    const [showSearchBar, setShowSearchBar] = useState(false);
    const [searchText, setSearchText] = useState("");
 
+   const [refreshing, setRefreshing] = useState<boolean>(false);
+
    const router = useRouter();
    const bottomSheetRef = useRef<BottomSheet>(null);
    const { bottom } = useSafeAreaInsets();
 
-   const { data: PRODUCT, isLoading } = useQuery({
+   const {
+      data: PRODUCT,
+      isLoading,
+      isFetching,
+      refetch,
+   } = useQuery({
       queryKey: ["store"],
       queryFn: async () => getStoreProduct(),
    });
+
+   // console.log(JSON.stringify(PRODUCT, null, 2));
 
    const height = useSharedValue(0);
    const opacity = useSharedValue(0);
@@ -51,6 +60,10 @@ export default function StorePage() {
    });
 
    const handleOpenSheet = () => bottomSheetRef.current?.expand();
+
+   const onRefresh = useCallback(async () => {
+      setRefreshing(true);
+   }, [, refreshing, setRefreshing]);
 
    return (
       <View style={{ backgroundColor: appColors.white, flex: 1 }}>
@@ -129,6 +142,13 @@ export default function StorePage() {
                numColumns={2}
                scrollEnabled
                showsVerticalScrollIndicator={false}
+               removeClippedSubviews
+               refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} colors={["#22c55e"]} />}
+               refreshing={refreshing}
+               onRefresh={onRefresh}
+               bounces
+               alwaysBounceVertical
+               overScrollMode="always"
                columnWrapperStyle={{ gap: 10, marginVertical: 8 }}
                contentContainerStyle={{ paddingBottom: 100, backgroundColor: appColors.whitesmoke }}
             />

@@ -38,17 +38,51 @@
 
 import { supabase } from "../lib/supabase";
 
-export async function uploadMediaSmart(userId: string, uris: string[]) {
-   if (!uris.length) return [];
+// type fileItemsTypes = {
+//    uri: string;
+//    mimeType: string;
+//    height: string;
+//    width: string;
+//    duration: string;
+//    fileName: string;
+//    size: string;
+//    type: string;
+// }[];
 
-   const uploadedUrls: { type: "image" | "video"; url: string }[] = [];
+export async function uploadMediaSmart(
+   userId: string,
+   files: {
+      uri: string;
+      mimeType: string;
+      height: string;
+      width: string;
+      duration: string;
+      fileName: string;
+      size: string;
+      type: string;
+   }[],
+   folder: string
+) {
+   if (!files.length) return [];
 
-   for (const uri of uris) {
+   const uploadedUrls: {
+      type: "image" | "video";
+      url: string;
+      height: string;
+      width: string;
+      duration: string;
+      fileName: string;
+      mimeType: string;
+      size: string;
+   }[] = [];
+
+   for (const file of files) {
       try {
+         const { uri, width, height, duration, mimeType, size } = file;
          // detect file extension and type
          const ext = uri.split(".").pop()?.toLowerCase() ?? "jpeg";
          const isVideo = ["mp4", "mov", "mkv", "avi"].includes(ext);
-         const folder = isVideo ? "videos" : "media";
+         // const folder = isVideo ? "videos" : "media";
          const contentType = isVideo ? "video/mp4" : "image/jpeg";
          const fileName = `${userId}-${Date.now()}.${ext}`;
          const fullPath = `${folder}/${userId}/${fileName}`;
@@ -90,6 +124,12 @@ export async function uploadMediaSmart(userId: string, uris: string[]) {
          uploadedUrls.push({
             type: isVideo ? "video" : "image",
             url: publicUrlData.publicUrl,
+            height,
+            width,
+            duration,
+            fileName,
+            mimeType,
+            size,
          });
       } catch (err) {
          console.error("Upload failed:", err);

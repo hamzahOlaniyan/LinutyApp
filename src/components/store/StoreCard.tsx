@@ -26,7 +26,7 @@ export default function StoreCard({ item, isLoading }: { item: any; isLoading: b
          style={{ backgroundColor: appColors.white }}
       >
          <Image
-            source={item?.images[0]}
+            source={item?.images[0]?.url}
             style={{ width: "auto", height: "auto", aspectRatio: 1, backgroundColor: appColors.white }}
          />
          <View className="px-4 py-1 gap-1">

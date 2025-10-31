@@ -1,19 +1,19 @@
-import { PublishIcon } from "@/assets/icons/publishIcon";
+import { Plus } from "@/assets/icons/plus";
 import NewListingHeader from "@/src/components/store/NewListingHeader";
 import ProductImagePicker from "@/src/components/store/ProductImagePicker";
 import AppText from "@/src/components/ui/AppText";
-import Button from "@/src/components/ui/Button";
 import { Input } from "@/src/components/ui/Input";
 import InputArea from "@/src/components/ui/InputArea";
 import Select from "@/src/components/ui/Select";
-import { UploadImage } from "@/src/components/UploadImage";
+import { uploadMediaSmart } from "@/src/components/UploadImage";
 import { appColors } from "@/src/constant/colors";
 import { wp } from "@/src/constant/common";
-import { createStoreProduct } from "@/src/Services/store";
+import { createStore, createStoreProduct } from "@/src/Services/store";
 import { useAuthStore } from "@/src/store/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { ActivityIndicator, Alert, Pressable, ScrollView, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const ProductCondition = ["new", "used - like", "used - good", "used - fair"];
 export const ProductCategory = ["electrionic", "furniture", "vehicle", "other"];
@@ -27,9 +27,10 @@ export default function NewProduct() {
    const [availability, setAvailability] = useState("");
    const [condition, setCondition] = useState<string | null>("");
    const [description, setDescription] = useState("");
-   const [productImage, setProductImage] = useState<{ uri: string; mimeType?: string }[]>([]);
+   const [productImage, setProductImage] = useState<any[]>([]);
 
    const queryClient = useQueryClient();
+   const { bottom } = useSafeAreaInsets();
 
    // const uploadImage = async () => {
    //    if (!image.length) return;
@@ -68,7 +69,7 @@ export default function NewProduct() {
 
    const { mutate, isPending, error } = useMutation({
       mutationFn: async () => {
-         const imageRes = await UploadImage(profile.id, productImage as any, "store");
+         const imageRes = await uploadMediaSmart(profile.id, productImage as any, "store");
 
          return createStoreProduct({
             name: title,
@@ -82,7 +83,7 @@ export default function NewProduct() {
          });
       },
       onSuccess: () => {
-         queryClient.invalidateQueries({ queryKey: ["store"] });
+         createStore(profile?.id);
          Alert.alert("New products has been added");
          setTitle("");
          setCategory(null);
@@ -91,6 +92,7 @@ export default function NewProduct() {
          setPrice("");
          setAvailability("");
          setDescription("");
+         queryClient.invalidateQueries({ queryKey: ["store"] });
       },
       onError: (error) => Alert.alert("Error", error.message),
    });
@@ -99,21 +101,28 @@ export default function NewProduct() {
       <ScrollView
          decelerationRate={0.8}
          className="relative"
-         style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }}
+         style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white, marginBottom: bottom }}
       >
          {/* <View className="flex-row items-center"> */}
          <View className="w-full flex-row relative justify-center items-center">
             <NewListingHeader image={profile?.avatarUrl} firstName={profile?.firstName} lastName={profile?.lastName} />
-            <Button
-               size="sm"
-               text="Publish"
-               variant="secondary"
+            <Pressable
                onPress={() => mutate()}
-               isLoading={isPending}
-               icon={<PublishIcon size={20} />}
-            />
+               disabled={isPending}
+               style={{ flexDirection: "row", alignItems: "center", padding: 10 }}
+            >
+               {isPending ? (
+                  <ActivityIndicator size={"small"} />
+               ) : (
+                  <>
+                     <Plus size={20} color={appColors.blue} />
+                     <AppText size="lg" weight="semi" color={appColors.blue}>
+                        Publish
+                     </AppText>
+                  </>
+               )}
+            </Pressable>
          </View>
-         {/* </View> */}
          <ProductImagePicker onPickLocal={(uri: []) => setProductImage(uri)} />
          <View style={{ paddingBottom: 200, paddingTop: 30 }} className="gap-4 flex-1">
             <AppText weight="semi">Product Information</AppText>

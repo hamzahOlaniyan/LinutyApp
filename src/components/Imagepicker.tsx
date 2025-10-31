@@ -17,13 +17,13 @@ export default function Imagepicker({ url, size = 200, onPickLocal, picker }: Pr
    const [uploading, setUploading] = useState(false);
    const [image, setImage] = useState<{ uri: string; mimeType?: string; height: number; width: number }[]>([]);
 
-   async function pickAvatar() {
+   async function pickImage() {
       try {
          setUploading(true);
          let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images", "videos"],
             allowsMultipleSelection: true,
-            aspect: [1, 1],
+            // aspect: [1, 1],
             quality: 1,
          });
          if (result.canceled || !result.assets || result.assets.length === 0) {
@@ -42,12 +42,11 @@ export default function Imagepicker({ url, size = 200, onPickLocal, picker }: Pr
                size: asset.fileSize,
                type: asset.type,
             }));
-            // console.log(JSON.stringify(result.assets, null, 2));
 
             setImage((prev) => [...prev, ...newImages]);
 
-            const uris = newImages.map((u) => u.uri);
-            onPickLocal?.(uris);
+            // const uris = newImages.map((u) => u.uri);
+            onPickLocal?.(newImages);
             return;
          }
       } catch (error) {
@@ -89,7 +88,7 @@ export default function Imagepicker({ url, size = 200, onPickLocal, picker }: Pr
                   </View>
                ))}
          </View>
-         <TouchableOpacity onPress={pickAvatar}>{picker}</TouchableOpacity>
+         <TouchableOpacity onPress={pickImage}>{picker}</TouchableOpacity>
       </View>
    );
 }

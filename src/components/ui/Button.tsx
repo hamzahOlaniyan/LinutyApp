@@ -41,7 +41,7 @@ export default function Button({
                justifyContent: "center",
                paddingHorizontal:
                   size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 10 : hp(5),
-               borderWidth: variant === "outline" || "secondary" ? 1.5 : 0,
+               borderWidth: variant === "outline" || "secondary" ? 1.5 : variant === "plain" ? 0 : 0,
                borderColor: variant === "secondary" ? appColors.grey : appColors.black,
                backgroundColor:
                   variant === "outline"

@@ -44,30 +44,31 @@ export default function ProductDetailsScreen() {
       >
          <View style={s.mediaContainer}>
             <FlatList
-               data={PRODUCT_DETAIL?.images || []}
-               keyExtractor={(index) => index.toString()}
+               data={PRODUCT_DETAIL?.images}
+               keyExtractor={(item, index) => item.url || index.toString()}
                horizontal
                pagingEnabled
                showsHorizontalScrollIndicator={false}
                renderItem={({ item }) => (
                   <View>
                      <Image
-                        source={{ uri: item }}
+                        source={{ uri: item?.url }}
                         style={{ width: screenWidth, height: screenWidth, aspectRatio: 1 }}
                         contentPosition="center"
                         contentFit="contain"
                      />
                      <Image
-                        source={{ uri: item }}
+                        source={{ uri: item?.url }}
                         style={{
                            width: screenWidth,
                            height: screenWidth,
                            aspectRatio: 1,
                            position: "absolute",
                            top: 0,
+                           opacity: 0.5,
                            zIndex: -10,
                         }}
-                        blurRadius={10}
+                        blurRadius={15}
                         contentPosition="center"
                      />
                   </View>
@@ -76,11 +77,11 @@ export default function ProductDetailsScreen() {
                onViewableItemsChanged={onViewableItemsChanged}
                viewabilityConfig={viewabilityConfig}
             />
-            <View style={s.mediaCounter}>
-               <AppText size="sm" color={appColors.white}>
-                  {currentIndex + 1} / {PRODUCT_DETAIL?.images?.length}
-               </AppText>
-            </View>
+         </View>
+         <View style={s.mediaCounter}>
+            <AppText size="sm" color={appColors.white}>
+               {currentIndex + 1} / {PRODUCT_DETAIL?.images?.length}
+            </AppText>
          </View>
          <View style={s.dotsRow}>
             {PRODUCT_DETAIL?.images?.map((_: string, i: number) => (

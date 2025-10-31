@@ -23,7 +23,7 @@ export default function ProductImagePicker({ url, size = 200, onPickLocal, picke
          let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images", "videos"],
             allowsMultipleSelection: true,
-            aspect: [4, 3],
+            // aspect: [4, 3],
             quality: 1,
          });
          if (result.canceled || !result.assets || result.assets.length === 0) {
@@ -37,11 +37,14 @@ export default function ProductImagePicker({ url, size = 200, onPickLocal, picke
                mimeType: asset.mimeType,
                height: asset.height,
                width: asset.width,
+               fileName: asset.fileName,
+               size: asset.fileSize,
+               type: asset.type,
             }));
             setImage((prev) => [...prev, ...newImages]);
 
-            const uris = newImages.map((u) => u.uri);
-            onPickLocal?.(uris);
+            // const uris = newImages.map((u) => u.uri);
+            onPickLocal?.(newImages);
             return;
          }
       } catch (error) {

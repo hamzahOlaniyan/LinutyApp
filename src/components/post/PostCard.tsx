@@ -1,11 +1,10 @@
 import { appColors } from "@/src/constant/colors";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Dimensions, FlatList, StyleSheet, View, ViewabilityConfig, ViewToken } from "react-native";
-import { deleteComment, deletePost } from "../../Services/posts";
+import { Dimensions, FlatList, StyleSheet, View, ViewabilityConfig, ViewToken } from "react-native";
 import AppText from "../ui/AppText";
 import { CustomBottomSheet } from "../ui/CustomBottomSheet";
 import Comments from "./Comments";
@@ -15,7 +14,7 @@ import PostHeader from "./PostHeader";
 export default function Post({
    post,
    showMoreIcon = false,
-   isPostDetails = false,
+   // isPostDetails = false,
    count,
    comments,
    setPostID,
@@ -55,29 +54,31 @@ export default function Post({
    }, [openComments]);
 
    const fullName = `${post.author.firstName.trim()} ${post.author.lastName.trim()}`;
-   const isComment = post.parent_id !== null;
+   // const isComment = post.parent_id !== null;
 
-   const deletePostMutation = useMutation({
-      mutationFn: (postId: string) => deletePost(postId),
-      onSuccess: () => {
-         Alert.alert("Success", "Post deleted");
-         queryClient.invalidateQueries({ queryKey: ["posts"] });
-      },
-      onError: () => {
-         Alert.alert("Error", "Failed to delete post");
-      },
-   });
+   // console.log(JSON.stringify(post, null, 2));
 
-   const deleteCommentMutation = useMutation({
-      mutationFn: (commentId: string) => deleteComment(commentId),
-      onSuccess: () => {
-         Alert.alert("Success", "Comment deleted");
-         queryClient.invalidateQueries({ queryKey: ["posts"] });
-      },
-      onError: () => {
-         Alert.alert("Error", "Failed to delete comment");
-      },
-   });
+   // const deletePostMutation = useMutation({
+   //    mutationFn: (postId: string) => deletePost(postId),
+   //    onSuccess: () => {
+   //       Alert.alert("Success", "Post deleted");
+   //       queryClient.invalidateQueries({ queryKey: ["posts"] });
+   //    },
+   //    onError: () => {
+   //       Alert.alert("Error", "Failed to delete post");
+   //    },
+   // });
+
+   // const deleteCommentMutation = useMutation({
+   //    mutationFn: (commentId: string) => deleteComment(commentId),
+   //    onSuccess: () => {
+   //       Alert.alert("Success", "Comment deleted");
+   //       queryClient.invalidateQueries({ queryKey: ["posts"] });
+   //    },
+   //    onError: () => {
+   //       Alert.alert("Error", "Failed to delete comment");
+   //    },
+   // });
 
    // const handleDelete = () => {
    //    Alert.alert(
@@ -184,37 +185,50 @@ export default function Post({
             <View className="px-4 pb-3">
                <AppText size="lg">{post?.content}</AppText>
             </View>
-            {post?.images?.length <= 1 && (
+            {post?.media?.length <= 1 && (
                <View className="flex-row flex-wrap">
-                  {post?.images.map((pics: any, idx: number) => (
-                     <View key={idx} style={{ width: post?.images.length === 1 ? "100%" : "50%" }}>
-                        <Image
-                           source={{ uri: pics }}
-                           style={{
-                              aspectRatio: 1 / 1,
-                           }}
-                           contentPosition="center"
-                           contentFit="cover"
-                        />
-                     </View>
-                  ))}
+                  {post?.media?.map((item: any, i: number) => {
+                     const aspectRatio = item.width && item.height ? item.width / item.height : 4 / 5;
+                     return (
+                        <View key={i} style={{ width: post?.media?.length === 1 ? "100%" : "50%" }}>
+                           {item.type === "video" ? (
+                              <AppText size="xxxl">THIS IS S VIDEO</AppText>
+                           ) : (
+                              <Image
+                                 key={item.url}
+                                 source={{ uri: item.url }}
+                                 style={{
+                                    aspectRatio,
+                                 }}
+                                 contentPosition="center"
+                                 contentFit="cover"
+                              />
+                           )}
+                        </View>
+                     );
+                  })}
                </View>
             )}
-            {post?.images?.length > 1 && (
+            {post?.media?.length > 1 && (
                <View style={s.mediaContainer}>
                   <FlatList
-                     data={post?.images}
-                     keyExtractor={(index) => index.toString()}
+                     data={post?.media}
+                     keyExtractor={(item, index) => item.url || index.toString()}
                      horizontal
                      pagingEnabled
                      showsHorizontalScrollIndicator={false}
                      renderItem={({ item }) => (
-                        <Image
-                           source={{ uri: item }}
-                           style={{ width: screenWidth, height: screenWidth, aspectRatio: 1 / 1 }}
-                           contentPosition="center"
-                           contentFit="contain"
-                        />
+                        <View>
+                           {item.type === "video" ? (
+                              <AppText size="xxxl">THIS IS S VIDEO</AppText>
+                           ) : (
+                              <Image
+                                 source={{ uri: item.url }}
+                                 style={{ width: screenWidth, height: screenWidth, aspectRatio: 1 / 1 }}
+                                 contentPosition="center"
+                              />
+                           )}
+                        </View>
                      )}
                      contentContainerStyle={{ backgroundColor: appColors.black }}
                      onViewableItemsChanged={onViewableItemsChanged}
@@ -222,7 +236,7 @@ export default function Post({
                   />
                   <View style={s.mediaCounter}>
                      <AppText size="sm" color={appColors.white}>
-                        {currentIndex + 1} / {post?.images?.length}
+                        {currentIndex + 1} / {post?.media?.length}
                      </AppText>
                   </View>
                   <View style={s.dotsRow}>

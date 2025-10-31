@@ -15,22 +15,22 @@ export default function NewListingHeader({
    lastName: string;
 }) {
    return (
-      <View className="flex-row gap-2 my-4 items-center w-full flex-1">
-         <Avatar path={image} size={35} />
+      <View className="flex-row gap-3 my-4 items-center w-full flex-1">
+         <Avatar path={image} size={45} />
          <View className="w-full">
             <View className="flex-row gap-1">
-               <AppText weight="semi" cap="capitalize">
+               <AppText size="lg" weight="semi" cap="capitalize">
                   {firstName}
                </AppText>
-               <AppText weight="semi" cap="capitalize">
+               <AppText size="lg" weight="semi" cap="capitalize">
                   {lastName}
                </AppText>
             </View>
             <View className="flex-row gap-3 items-center">
-               <AppText size="sm" color={appColors.grey}>
+               <AppText size="sm" color={appColors.secondary}>
                   Listing in Store
                </AppText>
-               <Ionicons name={"storefront-sharp"} size={14} color={appColors.grey} />
+               <Ionicons name={"storefront-sharp"} size={14} color={appColors.secondary} />
             </View>
          </View>
       </View>

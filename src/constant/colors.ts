@@ -8,6 +8,7 @@ export const appColors = {
    purple: "#e9ddf0",
    grey: "#ccc",
    icons: "#505050",
+   blue: "#0072b1",
 
    offWhite: "#f9f9f9",
    whitesmoke: "#f5f5f5",
