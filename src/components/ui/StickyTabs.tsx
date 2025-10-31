@@ -1,6 +1,6 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/src/constant/colors";
-import { hp, wp } from "@/src/constant/common";
+import { wp } from "@/src/constant/common";
 import React, { useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -57,7 +57,7 @@ export default function StickyTabs({
                         ]}
                      >
                         <Text style={[styles.tabText, { color: isActive ? appColors.white : "" }]}>{route.title}</Text>
-                        {isActive && <View style={[styles.indicator, { backgroundColor: indicatorColor }]} />}
+                        {isActive && <View style={[{ backgroundColor: indicatorColor }]} />}
                      </Pressable>
                   );
                })}
@@ -76,6 +76,8 @@ const styles = StyleSheet.create({
       gap: 10,
       marginBottom: 12,
       paddingHorizontal: wp(4),
+      backgroundColor: appColors.white,
+      paddingVertical: 10,
    },
    tabButton: {
       paddingVertical: 6,
@@ -83,15 +85,8 @@ const styles = StyleSheet.create({
       borderRadius: 40,
    },
    tabText: {
-      fontSize: hp(2),
+      fontSize: 16,
       fontFamily: TiktokFont.TiktokMedium,
       color: appColors.secondary,
-   },
-   indicator: {
-      // height: 3,
-      // width: "100%",
-      // position: "absolute",
-      // bottom: -1.5,
-      // borderRadius: 20,
    },
 });

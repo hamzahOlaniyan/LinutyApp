@@ -46,21 +46,18 @@ export default function CommentCard({
                            {item?.author?.lastName}
                         </AppText>
                         <Pressable onPress={() => setModalVisible(true)}>
-                           <ThreeDots color={appColors.grey} size={24} />
+                           <ThreeDots color={appColors.icons} size={20} />
                         </Pressable>
                      </View>
                      <AppText cap="capitalize" size="sm" color={appColors.lightGrey}>
                         @{item?.author?.username}
                      </AppText>
                   </View>
-
-                  <AppText weight="reg" size="lg">
-                     {item.content!!}
-                  </AppText>
+                  <AppText weight="reg">{item.content!!}</AppText>
                </View>
                <View className="flex-row items-center justify-between">
                   <View className="flex-row items-center gap-4">
-                     <AppText color={appColors.lightGrey} size="xxs">
+                     <AppText color={appColors.lightGrey} size="xs">
                         {dayjs(item?.created_at).fromNow(true)} |
                      </AppText>
 
@@ -72,15 +69,15 @@ export default function CommentCard({
                            setReplyToId(item?.id);
                         }}
                      >
-                        <AppText size="sm" weight="med" color={appColors.grey}>
+                        <AppText size="sm" weight="med" color={appColors.lightGrey}>
                            Reply
                         </AppText>
                      </TouchableOpacity>
                   </View>
                   <View>
                      <Pressable className="flex-row gap-2 justify-center items-center">
-                        <Thumbsup size={16} color={appColors.grey} />
-                        <AppText color={appColors.grey} size="sm">
+                        <Thumbsup size={16} color={appColors.icons} />
+                        <AppText color={appColors.icons} size="sm">
                            0
                         </AppText>
                      </Pressable>
@@ -88,13 +85,13 @@ export default function CommentCard({
                </View>
                {REPLIES && REPLIES?.length === 0 ? null : (
                   <TouchableOpacity onPress={() => setShowReplies(!showReplies)} className="flex-row items-center">
-                     <AppText color={appColors.grey}>
+                     <AppText color={appColors.lightGrey}>
                         {REPLIES?.length! >= 2 ? `view ${REPLIES?.length!} replies` : `view ${REPLIES?.length!} reply`}
                      </AppText>
                      <MaterialIcons
                         name="navigate-next"
                         size={18}
-                        color={appColors.grey}
+                        color={appColors.icons}
                         className="relative top-[2px]"
                      />
                   </TouchableOpacity>

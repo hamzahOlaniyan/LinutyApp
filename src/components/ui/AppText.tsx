@@ -4,7 +4,7 @@ import React from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
 
 type TextWeight = "black" | "extraBold" | "bold" | "semi" | "med" | "reg" | "light";
-type TextSize = "xxxxxl" | "xxxxl" | "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs" | "xxs";
+type TextSize = "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs" | "xxs";
 
 type AppTextProps = {
    size?: TextSize;
@@ -32,22 +32,10 @@ export default function AppText({
    // const { currentTheme } = useThemeStore();
 
    const fontSize = {
-      // xxxxxl: hp(4.4),
-      // xxxxl: hp(3.4),
-      // xxxl: hp(2.7),
-      // xxl: hp(2.5),
-      // xl: hp(2.1),
-      // lg: hp(1.9),
-      // md: hp(1.7),
-      // sm: hp(1.5),
-      // xs: hp(1.3),
-      // xxs: 12,
-      xxxxxl: 38,
-      xxxxl: 32,
-      xxxl: 18,
-      xxl: 22,
-      xl: 20,
-      lg: 18,
+      xxxl: 24,
+      xxl: 20,
+      xl: 18,
+      lg: 17,
       md: 16,
       sm: 14,
       xs: 12,

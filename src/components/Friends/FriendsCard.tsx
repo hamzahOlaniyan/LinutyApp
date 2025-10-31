@@ -8,6 +8,7 @@ import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 // import { useThemeStore } from "../context/themeStore";
 // import { createNotification } from "../Services/Notification";
 // import { deleteFriendRequest, sendFriendRequest } from "../Services/relationships";
+import { Plus } from "@/assets/icons/plus";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { createNotification } from "@/src/Services/Notification";
@@ -16,6 +17,7 @@ import { useAuthStore } from "@/src/store/authStore";
 import { useRouter } from "expo-router";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
+import Button from "../ui/Button";
 
 type FriendsCardProps = {
    id: string;
@@ -119,28 +121,17 @@ export default function FriendsCard({ id, avatar, firstName, lastName, username 
    });
 
    let button = (
-      <TouchableOpacity
-         style={{
-            backgroundColor: appColors.searchBar,
-            height: hp(4),
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 50,
-            paddingHorizontal: 16,
-         }}
+      <Button
+         text="Add friend"
          onPress={() => {
             sendRequest.mutate();
             setNotificationReceiver(id);
          }}
-      >
-         {sendRequest.isPending ? (
-            <ActivityIndicator />
-         ) : (
-            <AppText size="sm" weight="med">
-               Add friend
-            </AppText>
-         )}
-      </TouchableOpacity>
+         icon={<Plus color={appColors.blue} size={20} />}
+         color={appColors.blue}
+         variant="secondary"
+         size="xs"
+      />
    );
 
    if (RELATIONSHIP_DATA) {

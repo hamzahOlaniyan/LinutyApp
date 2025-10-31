@@ -3,7 +3,7 @@ import { ShareIcon } from "@/assets/icons/shareIcon";
 import { Thumbsup } from "@/assets/icons/thumbsup";
 import { ThumbsupSolid } from "@/assets/icons/thumbsup-solid";
 import { appColors } from "@/src/constant/colors";
-import { hp, wp } from "@/src/constant/common";
+import { wp } from "@/src/constant/common";
 import { usePostLikes } from "@/src/hooks/usePostLikes";
 import { useAuthStore } from "@/src/store/authStore";
 import { TouchableOpacity, View } from "react-native";
@@ -24,13 +24,13 @@ export default function PostAction({ post_id, showComment, commentCount, authorI
    const { isLiked, handleLike, likeCount } = usePostLikes(post_id, profile?.id, authorId);
 
    return (
-      <View style={{ paddingHorizontal: wp(4), paddingVertical: hp(1.7), gap: 14 }}>
-         <View className="flex-row justify-between items-center">
+      <View style={{ paddingHorizontal: wp(4) }}>
+         <View className="flex-row justify-between items-center py-2">
             <ActionDetails />
             <ActionInfo likeCount={likeCount} commentCount={commentCount} />
          </View>
-         <View style={{ width: "100%", backgroundColor: appColors.border, height: 0.5 }}></View>
-         <View className="flex-row justify-between items-center">
+         <View style={{ width: "100%", backgroundColor: appColors.border, height: 1 }}></View>
+         <View className="flex-row justify-between items-center py-4">
             <View className="flex-row w-full">
                <View className="flex-row flex-1 items-center gap-3">
                   <TouchableOpacity

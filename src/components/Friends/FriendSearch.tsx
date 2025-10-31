@@ -63,11 +63,13 @@ export default function FriendSearch({ showSearchBar }: { showSearchBar: boolean
                   style={{ paddingHorizontal: wp(3), gap: 6, backgroundColor: appColors.whitesmoke }}
                   className="py-3"
                >
-                  <AppText weight="semi" size="lg" color={appColors.secondary}>
+                  <AppText weight="semi" size="xl" color={appColors.secondary}>
                      Suggested
                   </AppText>
                   <View className="flex-row justify-between">
-                     <AppText weight="semi">People you my know</AppText>
+                     <AppText color={appColors.secondary} weight="semi">
+                        People you my know
+                     </AppText>
                      <TouchableOpacity onPress={() => router.push("/(app)/(tabs)/(friends)/suggested")}>
                         <AppText color={appColors.secondary}>{`see more >`}</AppText>
                      </TouchableOpacity>

@@ -2,6 +2,7 @@ import { Plus } from "@/assets/icons/plus";
 import NewListingHeader from "@/src/components/store/NewListingHeader";
 import ProductImagePicker from "@/src/components/store/ProductImagePicker";
 import AppText from "@/src/components/ui/AppText";
+import Button from "@/src/components/ui/Button";
 import { Input } from "@/src/components/ui/Input";
 import InputArea from "@/src/components/ui/InputArea";
 import Select from "@/src/components/ui/Select";
@@ -11,8 +12,9 @@ import { wp } from "@/src/constant/common";
 import { createStore, createStoreProduct } from "@/src/Services/store";
 import { useAuthStore } from "@/src/store/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ActivityIndicator, Alert, Pressable, ScrollView, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const ProductCondition = ["new", "used - like", "used - good", "used - fair"];
@@ -28,9 +30,12 @@ export default function NewProduct() {
    const [condition, setCondition] = useState<string | null>("");
    const [description, setDescription] = useState("");
    const [productImage, setProductImage] = useState<any[]>([]);
+   const [resetPicker, setResetPicker] = useState(false);
 
    const queryClient = useQueryClient();
    const { bottom } = useSafeAreaInsets();
+
+   const router = useRouter();
 
    // const uploadImage = async () => {
    //    if (!image.length) return;
@@ -88,14 +93,22 @@ export default function NewProduct() {
          setTitle("");
          setCategory(null);
          setCondition(null);
-         setProductImage([]);
+         handleReset();
          setPrice("");
          setAvailability("");
          setDescription("");
          queryClient.invalidateQueries({ queryKey: ["store"] });
+         router.back();
       },
       onError: (error) => Alert.alert("Error", error.message),
    });
+
+   const handleReset = () => {
+      setProductImage([]);
+      setResetPicker(true);
+      // Optional: turn it off after triggering reset so it can be reused
+      setTimeout(() => setResetPicker(false), 100);
+   };
 
    return (
       <ScrollView
@@ -106,24 +119,18 @@ export default function NewProduct() {
          {/* <View className="flex-row items-center"> */}
          <View className="w-full flex-row relative justify-center items-center">
             <NewListingHeader image={profile?.avatarUrl} firstName={profile?.firstName} lastName={profile?.lastName} />
-            <Pressable
+            <Button
+               text="Publish"
                onPress={() => mutate()}
+               icon={<Plus color={appColors.blue} />}
+               color={appColors.blue}
+               variant="secondary"
+               size="sm"
                disabled={isPending}
-               style={{ flexDirection: "row", alignItems: "center", padding: 10 }}
-            >
-               {isPending ? (
-                  <ActivityIndicator size={"small"} />
-               ) : (
-                  <>
-                     <Plus size={20} color={appColors.blue} />
-                     <AppText size="lg" weight="semi" color={appColors.blue}>
-                        Publish
-                     </AppText>
-                  </>
-               )}
-            </Pressable>
+               isLoading={isPending}
+            />
          </View>
-         <ProductImagePicker onPickLocal={(uri: []) => setProductImage(uri)} />
+         <ProductImagePicker onPickLocal={(uri: []) => setProductImage(uri)} reset={resetPicker} />
          <View style={{ paddingBottom: 200, paddingTop: 30 }} className="gap-4 flex-1">
             <AppText weight="semi">Product Information</AppText>
             <Input placeholder="Title" value={title} onChangeText={setTitle} inputMode="text" />

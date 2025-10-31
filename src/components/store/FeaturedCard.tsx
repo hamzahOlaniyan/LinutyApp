@@ -13,9 +13,9 @@ type Props = {
 export default function FeaturedCard({ item, isLoading }: Props) {
    const router = useRouter();
 
-   let loading = true;
+   // console.log(JSON.stringify(item, null, 2));
 
-   if (loading) {
+   if (isLoading) {
       return (
          <Animated.View
             style={{
@@ -55,7 +55,7 @@ export default function FeaturedCard({ item, isLoading }: Props) {
          <View
             style={{
                padding: 10,
-               gap: 6,
+               gap: 2,
             }}
          >
             <AppText size="sm" weight="med" cap="capitalize" color={appColors.white}>

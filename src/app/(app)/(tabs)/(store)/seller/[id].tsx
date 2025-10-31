@@ -40,7 +40,6 @@ export default function SellerDetails() {
    const fullName = `${SELLER?.firstName}  ${SELLER?.lastName}`;
 
    // console.log("---SELLER PRODUCT", JSON.stringify(PRODUCTS, null, 2));
-   console.log({ id });
 
    return (
       <FlatList

@@ -42,18 +42,18 @@ export default function PostHeader({ id, avatar, name, username, date, content }
             }}
          >
             <View className="flex-row justify-between items-start">
-               <View className="flex-row items-center gap-2">
+               <View className="flex-row items-start gap-2">
                   <TouchableOpacity onPress={() => router.push(`/(user)/${id}`)}>
                      <Avatar path={avatar} size={50} />
                   </TouchableOpacity>
                   <View>
                      <View className="flex-row items-center gap-1">
                         <TouchableOpacity onPress={() => router.push(`/(user)/${id}`)}>
-                           <AppText size="lg" weight="bold" cap="capitalize" style={{ letterSpacing: -0.5 }}>
+                           <AppText size="lg" weight="bold" cap="capitalize" style={{ letterSpacing: -0.4 }}>
                               {name.trim()}
                            </AppText>
                         </TouchableOpacity>
-                        <View className="flex-row items-center gap-1 relative -top-[px]">
+                        <View className="flex-row items-center gap-1 relative top-[1.5px]">
                            <Octicons name="dot-fill" size={5} color={appColors.lightGrey} className="relative " />
                            <AppText color={appColors.lightGrey} size="xs" className="">
                               {dayjs(date).fromNow(true)}

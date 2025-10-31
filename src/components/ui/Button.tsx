@@ -41,6 +41,7 @@ export default function Button({
             {
                borderRadius: 100,
                justifyContent: "center",
+               alignItems: "center",
                paddingHorizontal:
                   size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 10 : hp(5),
                borderWidth: variant === "outline" ? 0.8 : 0,
@@ -70,7 +71,7 @@ export default function Button({
          {isLoading ? (
             <ActivityIndicator color={indicatorColor} size={"small"} />
          ) : (
-            <View className="flex-row justify-center items-center gap-2">
+            <View className="flex-row justify-center items-center gap-1">
                {icon && icon}
                {text && (
                   <Text

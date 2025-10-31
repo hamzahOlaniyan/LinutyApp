@@ -58,7 +58,6 @@ export default function NewPost() {
             paddingHorizontal: wp(4),
             paddingBottom: bottom,
             position: "relative",
-            backgroundColor: "blue",
          }}
          className="flex-1 bg-white relative"
       >

@@ -42,7 +42,7 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
       >
          <BottomSheetView style={[styles.contentContainer, { paddingBottom: bottom }]}>
             <View style={{ borderBottomColor: appColors.border, borderBottomWidth: 0.5 }} className="py-3 mb-4">
-               <AppText align="center" size="lg" weight="semi" cap="capitalize">
+               <AppText align="center" weight="semi" cap="capitalize">
                   {props.title}
                </AppText>
             </View>

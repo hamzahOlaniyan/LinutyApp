@@ -2,7 +2,7 @@ import { ImageIcon } from "@/assets/icons/ImageIcon";
 import { appColors } from "@/src/constant/colors";
 import { Fontisto } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, FlatList, Image, Pressable, View } from "react-native";
 import AppText from "../ui/AppText";
 
@@ -11,11 +11,18 @@ interface Props {
    url?: string | null;
    onPickLocal?: (uri: any) => void;
    picker?: React.ReactNode;
+   reset?: boolean;
 }
 
-export default function ProductImagePicker({ url, size = 200, onPickLocal, picker }: Props) {
+export default function ProductImagePicker({ url, size = 200, onPickLocal, picker, reset }: Props) {
    const [uploading, setUploading] = useState(false);
    const [image, setImage] = useState<{ uri: string; mimeType?: string; height: number; width: number }[]>([]);
+
+   useEffect(() => {
+      if (reset) {
+         setImage([]);
+      }
+   }, [reset]);
 
    async function pickStoreImage() {
       try {
@@ -23,7 +30,6 @@ export default function ProductImagePicker({ url, size = 200, onPickLocal, picke
          let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images", "videos"],
             allowsMultipleSelection: true,
-            // aspect: [4, 3],
             quality: 1,
          });
          if (result.canceled || !result.assets || result.assets.length === 0) {

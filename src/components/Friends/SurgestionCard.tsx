@@ -1,3 +1,4 @@
+import { Plus } from "@/assets/icons/plus";
 import { appColors } from "@/src/constant/colors";
 import { Image } from "expo-image";
 import React from "react";
@@ -17,7 +18,7 @@ const { width: screenWidth } = Dimensions.get("screen");
 
 export default function SurgestionCard({ id, avatar, firstName, lastName, username }: SurgestionCardProps) {
    return (
-      <TouchableOpacity onPress={() => ""} style={{ flex: 1 }}>
+      <TouchableOpacity onPress={() => ""} style={{ flex: 1, backgroundColor: appColors.white }}>
          <View style={{ width: "100%", height: 200 }}>
             {avatar ? (
                <Image source={{ uri: avatar }} style={{ width: "100%", height: "100%" }} contentPosition="center" />
@@ -34,14 +35,20 @@ export default function SurgestionCard({ id, avatar, firstName, lastName, userna
             )}
          </View>
 
-         <View className="py-1 gap-3">
+         <View className="py-3 gap-3 px-3">
             <View>
                <AppText weight="med" cap="capitalize">
                   {firstName} {lastName}
                </AppText>
-               <AppText color={appColors.secondary}>@{username}</AppText>
+               <AppText color={appColors.lightGrey}>@{username}</AppText>
             </View>
-            <Button size="xs" text="Add friend" variant="outline" />
+            <Button
+               size="xs"
+               icon={<Plus color={appColors.blue} size={20} />}
+               text="Add friend"
+               color={appColors.blue}
+               variant="secondary"
+            />
          </View>
       </TouchableOpacity>
    );

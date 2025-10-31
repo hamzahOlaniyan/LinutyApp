@@ -86,11 +86,13 @@ export default function StorePage() {
                   />
                   <Button
                      size="sm"
+                     text="Sell a product"
                      onPress={() => router.push("/new-product")}
-                     icon={<Plus size={28} />}
+                     icon={<Plus size={24} color={appColors.blue} />}
                      className="flex-1"
                      style={{ backgroundColor: "red" }}
-                     variant="outline"
+                     variant="secondary"
+                     color={appColors.blue}
                   />
                </View>
                {showSearchBar && (
