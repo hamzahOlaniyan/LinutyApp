@@ -178,12 +178,13 @@ export default function Post({
          <View style={{ backgroundColor: appColors.white }} className="overflow-hidden">
             {/* HEADER*/}
             <PostHeader
-               id={post?.author?.id}
+               authorId={post?.author?.id}
                avatar={post?.author?.avatarUrl}
                name={fullName}
                username={post?.author?.username}
                date={post?.created_at}
                content={post?.content}
+               postId={post?.id}
             />
             {/* MEDIA*/}
             {post?.media?.length <= 1 && (

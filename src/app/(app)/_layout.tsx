@@ -49,6 +49,12 @@ export default function AppLayout() {
          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
          <Stack.Screen name="(user)/[id]" />
          <Stack.Screen
+            name="edit/[id]"
+            options={{
+               title: "Edit post",
+            }}
+         />
+         <Stack.Screen
             name="new-post"
             options={{
                title: "New post",

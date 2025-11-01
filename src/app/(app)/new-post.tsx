@@ -1,5 +1,6 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { ImageIcon } from "@/assets/icons/ImageIcon";
+import { Plus } from "@/assets/icons/plus";
 import Avatar from "@/src/components/Avatar";
 import Imagepicker from "@/src/components/Imagepicker";
 import AppText from "@/src/components/ui/AppText";
@@ -61,7 +62,7 @@ export default function NewPost() {
          }}
          className="flex-1 bg-white relative"
       >
-         <View className="gap-4 relative bg-green-200">
+         <View className="gap-4 relative">
             <View className="flex-row items-center gap-4">
                <Avatar path={profile?.avatarUrl} size={45} />
                <View>
@@ -69,7 +70,7 @@ export default function NewPost() {
                      {profile?.firstName} {profile?.lastName}
                   </AppText>
                   <View className="flex-row gap-3">
-                     <AppText weight="med" size="sm" color={appColors.grey}>
+                     <AppText weight="med" size="sm" color={appColors.lightGrey}>
                         @{profile?.username}
                      </AppText>
                   </View>
@@ -85,7 +86,7 @@ export default function NewPost() {
                   <TextInput
                      style={{
                         fontSize: hp(3),
-                        fontFamily: TiktokFont.TiktokLight,
+                        fontFamily: TiktokFont.TiktokRegular,
                         color: appColors.text,
                      }}
                      placeholder="What's on your mind?"
@@ -110,11 +111,14 @@ export default function NewPost() {
             />
          </View>
          <Button
-            onPress={() => mutate()}
+            text="Add Post"
             disabled={!postText.trim()}
             isLoading={isPending}
-            size="sm"
-            text="Post"
+            icon={<Plus size={20} color={appColors.blue} />}
+            onPress={() => mutate()}
+            color={appColors.blue}
+            variant="secondary"
+            size="xs"
             className="absolute top-0 right-4 bg-neutral-100 p-2 rounded-lg"
          />
       </ScrollView>

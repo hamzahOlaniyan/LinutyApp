@@ -7,7 +7,7 @@ export const fetchPost = async () => {
       .order("created_at", { ascending: false });
 
    if (error) throw error;
-   return data;
+   return data || [];
 };
 
 export const createPost = async (newPost: any) => {
@@ -20,7 +20,6 @@ export const getPostById = async (id: string) => {
       .from("posts")
       .select("*, comments(*, author:profiles(id,firstName,lastName, username, avatarUrl))")
       .eq("id", id)
-      .order("created_at", { ascending: false })
       .single()
       .throwOnError();
 
@@ -65,6 +64,11 @@ export const removePostLike = async (postId: string, userId: string) => {
 
 export async function deletePost(postId: string) {
    const res = await supabase.from("posts").delete().eq("id", postId).is("parent_id", null).single().throwOnError();
+   return { success: true };
+}
+
+export async function updatePost(postId: string, value: any) {
+   const { error } = await supabase.from("instruments").update({ value }).eq("id", postId);
    return { success: true };
 }
 

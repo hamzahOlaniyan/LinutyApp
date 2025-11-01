@@ -1,5 +1,5 @@
-import { AddCircleIcon } from "@/assets/icons/addCircle";
 import { Notification } from "@/assets/icons/notification";
+import { Plus } from "@/assets/icons/plus";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
@@ -13,6 +13,7 @@ import { getNotfication } from "../Services/Notification";
 import { useAuthStore } from "../store/authStore";
 import Avatar from "./Avatar";
 import AppText from "./ui/AppText";
+import Button from "./ui/Button";
 
 export default function HomeHeaderMenu() {
    const { profile, session } = useAuthStore();
@@ -83,19 +84,14 @@ export default function HomeHeaderMenu() {
             contentFit="contain"
          />
          <View className="flex-row items-center justify-between gap-2">
-            <TouchableOpacity
+            <Button
+               text="Add Post"
+               icon={<Plus size={20} color={appColors.blue} />}
                onPress={() => router.push("/(app)/new-post")}
-               style={{
-                  borderRadius: 60,
-                  padding: 3,
-                  borderWidth: 1,
-                  paddingHorizontal: 8,
-               }}
-               className="flex-row items-center gap-1"
-            >
-               <AddCircleIcon size={20} />
-               <AppText weight="med">Post</AppText>
-            </TouchableOpacity>
+               color={appColors.blue}
+               variant="secondary"
+               size="xs"
+            />
             <TouchableOpacity onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
                <Notification size={24} />
                {unreadCount > 0 && (
