@@ -1,9 +1,9 @@
 import { PhotoIcon } from "@/assets/icons/photoIcon";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import { ActivityIndicator, Alert, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from "react-native";
 import { appColors } from "../constant/colors";
 import { supabase } from "../lib/supabase";
 import { updateProfile } from "../Services/profiles";
@@ -15,6 +15,8 @@ export default function CoverImagepicker() {
    const [uploading, setUploading] = useState(false);
    const [image, setImage] = useState<any>();
    const [uri, setUri] = useState<string | null>(null);
+
+   const queryClient = useQueryClient();
 
    async function pickImage() {
       try {
@@ -32,14 +34,10 @@ export default function CoverImagepicker() {
          if (!result.canceled) {
             setImage(result.assets);
             setUri(result.assets[0].uri);
-            return { status: true };
+            return { status: true, uri: result.assets[0].uri };
          }
       } catch (error) {
-         if (error instanceof Error) {
-            Alert.alert(error.message);
-         } else {
-            throw error;
-         }
+         console.log(error);
       } finally {
          setUploading(false);
       }
@@ -55,14 +53,12 @@ export default function CoverImagepicker() {
          const filename = `${userId}-${Date.now()}.${fileExt}`;
          const fullPath = `users/${userId}/${filename}`;
 
-         const { data, error: uploadError } = await supabase.storage.from(folder).upload(fullPath, arraybuffer, {
+         const { error: uploadError } = await supabase.storage.from(folder).upload(fullPath, arraybuffer, {
             contentType: "image/jpeg",
             upsert: true,
          });
 
-         if (uploadError) {
-            throw uploadError;
-         }
+         if (uploadError) throw uploadError;
 
          const {
             data: { publicUrl },
@@ -76,27 +72,32 @@ export default function CoverImagepicker() {
    };
 
    const handleCoverImage = useMutation({
-      mutationFn: async () => {
-         const coverImage = await uploadImage(profile?.id, uri as string, "media");
-         updateProfile(profile?.id, { cover_photo: coverImage });
+      mutationFn: async (uri: string) => {
+         const coverImage = await uploadImage(profile?.id, uri, "media");
+         await updateProfile(profile?.id, { cover_photo: coverImage });
+         return coverImage; // return uploaded URL
       },
-      onSuccess(data, variables, context) {
-         console.log(" ✅ cover image has been updated", data, variables, context);
+      onSuccess: async (data) => {
+         console.log("✅ Cover image updated:", data);
+         await queryClient.invalidateQueries({ queryKey: ["profile", profile?.id] });
       },
-      onError: () => {
-         console.error("Error", "Failed to upload cover image");
+      onError: (err) => {
+         console.error("❌ Failed to upload cover image", err);
       },
    });
 
    const handleCoverImageChange = async () => {
-      pickImage().then((res) => {
-         if (res) handleCoverImage.mutate();
-      });
+      const picked = await pickImage();
+      if (picked?.status && picked.uri) {
+         handleCoverImage.mutate(picked.uri); // ✅ pass the uri here
+      }
    };
 
    // const removeImage = (uriToRemove: string) => {
    //    setImage((prev) => prev.filter((img) => img.uri !== uriToRemove));
    // };
+
+   // console.log(JSON.stringify(profile, null, 2));
 
    return (
       <View>
@@ -108,14 +109,15 @@ export default function CoverImagepicker() {
                {handleCoverImage.isPending && <ActivityIndicator />}
                {profile?.cover_photo && (
                   <Image
-                     source={profile?.cover_photo || profile?.cover_photo}
+                     source={{ uri: profile?.cover_photo }}
                      transition={100}
                      style={{ width: "100%", height: "100%" }}
+                     contentPosition="center"
                   />
                )}
-               {image && (
+               {uri && (
                   <Image
-                     source={image}
+                     source={image.uri}
                      transition={100}
                      style={{ width: "100%", height: "100%", aspectRatio: image.width / image.height }}
                   />

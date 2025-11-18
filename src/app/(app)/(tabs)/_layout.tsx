@@ -1,9 +1,11 @@
-import { Community } from "@/assets/icons/community";
-import { CommunityOtline } from "@/assets/icons/community-outline";
-import { GroupIcon } from "@/assets/icons/groupIcon";
-import { GroupIconSolid } from "@/assets/icons/groupIconSolid";
+import { DiscoverIcon } from "@/assets/icons/DiscoverIcon";
+import { DiscoverIconSolid } from "@/assets/icons/DiscoverIconSolid";
+import { FriendsIcon } from "@/assets/icons/friendsIcon";
+import { FriendsIconSolid } from "@/assets/icons/friendsIconSolid";
 import { Home } from "@/assets/icons/home";
 import { HomeSolid } from "@/assets/icons/home-solid";
+import { NewsIcon } from "@/assets/icons/NewsIcon";
+import { NewsIconSolid } from "@/assets/icons/NewsIconSolid";
 import { Store } from "@/assets/icons/store";
 import { StoreSolid } from "@/assets/icons/store-solid";
 import { appColors } from "@/src/constant/colors";
@@ -20,18 +22,28 @@ export default function TabLayout() {
             headerTitleAlign: "center",
             tabBarShowLabel: false,
             headerShadowVisible: false,
-            tabBarStyle: {
-               height: 35 + insets.bottom,
-               position: "absolute",
-               elevation: 0,
-               borderTopColor: appColors.bordersLight,
-               borderTopWidth: 0.5,
-               shadowOpacity: 0,
-               backgroundColor: appColors.white,
-               // backgroundColor: "green",
-            },
+            tabBarActiveTintColor: appColors.primary,
             tabBarItemStyle: {
-               // paddingVertical: 1,
+               height: 50,
+            },
+            tabBarIconStyle: {
+               width: "100%",
+               height: "100%",
+               borderRadius: 500,
+            },
+            tabBarStyle: {
+               height: 50,
+               position: "absolute",
+               bottom: insets.bottom + 10,
+               elevation: 3,
+               borderTopWidth: 0,
+               shadowOpacity: 0.7,
+               backgroundColor: appColors.white,
+               marginHorizontal: 15,
+               borderRadius: 500,
+               justifyContent: "center",
+               alignContent: "center",
+               flex: 1,
             },
          }}
       >
@@ -40,18 +52,60 @@ export default function TabLayout() {
             options={{
                title: "Home",
                headerShown: false,
-               tabBarIcon: ({ size, color, focused }) => (
-                  <View>{focused ? <HomeSolid color={appColors.primary} /> : <Home />}</View>
+               tabBarIcon: ({ focused }) => (
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <HomeSolid size={22} color={appColors.white} /> : <Home size={22} />}
+                  </View>
                ),
             }}
          />
          <Tabs.Screen
-            name="Friends"
+            name="(explore)"
             options={{
-               title: "Find friends",
                headerShown: false,
-               tabBarIcon: ({ size, color, focused }) => (
-                  <View>{focused ? <GroupIconSolid color={appColors.primary} /> : <GroupIcon />}</View>
+               tabBarIcon: ({ focused }) => (
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <DiscoverIconSolid size={22} color={appColors.white} /> : <DiscoverIcon size={22} />}
+                  </View>
+               ),
+            }}
+         />
+         <Tabs.Screen
+            name="(friends)"
+            options={{
+               title: "comunity",
+               headerShown: false,
+               tabBarIcon: ({ focused }) => (
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <FriendsIconSolid size={22} color={appColors.white} /> : <FriendsIcon size={22} />}
+                  </View>
                ),
             }}
          />
@@ -61,18 +115,40 @@ export default function TabLayout() {
                title: "market",
                headerShown: false,
                popToTopOnBlur: true,
-               tabBarIcon: ({ size, color, focused }) => (
-                  <View>{focused ? <StoreSolid color={appColors.primary} /> : <Store />}</View>
+               tabBarIcon: ({ focused }) => (
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <StoreSolid size={22} color={appColors.white} /> : <Store size={22} />}
+                  </View>
                ),
             }}
          />
          <Tabs.Screen
-            name="(community)"
+            name="(news)"
             options={{
                title: "comunity",
                headerShown: false,
-               tabBarIcon: ({ size, color, focused }) => (
-                  <View>{focused ? <Community color={appColors.primary} /> : <CommunityOtline />}</View>
+               tabBarIcon: ({ focused }) => (
+                  <View
+                     style={{
+                        backgroundColor: focused ? appColors.primary : "",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        borderRadius: 500,
+                     }}
+                  >
+                     {focused ? <NewsIconSolid size={22} color={appColors.white} /> : <NewsIcon size={22} />}
+                  </View>
                ),
             }}
          />

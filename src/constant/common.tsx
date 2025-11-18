@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
 
-const { width: deviceWidth, height: deviceHight } = Dimensions.get("window");
+const { width: deviceWidth, height: deviceHight } = Dimensions.get("screen");
 
 export const hp = (percentage: number) => {
    return (percentage * deviceHight) / 100;

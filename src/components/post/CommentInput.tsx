@@ -1,22 +1,21 @@
-import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useRef, useState } from "react";
-import { Alert, KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
-// import { hp } from "../common";
-// import { colors } from "../constant/colors";
-// import { useThemeStore } from "../context/themeStore";
+import { SendIcon } from "@/assets/icons/sendIcon";
 import { appColors } from "@/src/constant/colors";
 import { hp } from "@/src/constant/common";
 import { createComment } from "@/src/Services/comment";
+import { createNotification } from "@/src/Services/Notification";
 import { useAuthStore } from "@/src/store/authStore";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, KeyboardAvoidingView, Platform, TextInput, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
 import Button from "../ui/Button";
-// import { createNotification } from "../Services/Notification";
 
 export default function CommentInput({
    postId,
-   postUserID,
+   postAuthor,
    replyToName,
    parentId,
    showKeyboard,
@@ -25,7 +24,7 @@ export default function CommentInput({
    setReplyToId,
 }: {
    postId?: string;
-   postUserID?: string;
+   postAuthor?: string;
    showKeyboard?: boolean;
    replyToName?: string | null;
    parentId?: any;
@@ -37,6 +36,7 @@ export default function CommentInput({
    const { profile } = useAuthStore();
 
    const inputRef = useRef<TextInput>(null);
+   const { bottom } = useSafeAreaInsets();
 
    useEffect(() => {
       if (showKeyboard && inputRef.current) {
@@ -60,24 +60,26 @@ export default function CommentInput({
          console.log("✅ repliy has been sent", data);
          setCommentText("");
 
-         // if (profile.id !== postUserID) {
-         //    try {
-         //       let notify = {
-         //          senderId: profile?.id,
-         //          receiverId: postUserID,
-         //          title: commentText,
-         //          content: { postId: postId, commentId: data?.id ?? "" },
-         //       };
-         //       // await createNotification(notify);
-         //       // console.log("Notification created CREATE=====>", JSON.stringify(notify, null, 2));
-         //    } catch (error) {
-         //       console.log("Notification error", error);
-         //    }
-         // }
-         // setCommentText("");
-         // setReplyToId(null);
-         // setReplyToName(null);
-         // setShowKeyboard(false);
+         if (profile.id !== postAuthor) {
+            try {
+               let notify = {
+                  senderId: profile?.id,
+                  receiverId: postAuthor,
+                  title: commentText,
+                  content: { postId: postId, commentId: data?.id ?? "" },
+                  type: "comment",
+                  postId: postId,
+               };
+               await createNotification(notify);
+               console.log("Notification created CREATE=====>", JSON.stringify(notify, null, 2));
+            } catch (error) {
+               console.log("Notification error", error);
+            }
+         }
+         setCommentText("");
+         setReplyToId(null);
+         setReplyToName(null);
+         setShowKeyboard(false);
          await queryClient.invalidateQueries({ queryKey: ["posts"] });
          await queryClient.invalidateQueries({ queryKey: ["posts", parentId] });
          await queryClient.invalidateQueries({ queryKey: ["posts", postId] });
@@ -89,16 +91,11 @@ export default function CommentInput({
 
    return (
       <KeyboardAvoidingView keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 135} behavior="padding">
-         <View
-            style={{
-               zIndex: 999,
-               width: "100%",
-            }}
-         >
+         <View>
             {replyToName && (
                <View
                   style={{ backgroundColor: appColors.selectedTeply, borderRadius: 10 }}
-                  className="w-full items-center justify-between flex-row py-4 my-1"
+                  className="w-full items-center justify-between flex-row py-4 my-1 "
                >
                   <AppText color={appColors.primary} weight="semi" className="px-4">
                      relpy to @{replyToName}
@@ -117,18 +114,20 @@ export default function CommentInput({
                </View>
             )}
             <View
-               style={{ borderTopColor: appColors.bordersLight, borderTopWidth: 1 }}
-               className="w-full items-center flex-row gap-2 py-3"
+               style={{ borderTopColor: appColors.border, borderTopWidth: 1 }}
+               className="w-full items-center flex-row gap-2 py-2"
             >
                <Avatar path={profile?.avatarUrl} size={35} />
-               <View className="h-12  flex-1 justify-center w-full rounded-full">
+               <View style={{ height: hp(4.5) }} className="flex-1 justify-center w-full rounded-full">
                   <TextInput
                      ref={inputRef}
                      style={{
-                        fontSize: hp(2),
+                        fontSize: hp(1.8),
                         backgroundColor: appColors.searchBar,
                         borderRadius: 100,
                         paddingHorizontal: 10,
+                        borderWidth: 0.5,
+                        borderColor: appColors.border,
                      }}
                      value={commentText}
                      onChangeText={setCommentText}
@@ -138,14 +137,14 @@ export default function CommentInput({
                      autoFocus={false}
                   />
                </View>
-               <Button size="sm" isLoading={isPending}>
-                  <Feather
-                     onPress={() => mutate()}
-                     disabled={isPending || commentText.length === 0}
-                     size={20}
-                     name="send"
-                  />
-               </Button>
+               <Button
+                  variant="secondary"
+                  size="sm"
+                  onPress={() => mutate()}
+                  isLoading={isPending}
+                  disabled={isPending || commentText.length === 0}
+                  icon={<SendIcon />}
+               />
             </View>
          </View>
       </KeyboardAvoidingView>

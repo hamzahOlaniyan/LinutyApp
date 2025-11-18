@@ -1,77 +1,65 @@
-// import AppName from "@/src/assets/Logo/AppName";
-// import { hp, wp } from "@/src/common";
-// import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
-import React from "react";
-import { Animated, Pressable, View } from "react-native";
-// import { useAuthStore } from "../context/authStore";
-// import { useThemeStore } from "../context/themeStore";
-// import { getNotfication } from "../Services/Notification";
-// import SupabaseImage from "./SupabaseImage";
-import { AddCircleIcon } from "@/assets/icons/addCircle";
 import { Notification } from "@/assets/icons/notification";
+import { Plus } from "@/assets/icons/plus";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
+import { useEffect } from "react";
+import { TouchableOpacity, View } from "react-native";
+import Animated from "react-native-reanimated";
 import { appColors } from "../constant/colors";
 import { GLOBAL_STYLES } from "../constant/globalStyles";
+import { supabase } from "../lib/supabase";
+import { getNotfication } from "../Services/Notification";
 import { useAuthStore } from "../store/authStore";
 import Avatar from "./Avatar";
-import Menu from "./ui/Menu";
+import AppText from "./ui/AppText";
+import Button from "./ui/Button";
 
 export default function HomeHeaderMenu() {
-   const { profile } = useAuthStore();
-   // const { currentTheme } = useThemeStore();
+   const { profile, session } = useAuthStore();
 
    const router = useRouter();
+   const queryClient = useQueryClient();
 
-   // const { data: notifications } = useQuery({
-   //    queryKey: ["notification", currentUser?.id],
-   //    queryFn: () => getNotfication(currentUser?.id ?? ""),
-   //    enabled: !!currentUser?.id,
-   // });
+   const { data: NOTIFICATION } = useQuery({
+      queryKey: ["notification", profile?.id],
+      queryFn: () => getNotfication(profile?.id),
+      enabled: !!profile?.id,
+   });
 
-   // const unreadCount = notifications?.filter((n: any) => !n.read)?.length || 0;
+   const unreadCount = NOTIFICATION?.filter((n: any) => !n.read)?.length ?? 0;
 
-   // useEffect(() => {
-   //    if (!currentUser?.id) return;
+   // console.log("HomeHeaderMenu", JSON.stringify(profile, null, 2));
+   // console.log("HomeHeaderMenu SESSION", JSON.stringify(session, null, 2));
 
-   //    const notificationChannel = supabase
-   //       .channel("public:notifications")
-   //       .on(
-   //          "postgres_changes",
-   //          {
-   //             event: "INSERT",
-   //             schema: "public",
-   //             table: "notification",
-   //             filter: `receiver_id=eq.${currentUser?.id}`,
-   //          },
-   //          (payload) => {
-   //             console.log("New Notification:", payload.new);
-   //             queryClient.invalidateQueries({ queryKey: ["notification", currentUser?.id] });
-   //          }
-   //       )
-   //       .subscribe();
+   useEffect(() => {
+      if (!profile?.id) return;
 
-   //    const postChannel = supabase
-   //       .channel("public:posts")
-   //       .on(
-   //          "postgres_changes",
-   //          {
-   //             event: "INSERT",
-   //             schema: "public",
-   //             table: "posts",
-   //          },
-   //          (payload) => {
-   //             console.log("New post:", payload.new);
-   //             queryClient.invalidateQueries({ queryKey: ["posts", currentUser?.id] });
-   //          }
-   //       )
-   //       .subscribe();
+      const notificationChannel = supabase
+         .channel("notification")
+         .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "notification", filter: `receiver_id=eq.${profile?.id}` },
+            (payload) => {
+               console.log("New Notification:", payload.new);
+               queryClient.invalidateQueries({ queryKey: ["notification", profile?.id] });
+            }
+         )
+         .subscribe();
 
-   //    return () => {
-   //       supabase.removeChannel(notificationChannel);
-   //       supabase.removeChannel(postChannel);
-   //    };
-   // }, [currentUser?.id]);
+      const postChannel = supabase
+         .channel("posts")
+         .on("postgres_changes", { event: "*", schema: "public", table: "posts" }, (payload) => {
+            console.log("New posts:", payload.new);
+            queryClient.invalidateQueries({ queryKey: ["posts", profile?.id] });
+         })
+         .subscribe();
+
+      return () => {
+         supabase.removeChannel(notificationChannel);
+         supabase.removeChannel(postChannel);
+      };
+   }, [profile?.id]);
 
    return (
       <Animated.View
@@ -81,31 +69,45 @@ export default function HomeHeaderMenu() {
                zIndex: 10,
                borderBottomColor: appColors.bordersLight,
                borderBottomWidth: 1,
+               backgroundColor: appColors.white,
             },
          ]}
-         className="flex-row items-center justify-between py-1 gap-10 bg-white"
+         className="flex-row items-center justify-between py-1"
       >
          <Image
             source={require("@/assets/images/linuty.png")}
             style={{
-               width: 80,
-               height: 30,
+               height: 25,
+               aspectRatio: 3 / 1,
+               alignSelf: "flex-end",
             }}
             contentFit="contain"
          />
-         <View className="flex-row items-center justify-between w-full flex-1">
-            <View className="relative">
-               <Menu />
-            </View>
-            <Pressable onPress={() => router.push("/(app)/new-post")}>
-               <AddCircleIcon />
-            </Pressable>
-            <Pressable onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
-               <Notification />
-            </Pressable>
-            <Pressable onPress={() => router.push("/(app)/(profile)")}>
-               <Avatar path={profile?.avatarUrl} size={40} />
-            </Pressable>
+         <View className="flex-row items-center justify-between gap-2">
+            <Button
+               text="Add Post"
+               icon={<Plus size={20} color={appColors.blue} />}
+               onPress={() => router.push("/(app)/new-post")}
+               color={appColors.blue}
+               variant="secondary"
+               size="xs"
+            />
+            <TouchableOpacity onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
+               <Notification size={24} />
+               {unreadCount > 0 && (
+                  <View
+                     style={{ borderWidth: 2, borderColor: appColors.white }}
+                     className="bg-sky-500 w-6 h-6 rounded-full absolute -top-[2px] -right-[2px] justify-center items-center"
+                  >
+                     <AppText size="xs" weight="semi" color="white">
+                        {unreadCount}
+                     </AppText>
+                  </View>
+               )}
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/(app)/(profile)")}>
+               <Avatar path={profile?.avatarUrl} size={30} />
+            </TouchableOpacity>
          </View>
       </Animated.View>
    );
