@@ -1,12 +1,10 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/src/constant/colors";
-import { hp } from "@/src/constant/common";
-// import { useThemeStore } from "@/src/context/themeStore";
 import React from "react";
-import { Text, TextStyle } from "react-native";
+import { StyleProp, Text, TextStyle } from "react-native";
 
-type TextWeight = "black" | "bold" | "semi" | "med" | "reg" | "light";
-type TextSize = "xxxxxl" | "xxxxl" | "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs" | "xxs";
+type TextWeight = "black" | "extraBold" | "bold" | "semi" | "med" | "reg" | "light";
+type TextSize = "xxxl" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs" | "xxs";
 
 type AppTextProps = {
    size?: TextSize;
@@ -14,7 +12,7 @@ type AppTextProps = {
    weight?: TextWeight;
    cap?: "capitalize" | "uppercase";
    color?: string;
-   style?: any;
+   style?: StyleProp<TextStyle>;
    align?: "left" | "right" | "center";
    className?: string;
    onPress?: () => void;
@@ -34,20 +32,19 @@ export default function AppText({
    // const { currentTheme } = useThemeStore();
 
    const fontSize = {
-      xxxxxl: hp(4.4),
-      xxxxl: hp(3.4),
-      xxxl: hp(2.8),
-      xxl: hp(2.6),
-      xl: hp(2.3),
-      lg: hp(2),
-      md: hp(1.8),
-      sm: hp(1.6),
-      xs: hp(1.4),
-      xxs: hp(1),
+      xxxl: 24,
+      xxl: 20,
+      xl: 18,
+      lg: 17,
+      md: 16,
+      sm: 14,
+      xs: 12,
+      xxs: 10,
    }[size];
 
    const fontFamilyMap: Record<TextWeight, TextStyle["fontFamily"]> = {
       black: TiktokFont.TiktokBlack,
+      extraBold: TiktokFont.TiktokExtraBold,
       bold: TiktokFont.TiktokBold,
       semi: TiktokFont.TiktokSemiBold,
       med: TiktokFont.TiktokMedium,
@@ -67,7 +64,6 @@ export default function AppText({
                fontFamily,
                textTransform: cap,
                color: color,
-               // color: appColors.text,
                textAlign: align,
             },
          ]}

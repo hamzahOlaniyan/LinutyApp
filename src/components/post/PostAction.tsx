@@ -1,78 +1,69 @@
-import { Comment } from "@/assets/icons/comment";
+import { CommentIcon } from "@/assets/icons/comment";
 import { ShareIcon } from "@/assets/icons/shareIcon";
 import { Thumbsup } from "@/assets/icons/thumbsup";
 import { ThumbsupSolid } from "@/assets/icons/thumbsup-solid";
 import { appColors } from "@/src/constant/colors";
-import React from "react";
+import { wp } from "@/src/constant/common";
+import { usePostLikes } from "@/src/hooks/usePostLikes";
+import { useAuthStore } from "@/src/store/authStore";
 import { TouchableOpacity, View } from "react-native";
 import AppText from "../ui/AppText";
+import ActionDetails from "./ActionDetails";
+import ActionInfo from "./ActionInfo";
 
 type PostAction = {
-   like: () => any;
-   liked: boolean;
-   likes: any;
+   authorId: string;
+   post_id: string;
    showComment: () => any;
    commentCount: any;
 };
 
-export default function PostAction({ like, liked, likes, showComment, commentCount }: PostAction) {
-   return (
-      <View className="">
-         {likes || commentCount ? (
-            <View className="flex-row gap-6 p-2 px-4 ">
-               {likes && (
-                  <AppText size="sm" color={appColors.grey}>
-                     {` ${likes} ${likes.length > 1 ? "likes" : "like"}`}
-                  </AppText>
-               )}
-               {commentCount && (
-                  <AppText size="sm" color={appColors.grey}>
-                     {commentCount} comments
-                  </AppText>
-               )}
-            </View>
-         ) : null}
+export default function PostAction({ post_id, showComment, commentCount, authorId }: PostAction) {
+   const { profile } = useAuthStore();
 
-         <View
-            style={{ borderTopColor: appColors.bordersLight, borderTopWidth: 0.5 }}
-            className="flex-row justify-between"
-         >
+   const { isLiked, handleLike, likeCount } = usePostLikes(post_id, profile?.id, authorId);
+
+   return (
+      <View style={{ paddingHorizontal: wp(4) }}>
+         <View className="flex-row justify-between items-center py-2">
+            <ActionDetails />
+            <ActionInfo likeCount={likeCount} commentCount={commentCount} />
+         </View>
+         <View style={{ width: "100%", backgroundColor: appColors.border, height: 1 }}></View>
+         <View className="flex-row justify-between items-center py-4">
             <View className="flex-row w-full">
-               <View className="flex-row flex-1 items-center">
+               <View className="flex-row flex-1 items-center gap-3">
                   <TouchableOpacity
-                     onPress={like}
-                     style={{ borderRightColor: appColors.bordersLight, borderRightWidth: 0.5 }}
-                     className="flex-row justify-center items-center gap-2 p-3 px-4"
+                     onPress={() => handleLike.mutate()}
+                     className="flex-row justify-center items-center gap-2"
                   >
-                     {liked ? (
-                        <ThumbsupSolid size={18} color={appColors.primary} />
+                     {isLiked ? (
+                        <ThumbsupSolid size={22} color={appColors.primary} />
                      ) : (
-                        <Thumbsup size={18} color={appColors.grey} />
+                        <Thumbsup size={22} color={appColors.icons} />
                      )}
-                     <AppText color={appColors.grey}>Like</AppText>
+                     <AppText weight="med" color={appColors.icons}>
+                        Like
+                     </AppText>
                   </TouchableOpacity>
 
-                  <TouchableOpacity
-                     onPress={showComment}
-                     style={{ borderRightColor: appColors.bordersLight, borderRightWidth: 0.5 }}
-                     className="flex-row justify-center items-center gap-2 p-3 px-2"
-                  >
+                  <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-2">
                      <View className="top-[1px]">
-                        <Comment size={18} color={appColors.grey} />
+                        <CommentIcon size={22} color={appColors.icons} />
                      </View>
-                     <AppText color={appColors.grey}>Comments</AppText>
+                     <AppText weight="med" color={appColors.icons}>
+                        Comments
+                     </AppText>
                   </TouchableOpacity>
                </View>
 
-               <TouchableOpacity
-                  onPress={showComment}
-                  style={{ borderLeftColor: appColors.bordersLight, borderLeftWidth: 0.5 }}
-                  className="flex-row justify-center items-center gap-2 p-3 px-2"
-               >
+               <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-2">
                   <View className="top-[1px]">
-                     <ShareIcon size={18} color={appColors.grey} />
+                     <ShareIcon size={22} color={appColors.icons} />
                   </View>
-                  <AppText color={appColors.grey}>Share</AppText>
+                  <AppText weight="med" color={appColors.icons}>
+                     Share
+                  </AppText>
                </TouchableOpacity>
             </View>
          </View>

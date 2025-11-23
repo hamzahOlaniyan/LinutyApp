@@ -1,0 +1,99 @@
+import StepContainer from "@/src/components/StepContainer";
+import GradientButton from "@/src/components/ui/GradientButton";
+import { Input } from "@/src/components/ui/Input";
+import { appColors } from "@/src/constant/colors";
+import { wp } from "@/src/constant/common";
+import { supabase } from "@/src/lib/supabase";
+import { useRegistrationStore } from "@/src/store/useRegistrationState";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { View } from "react-native";
+
+export default function Step1() {
+   const { form, errors, updateField, setError, nextStep, resetErrors, clearError, reset } = useRegistrationStore();
+
+   const [loading, setLoading] = useState(false);
+
+   const router = useRouter();
+
+   const isValidEmail = (email: string) => {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+   };
+
+   const handleNext = async () => {
+      let valid = true;
+      setLoading(true);
+
+      if (!form.email) {
+         setError("email", "Email is required!");
+         valid = false;
+         return;
+      } else if (!isValidEmail(form.email)) {
+         setError("email", "Enter a valid email address!");
+         valid = false;
+         return;
+      }
+
+      const { data, error } = await supabase
+         .from("profiles") // 👈 your users table
+         .select("id")
+         .eq("email", form.email)
+         .maybeSingle();
+
+      if (data) {
+         setError("email", "This email is already registered, try another email!");
+         setLoading(false);
+         valid = false;
+         return;
+      }
+
+      if (error) {
+         setError("email", "Error checking email, try again later");
+         console.log(
+            "email",
+            "Error checking email, try again later",
+            error.cause,
+            error.details,
+            error.hint,
+            error.message,
+            error.name,
+            error.stack,
+            error.code
+         );
+         setLoading(false);
+
+         valid = false;
+         return;
+      }
+
+      if (valid) {
+         nextStep();
+         router.push("/PartOne/step-2");
+         setLoading(false);
+      }
+   };
+
+   return (
+      <View style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white, flex: 1 }}>
+         <StepContainer
+            heading="What's your email address?"
+            paragraph="Enter a valid email address to continue. We’ll use this email to verify your identity and send important
+               updates about your Linuty account."
+         >
+            <Input
+               placeholder="Email address"
+               value={form.email}
+               onChangeText={(email) => updateField("email", email)}
+               keyboardType="email-address"
+               inputMode="text"
+               error={!!errors.email}
+               errorMessage={errors.email}
+            />
+            <View className="gap-2 my-6">
+               <GradientButton onPress={handleNext} text="Next" size="lg" isLoading={loading} />
+            </View>
+         </StepContainer>
+      </View>
+   );
+}

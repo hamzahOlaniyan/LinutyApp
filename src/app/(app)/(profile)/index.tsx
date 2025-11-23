@@ -2,6 +2,7 @@ import ProfileGallery from "@/src/components/profile/ProfileGallery";
 import ProfileHeader from "@/src/components/profile/ProfileHeader";
 import ProfileInfo from "@/src/components/profile/ProfileInfo";
 import ProfilePosts from "@/src/components/profile/ProfilePosts";
+import ProfileStore from "@/src/components/profile/ProfileStore";
 import StickyTabs from "@/src/components/ui/StickyTabs";
 import { getPostsUserById } from "@/src/Services/posts";
 import { getProfileById } from "@/src/Services/profiles";
@@ -40,12 +41,14 @@ export default function index() {
          routes={[
             { key: "Posts", title: "Posts" },
             { key: "Pictures", title: "Pictures" },
-            { key: "Info", title: "Details" }, // extra route
+            { key: "Info", title: "Details" },
+            { key: "Store", title: "Store" },
          ]}
          scenes={{
             Posts: <ProfilePosts item={USER_POSTS} />,
-            profile: <ProfileGallery />,
+            Pictures: <ProfileGallery />,
             Info: <ProfileInfo item={PROFILE} />,
+            Store: <ProfileStore />,
          }}
       />
    );

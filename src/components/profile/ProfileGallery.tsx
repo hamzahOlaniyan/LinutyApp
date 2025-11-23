@@ -1,19 +1,17 @@
 import React from "react";
-import { View } from "react-native";
-import AppText from "../ui/AppText";
+import { FlatList, View } from "react-native";
 
 const gallery = Array.from({ length: 20 });
 
 export default function ProfileGallery() {
    return (
-      <View>
-         <AppText>ProfileGallery</AppText>
+      <View className="flex-1">
+         <FlatList
+            data={gallery}
+            keyExtractor={(_, index) => index.toString()}
+            numColumns={3}
+            renderItem={({ index }) => <View className="w-full aspect-square flex-1 bg-red-400 border" key={index} />}
+         />
       </View>
-      // <FlatList
-      //    data={gallery}
-      //    keyExtractor={(_, index) => index.toString()}
-      //    numColumns={3}
-      //    renderItem={({ index }) => <View className="w-full h-40 flex-1 bg-red-400" key={index} />}
-      // />
    );
 }

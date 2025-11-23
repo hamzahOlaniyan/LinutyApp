@@ -19,7 +19,7 @@ export default function StepContainer({
 
    return (
       <View className="gap-4">
-         <View className="gap-6">
+         <View className="gap-4">
             <View className="gap-4">
                {heading && (
                   <AppText size="xxxl" weight="bold">

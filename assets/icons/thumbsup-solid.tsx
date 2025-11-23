@@ -4,7 +4,7 @@ export const ThumbsupSolid = ({ color = "#1f1f1f", size = 24, ...props }) => {
    return (
       <Svg viewBox="0 -960 960 960" fill={color} width={size} height={size} {...props}>
          <Path
-            d="M721-120H254v-512l278-288 33 26q11 8 14.5 18t3.5 23v10l-45 211h322q23 0 41.5 18.5T920-572v82q0 11-2.5 25.5T910-439L794-171q-9 21-29.5 36T721-120ZM194-632v512H80v-512h114Z"
+            d="M720-120H320v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h218q32 0 56 24t24 56v80q0 7-1.5 15t-4.5 15L794-168q-9 20-30 34t-44 14ZM240-640v520H80v-520h160Z"
             fill={color}
          />
       </Svg>

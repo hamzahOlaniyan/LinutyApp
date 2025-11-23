@@ -1,15 +1,14 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { useFonts } from "expo-font";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import { Linking } from "react-native";
+import React from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
-import { supabase } from "../lib/supabase";
+import { QueryProvider } from "../provider/QueryProvider";
 import { useAuthStore } from "../store/authStore";
 
 // const logoutAndClearSession = async () => {
@@ -21,17 +20,18 @@ import { useAuthStore } from "../store/authStore";
 export default function RootLayout() {
    const setSession = useAuthStore((s) => s.setSession);
    const fetchProfile = useAuthStore((s) => s.fetchProfile);
+   const reset = useAuthStore((state) => state.resetSession);
 
-   const router = useRouter();
+   // const router = useRouter();
 
    const [loaded] = useFonts({
-      [TiktokFont.TiktokBlack]: require("@/assets/fonts/TikTokSans-Black.ttf"),
-      [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/TikTokSans-ExtraBold.ttf"),
-      [TiktokFont.TiktokBold]: require("@/assets/fonts/TikTokSans-Bold.ttf"),
-      [TiktokFont.TiktokSemiBold]: require("@/assets/fonts/TikTokSans-SemiBold.ttf"),
-      [TiktokFont.TiktokMedium]: require("@/assets/fonts/TikTokSans-Medium.ttf"),
-      [TiktokFont.TiktokRegular]: require("@/assets/fonts/TikTokSans-Regular.ttf"),
-      [TiktokFont.TiktokLight]: require("@/assets/fonts/TikTokSans-Light.ttf"),
+      [TiktokFont.TiktokBlack]: require("@/assets/fonts/Roboto-Black.ttf"),
+      [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/Roboto-ExtraBold.ttf"),
+      [TiktokFont.TiktokBold]: require("@/assets/fonts/Roboto-SemiBold.ttf"),
+      [TiktokFont.TiktokSemiBold]: require("@/assets/fonts/Roboto-SemiBold.ttf"),
+      [TiktokFont.TiktokMedium]: require("@/assets/fonts/Roboto-Medium.ttf"),
+      [TiktokFont.TiktokRegular]: require("@/assets/fonts/Roboto-Regular.ttf"),
+      [TiktokFont.TiktokLight]: require("@/assets/fonts/Roboto-Light.ttf"),
    });
 
    // useEffect(() => {
@@ -53,43 +53,58 @@ export default function RootLayout() {
    //    checkGhostSession();
    // }, []);
 
-   useEffect(() => {
-      const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
-         setSession(session);
-         if (session?.user) {
-            fetchProfile(session?.user?.id);
-         } else {
-            await AsyncStorage.removeItem("auth-store");
-         }
-      });
+   // useEffect(() => {
+   //    const unsub = useAuthStore.persist.onFinishHydration(() => {
+   //       useAuthStore.setState({ hasHydrated: true, loading: false });
+   //    });
+   //    return unsub;
+   // }, []);
 
-      return () => {
-         authListener.subscription.unsubscribe();
-      };
-   }, []);
+   // useEffect(() => {
+   //    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
+   //       if (session?.user) {
+   //          setSession(session);
+   //          // fetchProfile(session?.user?.id);
+   //       } else {
+   //          await AsyncStorage.removeItem("auth-store");
+   //          reset();
+   //       }
+   //    });
 
-   useEffect(() => {
-      const subscription = Linking.addEventListener("url", async ({ url }: { url: string }) => {
-         const { data } = await supabase.auth.exchangeCodeForSession(url);
-         if (data.session) {
-            console.log("Password reset session started!");
-            router.replace("/(auth)/reset-password");
-         }
-      });
+   //    return () => {
+   //       authListener.subscription.unsubscribe();
+   //    };
+   // }, []);
 
-      return () => subscription.remove();
-   }, []);
+   // useEffect(() => {
+   //    const subscription = Linking.addEventListener("url", async ({ url }: { url: string }) => {
+   //       const { data } = await supabase.auth.exchangeCodeForSession(url);
+   //       if (data.session) {
+   //          console.log("Password reset session started!");
+   //          router.replace("/(auth)/reset-password");
+   //       }
+   //    });
 
-   const queryClient = new QueryClient();
+   //    return () => subscription.remove();
+   // }, []);
+
+   // const queryClient = new QueryClient();
 
    return (
-      <SafeAreaProvider>
-         <QueryClientProvider client={queryClient}>
-            <GluestackUIProvider>
-               <StatusBar style="auto" />
-               <Stack screenOptions={{ headerShown: false }} />
-            </GluestackUIProvider>
-         </QueryClientProvider>
-      </SafeAreaProvider>
+      <QueryProvider>
+         {/* <QueryClientProvider client={queryClient}> */}
+         <GestureHandlerRootView className="flex-1">
+            <PortalProvider>
+               <PortalHost name="root" />
+               <SafeAreaProvider>
+                  <GluestackUIProvider>
+                     <StatusBar style="auto" />
+                     <Stack screenOptions={{ headerShown: false }} />
+                  </GluestackUIProvider>
+               </SafeAreaProvider>
+            </PortalProvider>
+         </GestureHandlerRootView>
+         {/* </QueryClientProvider> */}
+      </QueryProvider>
    );
 }

@@ -1,64 +1,90 @@
 import { ThreeDots } from "@/assets/icons/threedots";
 import { appColors } from "@/src/constant/colors";
 import { hp, wp } from "@/src/constant/common";
-import { TimeAgo } from "@/src/hooks/timeAgo";
+import { useAuthStore } from "@/src/store/authStore";
 import { Octicons } from "@expo/vector-icons";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import { useRouter } from "expo-router";
-import React from "react";
-import { Pressable, View } from "react-native";
+import { useRef } from "react";
+import { Pressable, TouchableOpacity, View } from "react-native";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";
+import { CustomBottomSheet } from "../ui/CustomBottomSheet";
+import PostOptions from "./PostOptions";
 
 type PostHeader = {
-   id: string;
+   authorId: string;
+   postId: string;
    avatar: string;
    name: string;
    username: string;
    date: string;
-   postInfo: () => void;
+   content: string;
 };
 
-dayjs.extend(relativeTime);
-
-export default function PostHeader({ id, avatar, name, username, date, postInfo }: PostHeader) {
+export default function PostHeader({ authorId, postId, avatar, name, username, date, content }: PostHeader) {
+   const { profile } = useAuthStore();
    const router = useRouter();
+
+   const bottomSheetRef = useRef<BottomSheet>(null);
+   const handleOpenSheet = () => bottomSheetRef.current?.expand();
+
+   const isUserOwner = profile?.id === authorId;
+
+   console.log({ authorId });
+
    return (
-      <View
-         style={{
-            paddingHorizontal: wp(2),
-            paddingVertical: hp(1),
-         }}
-      >
-         <View className="flex-row justify-between items-start">
-            <View className="flex-row items-center gap-2">
-               <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                  <Avatar path={avatar} size={37} />
-               </Pressable>
-               <View className="">
-                  <View className="flex-row items-center gap-2">
-                     <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                        <AppText weight="semi" cap="capitalize">
-                           {name.trim()}
+      <>
+         <View
+            style={{
+               paddingHorizontal: wp(4),
+               paddingVertical: hp(1.5),
+               gap: 10,
+            }}
+         >
+            <View className="flex-row justify-between items-start">
+               <View className="flex-row items-start gap-2">
+                  <TouchableOpacity onPress={() => router.push(`/(user)/${authorId}`)}>
+                     <Avatar path={avatar} size={50} />
+                  </TouchableOpacity>
+                  <View>
+                     <View className="flex-row items-center gap-1">
+                        <TouchableOpacity onPress={() => router.push(`/(user)/${authorId}`)}>
+                           <AppText size="lg" weight="bold" cap="capitalize" style={{ letterSpacing: -0.4 }}>
+                              {name.trim()}
+                           </AppText>
+                        </TouchableOpacity>
+                        <View className="flex-row items-center gap-1 relative top-[1.5px]">
+                           <Octicons name="dot-fill" size={5} color={appColors.lightGrey} className="relative " />
+                           <AppText color={appColors.lightGrey} size="xs" className="">
+                              {dayjs(date).fromNow(true)}
+                           </AppText>
+                        </View>
+                     </View>
+                     <TouchableOpacity onPress={() => router.push(`/(user)/${authorId}`)}>
+                        <AppText size="sm" color={appColors.lightGrey}>
+                           @{username}
                         </AppText>
-                     </Pressable>
-                     <Octicons name="dot-fill" size={6} className="relative top-[2px]" />
-                     <AppText className="top-[2px]">
-                        <TimeAgo time={dayjs(date).fromNow()} />
-                     </AppText>
+                     </TouchableOpacity>
                   </View>
-                  <Pressable onPress={() => router.push(`/(app)/(user)/${id}`)}>
-                     <AppText size="sm" color={appColors.grey}>
-                        @{username}
-                     </AppText>
-                  </Pressable>
                </View>
+               <Pressable onPress={handleOpenSheet} className="h-full relative">
+                  <ThreeDots color={appColors.lightGrey} size={24} />
+               </Pressable>
             </View>
-            <Pressable onPress={postInfo} className="h-full relative">
-               <ThreeDots color={appColors.grey} />
-            </Pressable>
+            <View className="">
+               <AppText>{content}</AppText>
+            </View>
          </View>
-      </View>
+         <Portal hostName="root">
+            <CustomBottomSheet
+               ref={bottomSheetRef}
+               snapPoints={["35%"]}
+               children={<PostOptions isUserOwner={isUserOwner} post_id={postId} ref={bottomSheetRef} />}
+            />
+         </Portal>
+      </>
    );
 }

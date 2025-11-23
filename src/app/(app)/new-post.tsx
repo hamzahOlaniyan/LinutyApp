@@ -1,10 +1,11 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { ImageIcon } from "@/assets/icons/ImageIcon";
+import { Plus } from "@/assets/icons/plus";
 import Avatar from "@/src/components/Avatar";
 import Imagepicker from "@/src/components/Imagepicker";
 import AppText from "@/src/components/ui/AppText";
 import Button from "@/src/components/ui/Button";
-import { UploadImage } from "@/src/components/UploadImage";
+import { uploadMediaSmart } from "@/src/components/UploadImage";
 import { appColors } from "@/src/constant/colors";
 import { hp, wp } from "@/src/constant/common";
 import { createPost } from "@/src/Services/posts";
@@ -17,7 +18,7 @@ import { Alert, KeyboardAvoidingView, Platform, ScrollView, TextInput, View } fr
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function NewPost() {
-   const [preview, setPreview] = useState<string[]>([]);
+   const [preview, setPreview] = useState<any[]>([]);
    const [postText, setPostText] = useState("");
    const { profile } = useAuthStore();
 
@@ -28,11 +29,19 @@ export default function NewPost() {
 
    const { mutate, isPending, error } = useMutation({
       mutationFn: async () => {
-         const imageRes = await UploadImage(profile.id, preview as any, "media");
+         const mediaRes = await uploadMediaSmart(profile?.id, preview, "media");
+
+         // split uploaded URLs into separate fields if needed
+         // const imageUrls = mediaRes.filter((m) => m.type === "image").map((m) => m.url);
+         // const videoUrls = mediaRes.filter((m) => m.type === "video").map((m) => m.url);
+
          return createPost({
             content: postText,
             author: profile!.id,
-            images: imageRes,
+            // images: imageUrls,
+            // videos: videoUrls,med
+
+            media: mediaRes,
          });
       },
       onSuccess: (data) => {
@@ -49,19 +58,19 @@ export default function NewPost() {
          style={{
             paddingHorizontal: wp(4),
             paddingBottom: bottom,
+            position: "relative",
          }}
          className="flex-1 bg-white relative"
       >
-         <View className="gap-4">
+         <View className="gap-4 relative">
             <View className="flex-row items-center gap-4">
                <Avatar path={profile?.avatarUrl} size={45} />
                <View>
                   <AppText weight="semi" cap="capitalize">
-                     {profile?.firstName}
-                     {profile?.lastName}
+                     {profile?.firstName} {profile?.lastName}
                   </AppText>
                   <View className="flex-row gap-3">
-                     <AppText weight="med" size="sm">
+                     <AppText weight="med" size="sm" color={appColors.lightGrey}>
                         @{profile?.username}
                      </AppText>
                   </View>
@@ -77,7 +86,7 @@ export default function NewPost() {
                   <TextInput
                      style={{
                         fontSize: hp(3),
-                        fontFamily: TiktokFont.TiktokLight,
+                        fontFamily: TiktokFont.TiktokRegular,
                         color: appColors.text,
                      }}
                      placeholder="What's on your mind?"
@@ -89,23 +98,27 @@ export default function NewPost() {
                   />
                </View>
             </KeyboardAvoidingView>
+
             <Imagepicker
                size={100}
                url={null}
-               onPickLocal={(uri: string[]) => setPreview(uri)}
+               onPickLocal={(assets) => setPreview(assets)}
                picker={
-                  <View className="self-end bg-orange-100  p-1 rounded-md">
-                     <ImageIcon size={32} color="#ea580c" />
+                  <View className="self-end">
+                     <ImageIcon size={32} />
                   </View>
                }
             />
          </View>
          <Button
-            onPress={() => mutate()}
+            text="Add Post"
             disabled={!postText.trim()}
             isLoading={isPending}
-            size="sm"
-            text="Post"
+            icon={<Plus size={20} color={appColors.blue} />}
+            onPress={() => mutate()}
+            color={appColors.blue}
+            variant="secondary"
+            size="xs"
             className="absolute top-0 right-4 bg-neutral-100 p-2 rounded-lg"
          />
       </ScrollView>

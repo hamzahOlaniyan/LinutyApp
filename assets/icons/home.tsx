@@ -4,7 +4,7 @@ export const Home = ({ color = "#1f1f1f", size = 24, ...props }) => {
    return (
       <Svg viewBox="0 -960 960 960" fill={color} width={size} height={size} {...props}>
          <Path
-            d="M221-180h138v-257h243v257h137v-389L480-763 221-569.33V-180Zm-73 73v-499l332-248 332 248v499H529v-257h-97v257H148Zm332-365Z"
+            d="M242.87-202.87H354.5V-445.5h251v242.63h111.63v-355.7L480-736.41 242.87-558.57v355.7Zm-91 91v-492.2L480-850.28l328.13 246.13v492.28H518.09v-246.22h-76.18v246.22H151.87ZM480-469.52Z"
             fill={color}
          />
       </Svg>

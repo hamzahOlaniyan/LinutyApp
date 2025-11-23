@@ -1,10 +1,10 @@
 import Svg, { Path } from "react-native-svg";
 
-export const Comment = ({ color = "#1f1f1f", size = 24, ...props }) => {
+export const CommentIcon = ({ color = "#1f1f1f", size = 24, ...props }) => {
    return (
       <Svg viewBox="0 -960 960 960" fill={color} width={size} height={size} {...props}>
          <Path
-            d="M880-80 720-240H140q-24 0-42-18t-18-42v-520q0-24 18-42t42-18h680q24 0 42 18t18 42v740ZM140-300h606l74 80v-600H140v520Zm0 0v-520 520Z"
+            d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"
             fill={color}
          />
       </Svg>
