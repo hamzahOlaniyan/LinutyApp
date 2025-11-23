@@ -176,10 +176,13 @@ module.exports = {
             },
          },
          fontFamily: {
-            heading: undefined,
-            body: undefined,
-            mono: undefined,
-            roboto: ["Roboto", "sans-serif"],
+            Black: ["Black"],
+            ExtraBold: ["ExtraBold"],
+            Bold: ["Bold"],
+            SemiBold: ["SemiBold"],
+            Medium: ["Medium"],
+            Regular: ["Regular"],
+            Light: ["Light"],
          },
          fontWeight: {
             extrablack: "950",

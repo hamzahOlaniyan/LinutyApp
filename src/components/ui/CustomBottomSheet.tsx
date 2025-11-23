@@ -19,7 +19,9 @@ export const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
    const { bottom } = useSafeAreaInsets();
 
    const renderBackdrop = useCallback(
-      (props: any) => <BottomSheetBackdrop appearsOnIndex={1} disappearsOnIndex={0} {...props} />,
+      (props: any) => (
+         <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} pressBehavior="close" {...props} />
+      ),
       []
    );
 

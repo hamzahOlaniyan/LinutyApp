@@ -1,4 +1,4 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
 import Avatar from "@/components/Avatar";
 import Imagepicker from "@/components/Imagepicker";
 import AppText from "@/components/ui/AppText";
@@ -8,8 +8,7 @@ import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import { ImageIcon } from "@/icons/ico/ImageIcon";
 import { Plus } from "@/icons/ico/plus";
-import { createPost } from "@/Services/posts";
-// import { useThemeStore } from "@/context/themeStore";
+import { createPost } from "@/Services/db/posts";
 import { useAuthStore } from "@/store/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
@@ -31,16 +30,9 @@ export default function NewPost() {
       mutationFn: async () => {
          const mediaRes = await uploadMediaSmart(profile?.id, preview, "media");
 
-         // split uploaded URLs into separate fields if needed
-         // const imageUrls = mediaRes.filter((m) => m.type === "image").map((m) => m.url);
-         // const videoUrls = mediaRes.filter((m) => m.type === "video").map((m) => m.url);
-
          return createPost({
             content: postText,
             author: profile!.id,
-            // images: imageUrls,
-            // videos: videoUrls,med
-
             media: mediaRes,
          });
       },
@@ -70,7 +62,7 @@ export default function NewPost() {
                      {profile?.firstName} {profile?.lastName}
                   </AppText>
                   <View className="flex-row gap-3">
-                     <AppText weight="med" size="sm" color={appColors.lightGrey}>
+                     <AppText size="sm" color={appColors.secondary}>
                         @{profile?.username}
                      </AppText>
                   </View>
@@ -86,7 +78,7 @@ export default function NewPost() {
                   <TextInput
                      style={{
                         fontSize: hp(3),
-                        fontFamily: TiktokFont.TiktokRegular,
+                        fontFamily: Font.Light,
                         color: appColors.text,
                      }}
                      placeholder="What's on your mind?"
@@ -111,15 +103,15 @@ export default function NewPost() {
             />
          </View>
          <Button
-            text="Add Post"
+            onPress={() => mutate()}
             disabled={!postText.trim()}
             isLoading={isPending}
-            icon={<Plus size={20} color={appColors.blue} />}
-            onPress={() => mutate()}
-            color={appColors.blue}
-            variant="secondary"
-            size="xs"
+            icon={<Plus color={!postText ? appColors.grey : appColors.blue} />}
+            size="sm"
+            text="Post"
             className="absolute top-0 right-4 bg-neutral-100 p-2 rounded-lg"
+            variant="secondary"
+            color={appColors.blue}
          />
       </ScrollView>
    );

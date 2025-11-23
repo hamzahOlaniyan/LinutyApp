@@ -1,5 +1,4 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
-import BackButton from "@/components/ui/BackButton";
+import { Font } from "@/assets/fonts/FontFamily";
 import { Stack } from "expo-router";
 
 export default function StoreLayout() {
@@ -7,7 +6,7 @@ export default function StoreLayout() {
       <Stack
          screenOptions={{
             headerShadowVisible: false,
-            headerTitleStyle: { fontSize: 20, fontFamily: TiktokFont.TiktokSemiBold },
+            headerTitleStyle: { fontSize: 20, fontFamily: Font.Bold },
             headerTitleAlign: "left",
          }}
       >
@@ -17,20 +16,23 @@ export default function StoreLayout() {
                headerShown: false,
             }}
          />
+
          <Stack.Screen
-            name="productDetail/[id]"
+            name="product"
+            options={{
+               headerShown: false,
+               // headerTitle: () => "",
+               // headerLeft: () => <BackButton />,
+            }}
+         />
+
+         {/* <Stack.Screen
+            name="seller"
             options={{
                headerTitle: () => "",
                headerLeft: () => <BackButton />,
             }}
-         />
-         <Stack.Screen
-            name="seller/[id]"
-            options={{
-               headerTitle: () => "",
-               headerLeft: () => <BackButton />,
-            }}
-         />
+         /> */}
          <Stack.Screen
             name="new-product"
             options={{

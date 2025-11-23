@@ -1,7 +1,7 @@
 import NotificationCard from "@/components/notification/NotificationCard";
 import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
-import { getNotfication } from "@/Services/Notification";
+import { getNotfication } from "@/Services/db/Notification";
 import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import { FlatList, View } from "react-native";
@@ -13,8 +13,6 @@ export default function Notification() {
       queryKey: ["notification", profile?.id],
       queryFn: async () => getNotfication(profile?.id),
    });
-
-   // console.log("notifications", JSON.stringify(notifications, null, 2));
 
    return (
       <View

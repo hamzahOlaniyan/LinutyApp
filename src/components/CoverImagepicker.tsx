@@ -1,13 +1,13 @@
 import { PhotoIcon } from "@/icons/ico/photoIcon";
+import { useAuthStore } from "@/store/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from "react-native";
 import { appColors } from "../constant/colors";
 import { supabase } from "../lib/supabase";
-import { updateProfile } from "../Services/profiles";
-import { useAuthStore } from "../store/authStore";
+import { updateProfile } from "../Services/db/profiles";
+import AppText from "./ui/AppText";
 
 export default function CoverImagepicker() {
    const { profile } = useAuthStore();
@@ -108,19 +108,22 @@ export default function CoverImagepicker() {
             >
                {handleCoverImage.isPending && <ActivityIndicator />}
                {profile?.cover_photo && (
-                  <Image
-                     source={{ uri: profile?.cover_photo }}
-                     transition={100}
-                     style={{ width: "100%", height: "100%" }}
-                     contentPosition="center"
-                  />
+                  // <Image
+                  //    source={[{ uri: profile?.cover_photo }]}
+                  //    transition={100}
+                  //    style={{ width: "100%", height: "100%" }}
+                  //    contentPosition="center"
+                  // />
+                  <AppText>Image placeholder</AppText>
                )}
                {uri && (
-                  <Image
-                     source={image.uri}
-                     transition={100}
-                     style={{ width: "100%", height: "100%", aspectRatio: image.width / image.height }}
-                  />
+                  <AppText>Image placeholder</AppText>
+
+                  // <Image
+                  //    source={[{ uri: image.uri }]}
+                  //    transition={100}
+                  //    style={{ width: "100%", height: "100%", aspectRatio: image.width / image.height }}
+                  // />
                )}
                <TouchableOpacity
                   onPress={handleCoverImageChange}

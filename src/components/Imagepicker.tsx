@@ -71,7 +71,7 @@ export default function Imagepicker({ url, size = 200, onPickLocal, picker }: Pr
                image?.map((pic, idx) => (
                   <View key={idx} style={{ width: "49%" }}>
                      <Image
-                        source={{ uri: pic?.uri }}
+                        source={[{ uri: pic?.uri }]}
                         transition={100}
                         style={{
                            borderRadius: 10,

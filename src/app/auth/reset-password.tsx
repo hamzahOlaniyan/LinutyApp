@@ -40,7 +40,7 @@ export default function ResetPassword() {
       }
 
       console.log("Password updated successfully!");
-      router.replace("/(app)/(tabs)");
+      router.replace("/(app)/(tabs)/(home)");
    }
 
    return (

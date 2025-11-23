@@ -1,8 +1,7 @@
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
-import Icon from "@/icons";
 import { ShareIcon } from "@/icons/ico/shareIcon";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import Avatar from "../Avatar";
@@ -15,7 +14,7 @@ export default function ProductDetail({ item }: { item: any }) {
    return (
       <View style={{ paddingHorizontal: wp(4) }}>
          <View className="">
-            <AppText weight="semi" size="xl" cap="capitalize">
+            <AppText weight="semi" size="xxl" cap="capitalize">
                {item?.name.trim()}
             </AppText>
             <AppText size="xxl" color={appColors.secondary}>
@@ -23,10 +22,10 @@ export default function ProductDetail({ item }: { item: any }) {
             </AppText>
          </View>
          <View className="flex-row justify-between w-full my-4 items-center">
-            <Button text="Send seller a message" variant="secondary" />
+            <Button text="Send seller a message" variant="secondary" color={appColors.blue} />
             <View className="flex-row items-center gap-3">
                <Pressable className="justify-center items-center p-2 rounded-full">
-                  <Icon name="favorite" />
+                  <FavoriteIcon />
                   <AppText size="xs">Favorite</AppText>
                </Pressable>
                <Pressable className="justify-center items-center p-2  rounded-full">
@@ -61,11 +60,11 @@ export default function ProductDetail({ item }: { item: any }) {
                   className="flex-row items-start justify-between"
                >
                   <View className="gap-2">
-                     {/* <TouchableOpacity onPress={() => router.push(`/(user)/${item?.profile_id}`)}> */}
                      <AppText weight="semi">Seller Information</AppText>
-                     {/* </TouchableOpacity> */}
                      <View className="flex-row gap-3 items-start">
-                        <Avatar path={item?.profiles?.avatarUrl} size={40} />
+                        <TouchableOpacity onPress={() => router.push(`/user/${item?.profile_id}`)}>
+                           <Avatar path={item?.profiles?.avatarUrl} size={40} />
+                        </TouchableOpacity>
                         <View>
                            <AppText weight="med" cap="capitalize">
                               {item?.profiles?.firstName} {item?.profiles?.lastName}
@@ -76,15 +75,15 @@ export default function ProductDetail({ item }: { item: any }) {
                         </View>
                      </View>
                   </View>
-                  <Link href={`/(app)/(tabs)/store/seller/${item?.profile_id}`} asChild>
-                     <TouchableOpacity
-                        style={{ borderWidth: 1, borderColor: appColors.black, padding: 10, borderRadius: 50 }}
-                     >
-                        <AppText size="sm" weight="med">
-                           Sellers store
-                        </AppText>
-                     </TouchableOpacity>
-                  </Link>
+
+                  <TouchableOpacity
+                     onPress={() => router.push(`/(app)/(tabs)/store/seller/${item?.profile_id}`)}
+                     style={{ borderWidth: 1, borderColor: appColors.black, padding: 10, borderRadius: 50 }}
+                  >
+                     <AppText size="sm" weight="med">
+                        Sellers store
+                     </AppText>
+                  </TouchableOpacity>
                </View>
             </View>
          </View>

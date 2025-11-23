@@ -1,4 +1,4 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
 import StepContainer from "@/components/StepContainer";
 import AppText from "@/components/ui/AppText";
 import GradientButton from "@/components/ui/GradientButton";
@@ -11,7 +11,7 @@ import { useRegistrationStore } from "@/store/useRegistrationState";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ImageBackground, Pressable, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Step6_1() {
    const { form, errors, updateField, nextStep, setError } = useRegistrationStore();
@@ -87,7 +87,7 @@ export default function Step6_1() {
 
    const handleNext = () => {
       if (form.isFather === "No") {
-         router.push("/PartTwo/step-6.2");
+         router.push("/auth/new-user/PartTwo/step-6.2");
       }
       updateField("lineage_ids", path.map((n) => n.id) as any);
       updateField("lineage_names", [...path.map((n) => n.name)].filter(Boolean) as any);
@@ -100,7 +100,7 @@ export default function Step6_1() {
          return;
       }
       nextStep();
-      router.push("/PartTwo/step-6.2");
+      router.push("/auth/new-user/PartTwo/step-6.2");
    };
 
    return (
@@ -137,11 +137,7 @@ export default function Step6_1() {
                   {selectedEthnicityName && form.isFather === "Yes" && (
                      <View className="gap-6">
                         {path.length > 0 && (
-                           <ImageBackground
-                              source={require("@/assets/images/19_dhans11.jpg")}
-                              style={style.image}
-                              borderRadius={15}
-                           >
+                           <>
                               {atLeaf && <AppText color={appColors.colouredText}>Your selected clan</AppText>}
 
                               <AppText
@@ -153,7 +149,7 @@ export default function Step6_1() {
                               >
                                  {path.map((p, idx) => `${idx + 1}. ${p.name}    `).join("")}
                               </AppText>
-                           </ImageBackground>
+                           </>
                         )}
 
                         <View className="flex-row justify-between items-center gap-12">
@@ -232,7 +228,7 @@ export default function Step6_1() {
                               placeholder="Names"
                               value={form.fullLineageName}
                               onChangeText={(name) => updateField("fullLineageName", name)}
-                              style={{ fontSize: hp(2), fontFamily: TiktokFont.TiktokMedium }}
+                              style={{ fontSize: hp(2), fontFamily: Font.Medium }}
                               placeholderTextColor={"#a3a3a3"}
                               className="px-2 flex-1"
                            />

@@ -21,12 +21,6 @@ export default function CommunityLayout() {
          <Stack.Screen name="discover" />
          <Stack.Screen name="clan-members" />
          <Stack.Screen name="gathering" />
-         <Stack.Screen
-            name="(stories)"
-            options={{
-               headerShown: false,
-            }}
-         />
       </Stack>
    );
 }

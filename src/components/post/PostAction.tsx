@@ -8,7 +8,6 @@ import { ThumbsupSolid } from "@/icons/ico/thumbsup-solid";
 import { useAuthStore } from "@/store/authStore";
 import { TouchableOpacity, View } from "react-native";
 import AppText from "../ui/AppText";
-import ActionDetails from "./ActionDetails";
 import ActionInfo from "./ActionInfo";
 
 type PostAction = {
@@ -25,43 +24,37 @@ export default function PostAction({ post_id, showComment, commentCount, authorI
 
    return (
       <View style={{ paddingHorizontal: wp(4) }}>
-         <View className="flex-row justify-between items-center py-2">
-            <ActionDetails />
+         <View className="flex-row justify-end items-center py-3">
+            {/* <ActionDetails /> */}
             <ActionInfo likeCount={likeCount} commentCount={commentCount} />
          </View>
-         <View style={{ width: "100%", backgroundColor: appColors.border, height: 1 }}></View>
+         <View style={{ width: "100%", backgroundColor: appColors.bordersLight, height: 0.9 }}></View>
          <View className="flex-row justify-between items-center py-4">
-            <View className="flex-row w-full">
-               <View className="flex-row flex-1 items-center gap-3">
-                  <TouchableOpacity
-                     onPress={() => handleLike.mutate()}
-                     className="flex-row justify-center items-center gap-2"
-                  >
-                     {isLiked ? (
-                        <ThumbsupSolid size={22} color={appColors.primary} />
-                     ) : (
-                        <Thumbsup size={22} color={appColors.icons} />
-                     )}
-                     <AppText weight="med" color={appColors.icons}>
-                        Like
-                     </AppText>
-                  </TouchableOpacity>
+            <View className="flex-row justify-between w-full">
+               <TouchableOpacity
+                  onPress={() => handleLike.mutate()}
+                  className="flex-row justify-center items-center gap-1"
+               >
+                  {isLiked ? <ThumbsupSolid size={18} color={appColors.primary} /> : <Thumbsup size={18} />}
+                  <AppText size="sm" weight="med">
+                     Like
+                  </AppText>
+               </TouchableOpacity>
 
-                  <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-2">
-                     <View className="top-[1px]">
-                        <CommentIcon size={22} color={appColors.icons} />
-                     </View>
-                     <AppText weight="med" color={appColors.icons}>
-                        Comments
-                     </AppText>
-                  </TouchableOpacity>
-               </View>
-
-               <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-2">
+               <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-1">
                   <View className="top-[1px]">
-                     <ShareIcon size={22} color={appColors.icons} />
+                     <CommentIcon size={18} />
                   </View>
-                  <AppText weight="med" color={appColors.icons}>
+                  <AppText size="sm" weight="med">
+                     Comments
+                  </AppText>
+               </TouchableOpacity>
+
+               <TouchableOpacity onPress={showComment} className="flex-row justify-center items-center gap-1">
+                  <View className="top-[1px]">
+                     <ShareIcon size={18} />
+                  </View>
+                  <AppText size="sm" weight="med">
                      Share
                   </AppText>
                </TouchableOpacity>

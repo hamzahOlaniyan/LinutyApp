@@ -10,7 +10,7 @@ export default function _layout() {
                headerShown: false,
                // headerTitleAlign: "left",
                // headerShadowVisible: false,
-               // headerTitleStyle: { fontSize: 20, fontFamily: TiktokFont.TiktokSemiBold },
+               // headerTitleStyle: { fontSize: 20, fontFamily: Font.TiktokSemiBold },
                // animation: "slide_from_bottom",
             }}
          />
@@ -21,7 +21,7 @@ export default function _layout() {
                   // headerShown: false,
                   // headerTitleAlign: "left",
                   // headerShadowVisible: false,
-                  // headerTitleStyle: { fontSize: 20, fontFamily: TiktokFont.TiktokSemiBold },
+                  // headerTitleStyle: { fontSize: 20, fontFamily: Font.TiktokSemiBold },
                   // animation: "slide_from_bottom",
                }
             }

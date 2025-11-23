@@ -1,14 +1,14 @@
 import React from "react";
 import { View } from "react-native";
-// import { useThemeStore } from "../context/themeStore";
-import AppText from "./ui/AppText";
 import {
    Actionsheet,
    ActionsheetBackdrop,
    ActionsheetContent,
    ActionsheetDragIndicator,
    ActionsheetDragIndicatorWrapper,
-} from "./ui/actionsheet";
+} from "./actionsheet";
+import AppText from "./AppText";
+// import { useThemeStore } from "../context/themeStore";
 
 type BottomSheetProps = {
    children: React.ReactNode;

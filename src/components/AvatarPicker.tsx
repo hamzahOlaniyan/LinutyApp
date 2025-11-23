@@ -1,7 +1,7 @@
-import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
+import AppText from "./ui/AppText";
 import Button from "./ui/Button";
 
 interface Props {
@@ -73,17 +73,20 @@ export default function AvatarPicker({ url, size = 150, onPickLocal }: Props) {
    return (
       <View className="gap-12">
          {!avatarUrl && (
-            <Image
-               source={require("@/assets/images/person-placeholder.jpg")}
-               style={[avatarSize, { borderRadius: 100, alignSelf: "center" }]}
-            />
+            // <Image
+            //    source={require("@/assets/images/person-placeholder.jpg")}
+            //    style={[avatarSize, { borderRadius: 100, alignSelf: "center" }]}
+            // />
+            <AppText>Image placeholder</AppText>
          )}
          {avatarUrl && (
-            <Image
-               source={{ uri: avatarUrl }}
-               accessibilityLabel="Avatar"
-               style={[avatarSize, styles.avatar, styles.image]}
-            />
+            <AppText>Image placeholder</AppText>
+
+            // <Image
+            //    source={[{ uri: avatarUrl }]}
+            //    accessibilityLabel="Avatar"
+            //    style={[avatarSize, styles.avatar, styles.image]}
+            // />
          )}
          <View>
             <Button

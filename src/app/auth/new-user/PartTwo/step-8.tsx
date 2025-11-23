@@ -3,7 +3,6 @@ import { appColors } from "@/constant/colors";
 import { hp } from "@/constant/common";
 import { useAuthStore } from "@/store/authStore";
 import { useRegistrationStore } from "@/store/useRegistrationState";
-import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -51,24 +50,28 @@ export default function Step8() {
             > */}
             <StatusBar style="light" />
             <View>
-               <Image
+               {/* <Image
                   source={require("@/assets/images/tree-icon-white.png")}
                   accessibilityLabel="Avatar"
                   contentFit="contain"
                   style={{ width: "100%", height: 75, alignSelf: "center" }}
-               />
+               /> */}
+               <AppText>Image placeholder</AppText>
+
                <View className="self-center gap-8">
-                  <Image
-                     source={{ uri: form.avatarUrl }}
+                  {/* <Image
+                     source={[{ uri: form.avatarUrl }]}
                      accessibilityLabel="Avatar"
                      style={{ width: 150, height: 150, borderRadius: 300, alignSelf: "center" }}
-                  />
+                  /> */}
+                  <AppText>Image placeholder</AppText>
+
                   <View className="gap-12">
                      <View>
                         <AppText color={appColors.white} size="xxxl" align="center" weight="semi">
                            Welcome to Linuty
                         </AppText>
-                        <AppText color={appColors.white} size="xxxxl" align="center" cap="capitalize">
+                        <AppText color={appColors.white} size="xxxl" align="center" cap="capitalize">
                            {form.firstName}
                         </AppText>
                      </View>

@@ -41,7 +41,7 @@ export default function ImageSlideViewer<T>({ data, renderItem }: ImageSlideView
             viewabilityConfig={viewabilityConfig}
          />
          <View style={s.mediaCounter}>
-            <AppText size="sm" color={appColors.white}>
+            <AppText size="xs" color={appColors.white}>
                {currentIndex + 1} / {data.length}
             </AppText>
          </View>
@@ -69,9 +69,9 @@ const s = StyleSheet.create({
    dotsRow: {
       flexDirection: "row",
       justifyContent: "center",
-      gap: 6,
+      gap: 4,
       paddingVertical: 12,
    },
-   dot: { width: 8, height: 8, borderRadius: 12, backgroundColor: appColors.grey },
-   dotActive: { backgroundColor: appColors.black },
+   dot: { width: 5, height: 5, borderRadius: 12, backgroundColor: appColors.grey },
+   dotActive: { backgroundColor: appColors.black, width: 6, height: 6 },
 });

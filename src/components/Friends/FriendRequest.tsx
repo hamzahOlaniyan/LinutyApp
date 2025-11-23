@@ -1,4 +1,4 @@
-import { getRequests } from "@/Services/relationships";
+import { getRequests } from "@/Services/db/relationships";
 import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import { View } from "react-native";

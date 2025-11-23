@@ -36,8 +36,13 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          [
             "expo-splash-screen",
             {
-               backgroundColor: "#000000",
-               image: "./src/assets/images/white.png",
+               backgroundColor: "#ffffff",
+               image: "./src/assets/images/icon-white.png",
+               dark: {
+                  image: "./assets/icon-white.png",
+                  backgroundColor: "#000000",
+               },
+               imageWidth: 300,
             },
          ],
       ],
@@ -53,9 +58,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          },
       },
       owner: "hamzaholaniyan",
-      runtimeVersion: {
-         policy: "appVersion" as const,
-      },
+
+      runtimeVersion: "1.0.0",
+
       updates: {
          url: "https://u.expo.dev/9ba15d7e-509f-4f7c-ae54-827330c67015",
       },

@@ -1,4 +1,4 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
 import { Stack } from "expo-router";
 
 export default function CommunityLayout() {
@@ -11,7 +11,7 @@ export default function CommunityLayout() {
                title: "comunity page",
                headerTitleAlign: "left",
                headerShadowVisible: false,
-               headerTitleStyle: { fontSize: 20, fontFamily: TiktokFont.TiktokSemiBold },
+               headerTitleStyle: { fontSize: 20, fontFamily: Font.SemiBold },
                animation: "slide_from_bottom",
             }}
          />

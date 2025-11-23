@@ -30,58 +30,62 @@ export default function NewDetail() {
       <ScrollView
          scrollEnabled={true}
          showsVerticalScrollIndicator={false}
-         style={{ backgroundColor: appColors.white, flex: 1, paddingBottom: 2000 }}
+         style={{ backgroundColor: appColors.white }}
       >
-         <View style={{ paddingHorizontal: wp(3), gap: 8 }}>
-            <AppText size="xxxl" weight="semi">
+         <View style={{ paddingHorizontal: wp(4), gap: 4 }}>
+            <View className="flex-row justify-between">
+               <AppText color={appColors.lightGrey} size="xs" cap="capitalize">
+                  {item?.category}
+               </AppText>
+               <AppText size="xs" cap="capitalize" color={appColors.lightGrey}>
+                  {dayjs(item?.pubDate).format("ddd DD MMM YYYY")}
+               </AppText>
+            </View>
+            <AppText size="xl" weight="semi">
                {item.title}
             </AppText>
-            <View className="flex-row justify-between">
-               <View>
-                  <AppText cap="capitalize">{item.creator}</AppText>
-                  <AppText cap="capitalize">{item.source_name}</AppText>
-               </View>
-               <View>
-                  <AppText cap="capitalize" align="right">
-                     {item.category}
-                  </AppText>
-                  <AppText cap="capitalize">{dayjs(item?.pubDate).format("ddd DD MMM YYYY")}</AppText>
-               </View>
-            </View>
+            <AppText size="sm" color={appColors.lightGrey}>
+               {item?.source_url.replace(/^https?:\/\//, "")}
+            </AppText>
          </View>
 
          <Image
             source={{ uri: item?.image_url }}
             style={{
-               marginVertical: 20,
+               marginVertical: 10,
                width: screenWidth,
                height: screenWidth,
-               backgroundColor: "yellow",
             }}
+            contentFit="cover"
          />
-
-         <View style={{ paddingHorizontal: wp(3), gap: 8 }}>
-            <AppText size="lg">{item?.description}</AppText>
-            <AppText size="sm" color={appColors.lightGrey}>
-               {item?.source_url.replace(/^https?:\/\//, "")}
-            </AppText>
-            <TouchableOpacity
-               onPress={() => handlePress(item.link)}
-               style={{ borderWidth: 1, borderRadius: 100, paddingHorizontal: 20, padding: 6 }}
-               className="w-fit"
-            >
-               <AppText>Complete article</AppText>
-            </TouchableOpacity>
-         </View>
-
-         {/* <View className="flex-1 gap-1">
-            <AppText weight="semi">{item?.title}</AppText>
-            <View className="flex-row justify-between">
-               <AppText size="sm" color={appColors.lightGrey} align="right">
-                  {dayjs(item?.pubDate).format("ddd DD MMM YYYY")}
-               </AppText>
+         <View style={{ paddingHorizontal: wp(4), gap: 8, paddingBottom: 100 }}>
+            <View className=" flex-1 justify-between">
+               <View className="flex-row gap-1">
+                  <AppText size="xs" cap="capitalize">
+                     Written by:
+                  </AppText>
+                  <AppText size="xs" color={appColors.lightGrey} cap="capitalize">
+                     {item?.creator}
+                  </AppText>
+               </View>
+               <View className="flex-row gap-1">
+                  <AppText size="xs" cap="capitalize">
+                     Source:
+                  </AppText>
+                  <AppText size="xs" color={appColors.lightGrey} cap="capitalize">
+                     {item?.source_name}
+                  </AppText>
+               </View>
             </View>
-         </View> */}
+            <View className="mt-4 gap-4">
+               <AppText>{item?.description}</AppText>
+               <TouchableOpacity onPress={() => handlePress(item.link)} className="w-fit">
+                  <AppText weight="med" color={appColors.blue}>
+                     {` Complete article >`}
+                  </AppText>
+               </TouchableOpacity>
+            </View>
+         </View>
       </ScrollView>
    );
 }

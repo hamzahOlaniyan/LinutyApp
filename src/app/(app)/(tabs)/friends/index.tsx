@@ -10,31 +10,20 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ClanMembers from "../explore/clan-members";
-
 export default function Friends() {
    const [showSearchBar, setShowSearchbar] = useState(false);
    const { initialTab } = useLocalSearchParams<{ initialTab?: string }>();
    return (
       <View style={{ backgroundColor: appColors.white, flex: 1 }}>
          <SafeAreaView style={{ flex: 1 }}>
-            <View className="px-4">
-               <ScreenHeader
-                  headerTitle="Friends"
-                  leftAction={
-                     <Search2 size={32} color={appColors.black} onPress={() => setShowSearchbar(!showSearchBar)} />
-                  }
-               />
-            </View>
+            <ScreenHeader
+               headerTitle="Friends"
+               leftAction={
+                  <Search2 size={32} color={appColors.black} onPress={() => setShowSearchbar(!showSearchBar)} />
+               }
+            />
             <StickyTabs
                initialKey={initialTab}
-               // header={
-               //    <ScreenHeader
-               //       headerTitle="Your friends"
-               //       leftAction={
-               //          <Search2 size={32} color={appColors.black} onPress={() => setShowSearchbar(!showSearchBar)} />
-               //       }
-               //    />
-               // }
                routes={[
                   { key: "Search", title: "Search friends" },
                   { key: "ClanMembers", title: "Clan Members" },

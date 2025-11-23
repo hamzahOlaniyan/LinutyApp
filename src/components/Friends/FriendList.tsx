@@ -1,4 +1,4 @@
-import { deleteFriendRequest, getFriends } from "@/Services/relationships";
+import { deleteFriendRequest, getFriends } from "@/Services/db/relationships";
 import { useAuthStore } from "@/store/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";

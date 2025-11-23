@@ -1,49 +1,41 @@
+import { Font } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/constant/colors";
 import { DiscoverIcon } from "@/icons/ico/DiscoverIcon";
 import { DiscoverIconSolid } from "@/icons/ico/DiscoverIconSolid";
 import { FriendsIcon } from "@/icons/ico/friendsIcon";
 import { FriendsIconSolid } from "@/icons/ico/friendsIconSolid";
-import { Home } from "@/icons/ico/home";
 import { HomeSolid } from "@/icons/ico/home-solid";
 import { NewsIcon } from "@/icons/ico/NewsIcon";
 import { NewsIconSolid } from "@/icons/ico/NewsIconSolid";
-import { Store } from "@/icons/ico/store";
 import { StoreSolid } from "@/icons/ico/store-solid";
-import { Tabs } from "expo-router";
-import React from "react";
+import { Tabs, usePathname } from "expo-router";
+import React, { useMemo } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Home from "./(home)";
+import Store from "./store";
 
 export default function TabLayout() {
    const insets = useSafeAreaInsets();
+   const pathname = usePathname();
+
+   const hideTabRoutes = [
+      // "/(app)/edit/[id]",
+      // "/(app)/new-post",
+      // "/(app)/auth",
+      "/product/edit",
+   ];
+
+   const isTabHidden = useMemo(() => hideTabRoutes.some((r) => pathname.startsWith(r.replace("[id]", ""))), [pathname]);
+
    return (
       <Tabs
          screenOptions={{
-            headerTitleAlign: "center",
-            tabBarShowLabel: false,
-            headerShadowVisible: false,
             tabBarActiveTintColor: appColors.primary,
-            tabBarItemStyle: {
-               height: 50,
-            },
-            tabBarIconStyle: {
-               width: "100%",
-               height: "100%",
-               borderRadius: 500,
-            },
+            tabBarInactiveTintColor: appColors.black,
+            tabBarLabelStyle: { textTransform: "capitalize", fontFamily: Font.Medium },
             tabBarStyle: {
-               height: 50,
-               position: "absolute",
-               bottom: insets.bottom + 10,
-               elevation: 3,
-               borderTopWidth: 0,
-               shadowOpacity: 0.7,
-               backgroundColor: appColors.white,
-               marginHorizontal: 15,
-               borderRadius: 500,
-               justifyContent: "center",
-               alignContent: "center",
-               flex: 1,
+               bottom: insets.bottom - 10,
             },
          }}
       >
@@ -60,16 +52,16 @@ export default function TabLayout() {
                         justifyContent: "center",
                         alignItems: "center",
                         height: "100%",
-                        borderRadius: 500,
+                        borderRadius: 5,
                      }}
                   >
-                     {focused ? <HomeSolid size={22} color={appColors.white} /> : <Home size={22} />}
+                     {focused ? <HomeSolid size={24} color={appColors.white} /> : <Home />}
                   </View>
                ),
             }}
          />
          <Tabs.Screen
-            name="(explore)"
+            name="explore"
             options={{
                headerShown: false,
                tabBarIcon: ({ focused }) => (
@@ -80,18 +72,18 @@ export default function TabLayout() {
                         justifyContent: "center",
                         alignItems: "center",
                         height: "100%",
-                        borderRadius: 500,
+                        borderRadius: 5,
                      }}
                   >
-                     {focused ? <DiscoverIconSolid size={22} color={appColors.white} /> : <DiscoverIcon size={22} />}
+                     {focused ? <DiscoverIconSolid size={24} color={appColors.white} /> : <DiscoverIcon size={24} />}
                   </View>
                ),
             }}
          />
          <Tabs.Screen
-            name="(friends)"
+            name="friends"
             options={{
-               title: "comunity",
+               title: "friends",
                headerShown: false,
                tabBarIcon: ({ focused }) => (
                   <View
@@ -101,18 +93,18 @@ export default function TabLayout() {
                         justifyContent: "center",
                         alignItems: "center",
                         height: "100%",
-                        borderRadius: 500,
+                        borderRadius: 5,
                      }}
                   >
-                     {focused ? <FriendsIconSolid size={22} color={appColors.white} /> : <FriendsIcon size={22} />}
+                     {focused ? <FriendsIconSolid size={24} color={appColors.white} /> : <FriendsIcon size={24} />}
                   </View>
                ),
             }}
          />
          <Tabs.Screen
-            name="(store)"
+            name="store"
             options={{
-               title: "market",
+               title: "store",
                headerShown: false,
                popToTopOnBlur: true,
                tabBarIcon: ({ focused }) => (
@@ -123,18 +115,18 @@ export default function TabLayout() {
                         justifyContent: "center",
                         alignItems: "center",
                         height: "100%",
-                        borderRadius: 500,
+                        borderRadius: 5,
                      }}
                   >
-                     {focused ? <StoreSolid size={22} color={appColors.white} /> : <Store size={22} />}
+                     {focused ? <StoreSolid size={24} color={appColors.white} /> : <Store />}
                   </View>
                ),
             }}
          />
          <Tabs.Screen
-            name="(news)"
+            name="news"
             options={{
-               title: "comunity",
+               title: "news",
                headerShown: false,
                tabBarIcon: ({ focused }) => (
                   <View
@@ -144,10 +136,10 @@ export default function TabLayout() {
                         justifyContent: "center",
                         alignItems: "center",
                         height: "100%",
-                        borderRadius: 500,
+                        borderRadius: 5,
                      }}
                   >
-                     {focused ? <NewsIconSolid size={22} color={appColors.white} /> : <NewsIcon size={22} />}
+                     {focused ? <NewsIconSolid size={24} color={appColors.white} /> : <NewsIcon size={24} />}
                   </View>
                ),
             }}

@@ -1,7 +1,7 @@
 import SurgestionCard from "@/components/Friends/SurgestionCard";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
-import { getProfiles } from "@/Services/profiles";
+import { getProfiles } from "@/Services/db/profiles";
 import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";

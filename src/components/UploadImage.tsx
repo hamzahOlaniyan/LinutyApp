@@ -1,94 +1,63 @@
-// import { supabase } from "../lib/supabase";
-
-// export async function UploadImage(userId: string, imageUri: string, folder: string) {
-//    if (!imageUri.length) return;
-//    const uploadedPaths: string[] = [];
-
-//    for (const img of imageUri) {
-//       try {
-//          const arraybuffer = await fetch(img).then((res) => res.arrayBuffer());
-//          const fileExt = img.split(".").pop()?.toLowerCase() ?? "jpeg";
-
-//          if (!userId) throw new Error("User not logged in.");
-
-//          const filename = `${userId}-${Date.now()}.${fileExt}`;
-//          const fullPath = `users/${userId}/${filename}`;
-
-//          const { data, error: uploadError } = await supabase.storage.from(folder).upload(fullPath, arraybuffer, {
-//             contentType: "image/jpeg",
-//             upsert: true,
-//          });
-
-//          if (uploadError) {
-//             throw uploadError;
-//          }
-
-//          const {
-//             data: { publicUrl },
-//          } = supabase.storage.from(folder).getPublicUrl(fullPath);
-
-//          uploadedPaths.push(publicUrl);
-//       } catch (err) {
-//          console.error("Avatar upload failed", err);
-//          throw err;
-//       }
-//    }
-//    return uploadedPaths;
-// }
-
 import { supabase } from "../lib/supabase";
 
-// type fileItemsTypes = {
-//    uri: string;
-//    mimeType: string;
-//    height: string;
-//    width: string;
-//    duration: string;
-//    fileName: string;
-//    size: string;
-//    type: string;
-// }[];
-
+//
 export async function uploadMediaSmart(
    userId: string,
    files: {
-      uri: string;
-      mimeType: string;
-      height: string;
-      width: string;
-      duration: string;
-      fileName: string;
-      size: string;
-      type: string;
+      uri?: string;
+      url?: string;
+      mimeType?: string;
+      height?: string | number;
+      width?: string | number;
+      duration?: string;
+      fileName?: string;
+      size?: string | number;
+      type: "image" | "video";
    }[],
    folder: string
 ) {
-   if (!files.length) return [];
+   if (!files?.length) return [];
 
    const uploadedUrls: {
       type: "image" | "video";
       url: string;
-      height: string;
-      width: string;
-      duration: string;
-      fileName: string;
-      mimeType: string;
-      size: string;
+      height?: string | number;
+      width?: string | number;
+      duration?: string;
+      fileName?: string;
+      mimeType?: string;
+      size?: string | number;
    }[] = [];
 
    for (const file of files) {
       try {
-         const { uri, width, height, duration, mimeType, size } = file;
-         // detect file extension and type
-         const ext = uri.split(".").pop()?.toLowerCase() ?? "jpeg";
+         const uri = file?.uri || file?.url;
+         if (!uri) continue;
+
+         // If the file already has a public URL (no need to re-upload)
+         if (uri.startsWith("http")) {
+            uploadedUrls.push({
+               type: file?.type || "image",
+               url: uri,
+               height: file?.height,
+               width: file?.width,
+               duration: file?.duration,
+               fileName: file?.fileName,
+               mimeType: file?.mimeType,
+               size: file?.size,
+            });
+            continue;
+         }
+
+         // Extract extension
+         const ext = (file?.fileName?.split(".").pop() || uri.split(".").pop() || "jpeg").toLowerCase();
          const isVideo = ["mp4", "mov", "mkv", "avi"].includes(ext);
-         // const folder = isVideo ? "videos" : "media";
-         const contentType = isVideo ? "video/mp4" : "image/jpeg";
+         const contentType = file?.mimeType || (isVideo ? "video/mp4" : "image/jpeg");
          const fileName = `${userId}-${Date.now()}.${ext}`;
          const fullPath = `${folder}/${userId}/${fileName}`;
 
+         // Upload logic
          if (isVideo) {
-            // ✅ For large files: upload using signed URL (streamed upload)
             const { data: signedUrlData, error: signedErr } = await supabase.storage
                .from(folder)
                .createSignedUploadUrl(fullPath);
@@ -108,7 +77,6 @@ export async function uploadMediaSmart(
                throw new Error(`Failed to upload video: ${uploadResponse.statusText}`);
             }
          } else {
-            // 🖼 For images: simple upload is fine
             const arrayBuffer = await fetch(uri).then((res) => res.arrayBuffer());
             const { error } = await supabase.storage.from(folder).upload(fullPath, arrayBuffer, {
                contentType,
@@ -118,22 +86,23 @@ export async function uploadMediaSmart(
             if (error) throw error;
          }
 
-         // get public URL after upload
+         // Get public URL
          const { data: publicUrlData } = supabase.storage.from(folder).getPublicUrl(fullPath);
 
          uploadedUrls.push({
             type: isVideo ? "video" : "image",
             url: publicUrlData.publicUrl,
-            height,
-            width,
-            duration,
+            height: file?.height,
+            width: file?.width,
+            duration: file?.duration,
             fileName,
-            mimeType,
-            size,
+            mimeType: file?.mimeType,
+            size: file?.size,
          });
       } catch (err) {
          console.error("Upload failed:", err);
-         throw err;
+         // continue instead of throwing — prevents breaking batch upload
+         continue;
       }
    }
 
