@@ -7,17 +7,25 @@ import { hp, wp } from "@/constant/common";
 import { supabase } from "@/lib/supabase";
 import { getRedirectPath } from "@/navigation/authRedirect";
 import { signInFlow } from "@/Services/authService";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
-import { Alert, Pressable, View } from "react-native";
+import React from "react";
+import { Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { z } from "zod";
+
+import { Controller, useForm } from "react-hook-form";
+
+const formSchema = z.object({
+   email: z.string().email("Please enter a valid email address."),
+   password: z.string().min(8, "Please enter at least 8 characters.").max(64, "Please enter fewer than 64 characters."),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 export default function Signin() {
-   const [email, setEmail] = useState("");
-   const [password, setPassword] = useState("");
-   const [loading, setLoading] = useState(false);
    const profile = useAuthStore((s) => s.profile);
 
    const setSession = useAuthStore((s) => s.setSession);
@@ -25,26 +33,30 @@ export default function Signin() {
 
    const router = useRouter();
 
-   const handleSignInUser = async () => {
-      setLoading(true);
-      const result = await signInFlow({
-         email,
-         password,
-         supabase,
-         setSession,
-         fetchProfile,
-      });
-      setLoading(false);
-      if ("error" in result) {
-         if (result.error === "MISSING_FIELDS") {
-            Alert.alert("Please fill in all fields");
-         } else {
-            Alert.alert(result.error);
-         }
-         return;
+   const {
+      control,
+      handleSubmit,
+      formState: { errors, isSubmitting },
+      reset: resetForm,
+   } = useForm<FormValues>({
+      resolver: zodResolver(formSchema),
+      defaultValues: { email: "", password: "" },
+   });
+
+   const onSubmit = async (values: FormValues) => {
+      try {
+         await signInFlow({
+            values,
+            supabase,
+            setSession,
+            fetchProfile,
+         });
+         const redirectPath = getRedirectPath(profile);
+         router.replace(redirectPath as any);
+         resetForm();
+      } catch (e: any) {
+         console.log(e);
       }
-      const redirectPath = getRedirectPath(profile);
-      router.replace(redirectPath as any);
    };
 
    return (
@@ -59,20 +71,34 @@ export default function Signin() {
          <View className="gap-2 py-6 flex-1 justify-between relative">
             <View className="gap-8 relative top-20">
                <View className="gap-2">
-                  <Input
-                     placeholder="Email address"
-                     value={email}
-                     onChangeText={setEmail}
-                     keyboardType="email-address"
-                     inputMode="text"
+                  <Controller
+                     control={control}
+                     name="email"
+                     render={({ field: { onChange, onBlur, value } }) => (
+                        <Input
+                           placeholder="Email address"
+                           value={value}
+                           onChangeText={onChange}
+                           keyboardType="email-address"
+                           inputMode="text"
+                           error={errors.email?.message}
+                        />
+                     )}
                   />
-                  <Input
-                     placeholder="Password"
-                     value={password}
-                     onChangeText={setPassword}
-                     secureTextEntry
-                     inputMode="text"
-                     isPassword={true}
+                  <Controller
+                     control={control}
+                     name="password"
+                     render={({ field: { onChange, onBlur, value } }) => (
+                        <Input
+                           placeholder="••••••••"
+                           value={value}
+                           onChangeText={onChange}
+                           secureTextEntry
+                           inputMode="text"
+                           isPassword={true}
+                           error={errors.password?.message}
+                        />
+                     )}
                   />
                   <Pressable onPress={() => router.push("/auth/password-recovery")}>
                      <AppText align="right" size="sm" color={appColors.inputActive}>
@@ -80,7 +106,7 @@ export default function Signin() {
                      </AppText>
                   </Pressable>
                </View>
-               <GradientButton text="Sign in" onPress={handleSignInUser} isLoading={loading} size="lg" />
+               <GradientButton text="Sign in" onPress={handleSubmit(onSubmit)} isLoading={isSubmitting} size="lg" />
             </View>
             <View className="w-full absolute bottom-5 gap-4">
                <Button

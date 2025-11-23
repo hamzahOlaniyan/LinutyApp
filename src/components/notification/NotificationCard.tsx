@@ -1,6 +1,6 @@
 import { appColors } from "@/constant/colors";
 import { getPostById } from "@/Services/db/posts";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useRouter } from "expo-router";

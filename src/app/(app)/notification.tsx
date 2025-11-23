@@ -2,7 +2,7 @@ import NotificationCard from "@/components/notification/NotificationCard";
 import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
 import { getNotfication } from "@/Services/db/Notification";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import { FlatList, View } from "react-native";
 

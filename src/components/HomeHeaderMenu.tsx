@@ -1,6 +1,6 @@
 import { Notification } from "@/icons/ico/notification";
 import { Plus } from "@/icons/ico/plus";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";

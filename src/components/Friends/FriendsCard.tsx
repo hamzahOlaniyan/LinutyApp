@@ -9,7 +9,7 @@ import { TouchableOpacity, View } from "react-native";
 // import { deleteFriendRequest, sendFriendRequest } from "../Services/relationships";
 
 import { appColors } from "@/constant/colors";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "expo-router";
 import Avatar from "../Avatar";
 import AppText from "../ui/AppText";

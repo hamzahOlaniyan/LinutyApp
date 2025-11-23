@@ -3,7 +3,7 @@ import FriendsSkeletion from "@/components/Friends/FriendsSkeletion";
 import Searchbar from "@/components/ui/Searchbar";
 import { wp } from "@/constant/common";
 import { getProfiles } from "@/Services/db/profiles";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Animated, View } from "react-native";

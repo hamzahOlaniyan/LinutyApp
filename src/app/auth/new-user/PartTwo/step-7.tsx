@@ -5,7 +5,7 @@ import { UploadAvatar } from "@/components/UploadAvatar";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { supabase } from "@/lib/supabase";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRegistrationStore } from "@/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";

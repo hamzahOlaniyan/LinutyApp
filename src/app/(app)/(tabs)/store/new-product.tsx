@@ -10,7 +10,7 @@ import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { Plus } from "@/icons/ico/plus";
 import { createStoreProduct } from "@/Services/db/store";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useProductFormState } from "@/store/useProductFormState";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFocusEffect, useRouter } from "expo-router";

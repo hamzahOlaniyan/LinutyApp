@@ -2,7 +2,7 @@ import ClanInfo from "@/components/ui/ClanInfo";
 import LineageChain from "@/components/ui/LineageChain";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, View } from "react-native";

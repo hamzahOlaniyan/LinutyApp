@@ -1,7 +1,7 @@
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { getStoreProductByProfileId } from "@/Services/db/store";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import React, { useCallback, useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";

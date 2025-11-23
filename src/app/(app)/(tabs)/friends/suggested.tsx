@@ -2,7 +2,7 @@ import SurgestionCard from "@/components/Friends/SurgestionCard";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { getProfiles } from "@/Services/db/profiles";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Dimensions, FlatList, View } from "react-native";

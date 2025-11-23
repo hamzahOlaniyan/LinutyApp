@@ -1,32 +1,34 @@
 // authStore.ts
 import { supabase } from "@/lib/supabase"; // adjust path
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as SplashScreen from "expo-splash-screen";
+import { Session } from "@supabase/supabase-js";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-SplashScreen.preventAutoHideAsync();
-SplashScreen.setOptions({ duration: 100 });
-
 type AuthState = {
+   initialized: boolean;
    loading: boolean;
    hasHydrated: boolean;
-   session: any | null;
+   session: Session | null;
    user: any | null;
    profile: any | null;
 
    // actions
    setHydrated: () => void;
+   signIn: (email: string, password: string) => Promise<void>;
    resetSession: () => void;
    setSession: (session: any | null) => void;
    fetchProfile: (userId: string) => Promise<void>;
    signOut: () => Promise<void>;
    setLoading: (loading: boolean) => void;
+   init: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthState>()(
    persist(
       (set, get) => ({
+         initialized: false,
+
          loading: true,
          hasHydrated: false,
          session: null,
@@ -63,6 +65,22 @@ export const useAuthStore = create<AuthState>()(
          signOut: async () => {
             await supabase.auth.signOut();
             set({ session: null, user: null, profile: null });
+         },
+
+         signIn: async (email, password) => {
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) throw error;
+            if (data.session) set({ session: data.session });
+         },
+
+         init: async () => {
+            if (get().initialized) return;
+            const {
+               data: { session },
+            } = await supabase.auth.getSession();
+            set({ session });
+            supabase.auth.onAuthStateChange((_event, session) => set({ session }));
+            set({ initialized: true });
          },
       }),
       {

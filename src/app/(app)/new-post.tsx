@@ -9,7 +9,7 @@ import { hp, wp } from "@/constant/common";
 import { ImageIcon } from "@/icons/ico/ImageIcon";
 import { Plus } from "@/icons/ico/plus";
 import { createPost } from "@/Services/db/posts";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";

@@ -11,13 +11,23 @@ type InputProps = TextInputProps & {
    icon?: React.ReactNode;
    label?: string;
    isPassword?: boolean;
-   error?: boolean;
+   error?: string | null;
    errorMessage?: string;
    clearValue?: boolean;
+   onChangeText: (t: string) => void;
    [key: string]: any;
 };
 
-export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMessage, clearValue, ...props }) => {
+export const Input: FC<InputProps> = ({
+   isPassword,
+   icon,
+   label,
+   error,
+   errorMessage,
+   clearValue,
+   onChangeText,
+   ...props
+}) => {
    const [isFocused, setIsFocused] = useState(false);
    const [showPassword, setShowPassword] = useState(true);
 
@@ -50,6 +60,7 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
                   placeholderTextColor={`${appColors.placeholder}`}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
+                  onChangeText={onChangeText}
                   {...props}
                   selectionColor={appColors.primary}
                   selectionHandleColor={appColors.primary}
@@ -67,11 +78,16 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
                   </View>
                )}
             </View>
-            {error && errorMessage ? (
+            {!!error && (
+               <AppText size="sm" color={appColors.error} style={{ marginTop: 4 }}>
+                  {error}
+               </AppText>
+            )}
+            {/* {error && errorMessage ? (
                <AppText color={appColors.error} size="sm">
                   {errorMessage}
                </AppText>
-            ) : null}
+            ) : null} */}
          </View>
       </KeyboardAvoidingView>
    );

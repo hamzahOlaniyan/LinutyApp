@@ -3,7 +3,7 @@ import { hp } from "@/constant/common";
 import { SendIcon } from "@/icons/ico/sendIcon";
 import { createComment } from "@/Services/db/comment";
 import { createNotification } from "@/Services/db/Notification";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";

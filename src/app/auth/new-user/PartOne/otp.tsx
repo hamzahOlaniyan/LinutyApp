@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 import GradientButton from "@/components/ui/GradientButton";
 import { Input } from "@/components/ui/Input";
 import { supabase } from "@/lib/supabase";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRegistrationStore } from "@/store/useRegistrationState";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";

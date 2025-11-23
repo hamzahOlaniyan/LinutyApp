@@ -6,7 +6,7 @@ import ProfileStore from "@/components/profile/ProfileStore";
 import StickyTabs from "@/components/ui/StickyTabs";
 import { getPostsUserById } from "@/Services/db/posts";
 import { getProfileById } from "@/Services/db/profiles";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useWindowDimensions } from "react-native";

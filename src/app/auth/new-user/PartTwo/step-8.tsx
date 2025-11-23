@@ -1,7 +1,7 @@
 import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
 import { hp } from "@/constant/common";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRegistrationStore } from "@/store/useRegistrationState";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";

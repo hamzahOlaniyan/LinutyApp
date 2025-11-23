@@ -1,5 +1,5 @@
 import { appColors } from "@/constant/colors";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";

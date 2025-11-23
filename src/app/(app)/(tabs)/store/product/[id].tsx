@@ -6,7 +6,7 @@ import { CustomBottomSheet } from "@/components/ui/CustomBottomSheet";
 import { appColors } from "@/constant/colors";
 import { ThreeDots } from "@/icons/ico/threedots";
 import { getStoreProductById } from "@/Services/db/store";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 import { useQuery } from "@tanstack/react-query";

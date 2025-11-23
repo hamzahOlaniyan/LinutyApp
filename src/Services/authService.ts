@@ -1,31 +1,30 @@
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { Session, SupabaseClient, User } from "@supabase/supabase-js";
 
 export interface SignInParams {
-   email: string;
-   password: string;
+   values:{email: string;
+   password: string;}
    setSession: (session: Session | null) => void;
    fetchProfile: (userId: string) => Promise<void>;
    supabase: SupabaseClient;
 }
 
-export type SignInResult = { error: string } | { profile: true; userId: string };
+// export type SignInResult = { error: string } | { profile: true; userId: string };
 
 export async function signInFlow({
-   email,
-   password,
+   values,
    setSession,
    fetchProfile,
    supabase,
-}: SignInParams): Promise<SignInResult> {
-   if (!email || !password) {
-      return { error: "MISSING_FIELDS" };
+}: SignInParams) {
+   if (!values.email.trim() || !values.password.trim()) {
+      return null
    }
 
    try {
       const { data, error } = await supabase.auth.signInWithPassword({
-         email,
-         password,
+         email: values.email,
+         password: values.password,
       });
 
       if (error) {
@@ -54,18 +53,4 @@ export async function LogOutFlow() {
    useAuthStore.getState().signOut();
    useAuthStore.getState().resetSession();
 
-   //RESET DEV
-
-   // try {
-   //    // 1️⃣ Clear async storage
-   //    await AsyncStorage.clear();
-   //    queryClient.clear();
-
-   //    // 2️⃣ Clear persisted Zustand stores
-   //    await useAuthStore.persist.clearStorage();
-
-   //    console.log("✅ All local data cleared!");
-   // } catch (error) {
-   //    console.error("❌ Failed to clear local data:", error);
-   // }
 }

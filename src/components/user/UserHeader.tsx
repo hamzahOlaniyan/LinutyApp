@@ -2,7 +2,7 @@ import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import { ImageIcon } from "@/icons/ico/ImageIcon";
 import { ThreeDots } from "@/icons/ico/threedots";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { Image } from "expo-image";
 import React from "react";
 import { View } from "react-native";

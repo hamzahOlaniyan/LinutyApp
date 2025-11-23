@@ -5,7 +5,7 @@ import { CommentIcon } from "@/icons/ico/comment";
 import { ShareIcon } from "@/icons/ico/shareIcon";
 import { Thumbsup } from "@/icons/ico/thumbsup";
 import { ThumbsupSolid } from "@/icons/ico/thumbsup-solid";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { TouchableOpacity, View } from "react-native";
 import AppText from "../ui/AppText";
 import ActionInfo from "./ActionInfo";

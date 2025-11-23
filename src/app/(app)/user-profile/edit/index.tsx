@@ -5,7 +5,7 @@ import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { EditIcon } from "@/icons/ico/edit";
 import { getProfileById } from "@/Services/db/profiles";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { View } from "react-native";

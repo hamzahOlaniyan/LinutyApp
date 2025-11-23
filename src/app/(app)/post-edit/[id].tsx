@@ -6,7 +6,7 @@ import { wp } from "@/constant/common";
 import { ImageIcon } from "@/icons/ico/ImageIcon";
 import { getPostById, updatePost } from "@/Services/db/posts";
 import { getStoreProductById } from "@/Services/db/store";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";

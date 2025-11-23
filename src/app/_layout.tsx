@@ -1,5 +1,6 @@
 import { Font } from "@/assets/fonts/FontFamily";
-import { useAuthStore } from "@/store/authStore";
+import { SplashOverlay } from "@/components/SplashOverlay";
+import { useAuthStore } from "@/store/useAuthStore";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
@@ -37,7 +38,7 @@ export default function RootLayout() {
    }, [hasHydrated, loaded]);
 
    if (!loaded || !hasHydrated || loading) {
-      return null;
+      return <SplashOverlay />;
    }
 
    return (

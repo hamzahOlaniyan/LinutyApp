@@ -6,7 +6,7 @@ import { EventsIcon } from "@/icons/ico/EventsIcon";
 import { FramePersonIcon } from "@/icons/ico/FramePersonIcon";
 import { FriendsIcon } from "@/icons/ico/friendsIcon";
 import { StoryIcon } from "@/icons/ico/StoryIcon";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";

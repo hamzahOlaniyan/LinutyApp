@@ -9,7 +9,7 @@ import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { Plus } from "@/icons/ico/plus";
 import { getStoreProductById, updateProduct } from "@/Services/db/store";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useProductFormState } from "@/store/useProductFormState";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";

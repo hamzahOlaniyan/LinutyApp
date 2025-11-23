@@ -25,7 +25,7 @@ jest.mock("../../store/authStore", () => ({
    },
 }));
 
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { LogOutFlow, signInFlow, SignInResult } from "../../Services/authService";
 

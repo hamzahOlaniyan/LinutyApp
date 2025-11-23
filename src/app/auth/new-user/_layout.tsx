@@ -1,5 +1,5 @@
 import { Font } from "@/assets/fonts/FontFamily";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRegistrationStore } from "@/store/useRegistrationState";
 import { Stack, usePathname, useRouter } from "expo-router";
 import React, { useEffect } from "react";

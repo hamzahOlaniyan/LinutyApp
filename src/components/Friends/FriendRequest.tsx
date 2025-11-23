@@ -1,5 +1,5 @@
 import { getRequests } from "@/Services/db/relationships";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import { View } from "react-native";
 import AppText from "../ui/AppText";
