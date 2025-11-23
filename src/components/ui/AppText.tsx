@@ -1,4 +1,4 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/constant/colors";
 import React from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
@@ -29,27 +29,25 @@ export default function AppText({
    className,
    onPress,
 }: AppTextProps) {
-   // const { currentTheme } = useThemeStore();
-
    const fontSize = {
-      xxxl: 24,
+      xxxl: 26,
       xxl: 20,
       xl: 18,
       lg: 17,
       md: 16,
       sm: 14,
-      xs: 12,
-      xxs: 10,
+      xs: 13,
+      xxs: 12,
    }[size];
 
    const fontFamilyMap: Record<TextWeight, TextStyle["fontFamily"]> = {
-      black: TiktokFont.TiktokBlack,
-      extraBold: TiktokFont.TiktokExtraBold,
-      bold: TiktokFont.TiktokBold,
-      semi: TiktokFont.TiktokSemiBold,
-      med: TiktokFont.TiktokMedium,
-      reg: TiktokFont.TiktokRegular,
-      light: TiktokFont.TiktokLight,
+      black: Font.Black,
+      extraBold: Font.ExtraBold,
+      bold: Font.Bold,
+      semi: Font.SemiBold,
+      med: Font.Medium,
+      reg: Font.Regular,
+      light: Font.Light,
    };
 
    const fontFamily = fontFamilyMap[weight];

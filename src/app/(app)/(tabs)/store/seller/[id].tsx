@@ -5,8 +5,8 @@ import Searchbar from "@/components/ui/Searchbar";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { Store } from "@/icons/ico/store";
-import { getProfileById } from "@/Services/profiles";
-import { getStoreProductByProfileId } from "@/Services/store";
+import { getProfileById } from "@/Services/db/profiles";
+import { getStoreProductByProfileId } from "@/Services/db/store";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
@@ -38,8 +38,6 @@ export default function SellerDetails() {
    });
 
    const fullName = `${SELLER?.firstName}  ${SELLER?.lastName}`;
-
-   // console.log("---SELLER PRODUCT", JSON.stringify(PRODUCTS, null, 2));
 
    return (
       <FlatList

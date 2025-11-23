@@ -1,9 +1,9 @@
-export const TiktokFont = {
-   TiktokBlack: "TiktokBlack",
-   TiktokExtraBold: "TiktokExtraBold",
-   TiktokBold: "TiktokBold",
-   TiktokSemiBold: "TiktokSemiBold",
-   TiktokMedium: "TiktokMedium",
-   TiktokRegular: "TiktokRegular",
-   TiktokLight: "TiktokLight",
+export const Font = {
+   Black: "Black",
+   ExtraBold: "ExtraBold",
+   Bold: "Bold",
+   SemiBold: "SemiBold",
+   Medium: "Medium",
+   Regular: "Regular",
+   Light: "Light",
 };

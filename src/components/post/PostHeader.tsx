@@ -33,8 +33,6 @@ export default function PostHeader({ authorId, postId, avatar, name, username, d
 
    const isUserOwner = profile?.id === authorId;
 
-   console.log({ authorId });
-
    return (
       <>
          <View
@@ -46,13 +44,13 @@ export default function PostHeader({ authorId, postId, avatar, name, username, d
          >
             <View className="flex-row justify-between items-start">
                <View className="flex-row items-start gap-2">
-                  <TouchableOpacity onPress={() => router.push(`/(user)/${authorId}`)}>
+                  <TouchableOpacity onPress={() => router.push(`/user/${authorId}`)}>
                      <Avatar path={avatar} size={50} />
                   </TouchableOpacity>
                   <View>
                      <View className="flex-row items-center gap-1">
-                        <TouchableOpacity onPress={() => router.push(`/(user)/${authorId}`)}>
-                           <AppText size="lg" weight="bold" cap="capitalize" style={{ letterSpacing: -0.4 }}>
+                        <TouchableOpacity onPress={() => router.push(`/user/${authorId}`)}>
+                           <AppText weight="bold" cap="capitalize" style={{ letterSpacing: -0.4 }}>
                               {name.trim()}
                            </AppText>
                         </TouchableOpacity>
@@ -63,7 +61,7 @@ export default function PostHeader({ authorId, postId, avatar, name, username, d
                            </AppText>
                         </View>
                      </View>
-                     <TouchableOpacity onPress={() => router.push(`/(user)/${authorId}`)}>
+                     <TouchableOpacity onPress={() => router.push(`/user/${authorId}`)}>
                         <AppText size="sm" color={appColors.lightGrey}>
                            @{username}
                         </AppText>
@@ -81,8 +79,8 @@ export default function PostHeader({ authorId, postId, avatar, name, username, d
          <Portal hostName="root">
             <CustomBottomSheet
                ref={bottomSheetRef}
-               snapPoints={["35%"]}
-               children={<PostOptions isUserOwner={isUserOwner} post_id={postId} ref={bottomSheetRef} />}
+               snapPoints={["45%"]}
+               children={<PostOptions isUserOwner={isUserOwner} postId={postId} bottomSheetRef={bottomSheetRef} />}
             />
          </Portal>
       </>

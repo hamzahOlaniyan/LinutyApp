@@ -1,4 +1,5 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
+
 import { appColors } from "@/constant/colors";
 import { hp } from "@/constant/common";
 import { Ionicons } from "@expo/vector-icons";
@@ -44,7 +45,7 @@ export const Input: FC<InputProps> = ({ isPassword, icon, label, error, errorMes
             >
                {icon && <View className="relative top-[1px]">{icon}</View>}
                <TextInput
-                  style={{ fontSize: hp(1.9), fontFamily: TiktokFont.TiktokMedium }}
+                  style={{ fontSize: hp(1.9), fontFamily: Font.Medium }}
                   className="flex-1  p-0 m-0 h-full"
                   placeholderTextColor={`${appColors.placeholder}`}
                   onFocus={() => setIsFocused(true)}

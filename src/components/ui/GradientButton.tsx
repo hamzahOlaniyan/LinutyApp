@@ -1,10 +1,10 @@
-import { hp } from "@/constant/common";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/constant/colors";
+import { hp } from "@/constant/common";
 
 type ButtonProps = {
    text?: React.ReactNode;
@@ -63,7 +63,7 @@ export default function GradientButton({ text, onPress, isLoading = false, disab
                         fontSize: size === "lg" ? hp(1.9) : size === "sm" ? hp(1.6) : size === "xs" ? hp(1.3) : hp(1.6),
                         color: "white",
                         textAlign: "center",
-                        fontFamily: TiktokFont.TiktokRegular,
+                        fontFamily: Font.Regular,
                      }}
                   >
                      {text}

@@ -1,7 +1,8 @@
+// authStore.ts
+import { supabase } from "@/lib/supabase"; // adjust path
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { supabase } from "../lib/supabase";
 
 type AuthState = {
    loading: boolean;
@@ -9,6 +10,9 @@ type AuthState = {
    session: any | null;
    user: any | null;
    profile: any | null;
+
+   // actions
+   setHydrated: () => void;
    resetSession: () => void;
    setSession: (session: any | null) => void;
    fetchProfile: (userId: string) => Promise<void>;
@@ -16,7 +20,6 @@ type AuthState = {
    setLoading: (loading: boolean) => void;
 };
 
-// ...existing code...
 export const useAuthStore = create<AuthState>()(
    persist(
       (set, get) => ({
@@ -25,9 +28,13 @@ export const useAuthStore = create<AuthState>()(
          session: null,
          user: null,
          profile: null,
+
+         setHydrated: () => set({ hasHydrated: true }),
+
          resetSession: () => {
             set({ session: null, user: null, profile: null });
          },
+
          setSession: (session) => {
             set({
                session,
@@ -35,16 +42,20 @@ export const useAuthStore = create<AuthState>()(
                loading: false,
             });
          },
+
          setLoading: (loading) => set({ loading }),
+
          fetchProfile: async (userId) => {
             set({ loading: true });
             const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
+
             if (!error && data) {
                set({ profile: data, loading: false });
             } else {
                set({ profile: null, loading: false });
             }
          },
+
          signOut: async () => {
             await supabase.auth.signOut();
             set({ session: null, user: null, profile: null });
@@ -53,11 +64,13 @@ export const useAuthStore = create<AuthState>()(
       {
          name: "auth-store",
          storage: createJSONStorage(() => AsyncStorage),
+         onRehydrateStorage: () => (state, error) => {
+            if (!error && state) {
+               // call our own action on the hydrated state
+               state.setHydrated();
+               state.setLoading(false);
+            }
+         },
       }
    )
 );
-
-useAuthStore.persist.onFinishHydration(() => {
-   console.log("🔥 Store hydration complete ✅");
-   useAuthStore.setState({ hasHydrated: true, loading: false });
-});

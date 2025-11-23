@@ -1,107 +1,54 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
+import { useAuthStore } from "@/store/authStore";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
 import { QueryProvider } from "../provider/QueryProvider";
-import { useAuthStore } from "../store/authStore";
+
+export const unstable_settings = {
+   anchor: "(tabs)",
+};
 
 SplashScreen.preventAutoHideAsync();
-
-// const logoutAndClearSession = async () => {
-//    await supabase.auth.signOut(); // clear Supabase session
-//    await AsyncStorage.removeItem("auth-store"); // clear Zustand persist
-//    useAuthStore.getState().resetSession(); // clear in-memory state
-// };
+SplashScreen.setOptions({
+   duration: 200,
+   fade: true,
+});
 
 export default function RootLayout() {
-   const setSession = useAuthStore((s) => s.setSession);
-   const fetchProfile = useAuthStore((s) => s.fetchProfile);
-   const reset = useAuthStore((state) => state.resetSession);
-
-   // const router = useRouter();
+   const { session, profile, loading, hasHydrated, setLoading } = useAuthStore();
 
    const [loaded] = useFonts({
-      [TiktokFont.TiktokBlack]: require("@/assets/fonts/Roboto-Black.ttf"),
-      [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/Roboto-ExtraBold.ttf"),
-      [TiktokFont.TiktokBold]: require("@/assets/fonts/Roboto-Bold.ttf"),
-      [TiktokFont.TiktokSemiBold]: require("@/assets/fonts/Roboto-SemiBold.ttf"),
-      [TiktokFont.TiktokMedium]: require("@/assets/fonts/Roboto-Medium.ttf"),
-      [TiktokFont.TiktokRegular]: require("@/assets/fonts/Roboto-Regular.ttf"),
-      [TiktokFont.TiktokLight]: require("@/assets/fonts/Roboto-Light.ttf"),
+      [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
+      [Font.ExtraBold]: require("@/assets/fonts/TikTokSans-ExtraBold.ttf"),
+      [Font.Bold]: require("@/assets/fonts/TikTokSans-Bold.ttf"),
+      [Font.SemiBold]: require("@/assets/fonts/TikTokSans-SemiBold.ttf"),
+      [Font.Medium]: require("@/assets/fonts/TikTokSans-Medium.ttf"),
+      [Font.Regular]: require("@/assets/fonts/TikTokSans-Regular.ttf"),
+      [Font.Light]: require("@/assets/fonts/TikTokSans-Light.ttf"),
    });
 
-   // useEffect(() => {
-   //    if (loaded) {
-   //       SplashScreen.hide();
-   //    }
-   // }, [loaded]);
+   useEffect(() => {
+      if (loaded && hasHydrated && !loading) {
+         SplashScreen.hide();
+      }
+   }, [loaded, hasHydrated, loading]);
 
-   if (!loaded) {
-      return null;
+   if (!hasHydrated || loading) {
+      return (
+         <View className="flex-1 items-center justify-center bg-white">
+            <ActivityIndicator size="large" />
+         </View>
+      );
    }
-
-   // useEffect(() => {
-   //    const checkGhostSession = async () => {
-   //       const { data } = await supabase.auth.getSession();
-
-   //       if (data.session?.user) {
-   //          const { data: profile } = await supabase
-   //             .from("profiles")
-   //             .select("*")
-   //             .eq("id", data.session.user.id)
-   //             .single();
-
-   //          if (!profile) {
-   //             await logoutAndClearSession();
-   //          }
-   //       }
-   //    };
-   //    checkGhostSession();
-   // }, []);
-
-   // useEffect(() => {
-   //    const unsub = useAuthStore.persist.onFinishHydration(() => {
-   //       useAuthStore.setState({ hasHydrated: true, loading: false });
-   //    });
-   //    return unsub;
-   // }, []);
-
-   // useEffect(() => {
-   //    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
-   //       if (session?.user) {
-   //          setSession(session);
-   //          // fetchProfile(session?.user?.id);
-   //       } else {
-   //          await AsyncStorage.removeItem("auth-store");
-   //          reset();
-   //       }
-   //    });
-
-   //    return () => {
-   //       authListener.subscription.unsubscribe();
-   //    };
-   // }, []);
-
-   // useEffect(() => {
-   //    const subscription = Linking.addEventListener("url", async ({ url }: { url: string }) => {
-   //       const { data } = await supabase.auth.exchangeCodeForSession(url);
-   //       if (data.session) {
-   //          console.log("Password reset session started!");
-   //          router.replace("/(auth)/reset-password");
-   //       }
-   //    });
-
-   //    return () => subscription.remove();
-   // }, []);
-
-   // const queryClient = new QueryClient();
 
    return (
       <QueryProvider>
@@ -112,7 +59,22 @@ export default function RootLayout() {
                <SafeAreaProvider>
                   <GluestackUIProvider>
                      <StatusBar style="auto" />
-                     <Stack screenOptions={{ headerShown: false }} />
+                     <Stack screenOptions={{ animation: "none", headerShown: false }}>
+                        {/* Logged-in & profile complete -> main app group */}
+                        <Stack.Protected guard={!!session && profile?.isComplete !== false}>
+                           <Stack.Screen name="(app)" />
+                        </Stack.Protected>
+
+                        {/* Logged-in & profile incomplete -> onboarding */}
+                        <Stack.Protected guard={!!session && profile?.isComplete === false}>
+                           <Stack.Screen name="auth/new-user/PartTwo/step-4.0" />
+                        </Stack.Protected>
+
+                        {/* Logged-out -> auth */}
+                        <Stack.Protected guard={!session}>
+                           <Stack.Screen name="auth" />
+                        </Stack.Protected>
+                     </Stack>
                   </GluestackUIProvider>
                </SafeAreaProvider>
             </PortalProvider>

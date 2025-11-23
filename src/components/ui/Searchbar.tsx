@@ -1,7 +1,8 @@
-// import { useThemeStore } from "@/context/themeStore";
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+// import { useThemeStore } from "@/src/context/themeStore";
+import { Font } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/constant/colors";
 import { hp } from "@/constant/common";
+
 import { Feather, Fontisto } from "@expo/vector-icons";
 import React from "react";
 import { TextInput, TextInputProps, View } from "react-native";
@@ -28,7 +29,7 @@ export default function Searchbar({ value, onChangeText, onPress, placeholder, .
          <TextInput
             value={value}
             onChangeText={onChangeText}
-            style={{ fontSize: hp(1.9), fontFamily: TiktokFont.TiktokRegular }}
+            style={{ fontSize: hp(1.9), fontFamily: Font.Regular }}
             className="flex-1 h-full"
             placeholder={placeholder}
             placeholderTextColor={appColors.placeholder}

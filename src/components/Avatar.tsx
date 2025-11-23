@@ -14,6 +14,8 @@ export default function Avatar({
    style?: StyleProp<ImageStyle>;
    initails?: string;
 }) {
+   const source = typeof path === "string" && path ? { uri: path } : path;
+
    return (
       <View
          style={[
@@ -30,7 +32,7 @@ export default function Avatar({
          ]}
       >
          {path ? (
-            <Image source={{ uri: path }} style={{ width: "100%", height: "100%", borderRadius: 200 }} />
+            <Image source={source} style={{ width: "100%", height: "100%", borderRadius: 200 }} />
          ) : (
             <AppText size="lg" weight="med">
                {initails}

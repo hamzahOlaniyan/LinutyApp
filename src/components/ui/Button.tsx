@@ -1,6 +1,7 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/constant/colors";
 import { hp } from "@/constant/common";
+
 import React from "react";
 import { ActivityIndicator, ColorValue, StyleProp, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 
@@ -43,7 +44,7 @@ export default function Button({
                justifyContent: "center",
                alignItems: "center",
                paddingHorizontal:
-                  size === "lg" ? 18 : size === "md" ? 16 : size === "sm" ? 12 : size === "xs" ? 10 : hp(5),
+                  size === "lg" ? 20 : size === "md" ? 18 : size === "sm" ? 16 : size === "xs" ? 14 : hp(5),
                borderWidth: variant === "outline" ? 0.8 : 0,
                backgroundColor:
                   variant === "primary"
@@ -78,8 +79,8 @@ export default function Button({
                      style={{
                         fontSize: size === "lg" ? hp(2) : size === "sm" ? hp(1.8) : size === "xs" ? hp(1.6) : hp(1.8),
                         textAlign: "center",
-                        fontFamily: TiktokFont.TiktokMedium,
-                        color: color,
+                        fontFamily: Font.Medium,
+                        color: disabled ? appColors.grey : color,
                      }}
                   >
                      {text}

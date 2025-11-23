@@ -1,5 +1,5 @@
-// import { colors } from "@/constant/colors";
-// import { useThemeStore } from "@/context/themeStore";
+// import { colors } from "@/src/constant/colors";
+// import { useThemeStore } from "@/src/context/themeStore";
 import { appColors } from "@/constant/colors";
 import { Feather, Fontisto, Octicons } from "@expo/vector-icons";
 import React from "react";

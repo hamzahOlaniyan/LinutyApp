@@ -1,59 +1,26 @@
-import { useAuthStore } from "@/store/authStore";
-import { Stack, useRouter } from "expo-router";
-import { useEffect } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { Stack } from "expo-router";
 
 export default function AppLayout() {
-   const { session, profile, loading, hasHydrated } = useAuthStore();
-   const router = useRouter();
-
-   useEffect(() => {
-      // Only run redirect logic AFTER hydration completes
-      if (!hasHydrated) return;
-
-      // Optional: skip redirects while still loading async stuff
-      if (loading) return;
-
-      if (!session) {
-         router.replace("/auth");
-         return;
-      }
-
-      if (session && profile?.isComplete === false) {
-         router.replace("/auth/new-user/PartTwo/step-4.0");
-         return;
-      }
-   }, [hasHydrated, loading, session, profile]);
-
-   // Loading state or hydration pending → show spinner
-   if (!hasHydrated || loading) {
-      return (
-         <View className="flex-1 items-center justify-center bg-white">
-            <ActivityIndicator size="large" />
-         </View>
-      );
-   }
    return (
       <Stack
          screenOptions={{
             headerShadowVisible: false,
          }}
       >
+         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
+         <Stack.Screen name="post-edit" options={{ headerShown: false }} />
+
+         <Stack.Screen name="user" />
+
          <Stack.Screen
-            name="(profile)"
+            name="user-profile"
             options={{
                title: "Profile",
                headerShown: false,
             }}
          />
-         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-         <Stack.Screen name="(user)/[id]" />
-         <Stack.Screen
-            name="edit/[id]"
-            options={{
-               title: "Edit post",
-            }}
-         />
+
          <Stack.Screen
             name="new-post"
             options={{
@@ -63,6 +30,7 @@ export default function AppLayout() {
                animation: "none",
             }}
          />
+
          <Stack.Screen
             name="notification"
             options={{
@@ -72,10 +40,11 @@ export default function AppLayout() {
                animation: "none",
             }}
          />
+
          <Stack.Screen
-            name="edit-post"
+            name="+not-found"
             options={{
-               title: "edit",
+               title: "page not found!",
                headerTitleAlign: "left",
                headerShadowVisible: false,
                animation: "none",

@@ -1,4 +1,4 @@
-// import { useThemeStore } from "@/context/themeStore";
+// import { useThemeStore } from "@/src/context/themeStore";
 import { BackIcon } from "@/icons/ico/backIcon";
 import { useRouter } from "expo-router";
 import React from "react";

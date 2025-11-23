@@ -22,6 +22,8 @@ const InfoDetails = ({ label, value, icon }: { label?: string; icon?: React.Reac
 };
 
 export default function ProfileInfo({ item }: any) {
+   console.log(JSON.stringify(item, null, 2));
+
    return (
       <View className="flex-1 px-4 gap-6 py-4">
          <AppText size="xl" weight="semi">

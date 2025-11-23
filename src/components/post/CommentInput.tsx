@@ -1,8 +1,8 @@
 import { appColors } from "@/constant/colors";
 import { hp } from "@/constant/common";
 import { SendIcon } from "@/icons/ico/sendIcon";
-import { createComment } from "@/Services/comment";
-import { createNotification } from "@/Services/Notification";
+import { createComment } from "@/Services/db/comment";
+import { createNotification } from "@/Services/db/Notification";
 import { useAuthStore } from "@/store/authStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

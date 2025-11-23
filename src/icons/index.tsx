@@ -2,11 +2,13 @@ import React from "react";
 import { bookmark } from "./ico/bookmark";
 import { favorite } from "./ico/favoriteIcon";
 import { filter } from "./ico/filter";
+import { logout } from "./ico/logout";
 
 const icons = {
    bookmark: bookmark,
    filter: filter,
    favorite: favorite,
+   logout: logout,
 } as const;
 
 type IconName = keyof typeof icons;

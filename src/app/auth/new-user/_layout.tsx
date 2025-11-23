@@ -1,4 +1,4 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
 import { useAuthStore } from "@/store/authStore";
 import { useRegistrationStore } from "@/store/useRegistrationState";
 import { Stack, usePathname, useRouter } from "expo-router";
@@ -13,7 +13,7 @@ export default function NewUserLayout() {
 
    useEffect(() => {
       if (profile?.isComplete) {
-         router.replace("/(app)/(tabs)");
+         router.replace("/(app)/(tabs)/(home)");
       }
    }, [profile]);
 
@@ -32,8 +32,7 @@ export default function NewUserLayout() {
             headerLargeTitle: false,
             headerTitleStyle: {
                fontSize: 20,
-               fontFamily: TiktokFont.TiktokSemiBold,
-               // color: currentTheme === "light" ? appColors.light.text : appColors.dark.text,
+               fontFamily: Font.Bold,
             },
          }}
       ></Stack>

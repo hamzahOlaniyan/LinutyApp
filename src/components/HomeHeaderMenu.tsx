@@ -1,5 +1,6 @@
 import { Notification } from "@/icons/ico/notification";
 import { Plus } from "@/icons/ico/plus";
+import { useAuthStore } from "@/store/authStore";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
@@ -9,8 +10,7 @@ import Animated from "react-native-reanimated";
 import { appColors } from "../constant/colors";
 import { GLOBAL_STYLES } from "../constant/globalStyles";
 import { supabase } from "../lib/supabase";
-import { getNotfication } from "../Services/Notification";
-import { useAuthStore } from "../store/authStore";
+import { getNotfication } from "../Services/db/Notification";
 import Avatar from "./Avatar";
 import AppText from "./ui/AppText";
 import Button from "./ui/Button";
@@ -28,9 +28,6 @@ export default function HomeHeaderMenu() {
    });
 
    const unreadCount = NOTIFICATION?.filter((n: any) => !n.read)?.length ?? 0;
-
-   // console.log("HomeHeaderMenu", JSON.stringify(profile, null, 2));
-   // console.log("HomeHeaderMenu SESSION", JSON.stringify(session, null, 2));
 
    useEffect(() => {
       if (!profile?.id) return;
@@ -83,29 +80,30 @@ export default function HomeHeaderMenu() {
             }}
             contentFit="contain"
          />
+
          <View className="flex-row items-center justify-between gap-2">
             <Button
-               text="Add Post"
+               text="POST"
                icon={<Plus size={20} color={appColors.blue} />}
-               onPress={() => router.push("/(app)/new-post")}
-               color={appColors.blue}
-               variant="secondary"
+               onPress={() => router.push("/new-post")}
                size="xs"
+               variant="secondary"
+               color={appColors.blue}
             />
-            <TouchableOpacity onPress={() => router.push("/(app)/notification")} className="rounded-full p-2">
-               <Notification size={24} />
+            <TouchableOpacity onPress={() => router.push("/notification")} className="rounded-full p-2">
+               <Notification />
                {unreadCount > 0 && (
                   <View
-                     style={{ borderWidth: 2, borderColor: appColors.white }}
-                     className="bg-sky-500 w-6 h-6 rounded-full absolute -top-[2px] -right-[2px] justify-center items-center"
+                     style={{ borderWidth: 2, borderColor: appColors.white, backgroundColor: appColors.primary }}
+                     className="w-6 h-6 rounded-full absolute -top-[2px] -right-[2px] justify-center items-center"
                   >
-                     <AppText size="xs" weight="semi" color="white">
+                     <AppText size="xxs" color="white">
                         {unreadCount}
                      </AppText>
                   </View>
                )}
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => router.push("/(app)/(profile)")}>
+            <TouchableOpacity onPress={() => router.push(`/user-profile`)}>
                <Avatar path={profile?.avatarUrl} size={30} />
             </TouchableOpacity>
          </View>

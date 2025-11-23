@@ -1,5 +1,4 @@
 import { appColors } from "@/constant/colors";
-import { FilterIcon } from "@/icons/ico/filter";
 import React, { useEffect, useState } from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
@@ -56,7 +55,7 @@ export default function Menu({ options }: MenuProps) {
                </View>
             )}
             <Pressable onPress={() => setShowMenu(!showMenu)} className="">
-               <FilterIcon />
+               <AppText>filter icon here</AppText>
             </Pressable>
          </View>
 

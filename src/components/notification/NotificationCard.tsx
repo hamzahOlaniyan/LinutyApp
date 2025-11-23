@@ -1,9 +1,8 @@
 import { appColors } from "@/constant/colors";
-import { getPostById } from "@/Services/posts";
+import { getPostById } from "@/Services/db/posts";
 import { useAuthStore } from "@/store/authStore";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -120,7 +119,8 @@ export default function NotificationCard({ item }: { item: any }) {
                   <View className="flex-row gap-1 items-center"></View>
                </View>
                {POST?.images && (
-                  <Image source={{ uri: POST?.images[0] }} style={{ width: 50, height: 50, borderRadius: 10 }} />
+                  // <Image source={[{ uri: POST?.images[0] }]} style={{ width: 50, height: 50, borderRadius: 10 }} />
+                  <AppText>Image placeholder</AppText>
                )}
             </View>
          </View>

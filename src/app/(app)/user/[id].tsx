@@ -1,16 +1,13 @@
 import ProfileGallery from "@/components/profile/ProfileGallery";
+import ProfileInfo from "@/components/profile/ProfileInfo";
 import ProfilePosts from "@/components/profile/ProfilePosts";
-import AppText from "@/components/ui/AppText";
 import StickyTabs from "@/components/ui/StickyTabs";
 import UserHeader from "@/components/user/UserHeader";
-import { appColors } from "@/constant/colors";
-import { getPostsUserById } from "@/Services/posts";
-import { getProfileById } from "@/Services/profiles";
+import { getPostsUserById } from "@/Services/db/posts";
+import { getProfileById } from "@/Services/db/profiles";
 import { useQuery } from "@tanstack/react-query";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function UserProfile() {
@@ -24,47 +21,63 @@ export default function UserProfile() {
       isLoading,
       error,
    } = useQuery({
-      queryKey: ["posts", { author: id }],
+      queryKey: ["posts", id],
       queryFn: async () => getPostsUserById(id),
+      enabled: !!id,
    });
 
    const { data: PROFILE } = useQuery({
       queryKey: ["profile", id],
       queryFn: async () => getProfileById(id),
+      enabled: !!id,
    });
+
+   console.log("ID", JSON.stringify(PROFILE, null, 2));
+
+   const allMedia = USER_POSTS?.flatMap((post) => {
+      if (!post?.media) return [];
+
+      // Handle both stringified JSON and arrays
+      let mediaArray = [];
+      if (typeof post.media === "string") {
+         try {
+            mediaArray = JSON.parse(post.media);
+         } catch {
+            return [];
+         }
+      } else if (Array.isArray(post.media)) {
+         mediaArray = post.media;
+      }
+
+      return mediaArray;
+   });
+
+   const imageMedia = allMedia?.filter((m) => m.type === "image");
+   const videoMedia = allMedia?.filter((m) => m.type === "video");
 
    const fullName = `${PROFILE?.firstName} ${PROFILE?.lastName}`;
 
    return (
-      <ScrollView style={{ backgroundColor: appColors.extralightOlive, flex: 1, marginBottom: bottom }}>
+      <>
          <Stack.Screen
             options={{
                title: fullName,
-               headerShadowVisible: false,
             }}
          />
-         <UserHeader profile={PROFILE} />
-         <View style={{ backgroundColor: appColors.white }} className="mt-2 gap-4">
-            <View style={{ backgroundColor: appColors.white }} className="p-4">
-               <AppText size="xxl" weight="semi">
-                  Activities
-               </AppText>
-            </View>
-
-            <StickyTabs
-               // header={<UserHeader profile={PROFILE} />}
-               routes={[
-                  { key: "Post", title: "Posts" },
-                  { key: "Images", title: "Pictures" },
-                  { key: "About", title: "About" },
-               ]}
-               scenes={{
-                  Post: <ProfilePosts item={USER_POSTS} />,
-                  Images: <ProfileGallery />,
-                  // About: <ProfileInfo profile={PROFILE} />,
-               }}
-            />
-         </View>
-      </ScrollView>
+         <StickyTabs
+            header={<UserHeader profile={PROFILE} />}
+            routes={[
+               { key: "Post", title: "Posts" },
+               { key: "Images", title: "Pictures" },
+               { key: "Video", title: "Videos" },
+               { key: "About", title: "About" },
+            ]}
+            scenes={{
+               Post: <ProfilePosts item={USER_POSTS} />,
+               Images: <ProfileGallery imageMedia={imageMedia} />,
+               About: <ProfileInfo profile={PROFILE} />,
+            }}
+         />
+      </>
    );
 }

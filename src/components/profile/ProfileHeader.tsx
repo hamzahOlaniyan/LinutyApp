@@ -1,6 +1,6 @@
 import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
-import { EditIcon } from "@/icons/ico/edit";
+import { hp, wp } from "@/constant/common";
+import { ImageIcon } from "@/icons/ico/ImageIcon";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -16,23 +16,25 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
 
    const sampleText =
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias obcaecati tempora saepe deleniti ipsa eveniet numquam modi reiciendis dolore nemo perspiciatis totam debitis.";
+   // console.log(JSON.stringify(userProfile, null, 2));
 
    return (
       <View className="gap-2 mb-6">
-         <View style={{}} className="w-full overflow-hidden">
+         <View style={{ height: hp(35) }} className="w-full overflow-hidden">
             {userProfile?.cover_photo ? (
                <Image
                   source={{ uri: userProfile?.cover_photo }}
-                  transition={100}
-                  style={{ width: "auto", height: "auto", aspectRatio: 2 / 2 }}
+                  transition={120}
+                  style={{ width: "100%", height: "100%" }}
                   contentFit="cover"
-                  contentPosition="top"
                />
             ) : (
-               <View className="w-full h-full bg-neutral-200"></View>
+               <View className="w-full h-full bg-red-300">
+                  <ImageIcon />
+               </View>
             )}
          </View>
-         <View style={{ paddingHorizontal: wp(3) }} className="">
+         <View style={{ paddingHorizontal: wp(4) }} className="">
             <View className="flex-row items-center gap-3 relative">
                <View
                   style={{
@@ -58,10 +60,10 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                >
                   <View>
                      <View className="flex-row gap-1">
-                        <AppText size="xxxl" weight="bold" cap="capitalize">
+                        <AppText size="xxl" weight="bold" cap="capitalize">
                            {userProfile?.firstName}
                         </AppText>
-                        <AppText size="xxxl" weight="bold" cap="capitalize">
+                        <AppText size="xxl" weight="bold" cap="capitalize">
                            {userProfile?.lastName}
                         </AppText>
                      </View>
@@ -90,16 +92,15 @@ export default function ProfileHeader({ userProfile }: { userProfile: any }) {
                   </AppText>
                )}
             </View>
-         </View>
-         <View className="flex-row justify-between gap-2 mt-4 px-4">
-            <Button size="sm" text="Manage your profile" className="flex-1" variant="secondary" />
-            <Button
-               text="Edit profile"
-               icon={<EditIcon size={18} />}
-               size="sm"
-               variant="secondary"
-               onPress={() => router.push("/(app)/(profile)/edit")}
-            />
+            <View className="flex-row justify-between gap-4 mt-4 ">
+               <Button size="sm" text="Manage your profile" className="flex-1" variant="secondary" />
+               <Button
+                  text="Edit profile"
+                  size="sm"
+                  variant="secondary"
+                  onPress={() => router.push("/user-profile/edit")}
+               />
+            </View>
          </View>
       </View>
    );

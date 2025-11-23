@@ -21,7 +21,7 @@ export default function StoreCard({ item, isLoading }: { item: any; isLoading: b
    }
    return (
       <TouchableOpacity
-         onPress={() => router.push(`/productDetail/${item?.id}`)}
+         onPress={() => router.push(`/(app)/(tabs)/store/product/${item?.id}`)}
          className="flex-1"
          style={{ backgroundColor: appColors.white }}
       >

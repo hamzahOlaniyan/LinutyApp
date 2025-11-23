@@ -1,6 +1,6 @@
 import { appColors } from "@/constant/colors";
 import { hp } from "@/constant/common";
-import { acceptFriendRequest, rejectFriendRequest } from "@/Services/relationships";
+import { acceptFriendRequest, rejectFriendRequest } from "@/Services/db/relationships";
 import { useAuthStore } from "@/store/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";

@@ -112,7 +112,7 @@ export default function Step6_3() {
                               //    />
                               //    <Text
                               //       style={{
-                              //          fontFamily: selected ? TiktokFont.TiktokSemiBold : TiktokFont.TiktokMedium,
+                              //          fontFamily: selected ? Font.TiktokSemiBold : Font.TiktokMedium,
                               //          color: selected ? "black" : appColors.inputActive,
                               //          textTransform: "capitalize",
                               //          textAlign: "center",
@@ -174,7 +174,7 @@ export default function Step6_3() {
                               //    />
                               //    <Text
                               //       style={{
-                              //          fontFamily: TiktokFont.TiktokMedium,
+                              //          fontFamily: Font.TiktokMedium,
                               //          color: selected ? "black" : appColors.inputActive,
                               //          textTransform: "capitalize",
                               //          textAlign: "center",
