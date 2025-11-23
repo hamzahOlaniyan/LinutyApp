@@ -1,5 +1,5 @@
-import { hp } from "@/src/constant/common";
-import { supabase } from "@/src/lib/supabase";
+import { hp } from "@/constant/common";
+import { supabase } from "@/lib/supabase";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Alert, Text, View } from "react-native";

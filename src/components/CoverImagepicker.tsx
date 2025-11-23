@@ -1,4 +1,4 @@
-import { PhotoIcon } from "@/assets/icons/photoIcon";
+import { PhotoIcon } from "@/icons/ico/photoIcon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";

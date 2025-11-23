@@ -1,7 +1,7 @@
-import { FavoriteIcon } from "@/assets/icons/FavoriteIcon";
-import { ShareIcon } from "@/assets/icons/shareIcon";
-import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
+import { appColors } from "@/constant/colors";
+import { wp } from "@/constant/common";
+import Icon from "@/icons";
+import { ShareIcon } from "@/icons/ico/shareIcon";
 import { Link, useRouter } from "expo-router";
 import React from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
@@ -26,7 +26,7 @@ export default function ProductDetail({ item }: { item: any }) {
             <Button text="Send seller a message" variant="secondary" />
             <View className="flex-row items-center gap-3">
                <Pressable className="justify-center items-center p-2 rounded-full">
-                  <FavoriteIcon />
+                  <Icon name="favorite" />
                   <AppText size="xs">Favorite</AppText>
                </Pressable>
                <Pressable className="justify-center items-center p-2  rounded-full">
@@ -76,7 +76,7 @@ export default function ProductDetail({ item }: { item: any }) {
                         </View>
                      </View>
                   </View>
-                  <Link href={`/(app)/(tabs)/(store)/seller/${item?.profile_id}`} asChild>
+                  <Link href={`/(app)/(tabs)/store/seller/${item?.profile_id}`} asChild>
                      <TouchableOpacity
                         style={{ borderWidth: 1, borderColor: appColors.black, padding: 10, borderRadius: 50 }}
                      >

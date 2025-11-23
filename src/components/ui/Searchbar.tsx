@@ -1,7 +1,7 @@
-// import { useThemeStore } from "@/src/context/themeStore";
+// import { useThemeStore } from "@/context/themeStore";
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import { appColors } from "@/src/constant/colors";
-import { hp } from "@/src/constant/common";
+import { appColors } from "@/constant/colors";
+import { hp } from "@/constant/common";
 import { Feather, Fontisto } from "@expo/vector-icons";
 import React from "react";
 import { TextInput, TextInputProps, View } from "react-native";

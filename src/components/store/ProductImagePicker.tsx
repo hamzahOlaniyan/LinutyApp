@@ -1,5 +1,5 @@
-import { ImageIcon } from "@/assets/icons/ImageIcon";
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
+import { ImageIcon } from "@/icons/ico/ImageIcon";
 import { Fontisto } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useState } from "react";

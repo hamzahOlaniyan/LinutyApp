@@ -1,5 +1,5 @@
-import { appColors } from "@/src/constant/colors";
-import { hp } from "@/src/constant/common";
+import { appColors } from "@/constant/colors";
+import { hp } from "@/constant/common";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { FlatList, Pressable, TouchableOpacity, View } from "react-native";

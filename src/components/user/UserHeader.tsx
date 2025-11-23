@@ -1,8 +1,8 @@
-import { ImageIcon } from "@/assets/icons/ImageIcon";
-import { Plus } from "@/assets/icons/plus";
-import { ThreeDots } from "@/assets/icons/threedots";
-import { appColors } from "@/src/constant/colors";
-import { hp, wp } from "@/src/constant/common";
+import { appColors } from "@/constant/colors";
+import { hp, wp } from "@/constant/common";
+import { ImageIcon } from "@/icons/ico/ImageIcon";
+import { Plus } from "@/icons/ico/plus";
+import { ThreeDots } from "@/icons/ico/threedots";
 import { Image } from "expo-image";
 import React from "react";
 import { View } from "react-native";

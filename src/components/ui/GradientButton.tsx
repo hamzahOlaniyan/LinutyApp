@@ -1,10 +1,10 @@
-import { hp } from "@/src/constant/common";
+import { hp } from "@/constant/common";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
 
 type ButtonProps = {
    text?: React.ReactNode;

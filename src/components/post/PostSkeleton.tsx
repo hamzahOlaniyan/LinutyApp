@@ -1,4 +1,4 @@
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
 import React from "react";
 import { View } from "react-native";
 import Animated from "react-native-reanimated";

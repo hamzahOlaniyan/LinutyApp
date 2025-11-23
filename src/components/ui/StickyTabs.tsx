@@ -1,6 +1,6 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
+import { appColors } from "@/constant/colors";
+import { wp } from "@/constant/common";
 import React, { useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

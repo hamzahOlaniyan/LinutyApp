@@ -1,9 +1,9 @@
-import { SendIcon } from "@/assets/icons/sendIcon";
-import { appColors } from "@/src/constant/colors";
-import { hp } from "@/src/constant/common";
-import { createComment } from "@/src/Services/comment";
-import { createNotification } from "@/src/Services/Notification";
-import { useAuthStore } from "@/src/store/authStore";
+import { appColors } from "@/constant/colors";
+import { hp } from "@/constant/common";
+import { SendIcon } from "@/icons/ico/sendIcon";
+import { createComment } from "@/Services/comment";
+import { createNotification } from "@/Services/Notification";
+import { useAuthStore } from "@/store/authStore";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";

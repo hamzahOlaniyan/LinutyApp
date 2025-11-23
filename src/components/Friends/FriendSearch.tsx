@@ -1,7 +1,7 @@
-import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
-import { getProfiles } from "@/src/Services/profiles";
-import { useAuthStore } from "@/src/store/authStore";
+import { appColors } from "@/constant/colors";
+import { wp } from "@/constant/common";
+import { getProfiles } from "@/Services/profiles";
+import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";

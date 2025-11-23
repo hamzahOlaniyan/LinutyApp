@@ -1,6 +1,6 @@
-import { appColors } from "@/src/constant/colors";
-import { getPostById } from "@/src/Services/posts";
-import { useAuthStore } from "@/src/store/authStore";
+import { appColors } from "@/constant/colors";
+import { getPostById } from "@/Services/posts";
+import { useAuthStore } from "@/store/authStore";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { Image } from "expo-image";
