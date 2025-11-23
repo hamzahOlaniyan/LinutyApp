@@ -3,6 +3,7 @@ import { appColors } from "@/constant/colors";
 import { hp } from "@/constant/common";
 import { useAuthStore } from "@/store/authStore";
 import { useRegistrationStore } from "@/store/useRegistrationState";
+import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -50,12 +51,11 @@ export default function Step8() {
             > */}
             <StatusBar style="light" />
             <View>
-               {/* <Image
-                  source={require("@/assets/images/tree-icon-white.png")}
-                  accessibilityLabel="Avatar"
+               <Image
+                  source={require("@/assets/images/logo.png")}
+                  style={{ width: 100, height: 100, alignSelf: "center" }}
                   contentFit="contain"
-                  style={{ width: "100%", height: 75, alignSelf: "center" }}
-               /> */}
+               />
                <AppText>Image placeholder</AppText>
 
                <View className="self-center gap-8">

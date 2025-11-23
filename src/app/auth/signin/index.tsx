@@ -57,8 +57,8 @@ export default function Signin() {
       <SafeAreaView style={{ paddingHorizontal: wp(4), flex: 1, backgroundColor: appColors.white }}>
          <View style={{ position: "relative", marginTop: hp(16) }}>
             <Image
-               source={require("@/assets/images/icon-white.png")}
-               style={{ width: 80, height: 80, alignSelf: "center" }}
+               source={require("@/assets/images/logo.png")}
+               style={{ width: 100, height: 100, alignSelf: "center" }}
                contentFit="contain"
             />
          </View>
