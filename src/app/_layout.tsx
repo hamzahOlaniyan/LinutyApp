@@ -19,7 +19,6 @@ export const unstable_settings = {
 
 SplashScreen.preventAutoHideAsync();
 SplashScreen.setOptions({
-   duration: 200,
    fade: true,
 });
 

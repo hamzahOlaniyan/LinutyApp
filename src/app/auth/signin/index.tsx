@@ -58,7 +58,7 @@ export default function Signin() {
          <View style={{ position: "relative", marginTop: hp(16) }}>
             <Image
                source={require("@/assets/images/logo.png")}
-               style={{ width: 100, height: 100, alignSelf: "center" }}
+               style={{ width: 75, height: 75, alignSelf: "center" }}
                contentFit="contain"
             />
          </View>
