@@ -1,7 +1,7 @@
-import { ThreeDots } from "@/assets/icons/threedots";
-import { Thumbsup } from "@/assets/icons/thumbsup";
-import { appColors } from "@/src/constant/colors";
-import { fetchComments } from "@/src/Services/comment";
+import { appColors } from "@/constant/colors";
+import { ThreeDots } from "@/icons/ico/threedots";
+import { Thumbsup } from "@/icons/ico/thumbsup";
+import { fetchComments } from "@/Services/comment";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";

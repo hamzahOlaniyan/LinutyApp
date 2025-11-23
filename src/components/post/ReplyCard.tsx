@@ -1,4 +1,4 @@
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
 import { Octicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

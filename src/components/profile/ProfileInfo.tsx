@@ -1,7 +1,7 @@
-import { EthnicityIcon } from "@/assets/icons/ethnicity";
-import { LocationIcon } from "@/assets/icons/locationIcon";
-import { NameIcon } from "@/assets/icons/name";
-import { WorkIcon } from "@/assets/icons/work";
+import { EthnicityIcon } from "@/icons/ico/ethnicity";
+import { LocationIcon } from "@/icons/ico/locationIcon";
+import { NameIcon } from "@/icons/ico/name";
+import { WorkIcon } from "@/icons/ico/work";
 import React from "react";
 import { View } from "react-native";
 import AppText from "../ui/AppText";

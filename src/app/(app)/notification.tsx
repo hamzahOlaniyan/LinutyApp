@@ -1,8 +1,8 @@
-import NotificationCard from "@/src/components/notification/NotificationCard";
-import AppText from "@/src/components/ui/AppText";
-import { appColors } from "@/src/constant/colors";
-import { getNotfication } from "@/src/Services/Notification";
-import { useAuthStore } from "@/src/store/authStore";
+import NotificationCard from "@/components/notification/NotificationCard";
+import AppText from "@/components/ui/AppText";
+import { appColors } from "@/constant/colors";
+import { getNotfication } from "@/Services/Notification";
+import { useAuthStore } from "@/store/authStore";
 import { useQuery } from "@tanstack/react-query";
 import { FlatList, View } from "react-native";
 

@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/src/store/authStore";
+import { useAuthStore } from "@/store/authStore";
 import { Stack, useRouter } from "expo-router";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -15,12 +15,12 @@ export default function AppLayout() {
       if (loading) return;
 
       if (!session) {
-         router.replace("/(auth)");
+         router.replace("/auth");
          return;
       }
 
       if (session && profile?.isComplete === false) {
-         router.replace("/(new-user)/PartTwo/step-4.0");
+         router.replace("/auth/new-user/PartTwo/step-4.0");
          return;
       }
    }, [hasHydrated, loading, session, profile]);
@@ -67,6 +67,15 @@ export default function AppLayout() {
             name="notification"
             options={{
                title: "Notification",
+               headerTitleAlign: "left",
+               headerShadowVisible: false,
+               animation: "none",
+            }}
+         />
+         <Stack.Screen
+            name="edit-post"
+            options={{
+               title: "edit",
                headerTitleAlign: "left",
                headerShadowVisible: false,
                animation: "none",

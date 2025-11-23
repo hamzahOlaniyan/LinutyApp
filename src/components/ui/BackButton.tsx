@@ -1,5 +1,5 @@
-// import { useThemeStore } from "@/src/context/themeStore";
-import { BackIcon } from "@/assets/icons/backIcon";
+// import { useThemeStore } from "@/context/themeStore";
+import { BackIcon } from "@/icons/ico/backIcon";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable } from "react-native";

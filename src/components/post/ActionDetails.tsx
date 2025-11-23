@@ -1,7 +1,7 @@
 import { FavoriteIcon } from "@/assets/icons/FavoriteIcon";
-import { ShareIcon } from "@/assets/icons/shareIcon";
-import { Thumbsup } from "@/assets/icons/thumbsup";
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
+import { ShareIcon } from "@/icons/ico/shareIcon";
+import { Thumbsup } from "@/icons/ico/thumbsup";
 import React from "react";
 import { View } from "react-native";
 import AppText from "../ui/AppText";

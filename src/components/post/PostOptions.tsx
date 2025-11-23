@@ -1,9 +1,8 @@
-import { AccountIcon } from "@/assets/icons/AccountIcon";
-import { Bookmark } from "@/assets/icons/bookmark";
-import { DeleteIcon } from "@/assets/icons/DeleteIcon";
-import { ReportIcon } from "@/assets/icons/ReportIcon";
-import { ShareIcon } from "@/assets/icons/shareIcon";
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
+import Icon from "@/icons";
+import { DeleteIcon } from "@/icons/ico/DeleteIcon";
+import { ReportIcon } from "@/icons/ico/ReportIcon";
+import { ShareIcon } from "@/icons/ico/shareIcon";
 import { useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -26,14 +25,14 @@ export default function PostOptions({
 }) {
    const router = useRouter();
    const postOptions: PostOptionsType[] = [
-      { title: "save", icon: <Bookmark size={24} /> },
+      { title: "save", icon: <Icon name="bookmark" size={24} /> },
       { title: "share", icon: <ShareIcon size={24} /> },
-      { title: "about this account", icon: <AccountIcon size={24} /> },
+      { title: "about this account", icon: <Icon name="bookmark" size={24} /> },
       { title: "report", icon: <ReportIcon size={24} /> },
    ];
    const ownerPostOptions = [
-      { title: "save", icon: <Bookmark size={24} /> },
-      { title: "edit", icon: <ReportIcon size={24} />, action: () => router.push(`/edit/${post_id}`) },
+      { title: "save", icon: <Icon name="bookmark" size={24} /> },
+      { title: "edit", icon: <ReportIcon size={24} />, action: () => router.push(`/(app)/edit-post/${post_id}`) },
       { title: "delete", icon: <DeleteIcon size={24} color={appColors.error} /> },
    ];
 

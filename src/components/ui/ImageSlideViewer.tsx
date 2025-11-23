@@ -1,4 +1,4 @@
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
 import React, { useRef, useState } from "react";
 import { Dimensions, FlatList, ListRenderItemInfo, StyleSheet, View, ViewabilityConfig, ViewToken } from "react-native";
 import AppText from "./AppText";

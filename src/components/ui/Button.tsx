@@ -1,6 +1,6 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import { appColors } from "@/src/constant/colors";
-import { hp } from "@/src/constant/common";
+import { appColors } from "@/constant/colors";
+import { hp } from "@/constant/common";
 import React from "react";
 import { ActivityIndicator, ColorValue, StyleProp, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 

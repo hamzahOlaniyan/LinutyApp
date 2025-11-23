@@ -1,5 +1,5 @@
-import { Notification } from "@/assets/icons/notification";
-import { Plus } from "@/assets/icons/plus";
+import { Notification } from "@/icons/ico/notification";
+import { Plus } from "@/icons/ico/plus";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";

@@ -1,4 +1,4 @@
-import { wp } from "@/src/constant/common";
+import { wp } from "@/constant/common";
 import React, { useEffect } from "react";
 import { Dimensions, Modal, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";

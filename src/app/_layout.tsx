@@ -2,6 +2,7 @@ import { TiktokFont } from "@/assets/fonts/FontFamily";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -10,6 +11,8 @@ import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
 import { QueryProvider } from "../provider/QueryProvider";
 import { useAuthStore } from "../store/authStore";
+
+SplashScreen.preventAutoHideAsync();
 
 // const logoutAndClearSession = async () => {
 //    await supabase.auth.signOut(); // clear Supabase session
@@ -27,12 +30,22 @@ export default function RootLayout() {
    const [loaded] = useFonts({
       [TiktokFont.TiktokBlack]: require("@/assets/fonts/Roboto-Black.ttf"),
       [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/Roboto-ExtraBold.ttf"),
-      [TiktokFont.TiktokBold]: require("@/assets/fonts/Roboto-SemiBold.ttf"),
+      [TiktokFont.TiktokBold]: require("@/assets/fonts/Roboto-Bold.ttf"),
       [TiktokFont.TiktokSemiBold]: require("@/assets/fonts/Roboto-SemiBold.ttf"),
       [TiktokFont.TiktokMedium]: require("@/assets/fonts/Roboto-Medium.ttf"),
       [TiktokFont.TiktokRegular]: require("@/assets/fonts/Roboto-Regular.ttf"),
       [TiktokFont.TiktokLight]: require("@/assets/fonts/Roboto-Light.ttf"),
    });
+
+   // useEffect(() => {
+   //    if (loaded) {
+   //       SplashScreen.hide();
+   //    }
+   // }, [loaded]);
+
+   if (!loaded) {
+      return null;
+   }
 
    // useEffect(() => {
    //    const checkGhostSession = async () => {

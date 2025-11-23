@@ -1,5 +1,5 @@
-import { Plus } from "@/assets/icons/plus";
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
+import { Plus } from "@/icons/ico/plus";
 import { Image } from "expo-image";
 import React from "react";
 import { Dimensions, TouchableOpacity, View } from "react-native";

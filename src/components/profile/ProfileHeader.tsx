@@ -1,6 +1,6 @@
-import { EditIcon } from "@/assets/icons/edit";
-import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
+import { appColors } from "@/constant/colors";
+import { wp } from "@/constant/common";
+import { EditIcon } from "@/icons/ico/edit";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useState } from "react";

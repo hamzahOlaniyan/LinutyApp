@@ -1,5 +1,5 @@
-import { FilterIcon } from "@/assets/icons/filter";
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
+import { FilterIcon } from "@/icons/ico/filter";
 import React, { useEffect, useState } from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";

@@ -1,5 +1,5 @@
-import { appColors } from "@/src/constant/colors";
-import { wp } from "@/src/constant/common";
+import { appColors } from "@/constant/colors";
+import { wp } from "@/constant/common";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { forwardRef, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";

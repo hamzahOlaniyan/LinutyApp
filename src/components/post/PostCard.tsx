@@ -1,4 +1,4 @@
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 import { useQueryClient } from "@tanstack/react-query";

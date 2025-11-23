@@ -1,7 +1,7 @@
-import { ThreeDots } from "@/assets/icons/threedots";
-import { appColors } from "@/src/constant/colors";
-import { hp, wp } from "@/src/constant/common";
-import { useAuthStore } from "@/src/store/authStore";
+import { appColors } from "@/constant/colors";
+import { hp, wp } from "@/constant/common";
+import { ThreeDots } from "@/icons/ico/threedots";
+import { useAuthStore } from "@/store/authStore";
 import { Octicons } from "@expo/vector-icons";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";

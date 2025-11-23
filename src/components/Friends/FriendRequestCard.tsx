@@ -1,7 +1,7 @@
-import { appColors } from "@/src/constant/colors";
-import { hp } from "@/src/constant/common";
-import { acceptFriendRequest, rejectFriendRequest } from "@/src/Services/relationships";
-import { useAuthStore } from "@/src/store/authStore";
+import { appColors } from "@/constant/colors";
+import { hp } from "@/constant/common";
+import { acceptFriendRequest, rejectFriendRequest } from "@/Services/relationships";
+import { useAuthStore } from "@/store/authStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useRouter } from "expo-router";

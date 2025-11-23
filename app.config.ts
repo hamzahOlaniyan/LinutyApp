@@ -10,20 +10,22 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       slug: "LinutyApp",
       version: "1.3.0",
       orientation: "portrait",
-      icon: "./assets/images/icon.png",
+      icon: "./src/assets/images/icon.png",
       scheme: "linutyapp",
       userInterfaceStyle: "automatic",
       newArchEnabled: true,
 
       ios: {
          supportsTablet: true,
+         bundleIdentifier: "com.hamzaholaniyan.linuttydev",
       },
       android: {
          adaptiveIcon: {
-            backgroundImage: "./assets/images/adaptive-icon.png",
+            backgroundImage: "./src/assets/images/adaptive-icon.png",
          },
          edgeToEdgeEnabled: true,
          softwareKeyboardLayoutMode: "pan",
+         versionCode: 41,
       },
       web: {
          bundler: "metro",
@@ -34,8 +36,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          [
             "expo-splash-screen",
             {
-               backgroundColor: "#ffffff",
-               image: "./assets/images/white.png",
+               backgroundColor: "#000000",
+               image: "./src/assets/images/white.png",
             },
          ],
       ],

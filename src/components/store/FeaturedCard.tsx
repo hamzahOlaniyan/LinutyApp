@@ -1,4 +1,4 @@
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";

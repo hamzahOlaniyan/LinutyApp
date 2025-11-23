@@ -1,5 +1,5 @@
 import { TiktokFont } from "@/assets/fonts/FontFamily";
-import { appColors } from "@/src/constant/colors";
+import { appColors } from "@/constant/colors";
 import React from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
 
