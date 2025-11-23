@@ -14,6 +14,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       scheme: "linutyapp",
       userInterfaceStyle: "automatic",
       newArchEnabled: true,
+      splash: {
+         image: "./src/assets/images/logo.png",
+         resizeMode: "contain",
+         backgroundColor: "#ffffff",
+         imageWidth: 50,
+      },
 
       ios: {
          supportsTablet: true,
@@ -31,17 +37,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          bundler: "metro",
          output: "static",
       },
-      plugins: [
-         "expo-router",
-         [
-            "expo-splash-screen",
-            {
-               backgroundColor: "#ffffff",
-               image: "./src/assets/images/logo.png",
-               imageWidth: 100,
-            },
-         ],
-      ],
+      plugins: ["expo-router"],
       experiments: {
          typedRoutes: true,
       },

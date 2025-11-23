@@ -1,8 +1,12 @@
 // authStore.ts
 import { supabase } from "@/lib/supabase"; // adjust path
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SplashScreen from "expo-splash-screen";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+
+SplashScreen.preventAutoHideAsync();
+SplashScreen.setOptions({ duration: 100 });
 
 type AuthState = {
    loading: boolean;

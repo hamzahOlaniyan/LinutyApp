@@ -2,11 +2,9 @@ import { Font } from "@/assets/fonts/FontFamily";
 import { useAuthStore } from "@/store/authStore";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
+import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { ActivityIndicator, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
@@ -18,12 +16,9 @@ export const unstable_settings = {
 };
 
 SplashScreen.preventAutoHideAsync();
-SplashScreen.setOptions({
-   fade: true,
-});
 
 export default function RootLayout() {
-   const { session, profile, loading, hasHydrated, setLoading } = useAuthStore();
+   const { session, profile, hasHydrated, loading } = useAuthStore();
 
    const [loaded] = useFonts({
       [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
@@ -36,17 +31,13 @@ export default function RootLayout() {
    });
 
    useEffect(() => {
-      if (loaded && hasHydrated && !loading) {
-         SplashScreen.hide();
+      if (loaded && hasHydrated) {
+         SplashScreen.hideAsync();
       }
-   }, [loaded, hasHydrated, loading]);
+   }, [hasHydrated, loaded]);
 
-   if (!hasHydrated || loading) {
-      return (
-         <View className="flex-1 items-center justify-center bg-white">
-            <ActivityIndicator size="large" />
-         </View>
-      );
+   if (!loaded || !hasHydrated || loading) {
+      return null;
    }
 
    return (

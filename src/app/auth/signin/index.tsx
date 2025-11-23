@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/Input";
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import { supabase } from "@/lib/supabase";
+import { getRedirectPath } from "@/navigation/authRedirect";
+import { signInFlow } from "@/Services/authService";
 import { useAuthStore } from "@/store/authStore";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
@@ -16,41 +18,33 @@ export default function Signin() {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [loading, setLoading] = useState(false);
+   const profile = useAuthStore((s) => s.profile);
 
    const setSession = useAuthStore((s) => s.setSession);
    const fetchProfile = useAuthStore((s) => s.fetchProfile);
 
    const router = useRouter();
 
-   const handleSignIn = async () => {
-      if (!email || !password) {
-         Alert.alert("Please fill in all fields");
+   const handleSignInUser = async () => {
+      setLoading(true);
+      const result = await signInFlow({
+         email,
+         password,
+         supabase,
+         setSession,
+         fetchProfile,
+      });
+      setLoading(false);
+      if ("error" in result) {
+         if (result.error === "MISSING_FIELDS") {
+            Alert.alert("Please fill in all fields");
+         } else {
+            Alert.alert(result.error);
+         }
          return;
       }
-      try {
-         setLoading(true);
-         const { error, data } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-         });
-         setSession(data?.session);
-         await fetchProfile(data?.user?.id as string);
-
-         const profile = useAuthStore.getState().profile;
-         if (profile && !profile.isComplete) {
-            router.replace("/auth/new-user/PartTwo/step-4.0");
-         } else {
-            router.replace("/(app)/(tabs)/(home)");
-         }
-
-         if (error) Alert.alert(error.message);
-         console.log("logged in");
-         setLoading(false);
-      } catch (error) {
-         console.error("Error signing in:", error);
-      } finally {
-         setLoading(false);
-      }
+      const redirectPath = getRedirectPath(profile);
+      router.replace(redirectPath as any);
    };
 
    return (
@@ -86,7 +80,7 @@ export default function Signin() {
                      </AppText>
                   </Pressable>
                </View>
-               <GradientButton text="Sign in" onPress={handleSignIn} isLoading={loading} size="lg" />
+               <GradientButton text="Sign in" onPress={handleSignInUser} isLoading={loading} size="lg" />
             </View>
             <View className="w-full absolute bottom-5 gap-4">
                <Button
