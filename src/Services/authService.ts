@@ -9,8 +9,6 @@ export interface SignInParams {
    supabase: SupabaseClient;
 }
 
-// export type SignInResult = { error: string } | { profile: true; userId: string };
-
 export async function signInFlow({
    values,
    setSession,

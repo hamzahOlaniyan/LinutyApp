@@ -49,7 +49,7 @@ export default function Step2() {
       if (!valid) return;
       if (valid) {
          nextStep();
-         router.push("/PartOne/step-3.1");
+         router.push("/auth/createAccount/sectionOne/username");
          setConfirmPassword("");
          setLoading(false);
       }

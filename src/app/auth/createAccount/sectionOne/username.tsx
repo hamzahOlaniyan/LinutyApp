@@ -48,7 +48,7 @@ export default function Step3() {
       if (valid) {
          nextStep();
          setLoading(false);
-         router.push("/PartOne/agreement");
+         router.push("/auth/createAccount/sectionOne/agreement");
       }
    };
 
@@ -64,7 +64,6 @@ export default function Step3() {
                value={form.username}
                onChangeText={(username) => updateField("username", username)}
                inputMode="text"
-               error={!!errors.username}
                errorMessage={errors.username}
             />
             <View className="gap-2 my-6">

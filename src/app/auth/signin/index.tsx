@@ -111,16 +111,16 @@ export default function Signin() {
             <View className="w-full absolute bottom-5 gap-4">
                <Button
                   text="Create new account"
-                  onPress={() => router.push("/auth/new-user")}
+                  onPress={() => router.push("/auth/createAccount")}
                   size="lg"
                   variant="outline"
                />
-               <Button
+               {/* <Button
                   text="skip"
                   onPress={() => router.push("/auth/new-user/PartTwo/step-6.1")}
                   size="lg"
                   variant="outline"
-               />
+               /> */}
                <View className="w-2/3 flex-row items-center justify-center flex-wrap self-center">
                   <AppText size="xs" align="center">
                      By signing in, you agree to our{" "}

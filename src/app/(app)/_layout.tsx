@@ -9,9 +9,9 @@ export default function AppLayout() {
       >
          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-         <Stack.Screen name="post-edit" options={{ headerShown: false }} />
+         <Stack.Screen name="post-edit/[id]" options={{ headerShown: false }} />
 
-         <Stack.Screen name="user" />
+         <Stack.Screen name="user/[id]" />
 
          <Stack.Screen
             name="user-profile"

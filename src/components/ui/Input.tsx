@@ -11,7 +11,7 @@ type InputProps = TextInputProps & {
    icon?: React.ReactNode;
    label?: string;
    isPassword?: boolean;
-   error?: string | null;
+   // error?: string | null;
    errorMessage?: string;
    clearValue?: boolean;
    onChangeText: (t: string) => void;
