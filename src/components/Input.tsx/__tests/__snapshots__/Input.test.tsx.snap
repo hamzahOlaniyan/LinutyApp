@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppInput renders label and caption when provided (snapshot) 1`] = `
+<View
+  className="w-full gap-2"
+>
+  <Text>
+    Email
+  </Text>
+  <Text>
+    We will send updates to this address
+  </Text>
+  <View
+    className="w-full flex-row items-center rounded-sm bg-neutral border border-border h-[48px] px-3 font-Regular"
+  >
+    <TextInput
+      autoCapitalize="none"
+      className="text-md flex-1 font-sans text-black"
+      editable={true}
+      keyboardType="default"
+      onChangeText={[Function]}
+      placeholderTextColor="#999999"
+      secureTextEntry={false}
+      value=""
+    />
+  </View>
+</View>
+`;

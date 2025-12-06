@@ -18,7 +18,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          image: "./src/assets/images/logo.png",
          resizeMode: "contain",
          backgroundColor: "#ffffff",
-         imageWidth: 50,
       },
 
       ios: {
@@ -42,9 +41,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          typedRoutes: true,
       },
       extra: {
-         supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
-         supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
-         router: {},
+         // supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
+         // supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+         ENDPOINT_URL: process.env.ENDPOINT_URL,
          eas: {
             projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
          },

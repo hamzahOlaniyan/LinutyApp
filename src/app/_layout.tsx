@@ -1,16 +1,18 @@
 import { Font } from "@/assets/fonts/FontFamily";
-import { SplashOverlay } from "@/components/SplashOverlay";
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useUserQuery } from "@/hooks/useUserQuery";
 import { useAuthStore } from "@/store/useAuthStore";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
+import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Constants from "expo-constants";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
-import { QueryProvider } from "../provider/QueryProvider";
 
 export const unstable_settings = {
    anchor: "(tabs)",
@@ -18,8 +20,22 @@ export const unstable_settings = {
 
 SplashScreen.preventAutoHideAsync();
 
+const queryClient = new QueryClient();
+
+function AuthLoader({ children }: { children: React.ReactNode }) {
+   useUserQuery();
+   return <>{children}</>;
+}
+
 export default function RootLayout() {
-   const { session, profile, hasHydrated, loading } = useAuthStore();
+   const { initialized, user, init, hasCompletedOnboarding, hasCompletedRegistration } = useAuthStore();
+   const colorScheme = useColorScheme();
+
+   const endpointUrl = Constants.expoConfig?.extra?.endpointUrl;
+
+   console.log({ endpointUrl });
+
+   const isLoggedIn = !!user;
 
    const [loaded] = useFonts({
       [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
@@ -32,45 +48,59 @@ export default function RootLayout() {
    });
 
    useEffect(() => {
-      if (loaded && hasHydrated) {
+      if (loaded && initialized) {
          SplashScreen.hideAsync();
       }
-   }, [hasHydrated, loaded]);
+   }, [loaded, initialized]);
 
-   if (!loaded || !hasHydrated || loading) {
-      return <SplashOverlay />;
+   useEffect(() => {
+      init();
+   }, []);
+
+   if (!loaded || !initialized) {
+      return null;
    }
 
    return (
-      <QueryProvider>
-         {/* <QueryClientProvider client={queryClient}> */}
-         <GestureHandlerRootView className="flex-1">
-            <PortalProvider>
-               <PortalHost name="root" />
-               <SafeAreaProvider>
-                  <GluestackUIProvider>
-                     <StatusBar style="auto" />
-                     <Stack screenOptions={{ animation: "none", headerShown: false }}>
-                        {/* Logged-in & profile complete -> main app group */}
-                        <Stack.Protected guard={!!session && profile?.isComplete !== false}>
-                           <Stack.Screen name="(app)" />
-                        </Stack.Protected>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+         <QueryClientProvider client={queryClient}>
+            <AuthLoader>
+               {/* <QueryProvider>
+                  <QueryClientProvider client={queryClient}> */}
+               <GestureHandlerRootView className="flex-1">
+                  <PortalProvider>
+                     <PortalHost name="root" />
+                     {/* <SafeAreaProvider> */}
+                     <GluestackUIProvider>
+                        <StatusBar style="auto" />
+                        <Stack>
+                           <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding}>
+                              <Stack.Screen
+                                 name="(protected)/(tabs)"
+                                 options={{ headerShown: false, animation: "none" }}
+                              />
+                           </Stack.Protected>
 
-                        {/* Logged-in & profile incomplete -> onboarding */}
-                        <Stack.Protected guard={!!session && profile?.isComplete === false}>
-                           <Stack.Screen name="auth/new-user/PartTwo/step-4.0" />
-                        </Stack.Protected>
+                           <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && !hasCompletedRegistration}>
+                              <Stack.Screen name="onboarding-flow" options={{ headerShown: false }} />
+                           </Stack.Protected>
 
-                        {/* Logged-out -> auth */}
-                        <Stack.Protected guard={!session}>
-                           <Stack.Screen name="auth" />
-                        </Stack.Protected>
-                     </Stack>
-                  </GluestackUIProvider>
-               </SafeAreaProvider>
-            </PortalProvider>
-         </GestureHandlerRootView>
-         {/* </QueryClientProvider> */}
-      </QueryProvider>
+                           <Stack.Protected guard={!isLoggedIn && hasCompletedOnboarding}>
+                              <Stack.Screen name="auth" options={{ headerShown: false }} />
+                           </Stack.Protected>
+
+                           <Stack.Protected guard={!hasCompletedOnboarding}>
+                              <Stack.Screen name="onboarding/index" options={{ headerShown: false }} />
+                           </Stack.Protected>
+                        </Stack>
+                     </GluestackUIProvider>
+                     {/* </SafeAreaProvider> */}
+                  </PortalProvider>
+               </GestureHandlerRootView>
+               {/* </QueryClientProvider>
+               </QueryProvider> */}
+            </AuthLoader>
+         </QueryClientProvider>
+      </ThemeProvider>
    );
 }
