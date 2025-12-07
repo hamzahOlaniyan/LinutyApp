@@ -65,7 +65,7 @@ export const useAuthStore = create<AuthStore>()(
         removeItem
       })),
       partialize: state => ({
-        session: state.session,
+        // session: state.session,
         user: state.user,
         hasCompletedOnboarding: state.hasCompletedOnboarding,
         hasCompletedRegistration: state.hasCompletedRegistration

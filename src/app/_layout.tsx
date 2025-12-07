@@ -11,7 +11,7 @@ import React, { useEffect } from "react";
 import "../../global.css";
 
 export const unstable_settings = {
-   anchor: "(tabs)",
+   anchor: "auth",
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -29,8 +29,10 @@ export default function RootLayout() {
    const setSession = useAuthStore((state) => state.setSession);
    const setSignout = useAuthStore((state) => state.signOut);
 
-   const isLoggedIn = !!user;
+   const isLoggedIn = !!session;
 
+   console.log({ session });
+   console.log({ user });
    console.log(isLoggedIn);
 
    const [loaded] = useFonts({
@@ -65,28 +67,15 @@ export default function RootLayout() {
             <AuthLoader>
                <StatusBar style="auto" />
                <Stack>
-                  {/* <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && hasCompletedRegistration}>
+                  {/* 👇 Protected tabs */}
+                  <Stack.Protected guard={isLoggedIn}>
                      <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false, animation: "none" }} />
                   </Stack.Protected>
-                  <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && !hasCompletedRegistration}>
-                     <Stack.Screen name="onboarding-flow" options={{ headerShown: false }} />
-                  </Stack.Protected> */}
-                  {/* 
-                   <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding}>
-                     <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false, animation: "none" }} />
-                  </Stack.Protected> */}
 
-                  {/* <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && !hasCompletedRegistration}>
-                     <Stack.Screen name="onboarding-flow" options={{ headerShown: false }} />
-                  </Stack.Protected> */}
-
+                  {/* 👇 Public auth segment (sign-in, create-account live under this) */}
                   <Stack.Protected guard={!isLoggedIn}>
                      <Stack.Screen name="auth" options={{ headerShown: false }} />
                   </Stack.Protected>
-
-                  {/* <Stack.Protected guard={!hasCompletedOnboarding}>
-                     <Stack.Screen name="onboarding/index" options={{ headerShown: false }} />
-                  </Stack.Protected>  */}
                </Stack>
             </AuthLoader>
          </QueryClientProvider>
