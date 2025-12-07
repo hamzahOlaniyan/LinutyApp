@@ -3,7 +3,8 @@ import { create } from "zustand";
 
 export type RegistrationState = {
    step: number;
-   form: {
+   form: 
+   {
       firstName: string;
       lastName: string;
       email: string;
