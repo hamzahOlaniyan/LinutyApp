@@ -1,6 +1,4 @@
 import AppText from "@/components/ui/AppText";
-import Button from "@/components/ui/Button";
-import GradientButton from "@/components/ui/GradientButton";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { Image } from "expo-image";
@@ -35,12 +33,12 @@ export default function createAccount() {
                To connect, share, and explore — we need a little more info from you.
             </AppText>
             <View className="gap-4 my-6">
-               <GradientButton
+               {/* <GradientButton
                   onPress={() => router.push("/auth/createAccount/sectionOne/email")}
                   text="Get started"
                   size="lg"
-               />
-               <Button onPress={() => router.back()} text="Already have an account" size="lg" variant="outline" />
+               /> */}
+               {/* <Button onPress={() => router.back()} text="Already have an account" size="lg" variant="outline" /> */}
             </View>
          </View>
       </View>

@@ -2,17 +2,13 @@ import { Font } from "@/assets/fonts/FontFamily";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useUserQuery } from "@/hooks/useUserQuery";
 import { useAuthStore } from "@/store/useAuthStore";
-import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Constants from "expo-constants";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../../global.css";
-import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
 
 export const unstable_settings = {
    anchor: "(tabs)",
@@ -28,14 +24,11 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 }
 
 export default function RootLayout() {
-   const { initialized, user, init, hasCompletedOnboarding, hasCompletedRegistration } = useAuthStore();
    const colorScheme = useColorScheme();
+   const { initialized, session, user, hasCompletedOnboarding, hasCompletedRegistration } = useAuthStore();
+   const setSession = useAuthStore((state) => state.setSession);
 
-   const endpointUrl = Constants.expoConfig?.extra?.endpointUrl;
-
-   console.log({ endpointUrl });
-
-   const isLoggedIn = !!user;
+   const isLoggedIn = !!session && !!user;
 
    const [loaded] = useFonts({
       [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
@@ -48,14 +41,16 @@ export default function RootLayout() {
    });
 
    useEffect(() => {
+      if (initialized) {
+         setSession(); // call once store is hydrated
+      }
+   }, [initialized]);
+
+   useEffect(() => {
       if (loaded && initialized) {
          SplashScreen.hideAsync();
       }
    }, [loaded, initialized]);
-
-   useEffect(() => {
-      init();
-   }, []);
 
    if (!loaded || !initialized) {
       return null;
@@ -65,40 +60,31 @@ export default function RootLayout() {
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
          <QueryClientProvider client={queryClient}>
             <AuthLoader>
-               {/* <QueryProvider>
-                  <QueryClientProvider client={queryClient}> */}
-               <GestureHandlerRootView className="flex-1">
-                  <PortalProvider>
-                     <PortalHost name="root" />
-                     {/* <SafeAreaProvider> */}
-                     <GluestackUIProvider>
-                        <StatusBar style="auto" />
-                        <Stack>
-                           <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding}>
-                              <Stack.Screen
-                                 name="(protected)/(tabs)"
-                                 options={{ headerShown: false, animation: "none" }}
-                              />
-                           </Stack.Protected>
+               <StatusBar style="auto" />
+               <Stack>
+                  <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && hasCompletedRegistration}>
+                     <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false, animation: "none" }} />
+                  </Stack.Protected>
+                  <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && !hasCompletedRegistration}>
+                     <Stack.Screen name="onboarding-flow" options={{ headerShown: false }} />
+                  </Stack.Protected>
+                  {/* 
+                   <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding}>
+                     <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false, animation: "none" }} />
+                  </Stack.Protected> */}
 
-                           <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && !hasCompletedRegistration}>
-                              <Stack.Screen name="onboarding-flow" options={{ headerShown: false }} />
-                           </Stack.Protected>
+                  {/* <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && !hasCompletedRegistration}>
+                     <Stack.Screen name="onboarding-flow" options={{ headerShown: false }} />
+                  </Stack.Protected> */}
 
-                           <Stack.Protected guard={!isLoggedIn && hasCompletedOnboarding}>
-                              <Stack.Screen name="auth" options={{ headerShown: false }} />
-                           </Stack.Protected>
+                  <Stack.Protected guard={!isLoggedIn && hasCompletedOnboarding}>
+                     <Stack.Screen name="auth" options={{ headerShown: false }} />
+                  </Stack.Protected>
 
-                           <Stack.Protected guard={!hasCompletedOnboarding}>
-                              <Stack.Screen name="onboarding/index" options={{ headerShown: false }} />
-                           </Stack.Protected>
-                        </Stack>
-                     </GluestackUIProvider>
-                     {/* </SafeAreaProvider> */}
-                  </PortalProvider>
-               </GestureHandlerRootView>
-               {/* </QueryClientProvider>
-               </QueryProvider> */}
+                  {/* <Stack.Protected guard={!hasCompletedOnboarding}>
+                     <Stack.Screen name="onboarding/index" options={{ headerShown: false }} />
+                  </Stack.Protected>  */}
+               </Stack>
             </AuthLoader>
          </QueryClientProvider>
       </ThemeProvider>

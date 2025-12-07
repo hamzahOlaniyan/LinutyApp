@@ -1,29 +1,18 @@
 import { FormDataType } from "@/components/FormInput/types";
+import type { Session, User } from "@supabase/supabase-js";
+
 
 export type OnbaordingStatusType = "onboarding" | "dashboard";
+
+export type SessionResponse = {
+  session: Session |null;
+};
+
 
 export type UserData = {
   success: boolean;
   message: string;
   data: User;
-};
-
-export type User = {
-  email: string;
-  emailVerifiedAt: string | null;
-  fname: string;
-  lname: string;
-  id: string;
-  instagramUrl?: string;
-  onboarding: OnbaordingStatusType;
-  photo: string;
-  privilege?: string;
-  role: string;
-  totalMealPlans?: number;
-  totalPrograms?: number;
-  verifiedAt: string | null;
-  website?: string;
-  youtubeUrl?: string;
 };
 
 export type FormType = {
@@ -33,13 +22,15 @@ export type FormType = {
 
 export type AuthStore = {
   initialized: boolean;
-  user: User | null;
   hasCompletedOnboarding: boolean;
   hasCompletedRegistration: boolean;
 
+  user: User | null;        // from supabase-js
+  session: Session | null;  // 👈 not string[]
+
   //Actions
-  init: () => Promise<void>;
   setUser: (user: User | null) => void;
+  setSession: () => Promise<void>; // 👈 it’s async
   signOut: () => Promise<void>;
   completeOnboarding: () => void;
   resetOnboarding: () => void;

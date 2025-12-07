@@ -1,8 +1,8 @@
 import { api } from "@/lib/api";
-import { deleteItemAsync, getItem, setItem } from "expo-secure-store";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { AuthStore } from "./types";
+import { getItem, removeItem, setItem } from "./secureStore";
+import { AuthStore, SessionResponse } from "./types";
 
 export const useAuthStore = create<AuthStore>()(
   persist(
@@ -10,22 +10,40 @@ export const useAuthStore = create<AuthStore>()(
       initialized: false,
       hasCompletedOnboarding: false,
       user: null,
+      session:null,
       hasCompletedRegistration: false,
-
-      init: async () => {
-        set({ initialized: true });
-      },
 
       setUser: user => set({ user }),
 
-      signOut: async () => {
+     setSession: async () => {
+      try {
+        const res = await api.get<SessionResponse>("auth/session");
+
+        set({
+          session: res.data.session,
+          user: res.data.session?.user ?? null
+        });
+      } catch (err) {
+        console.log("failed to get session", err);
+      }
+    },
+
+
+          signOut: async () => {
         try {
           await api.post("auth/logout");
-        } catch {
-          // Ignore network errors on logout
+        } catch (err) {
+          console.log("logout failed", err);
+        } finally {
+          set({
+            session: null,
+            user: null,
+            hasCompletedOnboarding: false,
+            hasCompletedRegistration: false
+          });
         }
-        set({ user: null });
       },
+
 
       completeOnboarding: () => {
         set(state => ({ ...state, hasCompletedOnboarding: true }));
@@ -42,15 +60,22 @@ export const useAuthStore = create<AuthStore>()(
       storage: createJSONStorage(() => ({
         getItem,
         setItem,
-        removeItem: deleteItemAsync
+        removeItem
       })),
       partialize: state => ({
+        session: state.session,
         user: state.user,
         hasCompletedOnboarding: state.hasCompletedOnboarding,
         hasCompletedRegistration: state.hasCompletedRegistration
       }),
       onRehydrateStorage: () => (state, error) => {
-        if (error) return null;
+        if (error){
+          console.log("rehydration error", error);
+          return;
+        }
+        if (state) {
+            state.initialized = true;
+        }
       }
     }
   )

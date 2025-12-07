@@ -5,10 +5,10 @@ import { filter } from "./ico/filter";
 import { logout } from "./ico/logout";
 
 const icons = {
-   bookmark: bookmark,
-   filter: filter,
-   favorite: favorite,
-   logout: logout,
+   bookmark,
+   filter,
+   favorite,
+   logout,
 } as const;
 
 type IconName = keyof typeof icons;
@@ -21,7 +21,7 @@ type IconProps = {
 };
 
 const Icon: React.FC<IconProps> = ({ name, size = 32, strokeWidth = 0, color = "#1f1f1f" }) => {
-   const IconComponent = icons[name];
+   const IconComponent = icons[name as keyof typeof icons];
 
    return <IconComponent size={size} strokeWidth={strokeWidth} color={color} />;
 };

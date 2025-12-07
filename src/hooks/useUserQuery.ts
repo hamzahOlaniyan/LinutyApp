@@ -1,9 +1,9 @@
-import { User } from "@/store/types";
 import { useAuthStore } from "@/store/useAuthStore";
+import { User } from "@supabase/supabase-js";
 import { useEffect } from "react";
 import { useApiQuery } from "./useApi";
 
-export const USER_PROFILE_KEY = "users/me/profile";
+export const USER_PROFILE_KEY = "/profile/me";
 
 type ApiResponse<T> = {
   success: boolean;
