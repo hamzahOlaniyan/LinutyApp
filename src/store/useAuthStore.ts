@@ -1,8 +1,10 @@
+import { queryClient } from "@/app/_layout";
 import { api } from "@/lib/api";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { getItem, removeItem, setItem } from "./secureStore";
 import { AuthStore, SessionResponse } from "./types";
+
 
 export const useAuthStore = create<AuthStore>()(
   persist(
@@ -27,14 +29,14 @@ export const useAuthStore = create<AuthStore>()(
         console.log("failed to get session", err);
       }
     },
-
-
           signOut: async () => {
         try {
           await api.post("auth/logout");
         } catch (err) {
           console.log("logout failed", err);
         } finally {
+              queryClient.clear();
+
           set({
             session: null,
             user: null,

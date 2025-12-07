@@ -16,7 +16,7 @@ export const unstable_settings = {
 
 SplashScreen.preventAutoHideAsync();
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 function AuthLoader({ children }: { children: React.ReactNode }) {
    useUserQuery();
@@ -25,10 +25,13 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 
 export default function RootLayout() {
    const colorScheme = useColorScheme();
-   const { initialized, session, user, hasCompletedOnboarding, hasCompletedRegistration } = useAuthStore();
+   const { initialized, session, user, hasCompletedOnboarding, hasCompletedRegistration, signOut } = useAuthStore();
    const setSession = useAuthStore((state) => state.setSession);
+   const setSignout = useAuthStore((state) => state.signOut);
 
-   const isLoggedIn = !!session && !!user;
+   const isLoggedIn = !!user;
+
+   console.log(isLoggedIn);
 
    const [loaded] = useFonts({
       [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
@@ -62,12 +65,12 @@ export default function RootLayout() {
             <AuthLoader>
                <StatusBar style="auto" />
                <Stack>
-                  <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && hasCompletedRegistration}>
+                  {/* <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && hasCompletedRegistration}>
                      <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false, animation: "none" }} />
                   </Stack.Protected>
                   <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding && !hasCompletedRegistration}>
                      <Stack.Screen name="onboarding-flow" options={{ headerShown: false }} />
-                  </Stack.Protected>
+                  </Stack.Protected> */}
                   {/* 
                    <Stack.Protected guard={isLoggedIn && hasCompletedOnboarding}>
                      <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false, animation: "none" }} />
@@ -77,7 +80,7 @@ export default function RootLayout() {
                      <Stack.Screen name="onboarding-flow" options={{ headerShown: false }} />
                   </Stack.Protected> */}
 
-                  <Stack.Protected guard={!isLoggedIn && hasCompletedOnboarding}>
+                  <Stack.Protected guard={!isLoggedIn}>
                      <Stack.Screen name="auth" options={{ headerShown: false }} />
                   </Stack.Protected>
 

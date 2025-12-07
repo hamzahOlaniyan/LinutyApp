@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export default function TabLayout() {
+export default function CreateAccount() {
    return (
       <View>
-         <Text>TabLayout</Text>
+         <Text>CreateAccount</Text>
       </View>
    );
 }

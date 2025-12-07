@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export default function TabLayout() {
+export default function index() {
    return (
       <View>
-         <Text>TabLayout</Text>
+         <Text className="text-xxl">Root index</Text>
       </View>
    );
 }
