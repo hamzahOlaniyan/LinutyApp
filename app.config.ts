@@ -2,83 +2,83 @@ import "dotenv/config";
 import { ConfigContext, ExpoConfig } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => {
-   const variant = process.env.APP_VARIANT || "development";
+  const variant = process.env.APP_VARIANT || "development";
 
-   const baseConfig = {
-      ...config,
-      name: "LinutyApp",
-      slug: "LinutyApp",
-      version: "1.3.0",
-      orientation: "portrait",
-      icon: "./src/assets/images/icon.png",
-      scheme: "linutyapp",
-      userInterfaceStyle: "automatic",
-      newArchEnabled: true,
-      splash: {
-         image: "./src/assets/images/logo.png",
-         resizeMode: "contain",
-         backgroundColor: "#ffffff",
-      },
+  const baseConfig = {
+    ...config,
+    name: "LinutyApp",
+    slug: "LinutyApp",
+    version: "1.3.0",
+    orientation: "portrait",
+    icon: "./src/assets/images/icon.png",
+    scheme: "linutyapp",
+    userInterfaceStyle: "automatic",
+    newArchEnabled: true,
+    splash: {
+      image: "./src/assets/images/logo.png",
+      resizeMode: "contain",
+      backgroundColor: "#ffffff",
+    },
 
-      ios: {
-         supportsTablet: true,
-         bundleIdentifier: "com.hamzaholaniyan.linuttydev",
+    ios: {
+      supportsTablet: true,
+      bundleIdentifier: "com.hamzaholaniyan.linuttydev",
+    },
+    android: {
+      adaptiveIcon: {
+        backgroundImage: "./src/assets/images/adaptive-icon.png",
       },
+      edgeToEdgeEnabled: true,
+      softwareKeyboardLayoutMode: "pan",
+      versionCode: 41,
+    },
+    web: {
+      bundler: "metro",
+      output: "static",
+    },
+    plugins: ["expo-router"],
+    experiments: {
+      typedRoutes: true,
+    },
+    extra: {
+      EXPO_PUBLIC_ENDPOINT_URL: process.env.EXPO_PUBLIC_ENDPOINT_URL,
+      eas: {
+        projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
+      },
+    },
+    owner: "hamzaholaniyan",
+
+    runtimeVersion: "1.0.0",
+
+    updates: {
+      url: "https://u.expo.dev/9ba15d7e-509f-4f7c-ae54-827330c67015",
+    },
+  };
+
+  // Apply variant-specific settings
+  if (variant === "development") {
+    return {
+      ...baseConfig,
+      name: "Linuty Dev",
       android: {
-         adaptiveIcon: {
-            backgroundImage: "./src/assets/images/adaptive-icon.png",
-         },
-         edgeToEdgeEnabled: true,
-         softwareKeyboardLayoutMode: "pan",
-         versionCode: 41,
+        ...baseConfig.android,
+        package: "com.hamzaholaniyan.linuttydev", // unique package name
+        versionCode: 15, // increment this only when updating dev build
       },
-      web: {
-         bundler: "metro",
-         output: "static",
+    } as ExpoConfig;
+  }
+
+  if (variant === "preview") {
+    return {
+      ...baseConfig,
+      name: "Linuty Preview",
+      android: {
+        ...baseConfig.android,
+        package: "com.hamzaholaniyan.linuttypreview", // unique package name
+        versionCode: 20, // increment this only when updating preview build
       },
-      plugins: ["expo-router"],
-      experiments: {
-         typedRoutes: true,
-      },
-      extra: {
-         EXPO_PUBLIC_ENDPOINT_URL: process.env.EXPO_PUBLIC_ENDPOINT_URL,
-         eas: {
-            projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
-         },
-      },
-      owner: "hamzaholaniyan",
+    } as ExpoConfig;
+  }
 
-      runtimeVersion: "1.0.0",
-
-      updates: {
-         url: "https://u.expo.dev/9ba15d7e-509f-4f7c-ae54-827330c67015",
-      },
-   };
-
-   // Apply variant-specific settings
-   if (variant === "development") {
-      return {
-         ...baseConfig,
-         name: "Linuty Dev",
-         android: {
-            ...baseConfig.android,
-            package: "com.hamzaholaniyan.linuttydev", // unique package name
-            versionCode: 15, // increment this only when updating dev build
-         },
-      } as ExpoConfig;
-   }
-
-   if (variant === "preview") {
-      return {
-         ...baseConfig,
-         name: "Linuty Preview",
-         android: {
-            ...baseConfig.android,
-            package: "com.hamzaholaniyan.linuttypreview", // unique package name
-            versionCode: 20, // increment this only when updating preview build
-         },
-      } as ExpoConfig;
-   }
-
-   return baseConfig as ExpoConfig;
+  return baseConfig as ExpoConfig;
 };

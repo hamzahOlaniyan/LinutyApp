@@ -4,7 +4,7 @@ import {
   UseMutationOptions,
   useQuery,
   useQueryClient,
-  UseQueryOptions
+  UseQueryOptions,
 } from "@tanstack/react-query";
 
 export type ApiError = {
@@ -24,7 +24,7 @@ type ApiMutationOptions<TResponse, TParams, TContext> = Omit<
   onSuccess?: (
     data: TResponse,
     variables: TParams,
-    context: TContext
+    context: TContext,
   ) => Promise<unknown> | unknown;
   invalidateKeys?: string[];
 };
@@ -32,7 +32,7 @@ type ApiMutationOptions<TResponse, TParams, TContext> = Omit<
 export function useApiQuery<TResponse = unknown, TParams = unknown>(
   route: string,
   params?: TParams,
-  options?: Omit<UseQueryOptions<TResponse, ApiError>, "queryKey" | "queryFn">
+  options?: Omit<UseQueryOptions<TResponse, ApiError>, "queryKey" | "queryFn">,
 ) {
   const result = useQuery<TResponse, ApiError>({
     // The queryKey uniquely identifies this request.
@@ -43,7 +43,7 @@ export function useApiQuery<TResponse = unknown, TParams = unknown>(
       const res = await api.get<TResponse>(route, { params });
       return res.data;
     },
-    ...options
+    ...options,
   });
 
   const isLoading = result.isLoading || result.isFetching;
@@ -54,18 +54,18 @@ export function useApiQuery<TResponse = unknown, TParams = unknown>(
 export function useApiMutation<
   TResponse = unknown,
   TParams = unknown,
-  TContext = unknown
+  TContext = unknown,
 >(
   method: MutationMethod,
   route: string,
-  options?: ApiMutationOptions<TResponse, TParams, TContext>
+  options?: ApiMutationOptions<TResponse, TParams, TContext>,
 ) {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restOptions } = options || {};
 
   const result = useMutation<TResponse, ApiError, TParams, TContext>({
-    mutationFn: async variables => {
+    mutationFn: async (variables) => {
       // Handle different Axios signatures
       // POST/PATCH: api.post(url, data)
       // DELETE: api.delete(url, config) -> We pass data in config.data
@@ -76,7 +76,7 @@ export function useApiMutation<
       } else {
         const methodFn = api[method] as (
           url: string,
-          data: TParams
+          data: TParams,
         ) => Promise<{ data: TResponse }>;
         res = await methodFn(route, variables as TParams);
       }
@@ -87,7 +87,7 @@ export function useApiMutation<
       queryClient.invalidateQueries({ queryKey: [route] });
 
       if (options?.invalidateKeys) {
-        options.invalidateKeys.forEach(key => {
+        options.invalidateKeys.forEach((key) => {
           queryClient.invalidateQueries({ queryKey: [key] });
         });
       }
@@ -96,7 +96,7 @@ export function useApiMutation<
         onSuccess(data, variables, context);
       }
     },
-    ...restOptions
+    ...restOptions,
   });
 
   const isLoading = result.isPending;

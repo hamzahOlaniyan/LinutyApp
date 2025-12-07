@@ -23,8 +23,8 @@ export const useUserQuery = () => {
         return failureCount < 2;
       },
       staleTime: 1000 * 60 * 5,
-      enabled: !!user
-    }
+      enabled: !!user,
+    },
   );
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export const useUserQuery = () => {
 
     if (isError && user) {
       console.log("Token invalid, clearing user session");
-      setUser(null as any);
+      setUser(null);
     }
   }, [data, isError, user, setUser]);
 

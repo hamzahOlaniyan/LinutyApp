@@ -1,13 +1,11 @@
 import { FormDataType } from "@/components/FormInput/types";
 import type { Session, User } from "@supabase/supabase-js";
 
-
 export type OnbaordingStatusType = "onboarding" | "dashboard";
 
 export type SessionResponse = {
-  session: Session |null;
+  session: Session | null;
 };
-
 
 export type UserData = {
   success: boolean;
@@ -25,8 +23,8 @@ export type AuthStore = {
   hasCompletedOnboarding: boolean;
   hasCompletedRegistration: boolean;
 
-  user: User | null;        // from supabase-js
-  session: Session | null;  // 👈 not string[]
+  user: User | null; // from supabase-js
+  session: Session | null; // 👈 not string[]
 
   //Actions
   setUser: (user: User | null) => void;
