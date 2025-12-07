@@ -21,6 +21,7 @@ export default function Signin() {
           contentFit="contain"
         />
       </View>
+
       <View className="relative flex-1 justify-between gap-2 py-6">
         <View className="relative top-20 gap-8">
           {/* <GradientButton text="Sign in" onPress={handleSubmit(onSubmit)} isLoading={isSubmitting} size="lg" /> */}

@@ -2,7 +2,15 @@
 
 exports[`AppText matches snapshot with default props 1`] = `
 <Text
-  className="text-text font-sans text-base"
+  className="text-text font-Regular"
+  style={
+    [
+      {
+        "fontSize": 24.012000000000004,
+      },
+      undefined,
+    ]
+  }
 >
   Snapshot text
 </Text>

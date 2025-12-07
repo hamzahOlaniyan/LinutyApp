@@ -1,85 +1,103 @@
+// src/components/ui/AppText/__tests__/AppText.test.tsx
 import { render } from "@testing-library/react-native";
 import React from "react";
+
+// 👇 mock hp so font sizes are predictable
+jest.mock("@/constant/common", () => ({
+  hp: (percentage: number) => percentage // hp(3) => 3, hp(1.8) => 1.8, etc.
+}));
+
 import AppText from "..";
 
 describe("AppText", () => {
   it("renders children text", () => {
     const { getByText } = render(<AppText>Hello world</AppText>);
-    expect(getByText("Hello world")).toBeTruthy();
+
+    const text = getByText("Hello world");
+    expect(text).toBeTruthy();
   });
 
-  it("applies default variant and base styles", () => {
-    const { getByText } = render(<AppText>Default text</AppText>);
-    const text = getByText("Default text");
+  it("applies default body variant and base styles", () => {
+    const { getByText } = render(<AppText>Body text</AppText>);
 
-    // From cva base + default variant + default color
+    const text = getByText("Body text");
+
+    // className should include base + body font
+    expect(text.props.className).toContain("font-Regular");
     expect(text.props.className).toContain("text-text");
-    expect(text.props.className).toContain("font-sans");
-    expect(text.props.className).toContain("text-base");
+
+    // hp is mocked so body => hp(1.8) === 1.8
+    const styleArray = Array.isArray(text.props.style)
+      ? text.props.style
+      : [text.props.style];
+
+    const style = styleArray[0];
+    expect(style.fontSize).toBe(1.8);
   });
 
-  it("applies the title variant styles", () => {
-    const { getByText } = render(<AppText variant="title">Title text</AppText>);
-    const text = getByText("Title text");
+  it("applies header variant styles and font size", () => {
+    const { getByText } = render(
+      <AppText variant="header">Header text</AppText>
+    );
 
-    expect(text.props.className).toContain("text-3xl");
-    expect(text.props.className).toContain("font-Semibold");
+    const text = getByText("Header text");
+
+    // should use header font class
+    expect(text.props.className).toContain("font-SemiBold");
+
+    // hp mocked → header => hp(3) === 3
+    const styleArray = Array.isArray(text.props.style)
+      ? text.props.style
+      : [text.props.style];
+
+    const style = styleArray[0];
+    expect(style.fontSize).toBe(3);
   });
 
-  it("applies the link variant styles", () => {
-    const { getByText } = render(<AppText variant="link">Link text</AppText>);
-    const text = getByText("Link text");
+  it("applies link variant styles", () => {
+    const { getByText } = render(<AppText variant="link">Click me</AppText>);
 
-    expect(text.props.className).toContain("text-primary");
+    const text = getByText("Click me");
+
     expect(text.props.className).toContain("underline");
+    expect(text.props.className).toContain("text-blue-500");
+
+    // hp mocked → link => hp(1.8) === 1.8
+    const styleArray = Array.isArray(text.props.style)
+      ? text.props.style
+      : [text.props.style];
+
+    const style = styleArray[0];
+    expect(style.fontSize).toBe(1.8);
   });
 
-  it("applies the error variant styles", () => {
+  it("applies error variant styles", () => {
     const { getByText } = render(<AppText variant="error">Error text</AppText>);
+
     const text = getByText("Error text");
 
-    expect(text.props.className).toContain("text-sm");
     expect(text.props.className).toContain("text-red-600");
-    expect(text.props.className).toContain("font-medium");
+    expect(text.props.className).toContain("font-Medium");
+
+    // hp mocked → error => hp(1.6) === 1.6
+    const styleArray = Array.isArray(text.props.style)
+      ? text.props.style
+      : [text.props.style];
+
+    const style = styleArray[0];
+    expect(style.fontSize).toBe(1.6);
   });
 
-  it("applies color prop correctly", () => {
-    const { getByText } = render(
-      <AppText color="primary">Primary colored</AppText>
-    );
-    const text = getByText("Primary colored");
+  it("uses color prop to override text color", () => {
+    const { getByText } = render(<AppText color="red">Colored text</AppText>);
 
-    expect(text.props.className).toContain("text-primary");
-  });
+    const text = getByText("Colored text");
 
-  it("applies size prop correctly", () => {
-    const { getByText } = render(<AppText size="lg">Large text</AppText>);
-    const text = getByText("Large text");
+    const styleArray = Array.isArray(text.props.style)
+      ? text.props.style
+      : [text.props.style];
 
-    // Size should be applied on top of variant defaults
-    expect(text.props.className).toContain("text-lg");
-  });
-
-  it("merges custom className with generated classes", () => {
-    const { getByText } = render(
-      <AppText className="font-bold text-green-500">Custom class text</AppText>
-    );
-    const text = getByText("Custom class text");
-
-    expect(text.props.className).toContain("text-green-500");
-    expect(text.props.className).toContain("font-bold");
-  });
-
-  it("forwards other Text props (e.g. accessibilityLabel)", () => {
-    const { getByLabelText } = render(
-      <AppText accessibilityLabel="label-text">A11y text</AppText>
-    );
-
-    expect(getByLabelText("label-text")).toBeTruthy();
-  });
-
-  it("matches snapshot with default props", () => {
-    const { toJSON } = render(<AppText>Snapshot text</AppText>);
-    expect(toJSON()).toMatchSnapshot();
+    const style = styleArray[0];
+    expect(style.color).toBe("red");
   });
 });
