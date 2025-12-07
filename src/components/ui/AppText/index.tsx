@@ -1,6 +1,11 @@
+import { hp } from "@/constant/common";
 import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
-import { Text as RNText, TextProps as RNTextProps } from "react-native";
+import {
+  Text as RNText,
+  TextProps as RNTextProps,
+  TextStyle
+} from "react-native";
 import { twMerge } from "tailwind-merge";
 
 /**
@@ -26,25 +31,14 @@ import { twMerge } from "tailwind-merge";
  * @returns {JSX.Element} A styled React Native `Text` element.
  */
 
-const textVariants = cva("text-text font-sans", {
+const textVariants = cva("font-Regular text-text", {
   variants: {
     variant: {
-      title: "text-3xl font-Semibold text-black",
-      body: "text-base",
-      link: "text-primary underline",
-      error: "text-sm text-red-600 font-medium"
-    },
-    color: {
-      primary: "text-primary",
-      black: "text-black",
-      white: "text-white",
-      default: "text-text"
-    },
-    size: {
-      sm: "text-sm",
-      md: "text-base",
-      lg: "text-lg",
-      xl: "text-xl"
+      header: "font-SemiBold",
+      title: "font-SemiBold",
+      body: "font-Regular",
+      link: " underline font-Regular text-blue-500",
+      error: "text-red-600 font-Medium"
     }
   },
   defaultVariants: {
@@ -55,23 +49,37 @@ const textVariants = cva("text-text font-sans", {
 export type CustomTextProps = RNTextProps &
   VariantProps<typeof textVariants> & {
     children?: React.ReactNode;
+    color?: string;
   };
+
+// 👇 per-variant font sizes using hp()
+
+type VariantName = "header" | "title" | "body" | "link" | "error";
+
+const variantFontSizes: Record<VariantName, number> = {
+  header: hp(3),
+  title: hp(2.2),
+  body: hp(1.8),
+  link: hp(1.8),
+  error: hp(1.6)
+};
 
 const AppText = ({
   className,
   variant = "body",
-  color,
-  size,
   children,
+  style,
+  color,
   ...props
 }: CustomTextProps) => {
-  const finalClasses = twMerge(
-    textVariants({ variant, color, size }),
-    className
-  );
+  const finalClasses = twMerge(textVariants({ variant }), className);
+
+  const resolvedVariant: VariantName = (variant ?? "body") as VariantName;
+  const fontSize = variantFontSizes[resolvedVariant];
+  const textStyle: TextStyle = { fontSize, ...(color ? { color } : {}) };
 
   return (
-    <RNText {...props} className={finalClasses}>
+    <RNText {...props} className={finalClasses} style={[textStyle, style]}>
       {children}
     </RNText>
   );

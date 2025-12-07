@@ -20,6 +20,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        text: "#262626",
         primary: {
           0: "rgb(var(--color-primary-0)/<alpha-value>)",
           50: "rgb(var(--color-primary-50)/<alpha-value>)",
@@ -183,9 +184,6 @@ module.exports = {
         Medium: ["Medium"],
         Regular: ["Regular"],
         Light: ["Light"],
-      },
-      fontWeight: {
-        extrablack: "950",
       },
       fontSize: {
         "2xs": "10px",
