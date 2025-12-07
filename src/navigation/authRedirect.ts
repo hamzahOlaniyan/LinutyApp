@@ -1,14 +1,14 @@
-export interface UserProfile {
-   isComplete: boolean;
-   [key: string]: any;
-}
+// export interface UserProfile {
+//   isComplete: boolean;
+//   [key: string]: string;
+// }
 
-export function getRedirectPath(profile: UserProfile | null): string {
-   if (profile && !profile.isComplete) {
-      return "/auth/new-user/PartTwo/step-4.0";
-   }
-   return "/(app)/(tabs)";
-}
+// export function getRedirectPath(profile: UserProfile | null): string {
+//   if (profile && !profile.isComplete) {
+//     return "/auth/new-user/PartTwo/step-4.0";
+//   }
+//   return "/(app)/(tabs)";
+// }
 
 // import { router } from "expo-router";
 // import { useAuthStore } from "../store/auth.store";

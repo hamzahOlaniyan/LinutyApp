@@ -5,80 +5,78 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { getItem, removeItem, setItem } from "./secureStore";
 import { AuthStore, SessionResponse } from "./types";
 
-
 export const useAuthStore = create<AuthStore>()(
   persist(
-    set => ({
+    (set) => ({
       initialized: false,
       hasCompletedOnboarding: false,
       user: null,
-      session:null,
+      session: null,
       hasCompletedRegistration: false,
 
-      setUser: user => set({ user }),
+      setUser: (user) => set({ user }),
 
-     setSession: async () => {
-      try {
-        const res = await api.get<SessionResponse>("auth/session");
+      setSession: async () => {
+        try {
+          const res = await api.get<SessionResponse>("auth/session");
 
-        set({
-          session: res.data.session,
-          user: res.data.session?.user ?? null
-        });
-      } catch (err) {
-        console.log("failed to get session", err);
-      }
-    },
-          signOut: async () => {
+          set({
+            session: res.data.session,
+            user: res.data.session?.user ?? null,
+          });
+        } catch (err) {
+          console.log("failed to get session", err);
+        }
+      },
+      signOut: async () => {
         try {
           await api.post("auth/logout");
         } catch (err) {
           console.log("logout failed", err);
         } finally {
-              queryClient.clear();
+          queryClient.clear();
 
           set({
             session: null,
             user: null,
             hasCompletedOnboarding: false,
-            hasCompletedRegistration: false
+            hasCompletedRegistration: false,
           });
         }
       },
 
-
       completeOnboarding: () => {
-        set(state => ({ ...state, hasCompletedOnboarding: true }));
+        set((state) => ({ ...state, hasCompletedOnboarding: true }));
       },
       resetOnboarding: () => {
-        set(state => ({ ...state, hasCompletedOnboarding: false }));
+        set((state) => ({ ...state, hasCompletedOnboarding: false }));
       },
       setOnboardingStatus: () => {
-        set(state => ({ ...state, hasCompletedRegistration: true }));
-      }
+        set((state) => ({ ...state, hasCompletedRegistration: true }));
+      },
     }),
     {
       name: "auth-store",
       storage: createJSONStorage(() => ({
         getItem,
         setItem,
-        removeItem
+        removeItem,
       })),
-      partialize: state => ({
+      partialize: (state) => ({
         // session: state.session,
         user: state.user,
         hasCompletedOnboarding: state.hasCompletedOnboarding,
-        hasCompletedRegistration: state.hasCompletedRegistration
+        hasCompletedRegistration: state.hasCompletedRegistration,
       }),
       onRehydrateStorage: () => (state, error) => {
-        if (error){
+        if (error) {
           console.log("rehydration error", error);
           return;
         }
         if (state) {
-            state.initialized = true;
+          state.initialized = true;
         }
-      }
-    }
-  )
+      },
+    },
+  ),
 );
