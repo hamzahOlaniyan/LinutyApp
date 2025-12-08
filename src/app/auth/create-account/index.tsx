@@ -40,7 +40,7 @@ export default function CreateAccount() {
         </AppText>
         <View className="my-6 gap-4">
           <GradientButton
-            onPress={() => router.push("/auth/create-account/email")}
+            onPress={() => router.push("/auth/create-account/1.email")}
             text="Get started"
             size="lg"
           />
