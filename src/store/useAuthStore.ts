@@ -3,7 +3,7 @@ import { api } from "@/lib/api";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { getItem, removeItem, setItem } from "./secureStore";
-import { AuthStore, SessionResponse } from "./types";
+import { AuthStore } from "./types";
 
 export const useAuthStore = create<AuthStore>()(
   persist(
@@ -14,15 +14,15 @@ export const useAuthStore = create<AuthStore>()(
       session: null,
       hasCompletedRegistration: false,
 
-      setUser: (user) => set({ user }),
+      setUser: async (user) => set({ user }),
 
-      setSession: async () => {
+      setSession: async (session) => {
         try {
-          const res = await api.get<SessionResponse>("auth/session");
+          // const res = await api.get<SessionResponse>("auth/session");
 
           set({
-            session: res.data.session,
-            user: res.data.session?.user ?? null,
+            session: session,
+            user:session?.user,
           });
         } catch (err) {
           console.log("failed to get session", err);
@@ -63,7 +63,6 @@ export const useAuthStore = create<AuthStore>()(
         removeItem,
       })),
       partialize: (state) => ({
-        // session: state.session,
         user: state.user,
         hasCompletedOnboarding: state.hasCompletedOnboarding,
         hasCompletedRegistration: state.hasCompletedRegistration,

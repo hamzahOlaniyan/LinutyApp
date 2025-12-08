@@ -9,3 +9,5 @@ export const hp = (percentage: number) => {
 export const wp = (percentage: number) => {
   return (percentage * deviceWidth) / 100;
 };
+
+export const DEFAULT_TOAST_DURATION = 2000;

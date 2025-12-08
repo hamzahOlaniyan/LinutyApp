@@ -30,13 +30,8 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const { initialized, session, user } = useAuthStore();
-  const setSession = useAuthStore(state => state.setSession);
 
-  const isLoggedIn = !!session;
-
-  console.log({ session });
-  console.log({ user });
-  console.log(isLoggedIn);
+  const isLoggedIn = !!session && !!user;
 
   const [loaded] = useFonts({
     [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
@@ -50,7 +45,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (initialized) {
-      setSession(); // call once store is hydrated
+      // setSession(); // call once store is hydrated
     }
   }, [initialized]);
 
@@ -81,6 +76,10 @@ export default function RootLayout() {
             {/* 👇 Public auth segment (sign-in, create-account live under this) */}
             <Stack.Protected guard={!isLoggedIn}>
               <Stack.Screen name="auth" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="onboarding-flow"
+                options={{ headerShown: false }}
+              />
             </Stack.Protected>
           </Stack>
         </AuthLoader>

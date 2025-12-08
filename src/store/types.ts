@@ -1,4 +1,4 @@
-import { FormDataType } from "@/components/FormInput/types";
+import { FormDataType } from "@/components/ui/FormInput/types";
 import type { Session, User } from "@supabase/supabase-js";
 
 export type OnbaordingStatusType = "onboarding" | "dashboard";
@@ -28,7 +28,7 @@ export type AuthStore = {
 
   //Actions
   setUser: (user: User | null) => void;
-  setSession: () => Promise<void>; // 👈 it’s async
+  setSession: (session:Session|null) => Promise<void>; // 👈 it’s async
   signOut: () => Promise<void>;
   completeOnboarding: () => void;
   resetOnboarding: () => void;

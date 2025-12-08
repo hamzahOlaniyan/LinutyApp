@@ -34,11 +34,14 @@ import { twMerge } from "tailwind-merge";
 const textVariants = cva("font-Regular text-text", {
   variants: {
     variant: {
-      header: "font-SemiBold",
+      headerLarge: "font-Bold",
+      header: "font-Bold",
+      titleLarge: "",
       title: "font-SemiBold",
       body: "font-Regular",
       link: " underline font-Regular text-blue-500",
-      error: "text-red-600 font-Medium"
+      error: "text-red-600 font-Medium",
+      small: ""
     }
   },
   defaultVariants: {
@@ -54,14 +57,25 @@ export type CustomTextProps = RNTextProps &
 
 // 👇 per-variant font sizes using hp()
 
-type VariantName = "header" | "title" | "body" | "link" | "error";
+type VariantName =
+  | "headerLarge"
+  | "header"
+  | "title"
+  | "titleLarge"
+  | "body"
+  | "link"
+  | "error"
+  | "small";
 
 const variantFontSizes: Record<VariantName, number> = {
-  header: hp(3),
+  headerLarge: hp(3),
+  header: hp(2.6),
   title: hp(2.2),
+  titleLarge: hp(2),
   body: hp(1.8),
   link: hp(1.8),
-  error: hp(1.6)
+  error: hp(1.6),
+  small: hp(1.3)
 };
 
 const AppText = ({

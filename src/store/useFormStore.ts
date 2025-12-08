@@ -1,4 +1,4 @@
-import { FormDataType } from "@/components/FormInput/types";
+import { FormDataType } from "@/components/ui/FormInput/types";
 import { create } from "zustand";
 import { FormStore } from "./types";
 

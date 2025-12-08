@@ -43,7 +43,7 @@ describe("AppText", () => {
     const text = getByText("Header text");
 
     // should use header font class
-    expect(text.props.className).toContain("font-SemiBold");
+    expect(text.props.className).toContain("font-Bold");
 
     // hp mocked → header => hp(3) === 3
     const styleArray = Array.isArray(text.props.style)
@@ -51,7 +51,7 @@ describe("AppText", () => {
       : [text.props.style];
 
     const style = styleArray[0];
-    expect(style.fontSize).toBe(3);
+    expect(style.fontSize).toBe(2.6);
   });
 
   it("applies link variant styles", () => {
