@@ -1,4 +1,5 @@
 import { FormDataType } from "@/components/ui/FormInput/types";
+import { Profile } from "@/lib/supabase/supabaseTypes";
 import type { Session, User } from "@supabase/supabase-js";
 
 export type OnbaordingStatusType = "onboarding" | "dashboard";
@@ -25,10 +26,12 @@ export type AuthStore = {
 
   user: User | null; // from supabase-js
   session: Session | null; // 👈 not string[]
+  me: Profile | null;      
 
   //Actions
   setUser: (user: User | null) => void;
-  setSession: (session:Session|null) => Promise<void>; // 👈 it’s async
+  setSession: () => Promise<void>; // 👈 it’s async
+  setMe: (me: Profile | null) => void;
   signOut: () => Promise<void>;
   completeOnboarding: () => void;
   resetOnboarding: () => void;

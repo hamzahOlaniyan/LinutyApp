@@ -39,7 +39,7 @@ export default function Email() {
       setNotice("password does not match");
       return;
     }
-    router.push("/auth/create-account/agreement");
+    router.push("/auth/create-account/5.agreement");
   };
 
   return (

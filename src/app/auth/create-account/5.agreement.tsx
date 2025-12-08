@@ -24,7 +24,7 @@ export default function Agreement() {
     // const values = formData as unknown as Partial<SignInValues>;
     // const { email, password, username, firstName, lastName } = values;
     // resetFormData();
-    router.push("/auth/create-account/otp");
+    router.push("/auth/create-account/6.otp");
 
     // mutate(
     //   { email, password, username, firstName, lastName },

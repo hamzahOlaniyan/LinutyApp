@@ -1,6 +1,6 @@
 import { Font } from "@/assets/fonts/FontFamily";
 import { useColorScheme } from "@/hooks/use-color-scheme";
-import { useUserQuery } from "@/hooks/useUserQuery";
+import { useMeQuery } from "@/hooks/useMeQuery";
 import { useAuthStore } from "@/store/useAuthStore";
 import {
   DarkTheme,
@@ -12,7 +12,10 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
 import "../../global.css";
+
+// ---- RootLayout.tsx ----
 
 export const unstable_settings = {
   anchor: "auth"
@@ -23,16 +26,43 @@ SplashScreen.preventAutoHideAsync();
 export const queryClient = new QueryClient();
 
 function AuthLoader({ children }: { children: React.ReactNode }) {
-  useUserQuery();
+  const { session, me, setSession } = useAuthStore();
+
+  // 1. Load session ONCE after Zustand hydration
+  const { initialized } = useAuthStore();
+
+  useEffect(() => {
+    if (initialized && !session) {
+      console.log("🚀 Loading /auth/session");
+      setSession();
+    }
+  }, [initialized, session, setSession]);
+
+  // 2. Load /profile/me once session exists
+  const { isLoading: isMeLoading } = useMeQuery();
+
+  // 3. Block UI until all auth info is ready
+  const isReady =
+    initialized &&
+    !!session &&
+    me !== null && // must have real profile
+    !isMeLoading;
+
+  if (!isReady)
+    return (
+      <View className="flex-1 items-center justify-center bg-teal-800">
+        <ActivityIndicator size={"large"} color={"yellow"} />
+      </View>
+    ); // or a custom splash
+
   return <>{children}</>;
 }
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const { initialized, session, user } = useAuthStore();
+  const { session, user, me, hasCompletedOnboarding } = useAuthStore();
 
-  const isLoggedIn = !!session && !!user;
-
+  // Fonts
   const [loaded] = useFonts({
     [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
     [Font.ExtraBold]: require("@/assets/fonts/TikTokSans-ExtraBold.ttf"),
@@ -43,43 +73,59 @@ export default function RootLayout() {
     [Font.Light]: require("@/assets/fonts/TikTokSans-Light.ttf")
   });
 
-  useEffect(() => {
-    if (initialized) {
-      // setSession(); // call once store is hydrated
-    }
-  }, [initialized]);
-
+  // Hide splash when fonts + Zustand hydration complete
+  const { initialized } = useAuthStore();
   useEffect(() => {
     if (loaded && initialized) {
       SplashScreen.hideAsync();
     }
   }, [loaded, initialized]);
 
-  if (!loaded || !initialized) {
-    return null;
-  }
+  if (!loaded || !initialized) return null;
+
+  const isLoggedIn = !!session && !!user;
+  const hasCompletedRegistration = !!me?.isProfileComplete;
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <QueryClientProvider client={queryClient}>
         <AuthLoader>
           <StatusBar style="auto" />
+
           <Stack>
-            {/* 👇 Protected tabs */}
-            <Stack.Protected guard={isLoggedIn}>
+            {/* 1️⃣ Main app – logged in + onboarding done + registration done */}
+            <Stack.Protected
+              guard={
+                isLoggedIn && hasCompletedOnboarding && hasCompletedRegistration
+              }
+            >
               <Stack.Screen
                 name="(protected)/(tabs)"
                 options={{ headerShown: false, animation: "none" }}
               />
             </Stack.Protected>
 
-            {/* 👇 Public auth segment (sign-in, create-account live under this) */}
-            <Stack.Protected guard={!isLoggedIn}>
-              <Stack.Screen name="auth" options={{ headerShown: false }} />
+            {/* 2️⃣ Registration part 2 – logged in + onboarding done + registration NOT done */}
+            <Stack.Protected
+              guard={
+                isLoggedIn &&
+                hasCompletedOnboarding &&
+                !hasCompletedRegistration
+              }
+            >
               <Stack.Screen
-                name="onboarding-flow"
+                name="onboarding-flow" // your actual route here
                 options={{ headerShown: false }}
               />
+            </Stack.Protected>
+
+            <Stack.Protected guard={!hasCompletedOnboarding}>
+              <Stack.Screen name="app-start" options={{ headerShown: false }} />
+            </Stack.Protected>
+
+            {/* 4️⃣ Public auth – not logged in at all */}
+            <Stack.Protected guard={!isLoggedIn}>
+              <Stack.Screen name="auth" options={{ headerShown: false }} />
             </Stack.Protected>
           </Stack>
         </AuthLoader>

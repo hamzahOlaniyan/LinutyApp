@@ -8,7 +8,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SignInField } from "../sign-in";
 
-export default function Name() {
+export default function Username() {
   const { formData } = useFormStore();
 
   console.log(formData);
@@ -33,7 +33,7 @@ export default function Name() {
   ];
 
   const handleEmailSubmit = async () => {
-    router.push("/auth/create-account/username");
+    router.push("/auth/create-account/3.username");
   };
 
   return (

@@ -15,7 +15,7 @@ export type OnboardingField = Omit<Field, "name"> & {
   name: keyof OnboardingFlowValues;
 };
 
-export default function OTP() {
+export default function DateOfBirth() {
   // const router = useRouter();
 
   const DateOfBirth: OnboardingField[] = [

@@ -3,7 +3,7 @@ import { api } from "@/lib/api";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { getItem, removeItem, setItem } from "./secureStore";
-import { AuthStore } from "./types";
+import { AuthStore, SessionResponse } from "./types";
 
 export const useAuthStore = create<AuthStore>()(
   persist(
@@ -11,23 +11,29 @@ export const useAuthStore = create<AuthStore>()(
       initialized: false,
       hasCompletedOnboarding: false,
       user: null,
+      me:null,
       session: null,
       hasCompletedRegistration: false,
 
-      setUser: async (user) => set({ user }),
-
-      setSession: async (session) => {
+      
+      
+      setSession: async () => {
         try {
-          // const res = await api.get<SessionResponse>("auth/session");
-
+          const res = await api.get<SessionResponse>("auth/session");
           set({
-            session: session,
-            user:session?.user,
+            session: res.data.session,
+            user: res.data.session?.user ?? null,
           });
+          
         } catch (err) {
           console.log("failed to get session", err);
         }
       },
+      
+      setMe: (me) => set({ me }),
+      
+      setUser: async (user) => set({ user }),
+
       signOut: async () => {
         try {
           await api.post("auth/logout");

@@ -33,8 +33,6 @@ export type SignInField = Omit<Field, "name"> & {
 
 export default function Signin() {
   const { formData, resetFormData } = useFormStore();
-  const setSession = useAuthStore(state => state.setSession);
-  const setUser = useAuthStore(state => state.setUser);
 
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | React.ReactNode>(
@@ -82,8 +80,10 @@ export default function Signin() {
       { email, password },
       {
         onSuccess: ({ data }) => {
-          setSession(data.session);
-          setUser(data.user);
+          useAuthStore.setState({
+            session: data.session,
+            user: data.user // 👈 set this!
+          });
           setToastDuration(DEFAULT_TOAST_DURATION);
           showToast("Logged in successfully ✅");
           resetFormData();
