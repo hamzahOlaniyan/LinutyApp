@@ -21,9 +21,11 @@ export const appColors = {
   white: "#fff",
   black: "#000000",
   placeholder: "#767f86",
-  error: "#ff3232",
+  error: "#b22323",
   inputInactive: "#aebbc8",
   inputActive: "#677179",
+  icon: "#677179",
+
   buttonOutline: "#006891",
   text: "#262626",
   bordersLight: "#e8edeb",

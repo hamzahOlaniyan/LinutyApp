@@ -12,7 +12,7 @@ export type ApiError = {
     data?: unknown;
     status?: number;
   };
-  message?: string;
+  message?: string|null;
 };
 
 type MutationMethod = "post" | "patch" | "delete";
