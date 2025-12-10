@@ -1,13 +1,7 @@
 import { Font } from "@/assets/fonts/FontFamily";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { useMeQuery } from "@/hooks/useMeQuery";
+import { queryClient } from "@/lib/queryClient";
 import { useAuthStore } from "@/store/useAuthStore";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider
-} from "@react-navigation/native";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -17,50 +11,41 @@ import "../../global.css";
 
 // ---- RootLayout.tsx ----
 
+export const hasCompletedRegistration = false;
+
 export const unstable_settings = {
   anchor: "auth"
 };
 
 SplashScreen.preventAutoHideAsync();
 
-export const queryClient = new QueryClient();
-
 function AuthLoader({ children }: { children: React.ReactNode }) {
-  const { session, me, setSession } = useAuthStore();
-
-  // 1. Load session ONCE after Zustand hydration
-  const { initialized } = useAuthStore();
+  const { initialized, setSession } = useAuthStore();
+  const [checked, setChecked] = React.useState(false);
 
   useEffect(() => {
-    if (initialized && !session) {
-      console.log("🚀 Loading /auth/session");
-      setSession();
-    }
-  }, [initialized, session, setSession]);
+    if (!initialized || checked) return;
 
-  // 2. Load /profile/me once session exists
-  const { isLoading: isMeLoading } = useMeQuery();
+    (async () => {
+      console.log("🔵 Restoring session on app load...");
+      await setSession();
+      setChecked(true);
+    })();
+  }, [initialized, checked]);
 
-  // 3. Block UI until all auth info is ready
-  const isReady =
-    initialized &&
-    !!session &&
-    me !== null && // must have real profile
-    !isMeLoading;
-
-  if (!isReady)
+  if (!checked) {
     return (
-      <View className="flex-1 items-center justify-center bg-teal-800">
-        <ActivityIndicator size={"large"} color={"yellow"} />
+      <View className="flex-1 items-center justify-center bg-black">
+        <ActivityIndicator color="white" size="large" />
       </View>
-    ); // or a custom splash
+    );
+  }
 
   return <>{children}</>;
 }
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const { session, user, me, hasCompletedOnboarding } = useAuthStore();
+  const { user } = useAuthStore();
 
   // Fonts
   const [loaded] = useFonts({
@@ -83,53 +68,43 @@ export default function RootLayout() {
 
   if (!loaded || !initialized) return null;
 
-  const isLoggedIn = !!session && !!user;
-  const hasCompletedRegistration = !!me?.isProfileComplete;
+  const isLoggedIn = !!user;
+  // const hasCompletedRegistration = !!me?.isProfileComplete;
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <QueryClientProvider client={queryClient}>
-        <AuthLoader>
-          <StatusBar style="auto" />
+    // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <QueryClientProvider client={queryClient}>
+      <AuthLoader>
+        <StatusBar style="auto" />
 
-          <Stack>
-            {/* 1️⃣ Main app – logged in + onboarding done + registration done */}
-            <Stack.Protected
-              guard={
-                isLoggedIn && hasCompletedOnboarding && hasCompletedRegistration
-              }
-            >
-              <Stack.Screen
-                name="(protected)/(tabs)"
-                options={{ headerShown: false, animation: "none" }}
-              />
-            </Stack.Protected>
+        <Stack>
+          <Stack.Protected guard={isLoggedIn && hasCompletedRegistration}>
+            <Stack.Screen
+              name="(protected)/(tabs)"
+              options={{ headerShown: false, animation: "none" }}
+            />
+          </Stack.Protected>
 
-            {/* 2️⃣ Registration part 2 – logged in + onboarding done + registration NOT done */}
-            <Stack.Protected
-              guard={
-                isLoggedIn &&
-                hasCompletedOnboarding &&
-                !hasCompletedRegistration
-              }
-            >
-              <Stack.Screen
-                name="onboarding-flow" // your actual route here
-                options={{ headerShown: false }}
-              />
-            </Stack.Protected>
+          <Stack.Protected guard={isLoggedIn && !hasCompletedRegistration}>
+            <Stack.Screen
+              name="onboarding-flow"
+              options={{ headerShown: false }}
+            />
+          </Stack.Protected>
 
-            <Stack.Protected guard={!hasCompletedOnboarding}>
-              <Stack.Screen name="app-start" options={{ headerShown: false }} />
-            </Stack.Protected>
+          <Stack.Protected guard={!isLoggedIn}>
+            {/* Just point to the auth stack */}
+            <Stack.Screen name="auth" options={{ headerShown: false }} />
+          </Stack.Protected>
 
-            {/* 4️⃣ Public auth – not logged in at all */}
-            <Stack.Protected guard={!isLoggedIn}>
-              <Stack.Screen name="auth" options={{ headerShown: false }} />
-            </Stack.Protected>
-          </Stack>
-        </AuthLoader>
-      </QueryClientProvider>
-    </ThemeProvider>
+          {/* <Stack.Protected guard={!hasCompletedOnboarding}>
+            <Stack.Screen
+              name="onboarding/index"
+              options={{ headerShown: false }}
+            />
+          </Stack.Protected> */}
+        </Stack>
+      </AuthLoader>
+    </QueryClientProvider>
   );
 }

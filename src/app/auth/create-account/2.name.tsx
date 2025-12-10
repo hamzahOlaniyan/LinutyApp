@@ -2,17 +2,12 @@ import FormInput from "@/components/ui/FormInput";
 import StepContainer from "@/components/ui/StepContainer";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
-import { useFormStore } from "@/store/useFormStore";
 import { useRouter } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SignInField } from "../sign-in";
 
 export default function Username() {
-  const { formData } = useFormStore();
-
-  console.log(formData);
-
   const router = useRouter();
 
   const LoginForm: SignInField[] = [

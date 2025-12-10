@@ -1,11 +1,24 @@
 import { FormDataType } from "@/components/ui/FormInput/types";
 import { Profile } from "@/lib/supabase/supabaseTypes";
-import type { Session, User } from "@supabase/supabase-js";
+import type { User } from "@supabase/supabase-js";
 
-export type OnbaordingStatusType = "onboarding" | "dashboard";
+
+export type Session = {
+  user: User;
+  access_token: string;
+  refresh_token: string;
+  expires_in: number;
+  token_type: string;
+};
 
 export type SessionResponse = {
   session: Session | null;
+  user:User,
+  accessToken: string;
+  refreshToken: string;
+  expires_in:number
+  token_type: string
+
 };
 
 export type UserData = {
@@ -14,28 +27,49 @@ export type UserData = {
   data: User;
 };
 
+export type fillter = {
+  user: User;
+  access_token: string;
+  refresh_token: string;
+
+};
+
+
+
 export type FormType = {
   formData: { [key: string]: string };
   errors: { [key: string]: string } | undefined;
 };
 
+export type AuthPayload  =  {
+  session: Session | null;
+  user: User | null;
+  me?: Profile | null;            
+};
+
+export type LoginResponse = {
+  user: User,
+  accessToken: string;
+  refreshToken: string;
+};
+
 export type AuthStore = {
   initialized: boolean;
+  user: User | null;
+  me: Profile | null;
+  session: Session | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   hasCompletedOnboarding: boolean;
-  hasCompletedRegistration: boolean;
 
-  user: User | null; // from supabase-js
-  session: Session | null; // 👈 not string[]
-  me: Profile | null;      
-
-  //Actions
-  setUser: (user: User | null) => void;
-  setSession: () => Promise<void>; // 👈 it’s async
+  setAuthFromLogin: (payload: LoginResponse) => void;
+  setSession: () => Promise<void>;
   setMe: (me: Profile | null) => void;
+  // setUser: (user: User | null) => void;
   signOut: () => Promise<void>;
   completeOnboarding: () => void;
   resetOnboarding: () => void;
-  setOnboardingStatus: () => void;
+
 };
 
 export type FormStore = {
@@ -43,7 +77,9 @@ export type FormStore = {
   errors: FormDataType;
   setFormData: (action: Partial<FormDataType>) => void;
   setFormErrors: (action: Partial<FormDataType>) => void;
-  resetFormData: () => void;
+  resetFormData: (fields: Partial<FormDataType>) => void;
+  resetForm: () => void;
+
 };
 
 export type Workouts = {
