@@ -10,24 +10,29 @@ export const api = axios.create({
   withCredentials: true,
 });
 
+// --------------------------------------------------
+// REQUEST INTERCEPTOR — ALWAYS use accessToken
+// --------------------------------------------------
 api.interceptors.request.use((config) => {
-  const { session } = useAuthStore.getState(); // Zustand: safe to use outside React
+  const { accessToken } = useAuthStore.getState();
 
-  if (session?.access_token) {
+  if (accessToken) {
     config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${session.access_token}`;
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
 
   return config;
 });
 
+// --------------------------------------------------
+// RESPONSE INTERCEPTOR — Better error output
+// --------------------------------------------------
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log("API ERROR ===>", JSON.stringify(error, null, 2));
-    const customError =
-      error.response?.data ?? error.message ?? "Unknown error";
-
-    return Promise.reject(customError);
-  },
+    // console.log("API ERROR ===>", JSON.stringify(error, null, 2));
+    return Promise.reject(
+      error.response?.data ?? error.message ?? "Unknown error"
+    );
+  }
 );

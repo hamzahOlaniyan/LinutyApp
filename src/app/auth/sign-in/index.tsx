@@ -1,3 +1,4 @@
+import { hasCompletedRegistration } from "@/app/_layout";
 import { LoginParams } from "@/components/types";
 import AppText from "@/components/ui/AppText";
 import Button from "@/components/ui/Button";
@@ -8,6 +9,9 @@ import ToastModal from "@/components/ui/ToastModal";
 import { appColors } from "@/constant/colors";
 import { DEFAULT_TOAST_DURATION, wp } from "@/constant/common";
 import { useApiMutation } from "@/hooks/useApi";
+import { USER_PROFILE_KEY } from "@/hooks/useMeQuery";
+import { queryClient } from "@/lib/queryClient";
+import { LoginResponse } from "@/store/types";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useFormStore } from "@/store/useFormStore";
 import { AuthResponse } from "@supabase/supabase-js";
@@ -33,6 +37,7 @@ export type SignInField = Omit<Field, "name"> & {
 
 export default function Signin() {
   const { formData, resetFormData } = useFormStore();
+  const { setAuthFromLogin } = useAuthStore();
 
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | React.ReactNode>(
@@ -45,7 +50,7 @@ export default function Signin() {
     setToastVisible(true);
   };
 
-  const { mutate, isLoading } = useApiMutation<AuthResponse, LoginParams>(
+  const { mutate, isLoading } = useApiMutation<LoginResponse, LoginParams>(
     "post",
     "/auth/login"
   );
@@ -79,14 +84,24 @@ export default function Signin() {
     mutate(
       { email, password },
       {
-        onSuccess: ({ data }) => {
-          useAuthStore.setState({
-            session: data.session,
-            user: data.user // 👈 set this!
-          });
+        onSuccess: async data => {
+          resetFormData({ password: "" });
+          setAuthFromLogin(data);
+
+          // Make sure we have fresh profile
+          await queryClient.invalidateQueries({ queryKey: [USER_PROFILE_KEY] });
+
+          // const { me } = useAuthStore.getState();
+          // const hasCompletedRegistration = !!me?.isProfileComplete;
+
+          const nextRoute = hasCompletedRegistration
+            ? "/(protected)/(tabs)"
+            : "/onboarding-flow";
+
+          router.replace(nextRoute);
           setToastDuration(DEFAULT_TOAST_DURATION);
           showToast("Logged in successfully ✅");
-          resetFormData();
+          router.replace("/(protected)/(tabs)");
         },
         onError: err => {
           if (err.message?.includes("not verified")) {

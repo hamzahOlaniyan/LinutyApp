@@ -1,7 +1,7 @@
 import { Profile } from "@/lib/supabase/supabaseTypes";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect } from "react";
-import { ApiError, useApiQuery } from "./useApi";
+import { useApiQuery } from "./useApi";
 
 export const USER_PROFILE_KEY = "/profile/me";
 
@@ -12,31 +12,37 @@ export type ApiResponse<T> = {
 };
 
 export const useMeQuery = () => {
-  const { session, me, setMe } = useAuthStore();
+  const { accessToken, me, setMe } = useAuthStore();
 
-  const { data, isError, isLoading } = useApiQuery<Profile>(
-    USER_PROFILE_KEY,         // "/profile/me"
+  const { data, isError, isLoading } = useApiQuery<ApiResponse<Profile>>(
+    USER_PROFILE_KEY, // "/profile/me"
     undefined,
     {
-      enabled: !!session?.access_token,
-      staleTime: 1000 * 60 * 5,
-      retry: (failureCount: number, error: ApiError) => {
-        if (error?.response?.status === 401) return false;
-        return failureCount < 2;
-      },
-    },
+      enabled: !!accessToken,
+      staleTime: 0,                  // never stale → always re-fetch
+      refetchOnMount: "always",
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+
+      // staleTime: 1000 * 60 * 5,
+      retry: (count, error) => error?.response?.status !== 401 && count < 2
+    }
   );
 
   useEffect(() => {
-    if (data && JSON.stringify(data) !== JSON.stringify(me)) {
-      setMe(data);            // 👈 data is Me
+    // data?.data is the actual profile object
+    if (data?.data && JSON.stringify(data.data) !== JSON.stringify(me)) {
+      // console.log("🔄 Updating Me (profile):", data.data);
+      setMe(data.data);
     }
 
     if (isError && me) {
+      // console.log("Profile/me error → clearing me");
       setMe(null);
     }
   }, [data, isError, me, setMe]);
 
   return { isLoading };
 };
+
 
