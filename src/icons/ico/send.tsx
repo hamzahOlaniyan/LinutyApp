@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-export const HomeSolid = ({ color = "#1f1f1f", size = 24, ...props }) => {
+export const send = ({ color = "#1f1f1f", size = 24, ...props }) => {
   return (
     <Svg
       viewBox="0 -960 960 960"
@@ -10,7 +10,7 @@ export const HomeSolid = ({ color = "#1f1f1f", size = 24, ...props }) => {
       {...props}
     >
       <Path
-        d="M151.87-111.87v-492.2L480-850.28l328.13 246.13v492.28H561.91v-290.04H398.09v290.04H151.87Z"
+        d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"
         fill={color}
       />
     </Svg>

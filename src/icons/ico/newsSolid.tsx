@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-export const NewsIconSolid = ({ color = "#1f1f1f", size = 24, ...props }) => {
+export const newsSolid = ({ color = "#1f1f1f", size = 24, ...props }) => {
   return (
     <Svg
       viewBox="0 -960 960 960"

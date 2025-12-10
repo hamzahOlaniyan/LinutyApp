@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-export const MenuIcon = ({ color = "#1f1f1f", size = 24, ...props }) => {
+export const homeSolid = ({ color = "#1f1f1f", size = 24, ...props }) => {
   return (
     <Svg
       viewBox="0 -960 960 960"
@@ -10,7 +10,7 @@ export const MenuIcon = ({ color = "#1f1f1f", size = 24, ...props }) => {
       {...props}
     >
       <Path
-        d="M111.87-228.28v-91h736.26v91H111.87Zm0-206.22v-91h736.26v91H111.87Zm0-206.22v-91h736.26v91H111.87Z"
+        d="M151.87-111.87v-492.2L480-850.28l328.13 246.13v492.28H561.91v-290.04H398.09v290.04H151.87Z"
         fill={color}
       />
     </Svg>

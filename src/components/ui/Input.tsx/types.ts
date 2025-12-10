@@ -58,6 +58,11 @@ export type InputFieldTypes = {
   onSuffixChange?: (suffix: MetricItem) => void;
   suffixFieldName?: string;
   mode?: InputMode;
+  isMultipleSelect?: boolean;
+  selectedValues?: string[];
+  minDate?: Date;
+  maxDate?: Date;
+  onChangeSelectedValues?: (values: string[]) => void;
 };
 
 export type AppInputProps = InputFieldTypes &
@@ -78,4 +83,6 @@ export type ModalProps = {
   title?: string;
   options: SelectOption[];
   onSelect: (item: SelectOption) => void;
+  isMultipleSelect?: boolean;
+  selectedValues?: string[];
 };

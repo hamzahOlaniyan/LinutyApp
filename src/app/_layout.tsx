@@ -45,7 +45,7 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 }
 
 export default function RootLayout() {
-  const { user } = useAuthStore();
+  // const { user, session } = useAuthStore();
 
   // Fonts
   const [loaded] = useFonts({
@@ -68,7 +68,7 @@ export default function RootLayout() {
 
   if (!loaded || !initialized) return null;
 
-  const isLoggedIn = !!user;
+  // const isLoggedIn = !!user && !!session;
   // const hasCompletedRegistration = !!me?.isProfileComplete;
 
   return (
@@ -76,9 +76,11 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <AuthLoader>
         <StatusBar style="auto" />
+        <Stack screenOptions={{ headerShown: false }} />
+        {/* <Stack screenOptions={{ headerShown: false }} /> */}
 
-        <Stack>
-          <Stack.Protected guard={isLoggedIn && hasCompletedRegistration}>
+        {/* <Stack screenOptions={{ headerShown: false }}> */}
+        {/* <Stack.Protected guard={isLoggedIn && hasCompletedRegistration}>
             <Stack.Screen
               name="(protected)/(tabs)"
               options={{ headerShown: false, animation: "none" }}
@@ -90,20 +92,19 @@ export default function RootLayout() {
               name="onboarding-flow"
               options={{ headerShown: false }}
             />
-          </Stack.Protected>
+          </Stack.Protected> */}
 
-          <Stack.Protected guard={!isLoggedIn}>
-            {/* Just point to the auth stack */}
+        {/* <Stack.Protected guard={!isLoggedIn}>
             <Stack.Screen name="auth" options={{ headerShown: false }} />
-          </Stack.Protected>
+          </Stack.Protected> */}
 
-          {/* <Stack.Protected guard={!hasCompletedOnboarding}>
+        {/* <Stack.Protected guard={!hasCompletedOnboarding}>
             <Stack.Screen
               name="onboarding/index"
               options={{ headerShown: false }}
             />
           </Stack.Protected> */}
-        </Stack>
+        {/* </Stack> */}
       </AuthLoader>
     </QueryClientProvider>
   );

@@ -1,8 +1,9 @@
 import Button from "@/components/ui/Button";
+import ScreenWapper from "@/components/ui/ScreenWapper";
 import { useAuthStore } from "@/store/useAuthStore";
 import { router } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 
 export default function HomeFeed() {
   const { signOut } = useAuthStore();
@@ -13,13 +14,13 @@ export default function HomeFeed() {
   }
 
   return (
-    <View className="flex-1 justify-center bg-yellow-500">
+    <ScreenWapper>
       <Text className="text-xxl">HomeFeed</Text>
       <Button
         variant="outline"
         text="sign out"
         onPress={() => handleLogout()}
       />
-    </View>
+    </ScreenWapper>
   );
 }

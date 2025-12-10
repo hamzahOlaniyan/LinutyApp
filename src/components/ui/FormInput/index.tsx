@@ -20,10 +20,15 @@ import { FieldType, InputFieldProps } from "./types";
  * - Validation rules:
  *   - Required fields:
  *     - If `field.required` is true and `value` is empty:
- *       - `mode === "select"` → `"Please select an option"`
- *       - `mode === "date"`   → `"Please select a date"`
- *       - otherwise           → `"<Pretty Field Name> is required"`
- *         (using `formatLabel(field.name)`)
+ *       - `mode === "select"` and `isMultipleSelect === true`
+ *         → `"Please select at least one option"`
+ *       - `mode === "select"` (single)
+ *         → `"Please select an option"`
+ *       - `mode === "date"`
+ *         → `"Please select a date"`
+ *       - otherwise
+ *         → `"<Pretty Field Name> is required"`
+ *           (using `formatLabel(field.name)`)
  *   - Email format:
  *     - If `field.type === "email"`, validates with `emailRegex`
  *   - Phone number length:
@@ -56,7 +61,8 @@ export default function FormInput({
   fields,
   submitBtnLabel = "Continue",
   onSubmit,
-  loading
+  loading,
+  footerContent
 }: InputFieldProps) {
   const { setFormData, setFormErrors, errors, formData } = useFormStore();
 
@@ -68,34 +74,50 @@ export default function FormInput({
       const fieldName = field.name;
       const required = field.required;
       const value = formData[fieldName];
-
       const semanticType: FieldType = field.type ?? "text";
 
       const isEmail = semanticType === "email";
       const isPhone = semanticType === "phone";
       const isSelectMode = field.mode === "select";
       const isDateMode = field.mode === "date";
+      const isMultipleSelect = field.isMultipleSelect;
 
-      // Required validation
-      if (required && !value) {
-        if (isSelectMode) {
-          newErrors[fieldName] = "Please select an option";
-        } else if (isDateMode) {
-          newErrors[fieldName] = "Please select a date";
-        } else {
-          newErrors[fieldName] = `${formatLabel(fieldName)} is required`;
+      // --- Required validation ---
+      if (required) {
+        if (isSelectMode && isMultipleSelect) {
+          const selectedValues = (value as string[] | undefined) ?? [];
+          if (!selectedValues.length) {
+            newErrors[fieldName] = "Please select at least one option";
+            isValid = false;
+          }
+        } else if (!value) {
+          if (isSelectMode) {
+            newErrors[fieldName] = "Please select an option";
+          } else if (isDateMode) {
+            newErrors[fieldName] = "Please select a date";
+          } else {
+            newErrors[fieldName] = `${formatLabel(fieldName)} is required`;
+          }
+          isValid = false;
         }
-        isValid = false;
       }
 
-      // Email format
-      if (value && isEmail && !emailRegex.test(value)) {
-        newErrors[fieldName] = "Please enter a valid email";
-        isValid = false;
+      // --- Email format (only if value is string & not multi-select) ---
+      if (value && !isMultipleSelect && isEmail && typeof value === "string") {
+        if (!emailRegex.test(value)) {
+          newErrors[fieldName] = "Please enter a valid email";
+          isValid = false;
+        }
       }
 
-      // Phone length (you can adjust limits if needed)
-      if (value && isPhone && (value.length < 9 || value.length > 14)) {
+      // --- Phone length (only if string & not multi-select) ---
+      if (
+        value &&
+        !isMultipleSelect &&
+        isPhone &&
+        typeof value === "string" &&
+        (value.length < 9 || value.length > 14)
+      ) {
         newErrors[fieldName] = "Please enter a valid phone number";
         isValid = false;
       }
@@ -104,7 +126,7 @@ export default function FormInput({
     setFormErrors(newErrors);
 
     if (isValid) {
-      if (onSubmit) onSubmit();
+      onSubmit?.();
     }
   };
 
@@ -125,8 +147,21 @@ export default function FormInput({
           selectOptionsTitle,
           multiline,
           minHeight,
-          suffixFieldName
+          suffixFieldName,
+          isMultipleSelect,
+          minDate,
+          maxDate
         } = field;
+
+        const rawValue = formData[name];
+
+        const selectedValues: string[] =
+          isMultipleSelect && Array.isArray(rawValue) ? rawValue : [];
+
+        const stringValue =
+          !isMultipleSelect && typeof rawValue === "string" ? rawValue : "";
+
+        const fieldError = errors[name];
 
         return (
           <View className="mb-4" key={field.name}>
@@ -137,15 +172,19 @@ export default function FormInput({
               leftIcon={leftIcon}
               rightIcon={rightIcon}
               disabled={disabled}
-              errorMessage={errors[name]}
+              errorMessage={
+                typeof fieldError === "string" ? fieldError : undefined
+              }
               selectOptions={selectOptions}
               suffix={suffix}
-              value={formData[name] || ""}
+              value={stringValue}
               onChangeText={text => {
-                setFormData({ [name]: text });
+                if (!isMultipleSelect) {
+                  setFormData({ [name]: text });
 
-                if (errors[name]) {
-                  setFormErrors({ [name]: undefined });
+                  if (errors[name]) {
+                    setFormErrors({ [name]: undefined });
+                  }
                 }
               }}
               placeholder={placeholder}
@@ -159,10 +198,24 @@ export default function FormInput({
                   [suffixFieldName]: metric.symbol
                 });
               }}
+              isMultipleSelect={isMultipleSelect}
+              selectedValues={selectedValues}
+              minDate={minDate}
+              maxDate={maxDate}
+              // onChangeSelectedValues={values => {
+              //   if (isMultipleSelect) {
+              //     setFormData({ [name]: values });
+
+              //     if (errors[name]) {
+              //       setFormErrors({ [name]: undefined });
+              //     }
+              //   }
+              // }}
             />
           </View>
         );
       })}
+      {footerContent && <View className="pt-4">{footerContent}</View>}
       <GradientButton
         text={submitBtnLabel}
         onPress={handleSubmit}

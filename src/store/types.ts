@@ -77,6 +77,7 @@ export type FormStore = {
   errors: FormDataType;
   setFormData: (action: Partial<FormDataType>) => void;
   setFormErrors: (action: Partial<FormDataType>) => void;
+  setFormDataErrors:(action:Partial<FormDataType> )=>void
   resetFormData: (fields: Partial<FormDataType>) => void;
   resetForm: () => void;
 

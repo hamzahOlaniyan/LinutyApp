@@ -42,7 +42,7 @@ const formatNumberForDecimals = (raw: string, decimals: number): string => {
  * based on `hasError` and `disabled` variants.
  */
 export const inputWrapper = cva(
-  "w-full flex-row items-center rounded-sm bg-neutral overflow-hidden px-4",
+  "w-full flex-row items-center rounded-sm overflow-hidden px-5",
   {
     variants: {
       hasError: {
@@ -154,8 +154,6 @@ const getModalOptions = (
  */
 export const AppInput: React.FC<AppInputProps> = ({
   label,
-  // leftIcon,
-  // rightIcon,
   suffix,
   selectOptions,
   onSelect,
@@ -282,54 +280,25 @@ export const AppInput: React.FC<AppInputProps> = ({
         style={{
           height: hp(7),
           borderWidth: 0.9,
-          marginBottom: 3,
           borderColor: isFocused
             ? appColors.inputActive
             : hasError
               ? appColors.error
               : appColors.inputInactive,
-          borderRadius: 15
+          borderRadius: 15,
+          paddingHorizontal: 8,
+          alignItems: "center",
+          alignContent: "center"
         }}
         className={inputWrapper({ hasError, disabled, multiline })}
       >
-        {/* {showLeftIcon && (
-          <View className="mr-3">
-            <Icon
-              name={
-                isPasswordMode
-                  ? "password"
-                  : isEmailMode
-                    ? "email"
-                    : (leftIcon as string)
-              }
-            />
-          </View>
-        )} */}
-
-        {/* {isPhone && (
-          <View>
-            <TouchableOpacity
-              onPress={() => setVisible(true)}
-              className="border-border mr-2 flex-row items-center gap-1 border-r pr-1"
-            >
-              <Text className="mr-1 text-base">{country.flag}</Text>
-              <AppText className="text-md mr-1 text-neutral-700">
-                ({country.dialCode})
-              </AppText>
-              <View className="relative top-1">
-                <Icon name="arrow_down" />
-              </View>
-            </TouchableOpacity>
-          </View>
-        )} */}
-
         {isDateMode && (
           <View className="w-full flex-1 flex-row items-center justify-between">
             <Pressable
               onPress={showDatepicker}
               className="absolute h-full w-full flex-1 flex-row items-center justify-between"
             >
-              <AppText className="text-md flex-1 font-sans text-black">
+              <AppText className="text-md flex-1 font-Medium text-black">
                 {date ? moment(date).format("D MMMM YYYY") : placeholder}
               </AppText>
               {date && <AppText>{`(${age} years old)`}</AppText>}
@@ -341,7 +310,10 @@ export const AppInput: React.FC<AppInputProps> = ({
           <TextInput
             testID="app-input-text"
             style={[
-              { fontSize: hp(1.9), fontFamily: Font.Medium },
+              {
+                fontSize: hp(1.9),
+                fontFamily: Font.Medium
+              },
               multiline ? { minHeight: inputHeight } : undefined
             ]}
             className="m-0  h-full flex-1 p-0"
@@ -422,37 +394,17 @@ export const AppInput: React.FC<AppInputProps> = ({
           </TouchableOpacity>
         )}
 
-        {/* {rightIcon && (
-          <View className="ml-2">
-            <Icon name={rightIcon as string} />
-          </View>
-        )} */}
-
-        {isMetric && suffix && selectedSuffix && (
-          <View className="absolute right-0 h-full justify-center">
-            <TouchableOpacity
-              onPress={() => setVisible(true)}
-              className="flex-row items-center gap-2"
-            >
-              <AppText className="text-md text-neutral-700">
-                {selectedSuffix.symbol}
-              </AppText>
-              <View className="relative top-1">
-                {/* <Icon name="arrow_down" /> */}
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
-
         {isSelectMode && (
           <TouchableOpacity
             onPress={() => setVisible(true)}
-            className="absolute left-0 right-0 top-0 h-full flex-row items-center justify-between pl-10"
+            className="absolute left-0 right-0 top-0 h-full flex-row items-center justify-between px-5"
           >
-            <AppText>{formatLabel(value) || placeholder}</AppText>
+            <AppText style={{ fontSize: hp(1.9), fontFamily: Font.Medium }}>
+              {formatLabel(value) || placeholder}
+            </AppText>
 
-            <View className="relative top-1">
-              {/* <Icon name="arrow_down" /> */}
+            <View className="relative">
+              <Icon name="filter" />
             </View>
           </TouchableOpacity>
         )}

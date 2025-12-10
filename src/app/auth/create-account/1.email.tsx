@@ -43,7 +43,7 @@ export default function Email() {
       { email },
       {
         onSuccess: async () => {
-          router.push("/auth/create-account/name");
+          router.push("/auth/create-account/2.name");
         },
         onError: err => {
           setNotice(err.message || null);
