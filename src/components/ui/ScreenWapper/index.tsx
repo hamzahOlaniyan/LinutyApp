@@ -1,3 +1,4 @@
+import { appColors } from "@/constant/colors";
 import React from "react";
 import {
   SafeAreaView,
@@ -13,8 +14,8 @@ export default function ScreenWapper({
 
   return (
     <SafeAreaView
-      style={{ marginBottom: bottom }}
-      className="flex-1 justify-center bg-pink-400"
+      style={{ marginBottom: bottom, backgroundColor: appColors.white }}
+      className="flex-1"
     >
       {children}
     </SafeAreaView>

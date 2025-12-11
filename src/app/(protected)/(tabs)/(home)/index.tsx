@@ -1,26 +1,31 @@
-import Button from "@/components/ui/Button";
-import ScreenWapper from "@/components/ui/ScreenWapper";
-import { useAuthStore } from "@/store/useAuthStore";
-import { router } from "expo-router";
+import AppText from "@/components/ui/AppText";
+import { appColors } from "@/constant/colors";
+import { hp } from "@/constant/common";
 import React from "react";
-import { Text } from "react-native";
+import { FlatList, View } from "react-native";
 
 export default function HomeFeed() {
-  const { signOut } = useAuthStore();
+  // async function handleLogout() {
+  //   await signOut();
+  //   router.replace("/auth"); // or "/"
+  // }
 
-  async function handleLogout() {
-    await signOut();
-    router.replace("/auth"); // or "/"
-  }
+  const mockData = Array.from({ length: 10 }, () => ({
+    title: "post"
+  }));
 
   return (
-    <ScreenWapper>
-      <Text className="text-xxl">HomeFeed</Text>
-      <Button
-        variant="outline"
-        text="sign out"
-        onPress={() => handleLogout()}
-      />
-    </ScreenWapper>
+    <FlatList
+      data={mockData}
+      renderItem={({ item }) => (
+        <View style={{ height: hp(10), backgroundColor: appColors.white }}>
+          <AppText>{item.title}</AppText>
+        </View>
+      )}
+      contentContainerStyle={{
+        backgroundColor: appColors.background,
+        rowGap: 12
+      }}
+    />
   );
 }

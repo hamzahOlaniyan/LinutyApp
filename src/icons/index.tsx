@@ -9,6 +9,8 @@ import { homeSolid } from "./ico/homeSolid";
 import { logout } from "./ico/logout";
 import { news } from "./ico/news";
 import { newsSolid } from "./ico/newsSolid";
+import { notification } from "./ico/notification";
+import { plus } from "./ico/plus";
 import { search } from "./ico/search";
 import { search2 } from "./ico/search2";
 import { store } from "./ico/store";
@@ -32,7 +34,9 @@ const icons = {
   news,
   newsSolid,
   store,
-  storeSolid
+  storeSolid,
+  notification,
+  plus
 } as const;
 
 type IconName = keyof typeof icons;

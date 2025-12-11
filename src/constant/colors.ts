@@ -2,7 +2,7 @@ export const appColors = {
   primary: "#1e9187",
   secondary: "#3a3a3a",
   lightOlive: "#daf2ea",
-  extralightOlive: "#e1e7e5",
+  background: "#e1e7e5",
   selectedTeply: "#f3fbf8",
   colouredText: "#dbf5ff",
   purple: "#e9ddf0",
