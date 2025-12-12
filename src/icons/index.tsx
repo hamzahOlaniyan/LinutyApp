@@ -50,7 +50,7 @@ type IconProps = {
 
 const Icon: React.FC<IconProps> = ({
   name,
-  size = 32,
+  size = 24,
   strokeWidth = 0,
   color = "#404040"
 }) => {

@@ -1,10 +1,9 @@
-import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-// import { BlurView } from "expo-blur";
 import { appColors } from "@/constant/colors";
-import { hp } from "@/constant/common";
+import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AppText from "../AppText";
 import { TabBarIcon } from "./TabBarIcons";
 
 const CustomTabBar: React.FC<BottomTabBarProps> = ({
@@ -38,15 +37,17 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({
             key={route.key}
             onPress={onPress}
             activeOpacity={0.9}
-            style={[
-              styles.button,
-              {
-                borderTopColor: isFocused ? appColors.primary : appColors.white,
-                borderTopWidth: 5
-              }
-            ]}
+            style={styles.button}
           >
             {TabBarIcon(label, isFocused)}
+            {label === "search" ? null : (
+              <AppText
+                variant="small"
+                className="font-Regular text-xs capitalize"
+              >
+                {label}
+              </AppText>
+            )}
           </TouchableOpacity>
         );
       })}
@@ -57,18 +58,18 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: appColors.white,
+    borderTopColor: appColors.border,
+    borderTopWidth: 0.5,
     flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 24,
+    alignItems: "flex-start",
+    paddingHorizontal: 18,
     justifyContent: "space-between",
     width: "100%",
     position: "relative",
-    height: hp(6)
+    paddingVertical: 6
   },
   button: {
-    height: "100%",
     paddingHorizontal: 20,
-    paddingVertical: 5,
     justifyContent: "center",
     alignItems: "center"
   }

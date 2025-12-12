@@ -1,27 +1,19 @@
-import AppText from "@/components/ui/AppText";
+import Post from "@/components/Post";
 import { appColors } from "@/constant/colors";
-import { hp } from "@/constant/common";
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList } from "react-native";
 
 export default function HomeFeed() {
-  // async function handleLogout() {
-  //   await signOut();
-  //   router.replace("/auth"); // or "/"
-  // }
-
-  const mockData = Array.from({ length: 10 }, () => ({
+  const mockData = Array.from({ length: 10 }, (_, i) => ({
+    id: i,
     title: "post"
+    // image: require("@/assets/images/lin/png")
   }));
 
   return (
     <FlatList
       data={mockData}
-      renderItem={({ item }) => (
-        <View style={{ height: hp(10), backgroundColor: appColors.white }}>
-          <AppText>{item.title}</AppText>
-        </View>
-      )}
+      renderItem={({ item }) => <Post item={item} />}
       contentContainerStyle={{
         backgroundColor: appColors.background,
         rowGap: 12

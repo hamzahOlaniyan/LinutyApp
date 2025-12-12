@@ -14,11 +14,14 @@ export const api = axios.create({
 // REQUEST INTERCEPTOR — ALWAYS use accessToken
 // --------------------------------------------------
 api.interceptors.request.use((config) => {
-  const { accessToken } = useAuthStore.getState();
+    const token = useAuthStore.getState().session?.accessToken;
 
-  if (accessToken) {
+
+  if (token) {
     config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${accessToken}`;
+    config.headers.Authorization = `Bearer ${token}`;
+  }else{
+    if (config.headers) delete (config.headers).Authorization;
   }
 
   return config;
@@ -30,7 +33,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // console.log("API ERROR ===>", JSON.stringify(error, null, 2));
+    console.log("API ERROR ===>", JSON.stringify(error, null, 2));
     return Promise.reject(
       error.response?.data ?? error.message ?? "Unknown error"
     );

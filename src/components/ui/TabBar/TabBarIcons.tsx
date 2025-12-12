@@ -3,7 +3,7 @@ import Icon from "@/icons";
 import React from "react";
 import { View } from "react-native";
 
-const size = 28;
+const size = 24;
 
 export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
   switch (routeName) {
@@ -29,12 +29,8 @@ export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
       );
     case "search":
       return (
-        <View className="items-center justify-center rounded-full bg-neutral-200 p-3">
-          {isFocused ? (
-            <Icon name="search" color={appColors.primary} size={24} />
-          ) : (
-            <Icon name="search2" color={appColors.black} size={24} />
-          )}
+        <View className="items-center justify-center rounded-full bg-neutral-200 p-2">
+          <Icon name="search2" color={appColors.primary} size={24} />
         </View>
       );
     case "store":
