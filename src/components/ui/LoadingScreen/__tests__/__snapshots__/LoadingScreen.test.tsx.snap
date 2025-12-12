@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingScreen renders a full-screen container with the logo (snapshot) 1`] = `
+<View
+  className="transition-discrete flex-1  items-center justify-center bg-white"
+>
+  <View
+    className="animate-spin duration-100 ease-in-out motion-reduce:duration-0"
+  >
+    <View
+      style={
+        {
+          "height": 100,
+          "opacity": 0.3,
+          "width": 100,
+        }
+      }
+      testID="loading-logo"
+    />
+  </View>
+</View>
+`;

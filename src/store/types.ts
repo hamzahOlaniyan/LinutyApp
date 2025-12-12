@@ -1,25 +1,37 @@
 import { FormDataType } from "@/components/ui/FormInput/types";
 import { Profile } from "@/lib/supabase/supabaseTypes";
-import type { User } from "@supabase/supabase-js";
+import type { Session, User } from "@supabase/supabase-js";
+
+// export type SessionDTO = {
+//   user: User;
+//   accessToken: string;
+//   refreshToken: string | null;
+// };
+
+// export type LoginResponse = SessionDTO;
+
+// export type SessionResponse = {
+//   session: SessionDTO | null;
+// };
 
 
-export type Session = {
-  user: User;
-  access_token: string;
-  refresh_token: string;
-  expires_in: number;
-  token_type: string;
-};
+// export type Session = {
+//   user: User;
+//   access_token: string;
+//   refresh_token: string;
+//   expires_in: number;
+//   token_type: string;
+// };
 
-export type SessionResponse = {
-  session: Session | null;
-  user:User,
-  accessToken: string;
-  refreshToken: string;
-  expires_in:number
-  token_type: string
+// export type SessionResponse = {
+//   session: Session | null;
+//   user:User,
+//   accessToken: string;
+//   refreshToken: string;
+//   expires_in:number
+//   token_type: string
 
-};
+// };
 
 export type UserData = {
   success: boolean;
@@ -33,8 +45,6 @@ export type fillter = {
   refresh_token: string;
 
 };
-
-
 
 export type FormType = {
   formData: { [key: string]: string };
@@ -55,20 +65,34 @@ export type LoginResponse = {
 
 export type AuthStore = {
   initialized: boolean;
-  user: User | null;
   me: Profile | null;
-  session: Session | null;
-  accessToken: string | null;
-  refreshToken: string | null;
   hasCompletedOnboarding: boolean;
+  session:LoginResponse|null
 
-  setAuthFromLogin: (payload: LoginResponse) => void;
-  setSession: () => Promise<void>;
+  //Actions
+  init: () => Promise<void>;
+  setSession:(session:LoginResponse|null)=>void;
   setMe: (me: Profile | null) => void;
-  // setUser: (user: User | null) => void;
   signOut: () => Promise<void>;
   completeOnboarding: () => void;
   resetOnboarding: () => void;
+  // initialized: boolean;
+  // user: User | null;
+  // me: Profile | null;
+  // session: Session | null;
+  // accessToken: string | null;
+  // refreshToken: string | null;
+  // hasCompletedOnboarding: boolean;
+
+  // setAuthFromLogin: (payload: LoginResponse) => void;
+  // setSession: () => Promise<void>;
+  // setMe: (me: Profile | null) => void;
+  // // init: () => Promise<void>;
+
+  // // setUser: (user: User | null) => void;
+  // signOut: () => Promise<void>;
+  // completeOnboarding: () => void;
+  // resetOnboarding: () => void;
 
 };
 

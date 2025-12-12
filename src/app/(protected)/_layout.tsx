@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import React from "react";
 
-export default function _layout() {
+export default function _ProtectedLayout() {
   return (
     <Stack
       screenOptions={{
@@ -10,14 +10,12 @@ export default function _layout() {
     >
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-      <Stack.Screen name="me" />
+      <Stack.Screen name="me" options={{ title: "Profile" }} />
 
       <Stack.Screen
         name="create-post"
         options={{
           title: "New post",
-          headerTitleAlign: "left",
-          headerShadowVisible: false,
           animation: "none"
         }}
       />
@@ -26,8 +24,6 @@ export default function _layout() {
         name="notification"
         options={{
           title: "Notification",
-          headerTitleAlign: "left",
-          headerShadowVisible: false,
           animation: "none"
         }}
       />
@@ -36,8 +32,6 @@ export default function _layout() {
         name="+not-found"
         options={{
           title: "page not found!",
-          headerTitleAlign: "left",
-          headerShadowVisible: false,
           animation: "none"
         }}
       />
