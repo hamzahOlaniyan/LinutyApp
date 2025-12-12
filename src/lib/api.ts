@@ -21,7 +21,7 @@ api.interceptors.request.use((config) => {
     config.headers = config.headers ?? {};
     config.headers.Authorization = `Bearer ${token}`;
   }else{
-    if (config.headers) delete (config.headers as any).Authorization;
+    if (config.headers) delete (config.headers).Authorization;
   }
 
   return config;
