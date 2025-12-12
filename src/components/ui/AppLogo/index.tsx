@@ -7,7 +7,7 @@ export default function AppLogo() {
       source={require("@/assets/images/linuty.png")}
       style={{
         height: "100%",
-        width: "45%",
+        width: "17%",
         alignSelf: "flex-end"
       }}
       contentFit="contain"

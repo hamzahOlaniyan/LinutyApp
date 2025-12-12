@@ -36,7 +36,7 @@ const textVariants = cva("font-Regular text-text", {
     variant: {
       headerLarge: "font-Bold",
       header: "font-Bold",
-      titleLarge: "",
+      titleLarge: "font-SemiBold",
       title: "font-SemiBold",
       body: "font-Regular",
       link: " underline font-Regular text-blue-500",

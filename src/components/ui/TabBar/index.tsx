@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: appColors.white,
     borderTopColor: appColors.border,
-    borderTopWidth: 0.5,
+    borderTopWidth: 0.3,
     flexDirection: "row",
     alignItems: "flex-start",
     paddingHorizontal: 18,

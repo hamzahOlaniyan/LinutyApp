@@ -15,6 +15,7 @@ import { search } from "./ico/search";
 import { search2 } from "./ico/search2";
 import { store } from "./ico/store";
 import { storeSolid } from "./ico/storeSolid";
+import { threeDots } from "./ico/threedots";
 import { visibility } from "./ico/visibility";
 import { visibility_off } from "./ico/visibility-off";
 
@@ -36,7 +37,8 @@ const icons = {
   store,
   storeSolid,
   notification,
-  plus
+  plus,
+  threeDots
 } as const;
 
 type IconName = keyof typeof icons;

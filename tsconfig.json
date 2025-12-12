@@ -14,7 +14,8 @@
     "nativewind-env.d.ts",
     "src/components/ui/ToastModal",
     "src/constants/colors.js",
-    "index.js"
+    "index.js",
+    "src/app/(protected)/(tabs)/(home)/post/[postId]"
   ],
   "exclude": ["node-module"]
 }
