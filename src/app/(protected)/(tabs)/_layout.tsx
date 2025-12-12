@@ -1,5 +1,3 @@
-import AppLogo from "@/components/ui/AppLogo";
-import HomeHeaderAction from "@/components/ui/HomeHeaderAction";
 import CustomTabBar from "@/components/ui/TabBar";
 import { hp } from "@/constant/common";
 import { Tabs } from "expo-router";
@@ -16,12 +14,12 @@ export default function TabLayout() {
         options={{
           title: "home",
           headerTitle: "",
-          headerBackgroundContainerStyle: { backgroundColor: "yellow" },
-          headerShadowVisible: false,
-          headerRight: () => <HomeHeaderAction />,
-          headerLeft: () => <AppLogo />,
-          headerLeftContainerStyle: { paddingLeft: 8 },
-          headerRightContainerStyle: { paddingRight: 8 }
+          headerShown: false,
+          headerShadowVisible: false
+          // headerRight: () => <HomeHeaderAction />,
+          // headerLeft: () => <AppLogo />,
+          // headerLeftContainerStyle: { paddingLeft: 8 },
+          // headerRightContainerStyle: { paddingRight: 8 }
         }}
       />
       <Tabs.Screen name="explore/index" options={{ title: "explore" }} />
