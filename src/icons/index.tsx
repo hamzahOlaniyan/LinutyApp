@@ -1,5 +1,6 @@
 import React from "react";
 import { bookmark } from "./ico/bookmark";
+import { comment } from "./ico/comment";
 import { discover } from "./ico/discover";
 import { discoverSolid } from "./ico/discoverSolid";
 import { favorite } from "./ico/favoriteIcon";
@@ -11,11 +12,15 @@ import { news } from "./ico/news";
 import { newsSolid } from "./ico/newsSolid";
 import { notification } from "./ico/notification";
 import { plus } from "./ico/plus";
+import { repost } from "./ico/repost";
 import { search } from "./ico/search";
 import { search2 } from "./ico/search2";
+import { share } from "./ico/share";
 import { store } from "./ico/store";
 import { storeSolid } from "./ico/storeSolid";
 import { threeDots } from "./ico/threedots";
+import { thumbsup } from "./ico/thumbsup";
+import { thumbsupSolid } from "./ico/thumbsupSolid";
 import { visibility } from "./ico/visibility";
 import { visibility_off } from "./ico/visibility-off";
 
@@ -38,7 +43,12 @@ const icons = {
   storeSolid,
   notification,
   plus,
-  threeDots
+  threeDots,
+  thumbsup,
+  thumbsupSolid,
+  comment,
+  share,
+  repost
 } as const;
 
 type IconName = keyof typeof icons;

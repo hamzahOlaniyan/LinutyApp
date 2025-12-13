@@ -2,31 +2,38 @@ import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import React, { memo } from "react";
 import { Dimensions, Pressable, StyleSheet, View } from "react-native";
-import PostHeader from "./PostHeader";
-import { Props } from "./type";
+import PostAction from "../PostAction";
+import PostHeader from "../PostHeader";
+import { FeedPost } from "../type";
 
-const PostCard = memo(function PostCard({
-  post,
-  onOpenPost,
-  onOpenAuthor,
-  onOpenMedia,
-  onLike,
-  onOpenComments,
-  onMore
-}: Props) {
+export type PostCardProps = {
+  post: FeedPost;
+};
+
+const PostCard = memo(function PostCard({ post }: PostCardProps) {
+  const router = useRouter();
   const { width: screenWidth } = Dimensions.get("window");
-  const media = post.mediaFiles ?? [];
+
+  const media = post?.mediaFiles ?? [];
   const firstImage = media.find(m => m.type === "IMAGE")?.url;
 
   return (
     <View style={s.container}>
       {/* HEADER: author tap */}
-      <PostHeader post={post} onOpenAuthor={onOpenAuthor} onMore={onMore} />
+      <PostHeader
+        author={post.author}
+        createdAt={post.createdAt}
+        visibility={post.visibility}
+      />
 
       {/* BODY: open post */}
-      <Pressable onPress={() => onOpenPost?.(post.id)} style={s.content}>
+      <Pressable
+        onPress={() => router.push(`/post/${post.id}`)}
+        style={s.content}
+      >
         {post.content ? (
           <AppText className="leading-6">{post.content}</AppText>
         ) : null}
@@ -35,7 +42,9 @@ const PostCard = memo(function PostCard({
       {/* MEDIA: open media viewer */}
       {firstImage ? (
         <Pressable
-          onPress={() => onOpenMedia?.(post.id, 0)}
+          onPress={() =>
+            router.push(`/(protected)/post/${post.id}/media?start=${0}`)
+          }
           className="mt-3 overflow-hidden"
         >
           <Image
@@ -47,30 +56,7 @@ const PostCard = memo(function PostCard({
       ) : null}
 
       {/* ACTIONS */}
-      <View className="mt-4 flex-row items-center justify-between">
-        <Pressable
-          onPress={() => onLike?.(post.id)}
-          className="bg-muted rounded-xl px-3 py-2"
-        >
-          <AppText>👍 {post._count?.reactions ?? post.likeCount ?? 0}</AppText>
-        </Pressable>
-
-        <Pressable
-          onPress={() => onOpenComments?.(post.id)}
-          className="bg-muted rounded-xl px-3 py-2"
-        >
-          <AppText>
-            💬 {post._count?.comments ?? post.commentCount ?? 0}
-          </AppText>
-        </Pressable>
-
-        <Pressable
-          onPress={() => onOpenPost?.(post.id)}
-          className="bg-muted rounded-xl px-3 py-2"
-        >
-          <AppText>↗️ Share</AppText>
-        </Pressable>
-      </View>
+      <PostAction post={post} />
     </View>
   );
 });

@@ -3,11 +3,15 @@ import LoadingScreen from "@/components/ui/LoadingScreen";
 import { useMeQuery } from "@/hooks/useMeQuery";
 import { queryClient } from "@/lib/queryClient";
 import { useAuthStore } from "@/store/useAuthStore";
+import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
+
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 import "../../global.css";
 
 export const hasCompletedRegistration = false;
@@ -57,45 +61,52 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthLoader>
-        <StatusBar style="auto" />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack>
-            <Stack.Protected
-              guard={
-                isLoggedIn && hasCompletedOnboarding && hasCompletedRegistration
-              }
-            >
-              <Stack.Screen
-                name="(protected)"
-                options={{ headerShown: false, animation: "none" }}
-              />
-            </Stack.Protected>
+        <GestureHandlerRootView className="flex-1">
+          <PortalProvider>
+            <PortalHost name="root" />
+            <StatusBar style="auto" />
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack>
+                <Stack.Protected
+                  guard={
+                    isLoggedIn &&
+                    hasCompletedOnboarding &&
+                    hasCompletedRegistration
+                  }
+                >
+                  <Stack.Screen
+                    name="(protected)"
+                    options={{ headerShown: false, animation: "none" }}
+                  />
+                </Stack.Protected>
 
-            <Stack.Protected
-              guard={
-                isLoggedIn &&
-                hasCompletedOnboarding &&
-                !hasCompletedRegistration
-              }
-            >
-              <Stack.Screen
-                name="onboarding-flow"
-                options={{ headerShown: false }}
-              />
-            </Stack.Protected>
+                <Stack.Protected
+                  guard={
+                    isLoggedIn &&
+                    hasCompletedOnboarding &&
+                    !hasCompletedRegistration
+                  }
+                >
+                  <Stack.Screen
+                    name="onboarding-flow"
+                    options={{ headerShown: false }}
+                  />
+                </Stack.Protected>
 
-            <Stack.Protected guard={!isLoggedIn && hasCompletedOnboarding}>
-              <Stack.Screen name="auth" options={{ headerShown: false }} />
-            </Stack.Protected>
+                <Stack.Protected guard={!isLoggedIn && hasCompletedOnboarding}>
+                  <Stack.Screen name="auth" options={{ headerShown: false }} />
+                </Stack.Protected>
 
-            <Stack.Protected guard={!hasCompletedOnboarding}>
-              <Stack.Screen
-                name="onboarding/index"
-                options={{ headerShown: false }}
-              />
-            </Stack.Protected>
-          </Stack>
-        </Stack>
+                <Stack.Protected guard={!hasCompletedOnboarding}>
+                  <Stack.Screen
+                    name="onboarding/index"
+                    options={{ headerShown: false }}
+                  />
+                </Stack.Protected>
+              </Stack>
+            </Stack>
+          </PortalProvider>
+        </GestureHandlerRootView>
       </AuthLoader>
     </QueryClientProvider>
   );

@@ -1,11 +1,10 @@
-import PostCard from "@/components/PostCard";
-import EmptyFeed from "@/components/PostCard/EmptyFeed";
-import { FeedPost } from "@/components/PostCard/type";
+import PostCard from "@/components/Post/PostCard.tsx";
+import { FeedPost } from "@/components/Post/type";
 import AppText from "@/components/ui/AppText";
+import EmptyFeed from "@/components/ui/EmptyFeed";
 import HomeHeaderAction from "@/components/ui/HomeHeaderAction";
 import { appColors } from "@/constant/colors";
 import { useFeedQuery } from "@/hooks/useFeedQuery";
-import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useCallback } from "react";
 import { FlatList, ListRenderItem, View } from "react-native";
@@ -16,25 +15,12 @@ export default function HomeFeed() {
 
   const { top } = useSafeAreaInsets();
 
-  const router = useRouter();
   const post: FeedPost[] = data?.data ?? [];
 
   const END_REACHED_THRESHOLD = 0.5;
 
   const renderItem: ListRenderItem<FeedPost> = useCallback(
-    ({ item }) => (
-      <PostCard
-        post={item}
-        onOpenPost={postId => router.push(`/post/${postId}`)}
-        onOpenAuthor={authorId => router.push(`/profile/${authorId}`)}
-        onOpenComments={postId => router.push(`/post/${postId}?focus=comments`)}
-        onOpenMedia={(postId, startIndex = 0) =>
-          router.push(`/post/${postId}/media?start=${startIndex}`)
-        }
-        // onLike={(postId) => likeMutation.mutate({ postId })}
-        // onMore={(postId) => openPostActionSheet(postId)}
-      />
-    ),
+    ({ item }) => <PostCard post={item} />,
     []
   );
 
