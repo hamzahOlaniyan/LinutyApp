@@ -15,7 +15,7 @@
     "src/components/ui/ToastModal",
     "src/constants/colors.js",
     "index.js",
-    "src/app/(protected)/(tabs)/(home)/post/[postId]"
+    "src/app/(protected)/post/[postId]"
   ],
   "exclude": ["node-module"]
 }

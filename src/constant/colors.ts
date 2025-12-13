@@ -9,6 +9,8 @@ export const appColors = {
   placeholder: "#767f86",
   // icon: "#505050",
   icon: "#677179",
+  border: "#ccc",
+
 
   // lightOlive: "#daf2ea",
   // selectedTeply: "#f3fbf8",

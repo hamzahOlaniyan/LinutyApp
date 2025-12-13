@@ -1,22 +1,22 @@
-import { FeedPost } from "@/components/Post/type";
+import { Comment } from "@/lib/supabase/supabaseTypes";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useApiQuery } from "./useApi";
 
 export const USER_PROFILE_KEY = "/feed";
 
-type FeedEnvelope = {
-  data: FeedPost[];
+export type CommentEnvelope = {
+  data: Comment[];
   nextCursor: string | null;
 };
 
 
-export const useFeedQuery = () => {
+export const useCommentQuery = (postId:string) => {
   const { session } = useAuthStore();
 
   const accessToken = session?.accessToken; 
 
-  const { data, isLoading, error, isFetching, refetch, } = useApiQuery<FeedEnvelope>(
-    USER_PROFILE_KEY,
+  const { data, isLoading, error, isFetching, refetch, } = useApiQuery<CommentEnvelope>(
+    `/post/${postId}/comment`,
   { limit: 20 },
 
     {
