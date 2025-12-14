@@ -1,71 +1,70 @@
-import { UiComment } from "@/components/Post/type";
-import { Comment as DbComment } from "@/lib/supabase/supabaseTypes";
-import React from "react";
+import CommentInput from "@/components/Comments/CommentInput";
+import { PostComment, ReplyingTo } from "@/components/Post/type";
+import { wp } from "@/constant/common";
+import { useAddComment } from "@/hooks/usePostCommentQuery";
+import React, { useCallback, useState } from "react";
 import { ActivityIndicator, FlatList, View } from "react-native";
 import CommentCard from "../CommentCard";
 
 export default function CommentsList({
-  // postId,
   comments,
-  loading
-  // postAuthorId,
-  // count
+  loading,
+  postId
 }: {
-  postId: string;
-  comments: DbComment[];
+  comments: PostComment[];
   loading: boolean;
   postAuthorId: string;
   count: number;
+  postId: string;
 }) {
-  // const [showKeyboard, setShowKeyboard] = useState(false);
-  // const [replyToName, setReplyToName] = useState<string | null>(null);
-  // const [replyToId, setReplyToId] = useState<string | null>(null);
+  if (!comments) return null;
 
   if (loading) return <ActivityIndicator />;
 
-  // const {
-  //   data: commentsRes,
-  //   isLoading: commentsLoading,
-  //   refetch
-  // } = useCommentQuery(postId);
+  const [replyTo, setReplyTo] = useState<ReplyingTo>(null);
 
-  // const renderItem: ListRenderItem<Comment> = useCallback(
-  //   ({ item }) => <CommentCard item={item} />,
-  //   []
-  // );
+  const addComment = useAddComment(postId);
 
-  const toUiComment = (c: DbComment): UiComment => ({
-    ...c,
-    created_at: c.createdAt,
-    parentId: c.parentCommentId,
-    author: undefined
-  });
+  const onSend = useCallback(
+    (content: string) => {
+      console.log({ content, parentCommentId: replyTo?.parentCommentId });
 
-  const uiComments = React.useMemo(() => comments.map(toUiComment), [comments]);
+      addComment.mutate(
+        {
+          content,
+          parentCommentId: replyTo?.parentCommentId
+        },
+        {
+          onSuccess: async () => {
+            console.log("✅ comment addes");
+          },
+
+          onError: async error =>
+            console.log("❌ something when wrong", error.message)
+        }
+      );
+      setReplyTo(null);
+    },
+    [addComment, replyTo]
+  );
 
   return (
-    <View className="h-full flex-1 justify-between">
-      <FlatList<UiComment>
-        data={uiComments}
-        renderItem={({ item }) => <CommentCard item={item} />}
+    <View className="h-full flex-1">
+      <FlatList
+        data={comments.filter(c => c.parentCommentId === null) ?? []}
+        renderItem={({ item }) => (
+          <CommentCard comment={item} setReplyTo={setReplyTo} />
+        )}
         showsVerticalScrollIndicator={false}
+        scrollEnabled
         scrollEventThrottle={4}
         contentContainerStyle={{
-          rowGap: 20
+          rowGap: 20,
+          paddingHorizontal: wp(3),
+          paddingBottom: 200
         }}
       />
-
-      {/* <CommentInput
-        postId={data?.id}
-        postAuthor={postAuthor}
-        // postUserID={data?.author?.id}
-        showKeyboard={showKeyboard}
-        replyToName={replyToName}
-        parentId={replyToId}
-        setReplyToName={setReplyToName}
-        setReplyToId={setReplyToId}
-        setShowKeyboard={setShowKeyboard}
-      /> */}
+      <CommentInput onSend={onSend} replyingTo={replyTo} />
     </View>
   );
 }

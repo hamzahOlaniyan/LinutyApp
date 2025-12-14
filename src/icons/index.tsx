@@ -1,5 +1,7 @@
 import React from "react";
 import { bookmark } from "./ico/bookmark";
+import { chevrondown } from "./ico/chevrondown";
+import { chevronforward } from "./ico/chevronforward";
 import { comment } from "./ico/comment";
 import { discover } from "./ico/discover";
 import { discoverSolid } from "./ico/discoverSolid";
@@ -10,14 +12,17 @@ import { homeSolid } from "./ico/homeSolid";
 import { logout } from "./ico/logout";
 import { news } from "./ico/news";
 import { newsSolid } from "./ico/newsSolid";
+import { northwest } from "./ico/northwest";
 import { notification } from "./ico/notification";
 import { plus } from "./ico/plus";
 import { repost } from "./ico/repost";
 import { search } from "./ico/search";
 import { search2 } from "./ico/search2";
 import { share } from "./ico/share";
+import { southeast } from "./ico/southeast";
 import { store } from "./ico/store";
 import { storeSolid } from "./ico/storeSolid";
+import { story } from "./ico/story";
 import { threeDots } from "./ico/threedots";
 import { thumbsup } from "./ico/thumbsup";
 import { thumbsupSolid } from "./ico/thumbsupSolid";
@@ -48,7 +53,12 @@ const icons = {
   thumbsupSolid,
   comment,
   share,
-  repost
+  repost,
+  story,
+  southeast,
+  northwest,
+  chevrondown,
+  chevronforward
 } as const;
 
 type IconName = keyof typeof icons;

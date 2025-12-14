@@ -7,11 +7,7 @@ import React, { memo } from "react";
 import { Dimensions, Pressable, StyleSheet, View } from "react-native";
 import PostAction from "../PostAction";
 import PostHeader from "../PostHeader";
-import { FeedPost } from "../type";
-
-export type PostCardProps = {
-  post: FeedPost;
-};
+import { PostCardProps } from "../type";
 
 const PostCard = memo(function PostCard({ post }: PostCardProps) {
   const router = useRouter();
@@ -66,8 +62,9 @@ export default PostCard;
 const s = StyleSheet.create({
   container: {
     backgroundColor: appColors.white,
-    paddingVertical: 10,
-    marginBottom: 10
+    paddingTop: 12,
+    paddingBottom: 6,
+    marginBottom: 12
   },
   content: {
     paddingHorizontal: wp(3),

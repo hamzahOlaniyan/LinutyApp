@@ -36,12 +36,11 @@ const textVariants = cva("font-Regular text-text", {
     variant: {
       headerLarge: "font-Bold",
       header: "font-Bold",
-      titleLarge: "font-SemiBold",
       title: "font-SemiBold",
       body: "font-Regular",
-      link: " underline font-Regular text-blue-500",
-      error: "text-red-600 font-Medium",
-      small: ""
+      medium: "",
+      small: "",
+      xs: ""
     }
   },
   defaultVariants: {
@@ -61,21 +60,19 @@ type VariantName =
   | "headerLarge"
   | "header"
   | "title"
-  | "titleLarge"
   | "body"
-  | "link"
-  | "error"
-  | "small";
+  | "medium"
+  | "small"
+  | "xs";
 
 const variantFontSizes: Record<VariantName, number> = {
   headerLarge: hp(3),
   header: hp(2.6),
-  title: hp(2.2),
-  titleLarge: hp(2),
-  body: hp(1.8),
-  link: hp(1.8),
-  error: hp(1.6),
-  small: hp(1.3)
+  title: hp(2),
+  body: hp(1.9),
+  medium: hp(1.7),
+  small: hp(1.5),
+  xs: hp(1.3)
 };
 
 const AppText = ({

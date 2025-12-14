@@ -1,24 +1,24 @@
-export type PostWithUser = Database["public"]["Tables"]["posts"]["Row"] & {
+ type PostWithUser = Database["public"]["Tables"]["posts"]["Row"] & {
   user: Database["public"]["Tables"]["profiles"]["Row"];
   postLikes: Database["public"]["Tables"]["postLikes"]["Row"][];
   comments: { count: number }[];
 };
 
-export type PostLike = Database["public"]["Tables"]["postLikes"]["Row"];
+ type PostLike = Database["public"]["Tables"]["postLikes"]["Row"];
 
-export type PostType = Database["public"]["Tables"]["posts"]["Row"];
+ type PostType = Database["public"]["Tables"]["posts"]["Row"];
 
-export type PostWithUser = Database["public"]["Tables"]["posts"]["Row"] & {
+ type PostWithUser = Database["public"]["Tables"]["posts"]["Row"] & {
   user: Database["public"]["Tables"]["profiles"]["Row"];
   postLikes: Database["public"]["Tables"]["postLikes"]["Row"][];
   comments: { count: number }[];
 };
 
-export type PostLike = Database["public"]["Tables"]["postLikes"]["Row"];
+ type PostLike = Database["public"]["Tables"]["postLikes"]["Row"];
 
-export type UserProfile = Database["public"]["Tables"]["profiles"]["Row"];
+ type UserProfile = Database["public"]["Tables"]["profiles"]["Row"];
 
-export type AuthContextType = {
+ type AuthContextType = {
   user: User | null;
   isAuthenticated: boolean;
   isVerified: boolean;
@@ -28,8 +28,8 @@ export type AuthContextType = {
   isAuthReady: boolean;
 };
 
-export type PostInput = TablesInsert<"posts">;
-export type CommentInput = TablesInsert<"comments">;
-export type RelationshipInput = TablesInsert<"relationships"> & UserProfile;
+ type PostInput = TablesInsert<"posts">;
+ type CommentInput = TablesInsert<"comments">;
+ type RelationshipInput = TablesInsert<"relationships"> & UserProfile;
 
-export type ProductInput = TablesInsert<"store">;
+ type ProductInput = TablesInsert<"store">;
