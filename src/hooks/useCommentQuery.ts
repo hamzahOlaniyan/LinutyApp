@@ -1,11 +1,11 @@
-import { Comment } from "@/lib/supabase/supabaseTypes";
+import { PostComment } from "@/components/Post/type";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useApiQuery } from "./useApi";
 
 export const USER_PROFILE_KEY = "/feed";
 
 export type CommentEnvelope = {
-  data: Comment[];
+  data: PostComment[];
   nextCursor: string | null;
 };
 

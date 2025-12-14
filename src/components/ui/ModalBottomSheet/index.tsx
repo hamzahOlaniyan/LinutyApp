@@ -1,5 +1,4 @@
 import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -61,16 +60,18 @@ export const ModalBottomSheet = forwardRef<Ref, Props>((props, ref) => {
         >
           <View
             style={{
-              borderBottomColor: appColors.border,
+              borderBottomColor: appColors.bordersLight,
               borderBottomWidth: 0.5
             }}
             className="mb-4 py-3"
           >
-            <AppText>{props.title}</AppText>
+            <AppText variant="titleLarge" className="text-center font-bold">
+              {props.title}
+            </AppText>
           </View>
-          <View style={{ paddingHorizontal: wp(4), flex: 1, height: "100%" }}>
-            {props.children}
-          </View>
+          {/* <View style={{ paddingHorizontal: wp(3), flex: 1 }}> */}
+          {props.children}
+          {/* </View> */}
         </BottomSheetView>
       </BottomSheet>
     </Portal>

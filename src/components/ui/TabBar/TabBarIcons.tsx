@@ -13,7 +13,7 @@ export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
           {isFocused ? (
             <Icon name="homeSolid" color={appColors.primary} size={size} />
           ) : (
-            <Icon name="home" color={appColors.black} size={size} />
+            <Icon name="home" color={appColors.text} size={size} />
           )}
         </>
       );
@@ -23,13 +23,13 @@ export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
           {isFocused ? (
             <Icon name="discoverSolid" color={appColors.primary} size={size} />
           ) : (
-            <Icon name="discover" color={appColors.black} size={size} />
+            <Icon name="discover" color={appColors.text} size={size} />
           )}
         </>
       );
     case "search":
       return (
-        <View className="items-center justify-center rounded-full bg-neutral-200 p-2">
+        <View className="items-center justify-center rounded-full bg-neutral-100 p-2">
           <Icon name="search2" color={appColors.primary} size={24} />
         </View>
       );
@@ -39,7 +39,7 @@ export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
           {isFocused ? (
             <Icon name="storeSolid" color={appColors.primary} size={size} />
           ) : (
-            <Icon name="store" color={appColors.black} size={size} />
+            <Icon name="store" color={appColors.text} size={size} />
           )}
         </>
       );
@@ -49,7 +49,7 @@ export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
           {isFocused ? (
             <Icon name="newsSolid" color={appColors.primary} size={size} />
           ) : (
-            <Icon name="news" color={appColors.black} size={size} />
+            <Icon name="news" color={appColors.text} size={size} />
           )}
         </>
       );

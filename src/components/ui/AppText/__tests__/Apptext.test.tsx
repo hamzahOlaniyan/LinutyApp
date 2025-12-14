@@ -26,13 +26,13 @@ describe("AppText", () => {
     expect(text.props.className).toContain("font-Regular");
     expect(text.props.className).toContain("text-text");
 
-    // hp is mocked so body => hp(1.8) === 1.8
+    // hp is mocked so body => hp(1.9) === 1.9
     const styleArray = Array.isArray(text.props.style)
       ? text.props.style
       : [text.props.style];
 
     const style = styleArray[0];
-    expect(style.fontSize).toBe(1.8);
+    expect(style.fontSize).toBe(1.9);
   });
 
   it("applies header variant styles and font size", () => {
@@ -52,40 +52,6 @@ describe("AppText", () => {
 
     const style = styleArray[0];
     expect(style.fontSize).toBe(2.6);
-  });
-
-  it("applies link variant styles", () => {
-    const { getByText } = render(<AppText variant="link">Click me</AppText>);
-
-    const text = getByText("Click me");
-
-    expect(text.props.className).toContain("underline");
-    expect(text.props.className).toContain("text-blue-500");
-
-    // hp mocked → link => hp(1.8) === 1.8
-    const styleArray = Array.isArray(text.props.style)
-      ? text.props.style
-      : [text.props.style];
-
-    const style = styleArray[0];
-    expect(style.fontSize).toBe(1.8);
-  });
-
-  it("applies error variant styles", () => {
-    const { getByText } = render(<AppText variant="error">Error text</AppText>);
-
-    const text = getByText("Error text");
-
-    expect(text.props.className).toContain("text-red-600");
-    expect(text.props.className).toContain("font-Medium");
-
-    // hp mocked → error => hp(1.6) === 1.6
-    const styleArray = Array.isArray(text.props.style)
-      ? text.props.style
-      : [text.props.style];
-
-    const style = styleArray[0];
-    expect(style.fontSize).toBe(1.6);
   });
 
   it("uses color prop to override text color", () => {

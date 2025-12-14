@@ -8,6 +8,12 @@ jest.mock("@/store/useFormStore", () => ({
   useFormStore: jest.fn()
 }));
 
+// Mock hp to return the same numeric value for simplicity
+jest.mock("@/constant/common", () => ({
+  hp: (n: number) => n,
+  wp: (n: number) => n
+}));
+
 // Mock utils
 jest.mock("@/lib/utils", () => ({
   emailRegex: /.+@.+\..+/,

@@ -1,4 +1,3 @@
-import { Comment as DbComment } from "@/lib/supabase/supabaseTypes";
 
 export type PostVisibility = "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE";
 
@@ -14,6 +13,13 @@ export type PostVisibility = "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE"
 //   commentCount: number;
 //   likeCount: number;
 //   shareCount: number;
+// };
+export type PostCardProps = {
+  post: FeedPost;
+};
+
+// export type PostCardProps = {
+//   post: FeedPost;
 // };
 
 
@@ -156,10 +162,12 @@ export type FeedPost = {
 
 
 
-// export type CursorResponse<T> = {
-//   data: T[];
-//   nextCursor: string | null;
-// };
+
+
+export type CursorResponse<T> = {
+  data: T[];
+  nextCursor: string | null;
+};
 
 export type CommentAuthor = {
   id: string;
@@ -174,26 +182,27 @@ export type PostComment = {
   postId: string;
   profileId: string;
   content: string;
-  parentId: string | null;
+  parentCommentId: string | null;
   created_at: string;
   updatedAt: string;
   author: CommentAuthor;
   _count?: { replies: number };
 };
 
-export type CommentItemTypes = {
-  comment: PostComment; // top-level
-  onReply: (parent: { id: string; name: string }) => void;
-};
+export type ReplyingTo = { parentCommentId: string; name: string } | null;
+// export type CommentItemTypes = {
+//   comment: PostComment; // top-level
+//   onReply: (parent: { id: string; name: string }) => void;
+// };
 
 
-export type UiComment = DbComment & {
-  author?: CommentAuthor;
-  _count?: { replies: number };
+// export type UiComment = DbComment & {
+//   author?: CommentAuthor;
+//   _count?: { replies: number };
 
-  created_at: string;
-  parentId: string | null;
-};
+//   created_at: string;
+//   parentId: string | null;
+// };
 
 
 
