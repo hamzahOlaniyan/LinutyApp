@@ -53,7 +53,7 @@ export default function CommentsList({
       <FlatList
         data={comments.filter(c => c.parentCommentId === null) ?? []}
         renderItem={({ item }) => (
-          <CommentCard comment={item} setReplyTo={setReplyTo} />
+          <CommentCard comment={item} setReplyTo={setReplyTo} postId={postId} />
         )}
         showsVerticalScrollIndicator={false}
         scrollEnabled

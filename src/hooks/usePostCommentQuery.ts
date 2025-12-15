@@ -1,6 +1,9 @@
 import { CursorResponse, PostComment } from "@/components/Post/type";
+import { Comment } from "@/lib/supabase/supabaseTypes";
 import { useApiMutation, useApiQuery } from "./useApi";
+import { MyReactionResponse, ReactionType } from "./usePostReactionQuery";
 
+type RepliesQueryOpts = { enabled?: boolean };
 
 export const usePostCommentsQuery = (postId: string) =>
 {
@@ -12,18 +15,21 @@ export const usePostCommentsQuery = (postId: string) =>
 
 }
 
+export const useCommentRepliesQuery = (
+  commentId: string,
+  opts: RepliesQueryOpts = {}
+) => {
+  const { enabled = true } = opts;
 
-
-export const useCommentRepliesQuery = (commentId:string) => {
-    const { data, isLoading, error, isFetching, refetch, } =
+  const { data, isLoading, error, isFetching, refetch } =
     useApiQuery<CursorResponse<PostComment>>(
       `/comments/${commentId}/replies`,
-      // { limit: 20 },
-      { enabled: !!commentId }
+      undefined, // or { limit: 20 }
+      { enabled: !!commentId && enabled }
     );
-  return { isLoading, data, error, isFetching, refetch, };
-};
 
+  return { isLoading, data, error, isFetching, refetch };
+};
 
 
 export const useAddCommentMutation = (postId: string) => {
@@ -42,6 +48,28 @@ export const useAddComment = (postId: string) => {
     `/post/${postId}/comment`,
     {
       invalidateKeys: [`/post/${postId}/comment`, `/post/${postId}`] // adjust to your invalidation logic
+    }
+  );
+};
+
+export const useMyCommentReactionQuery = (commentId
+  : string) => {
+  return useApiQuery<MyReactionResponse>(`/comments/${commentId}/reactions/me`);
+};
+
+
+export const useReactToComment = (postId: string, commentId: string) => {
+  return useApiMutation<ReactionType,{ type?: "LIKE" }>(
+    "post",
+    `/comments/${commentId}/react`,
+    {
+      invalidateKeys: [
+        `/post/${postId}/comment`, `/post/${postId}`,
+        `/comments/${commentId}`,          // if you have comment endpoint
+        `/post/${postId}`,                 // if comment counts live on post
+        `/post/${postId}/comment`,          // if you fetch comments list here
+        `/post/${postId}/comment`,
+      ]
     }
   );
 };

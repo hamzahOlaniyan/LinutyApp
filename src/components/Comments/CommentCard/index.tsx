@@ -1,7 +1,11 @@
 import { PostComment, ReplyingTo } from "@/components/Post/type";
 import { appColors } from "@/constant/colors";
 import { displayName, toPng } from "@/constant/common";
-import { useCommentRepliesQuery } from "@/hooks/usePostCommentQuery";
+import {
+  useCommentRepliesQuery,
+  useMyCommentReactionQuery,
+  useReactToComment
+} from "@/hooks/usePostCommentQuery";
 import Icon from "@/icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -15,12 +19,30 @@ dayjs.extend(relativeTime);
 
 export default memo(function CommentCard({
   comment,
-  setReplyTo
+  setReplyTo,
+  postId
 }: {
   comment: PostComment;
   setReplyTo: (value: ReplyingTo) => void | null;
+  postId: string;
 }) {
   const { data } = useCommentRepliesQuery(comment.id);
+  const reactToComment = useReactToComment(postId, comment.id);
+  const { data: myReaction } = useMyCommentReactionQuery(comment.id);
+
+  const [likes, setLikes] = useState<{ count: number; liked: boolean }>({
+    count: Number(comment?.likeCount ?? 0),
+    liked: false
+  });
+
+  useEffect(() => {
+    setLikes(prev => ({ ...prev, count: Number(comment?.likeCount ?? 0) }));
+  }, [comment.likeCount]);
+
+  useEffect(() => {
+    if (!myReaction) return;
+    setLikes(prev => ({ ...prev, liked: myReaction.liked }));
+  }, [myReaction?.liked]);
 
   const [replies, setReplies] = useState(data?.data);
   const [expanded, setExpanded] = useState(false);
@@ -31,7 +53,29 @@ export default memo(function CommentCard({
     }
   }, [data]);
 
+  const handleLike = () => {
+    // optimistic
+    setLikes(prev => ({
+      count: prev.liked ? Math.max(0, prev.count - 1) : prev.count + 1,
+      liked: !prev.liked
+    }));
+
+    reactToComment.mutate(
+      { type: "LIKE" },
+      {
+        onError: () => {
+          // rollback
+          setLikes(prev => ({
+            count: prev.liked ? Math.max(0, prev.count - 1) : prev.count + 1,
+            liked: !prev.liked
+          }));
+        }
+      }
+    );
+  };
+
   const replyCount = replies?.length ?? 0;
+  // const likeCount = comment?.likeCount ?? 0;
 
   const name = useMemo(() => displayName(comment.author), [comment.author]);
 
@@ -80,10 +124,19 @@ export default memo(function CommentCard({
               </TouchableOpacity>
             </View>
             <View>
-              <Pressable className="flex-row items-center justify-center gap-2">
-                <Icon name="thumbsup" size={16} color={appColors.icon} />
-                <AppText color={appColors.icon}>0</AppText>
-              </Pressable>
+              <TouchableOpacity
+                onPress={handleLike}
+                disabled={reactToComment.isPending}
+                className="flex-row items-center justify-center gap-2"
+              >
+                <Icon
+                  name={likes?.liked ? "thumbsupSolid" : "thumbsup"}
+                  size={18}
+                />
+                <AppText variant={"small"} color={appColors.secondary}>
+                  {likes.count > 0 ? `${likes.count}` : ""}
+                </AppText>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

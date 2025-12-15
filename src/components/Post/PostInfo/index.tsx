@@ -5,21 +5,31 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { PostCardProps } from "../type";
 
-export default function PostInfo({ post }: PostCardProps) {
+export default function PostInfo({
+  post,
+  likeCount
+  // commentCount
+}: PostCardProps) {
   return (
     <View style={s.container}>
-      <AppText color={appColors.placeholder} className="text-right">
-        {post?._count.comments && post._count.comments} likes |
-      </AppText>
-      <AppText color={appColors.placeholder} className="text-right">
-        {post?._count.comments && post._count.comments} comments |
-      </AppText>
-      <AppText color={appColors.placeholder} className="text-right">
+      {Number(likeCount) >= 1 ? (
+        <AppText color={appColors.placeholder}>
+          {Number(likeCount)} like ·
+        </AppText>
+      ) : null}
+
+      {post?._count?.comments >= 1 ? (
+        <AppText color={appColors.placeholder} className="text-right">
+          {post?._count?.comments} comments
+        </AppText>
+      ) : null}
+
+      {/* <AppText color={appColors.placeholder} className="text-right">
         {post?._count.comments && post._count.comments} repost |
       </AppText>
       <AppText color={appColors.placeholder} className="text-right">
         {post?._count.comments && post._count.comments} share
-      </AppText>
+      </AppText> */}
     </View>
   );
 }
