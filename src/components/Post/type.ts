@@ -16,6 +16,8 @@ export type PostVisibility = "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE"
 // };
 export type PostCardProps = {
   post: FeedPost;
+  likeCount?: number;
+  commentCount?:number;
 };
 
 // export type PostCardProps = {
@@ -186,6 +188,7 @@ export type PostComment = {
   created_at: string;
   updatedAt: string;
   author: CommentAuthor;
+  likeCount:number;
   _count?: { replies: number };
 };
 

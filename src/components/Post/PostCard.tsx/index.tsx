@@ -16,6 +16,8 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
   const media = post?.mediaFiles ?? [];
   const firstImage = media.find(m => m.type === "IMAGE")?.url;
 
+  console.log(JSON.stringify(post, null, 2));
+
   return (
     <View style={s.container}>
       {/* HEADER: author tap */}

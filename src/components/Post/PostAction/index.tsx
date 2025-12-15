@@ -2,8 +2,12 @@ import CommentsList from "@/components/Comments/CommentsList";
 import AppText from "@/components/ui/AppText";
 import { ModalBottomSheet } from "@/components/ui/ModalBottomSheet";
 import { appColors } from "@/constant/colors";
-import { hp } from "@/constant/common";
+import { hp, wp } from "@/constant/common";
 import { useCommentQuery } from "@/hooks/useCommentQuery";
+import {
+  useMyPostReactionQuery,
+  usePostReactionMutation
+} from "@/hooks/usePostReactionQuery";
 import Icon from "@/icons";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useRouter } from "expo-router";
@@ -14,13 +18,50 @@ import { PostCardProps } from "../type";
 
 export default function PostAction({ post }: PostCardProps) {
   const { isLoading, data } = useCommentQuery(post?.id);
+  const reactMutation = usePostReactionMutation(post.id);
+  const { data: myReaction } = useMyPostReactionQuery(post.id);
+
   const [comments, setComments] = useState(data?.data);
+  const [likes, setLikes] = useState<{ count: number; liked: boolean }>({
+    count: post.likeCount ?? 0,
+    liked: false
+  });
 
   useEffect(() => {
     if (data) {
       setComments(data?.data);
     }
   }, [data]);
+
+  useEffect(() => {
+    setLikes(prev => ({ ...prev, count: post.likeCount ?? 0 }));
+  }, [post.likeCount]);
+
+  useEffect(() => {
+    if (!myReaction) return;
+    setLikes(prev => ({ ...prev, liked: myReaction.liked }));
+  }, [myReaction?.liked]);
+
+  const handleLike = () => {
+    // optimistic
+    setLikes(prev => ({
+      count: prev.liked ? Math.max(0, prev.count - 1) : prev.count + 1,
+      liked: !prev.liked
+    }));
+
+    reactMutation.mutate(
+      { type: "LIKE" },
+      {
+        onError: () => {
+          // rollback
+          setLikes(prev => ({
+            count: prev.liked ? Math.max(0, prev.count - 1) : prev.count + 1,
+            liked: !prev.liked
+          }));
+        }
+      }
+    );
+  };
 
   const router = useRouter();
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -29,10 +70,14 @@ export default function PostAction({ post }: PostCardProps) {
   return (
     <>
       <View style={s.container}>
-        <PostInfo post={post} />
+        <PostInfo
+          post={post}
+          likeCount={likes?.count}
+          commentCount={post._count.comments}
+        />
         <View style={s.actions}>
-          <Pressable hitSlop={8} style={s.button}>
-            <Icon name="thumbsup" />
+          <Pressable hitSlop={8} style={s.button} onPress={handleLike}>
+            <Icon name={likes.liked ? "thumbsupSolid" : "thumbsup"} />
             <AppText color={appColors.secondary}>Like</AppText>
           </Pressable>
 
@@ -83,17 +128,17 @@ export default function PostAction({ post }: PostCardProps) {
 const s = StyleSheet.create({
   container: { paddingTop: 12 },
   actions: {
+    paddingHorizontal: wp(4),
     flexDirection: "row",
-    alignItems: "center",
-    alignContent: "center",
-    justifyContent: "space-around",
-    paddingVertical: hp(1),
+    justifyContent: "space-between",
     borderTopColor: appColors.border,
     borderTopWidth: 0.2
   },
   button: {
+    paddingVertical: hp(1),
     flexDirection: "row",
-    gap: 6,
-    alignItems: "center"
+    gap: 3,
+    alignItems: "center",
+    height: "100%"
   }
 });
