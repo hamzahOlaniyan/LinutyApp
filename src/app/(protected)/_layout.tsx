@@ -10,7 +10,10 @@ export default function _ProtectedLayout() {
     >
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-      <Stack.Screen name="me" options={{ title: "Profile" }} />
+      <Stack.Screen
+        name="me"
+        options={{ title: "Profile", headerShown: false }}
+      />
 
       <Stack.Screen
         name="create-post"

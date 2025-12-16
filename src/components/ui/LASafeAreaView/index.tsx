@@ -12,7 +12,7 @@ export default function LASafeAreaView({
   return (
     <SafeAreaView
       style={{
-        paddingHorizontal: wp(4),
+        paddingHorizontal: wp(3),
         backgroundColor: appColors.white,
         flex: 1,
         justifyContent: "center"

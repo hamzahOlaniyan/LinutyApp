@@ -48,7 +48,7 @@
 //    return (
 //       <ScrollView
 //          style={{
-//             paddingHorizontal: wp(4),
+//             paddingHorizontal: wp(3),
 //             paddingBottom: bottom,
 //             position: "relative",
 //          }}

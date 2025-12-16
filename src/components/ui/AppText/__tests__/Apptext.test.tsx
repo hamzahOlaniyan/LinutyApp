@@ -43,7 +43,7 @@ describe("AppText", () => {
     const text = getByText("Header text");
 
     // should use header font class
-    expect(text.props.className).toContain("font-Bold");
+    expect(text.props.className).toContain("font-SemiBold");
 
     // hp mocked → header => hp(3) === 3
     const styleArray = Array.isArray(text.props.style)

@@ -19,7 +19,7 @@ export default function index() {
       showsHorizontalScrollIndicator={false}
       style={{
         flex: 1,
-        paddingHorizontal: wp(4),
+        paddingHorizontal: wp(3),
         backgroundColor: appColors.white
       }}
     >

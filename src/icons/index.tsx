@@ -10,6 +10,7 @@ import { filter } from "./ico/filter";
 import { home } from "./ico/home";
 import { homeSolid } from "./ico/homeSolid";
 import { logout } from "./ico/logout";
+import { menu } from "./ico/menu";
 import { news } from "./ico/news";
 import { newsSolid } from "./ico/newsSolid";
 import { northwest } from "./ico/northwest";
@@ -58,7 +59,8 @@ const icons = {
   southeast,
   northwest,
   chevrondown,
-  chevronforward
+  chevronforward,
+  menu
 } as const;
 
 type IconName = keyof typeof icons;

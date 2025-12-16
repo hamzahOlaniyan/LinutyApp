@@ -16,6 +16,16 @@ module.exports = {
       colors: {
         text: "#262626",
       },
+      fontFamily: {
+          Black: ["Black"],
+          ExtraBold: ["ExtraBold"],
+          Bold: ["Bold"],
+          SemiBold: ["SemiBold"],
+          Medium: ["Medium"],
+          Regular: ["Regular"],
+          Light:[ "Light"],
+      },
+
       fontSize: {
         "2xs": "10px",
       },

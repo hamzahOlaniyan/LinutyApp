@@ -128,7 +128,7 @@ export default function PostAction({ post }: PostCardProps) {
 const s = StyleSheet.create({
   container: { paddingTop: 12 },
   actions: {
-    paddingHorizontal: wp(4),
+    paddingHorizontal: wp(3),
     flexDirection: "row",
     justifyContent: "space-between",
     borderTopColor: appColors.border,

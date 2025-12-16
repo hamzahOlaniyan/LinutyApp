@@ -45,7 +45,7 @@ export default function Email() {
   return (
     <SafeAreaView
       style={{
-        paddingHorizontal: wp(4),
+        paddingHorizontal: wp(3),
         backgroundColor: appColors.white,
         flex: 1
       }}

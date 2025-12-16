@@ -35,7 +35,7 @@ export default function PostInfo({
 }
 const s = StyleSheet.create({
   container: {
-    paddingHorizontal: wp(4),
+    paddingHorizontal: wp(3),
     paddingVertical: hp(0.5),
     flexDirection: "row",
     justifyContent: "flex-end",
