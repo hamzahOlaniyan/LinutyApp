@@ -14,7 +14,7 @@ export default function DateOfBirth() {
   const router = useRouter();
   const { formData } = useFormStore();
 
-  console.log(JSON.stringify(formData, null, 2));
+  // console.log(JSON.stringify(formData, null, 2));
 
   const DateOfBirth: OnboardingField[] = [
     {
@@ -39,7 +39,7 @@ export default function DateOfBirth() {
   return (
     <SafeAreaView
       style={{
-        paddingHorizontal: wp(4),
+        paddingHorizontal: wp(3),
         backgroundColor: appColors.white,
         flex: 1
       }}

@@ -14,10 +14,35 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        text: "#262626",
+          primary: "#1e9187",
+          text: "#262626",
+          secondary: "#3a3a3a",
+          error: "#b22323",
+          white: "#fff",
+          background: "#e1e7e5",
+          grey: "#ccc",
+          dark_whitesmoke: "#f1f1f1",
+          whitesmoke: "#f5f5f5",
+          offWhite: "#f7f7f7",
+          placeholder: "#767f86",
+          // icon: "#505050",
+          icon: "#677179",
+          border: "#ccc",
+          bordersLight: "#e8edeb",
+
+      },
+      fontFamily: {
+          Black: ["Black"],
+          ExtraBold: ["ExtraBold"],
+          Bold: ["Bold"],
+          SemiBold: ["SemiBold"],
+          Medium: ["Medium"],
+          Regular: ["Regular"],
+          Light:[ "Light"],
       },
       fontSize: {
-        "2xs": "10px",
+        "xsmall": ["8px", "16px"],
+        "small": ["12px", "24px"],
       },
     },
   },

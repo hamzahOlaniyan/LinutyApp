@@ -1,20 +1,28 @@
 import React from "react";
+import { account } from "./ico/account";
+import { add_image } from "./ico/add-image";
 import { bookmark } from "./ico/bookmark";
 import { chevrondown } from "./ico/chevrondown";
 import { chevronforward } from "./ico/chevronforward";
+import { close } from "./ico/close";
 import { comment } from "./ico/comment";
+import { deleteTrash } from "./ico/delete";
 import { discover } from "./ico/discover";
 import { discoverSolid } from "./ico/discoverSolid";
-import { favorite } from "./ico/favoriteIcon";
+import { edit } from "./ico/edit";
+import { events } from "./ico/events";
+import { favorite } from "./ico/favorite";
 import { filter } from "./ico/filter";
 import { home } from "./ico/home";
 import { homeSolid } from "./ico/homeSolid";
 import { logout } from "./ico/logout";
+import { menu } from "./ico/menu";
 import { news } from "./ico/news";
 import { newsSolid } from "./ico/newsSolid";
 import { northwest } from "./ico/northwest";
 import { notification } from "./ico/notification";
 import { plus } from "./ico/plus";
+import { report } from "./ico/report";
 import { repost } from "./ico/repost";
 import { search } from "./ico/search";
 import { search2 } from "./ico/search2";
@@ -57,8 +65,16 @@ const icons = {
   story,
   southeast,
   northwest,
+  edit,
   chevrondown,
-  chevronforward
+  chevronforward,
+  menu,
+  add_image,
+  close,
+  deleteTrash,
+  account,
+  report,
+  events
 } as const;
 
 type IconName = keyof typeof icons;

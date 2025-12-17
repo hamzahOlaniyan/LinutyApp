@@ -17,18 +17,18 @@ export const useFeedQuery = () => {
 
   const { data, isLoading, error, isFetching, refetch, } = useApiQuery<FeedEnvelope>(
     USER_PROFILE_KEY,
-  { limit: 20 },
+  undefined,
 
     {
-      retry: (failureCount, error) => {
-        if (error?.response?.status === 401) return false;
-        return failureCount < 2;
-      },
-      staleTime: 0,
+      // retry: (failureCount, error) => {
+      //   if (error?.response?.status === 401) return false;
+      //   return failureCount < 2;
+      // },
+      // staleTime: 0,
       enabled: !!accessToken,
-      refetchOnMount: "always",
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
+      // refetchOnMount: "always",
+      // refetchOnReconnect: true,
+      // refetchOnWindowFocus: true,
     }
   );
   return { isLoading, data, error, isFetching, refetch, };

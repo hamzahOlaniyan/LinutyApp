@@ -4,19 +4,27 @@ import { wp } from "@/constant/common";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { memo } from "react";
-import { Dimensions, Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import PostAction from "../PostAction";
 import PostHeader from "../PostHeader";
 import { PostCardProps } from "../type";
 
 const PostCard = memo(function PostCard({ post }: PostCardProps) {
   const router = useRouter();
-  const { width: screenWidth } = Dimensions.get("window");
+  // const { width: screenWidth } = Dimensions.get("window");
 
   const media = post?.mediaFiles ?? [];
-  const firstImage = media.find(m => m.type === "IMAGE")?.url;
+  // const firstImage =  media.find(m => m.type === "IMAGE")?.url;
+  const firstImage = media[0];
 
-  console.log(JSON.stringify(post, null, 2));
+  const aspectRatio =
+    firstImage?.height && firstImage?.width
+      ? firstImage?.width / firstImage?.height
+      : 1;
+
+  // console.log("firstImage", JSON.stringify(firstImage, null, 2));
+
+  // console.log(JSON.stringify(post, null, 2));
 
   return (
     <View style={s.container}>
@@ -25,6 +33,7 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
         author={post.author}
         createdAt={post.createdAt}
         visibility={post.visibility}
+        postId={post.id}
       />
 
       {/* BODY: open post */}
@@ -33,7 +42,7 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
         style={s.content}
       >
         {post.content ? (
-          <AppText className="leading-6">{post.content}</AppText>
+          <AppText variant="post_content">{post?.content}</AppText>
         ) : null}
       </Pressable>
 
@@ -46,9 +55,15 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
           className="mt-3 overflow-hidden"
         >
           <Image
-            source={{ uri: firstImage }}
-            style={{ width: screenWidth, height: screenWidth }}
-            contentFit="contain"
+            source={{ uri: firstImage.url }}
+            contentFit="cover"
+            contentPosition={"center"}
+            style={[
+              s.image,
+              {
+                aspectRatio
+              }
+            ]}
           />
         </Pressable>
       ) : null}
@@ -71,5 +86,8 @@ const s = StyleSheet.create({
   content: {
     paddingHorizontal: wp(3),
     marginTop: 12
+  },
+  image: {
+    backgroundColor: "red"
   }
 });

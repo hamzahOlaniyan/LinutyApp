@@ -1,5 +1,4 @@
 import AppText from "@/components/ui/AppText";
-import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,15 +12,11 @@ export default function PostInfo({
   return (
     <View style={s.container}>
       {Number(likeCount) >= 1 ? (
-        <AppText color={appColors.placeholder}>
-          {Number(likeCount)} like ·
-        </AppText>
+        <AppText variant="post_info">{Number(likeCount)} like ·</AppText>
       ) : null}
 
       {post?._count?.comments >= 1 ? (
-        <AppText color={appColors.placeholder} className="text-right">
-          {post?._count?.comments} comments
-        </AppText>
+        <AppText variant="post_info">{post?._count?.comments} comments</AppText>
       ) : null}
 
       {/* <AppText color={appColors.placeholder} className="text-right">
@@ -35,7 +30,7 @@ export default function PostInfo({
 }
 const s = StyleSheet.create({
   container: {
-    paddingHorizontal: wp(4),
+    paddingHorizontal: wp(3),
     paddingVertical: hp(0.5),
     flexDirection: "row",
     justifyContent: "flex-end",

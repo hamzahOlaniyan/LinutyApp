@@ -1,129 +1,311 @@
-// import { Font } from "@/assets/fonts/FontFamily";
-// import Avatar from "@/components/Avatar";
-// import Imagepicker from "@/components/Imagepicker";
-// import AppText from "@/components/ui/AppText";
-// import Button from "@/components/ui/Button";
-// import { uploadMediaSmart } from "@/components/UploadImage";
-// import { appColors } from "@/constant/colors";
-// import { hp, wp } from "@/constant/common";
-// import { ImageIcon } from "@/icons/ico/ImageIcon";
-// import { Plus } from "@/icons/ico/plus";
-// import { createPost } from "@/Services/db/posts";
-// import { useAuthStore } from "@/store/useAuthStore";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import { useRouter } from "expo-router";
-// import React, { useState } from "react";
-// import { Alert, KeyboardAvoidingView, Platform, ScrollView, TextInput, View } from "react-native";
-// import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Font } from "@/assets/fonts/FontFamily";
+import AppText from "@/components/ui/AppText";
+import Avatar from "@/components/ui/Avatar";
+import { appColors } from "@/constant/colors";
+import { hp, wp } from "@/constant/common";
+import { useCreatePost } from "@/hooks/useCreatePost";
+import Icon from "@/icons";
+import { supabase } from "@/lib/supabase/supabase";
+import { useAuthStore } from "@/store/useAuthStore";
+import { randomUUID } from "expo-crypto";
+import { Image } from "expo-image";
+import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "expo-router";
+import React, { useState } from "react";
 
-// export default function NewPost() {
-//    const [preview, setPreview] = useState<any[]>([]);
-//    const [postText, setPostText] = useState("");
-//    const { profile } = useAuthStore();
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  View
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-//    const queryClient = useQueryClient();
-//    const router = useRouter();
+type LocalMedia = {
+  id: string;
+  uri: string;
+  mimeType: string;
+  width?: number;
+  height?: number;
+  size?: number;
+};
 
-//    const { bottom } = useSafeAreaInsets();
+export default function NewPost() {
+  const { me } = useAuthStore();
+  const createPostMutation = useCreatePost();
 
-//    const { mutate, isPending, error } = useMutation({
-//       mutationFn: async () => {
-//          const mediaRes = await uploadMediaSmart(profile?.id, preview, "media");
+  const [content, setContent] = useState("");
+  const [media, setMedia] = useState<LocalMedia[]>([]);
+  const [loading, setLoading] = useState(false);
 
-//          return createPost({
-//             content: postText,
-//             author: profile!.id,
-//             media: mediaRes,
-//          });
-//       },
-//       onSuccess: (data) => {
-//          console.log("✅ NEW POST HAS BEEN ADDED", JSON.stringify(data, null, 2));
-//          queryClient.invalidateQueries({ queryKey: ["posts"] });
-//          setPostText("");
-//          router.back();
-//       },
-//       onError: (error) => Alert.alert("Error", error.message),
-//    });
+  const name = `${me?.firstName} ${me?.lastName}`;
 
-//    return (
-//       <ScrollView
-//          style={{
-//             paddingHorizontal: wp(4),
-//             paddingBottom: bottom,
-//             position: "relative",
-//          }}
-//          className="flex-1 bg-white relative"
-//       >
-//          <View className="gap-4 relative">
-//             <View className="flex-row items-center gap-4">
-//                <Avatar path={profile?.avatarUrl} size={45} />
-//                <View>
-//                   <AppText weight="semi" cap="capitalize">
-//                      {profile?.firstName} {profile?.lastName}
-//                   </AppText>
-//                   <View className="flex-row gap-3">
-//                      <AppText size="sm" color={appColors.secondary}>
-//                         @{profile?.username}
-//                      </AppText>
-//                   </View>
-//                </View>
-//             </View>
+  const navigation = useNavigation();
 
-//             <KeyboardAvoidingView
-//                behavior={Platform.OS === "ios" ? "padding" : "height"}
-//                keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 80}
-//                className="relative"
-//             >
-//                <View style={{ backgroundColor: appColors.offWhite, height: hp(20) }} className="rounded-xl p-2">
-//                   <TextInput
-//                      style={{
-//                         fontSize: hp(3),
-//                         fontFamily: Font.Light,
-//                         color: appColors.text,
-//                      }}
-//                      placeholder="What's on your mind?"
-//                      placeholderTextColor={appColors.placeholder}
-//                      multiline
-//                      value={postText}
-//                      onChangeText={setPostText}
-//                      autoFocus
-//                   />
-//                </View>
-//             </KeyboardAvoidingView>
+  const { bottom } = useSafeAreaInsets();
 
-//             <Imagepicker
-//                size={100}
-//                url={null}
-//                onPickLocal={(assets) => setPreview(assets)}
-//                picker={
-//                   <View className="self-end">
-//                      <ImageIcon size={32} />
-//                   </View>
-//                }
-//             />
-//          </View>
-//          <Button
-//             onPress={() => mutate()}
-//             disabled={!postText.trim()}
-//             isLoading={isPending}
-//             icon={<Plus color={!postText ? appColors.grey : appColors.blue} />}
-//             size="sm"
-//             text="Post"
-//             className="absolute top-0 right-4 bg-neutral-100 p-2 rounded-lg"
-//             variant="secondary"
-//             color={appColors.blue}
-//          />
-//       </ScrollView>
-//    );
-// }
+  const pickImages = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsMultipleSelection: true,
+      quality: 0.8
+    });
 
-import React from "react";
-import { Text, View } from "react-native";
+    if (result.canceled) return;
 
-export default function CreatePost() {
+    const selected = result.assets.map(asset => ({
+      id: randomUUID(),
+      uri: asset.uri,
+      mimeType: asset.mimeType ?? "image/jpeg",
+      width: asset.width,
+      height: asset.height,
+      size: asset.fileSize
+    }));
+
+    setMedia(prev => [...prev, ...selected]);
+  };
+
+  const removeImage = (id: string) => {
+    setMedia(prev => prev.filter(m => m.id !== id));
+  };
+
+  async function uploadImage(file: LocalMedia, userId: string) {
+    const fileExt = file.uri.split(".").pop() || "jpg";
+    const filePath = `posts/${userId}/${Date.now()}-${file.id}.${fileExt}`;
+
+    const response = await fetch(file.uri);
+
+    // ✅ works in RN + TS
+    const arrayBuffer = await response.arrayBuffer();
+    const fileData = new Uint8Array(arrayBuffer);
+
+    const { error } = await supabase.storage
+      .from("post-images")
+      .upload(filePath, fileData, {
+        contentType: file.mimeType,
+        upsert: false
+      });
+
+    if (error) throw error;
+
+    const { data } = supabase.storage
+      .from("post-images")
+      .getPublicUrl(filePath);
+
+    return {
+      url: data.publicUrl,
+      mimeType: file.mimeType,
+      type: "IMAGE" as const,
+      width: file.width,
+      height: file.height,
+      sizeBytes: fileData.byteLength
+    };
+  }
+
+  const handleSubmit = async () => {
+    console.log("clicked");
+
+    try {
+      setLoading(true);
+
+      if (!me?.id) {
+        console.error("No authenticated user");
+        setLoading(false);
+        return;
+      }
+
+      // 1️⃣ Upload media first
+      let uploadedMedia;
+
+      if (!content?.trim() && media.length === 0) {
+        setLoading(false);
+        return;
+      }
+
+      if (media.length > 0) {
+        uploadedMedia = await Promise.all(
+          media.map(file => uploadImage(file, me.id))
+        );
+      }
+
+      // 2️⃣ Create post
+      await createPostMutation.mutateAsync(
+        {
+          content,
+          visibility: "PUBLIC",
+          images: uploadedMedia
+        },
+        {
+          onSuccess: async () => console.log("✅ new post has been created"),
+          onError: async error =>
+            console.log("something whent wrong", error.message)
+        }
+      );
+
+      // 3️⃣ Reset + navigate back
+      setContent("");
+      setMedia([]);
+      navigation.goBack();
+    } catch (err) {
+      console.error(err);
+      console.log("Failed to create post");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //  const { mutate, isPending, error } = useMutation({
+  //     mutationFn: async () => {
+  //        const mediaRes = await uploadMediaSmart(me?.id, preview, "media");
+
+  //        return createPost({
+  //           content: postText,
+  //           author: me!.id,
+  //           media: mediaRes,
+  //        });
+  //     },
+  //     onSuccess: (data) => {
+  //        console.log("✅ NEW POST HAS BEEN ADDED", JSON.stringify(data, null, 2));
+  //        queryClient.invalidateQueries({ queryKey: ["posts"] });
+  //        setPostText("");
+  //        router.back();
+  //     },
+  //     onError: (error) => Alert.alert("Error", error.message),
+  //  });
+
   return (
-    <View>
-      <Text>CreatePost</Text>
-    </View>
+    <ScrollView
+      style={{
+        paddingBottom: bottom,
+        position: "relative"
+      }}
+      className="relative flex-1 bg-white"
+    >
+      <View className="relative gap-4">
+        <View
+          style={{
+            paddingHorizontal: wp(3)
+          }}
+          className="flex-row items-center gap-4"
+        >
+          <Avatar path={me?.avatarUrl} size={45} />
+          <View className="flex-1">
+            <AppText variant={"small"} className="font-Medium capitalize">
+              {name}
+            </AppText>
+            <AppText variant={"xs"} color={appColors.placeholder}>
+              @{me?.username}
+            </AppText>
+          </View>
+        </View>
+
+        {/* <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 80}
+          className="relative"
+        > */}
+        <View style={{ height: hp(20) }} className="rounded-xl p-2">
+          <TextInput
+            style={{
+              fontSize: hp(2),
+              fontFamily: Font.Regular,
+              color: appColors.text
+            }}
+            placeholder="What's on your mind?"
+            placeholderTextColor={appColors.placeholder}
+            multiline
+            value={content}
+            onChangeText={setContent}
+            autoFocus
+          />
+        </View>
+        <TouchableOpacity
+          onPress={handleSubmit}
+          className="absolute right-4 top-0 z-50 bg-teal-500 "
+        >
+          <Icon name="plus" />
+        </TouchableOpacity>
+        {/* </KeyboardAvoidingView> */}
+        <View className="elevation-sm p-2">
+          <TouchableOpacity onPress={pickImages}>
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <Icon name="add_image" size={32} />
+            )}
+          </TouchableOpacity>
+        </View>
+        {/* {media && (
+          <Image source={{ uri: media }} style={{ width: 300, height: 300 }} />
+        )} */}
+
+        {media.length > 0 && (
+          <Pressable onPress={() => setMedia([])}>
+            <AppText>Remove all</AppText>
+          </Pressable>
+        )}
+        <FlatList
+          horizontal
+          data={media}
+          keyExtractor={item => item.id}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ gap: 10, paddingVertical: 10 }}
+          renderItem={({ item }) => (
+            <View style={{ position: "relative" }}>
+              <Image
+                source={{ uri: item.uri }}
+                style={{
+                  width: 90,
+                  height: 90,
+                  borderRadius: 12
+                }}
+              />
+
+              {/* delete button */}
+              <Pressable
+                onPress={() => removeImage(item.id)}
+                hitSlop={10}
+                style={{
+                  position: "absolute",
+                  top: 6,
+                  right: 6,
+                  width: 24,
+                  height: 24,
+                  borderRadius: 12,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "rgba(0,0,0,0.6)"
+                }}
+              >
+                <AppText style={{ color: "white", fontSize: 14 }}>✕</AppText>
+              </Pressable>
+            </View>
+          )}
+        />
+        {/* <Imagepicker
+          size={100}
+          url={null}
+          onPickLocal={assets => setPreview(assets)}
+          picker={
+            <View className="self-end">
+              <ImageIcon size={32} />
+            </View>
+          }
+        /> */}
+      </View>
+
+      {/* <Button
+        // onPress={() => mutate()}
+        disabled={!postText.trim()}
+        // isLoading={isPending}
+        size="sm"
+        className="absolute right-4 top-0 rounded-lg bg-neutral-100 p-2"
+        variant="secondary"
+        // color={appColors.blue}
+      ></Button> */}
+    </ScrollView>
   );
 }

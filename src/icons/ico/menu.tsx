@@ -10,7 +10,7 @@ export const menu = ({ color = "#1f1f1f", size = 24, ...props }) => {
       {...props}
     >
       <Path
-        d="M111.87-228.28v-91h736.26v91H111.87Zm0-206.22v-91h736.26v91H111.87Zm0-206.22v-91h736.26v91H111.87Z"
+        d="M120-680v-80h720v80H120Zm0 480v-80h720v80H120Zm0-240v-80h720v80H120Z"
         fill={color}
       />
     </Svg>

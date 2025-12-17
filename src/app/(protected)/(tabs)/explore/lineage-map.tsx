@@ -28,7 +28,7 @@ export default function clans() {
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    paddingHorizontal: wp(4),
+    paddingHorizontal: wp(3),
     paddingBottom: 200
   }
 });

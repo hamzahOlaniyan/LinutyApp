@@ -63,12 +63,12 @@ export default function Button({
           borderWidth: variant === "outline" ? 0.8 : 0,
           backgroundColor:
             variant === "primary"
-              ? appColors.black
+              ? appColors.primary
               : variant === "secondary"
                 ? appColors.dark_whitesmoke
                 : variant === "outline" || variant === "plain"
                   ? "transparent"
-                  : appColors.black,
+                  : appColors.primary,
           height:
             size === "lg"
               ? hp(6.5)

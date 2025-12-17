@@ -26,7 +26,7 @@ export default function ClanTree() {
         scrollEnabled
         showsVerticalScrollIndicator={false}
         style={{
-          paddingHorizontal: wp(4),
+          paddingHorizontal: wp(3),
           paddingBottom: 600
         }}
       >

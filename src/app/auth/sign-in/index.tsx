@@ -112,7 +112,7 @@ export default function Signin() {
   return (
     <SafeAreaView
       style={{
-        paddingHorizontal: wp(4),
+        paddingHorizontal: wp(3),
         flex: 1,
         backgroundColor: appColors.white
       }}
