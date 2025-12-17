@@ -42,14 +42,14 @@ export default function ClanMembers({
   useEffect(() => {
     height.value = withTiming(showSearchBar ? 50 : 0, { duration: 300 });
     opacity.value = withTiming(showSearchBar ? 1 : 0, { duration: 300 });
-  }, [showSearchBar]);
+  }, [showSearchBar, height, opacity]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
       height: height.value,
       opacity: opacity.value
     };
-  });
+  }, []);
 
   return (
     <View className="flex-1">

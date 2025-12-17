@@ -11,8 +11,6 @@ export default function Me() {
   const { me } = useAuthStore();
   const { bottom } = useSafeAreaInsets();
 
-  console.log(JSON.stringify(me, null, 2));
-
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

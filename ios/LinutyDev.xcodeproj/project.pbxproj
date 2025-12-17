@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		072807D97CD6150B8EF79761 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 47B4F53FBFE3AA7A4DAB840A /* PrivacyInfo.xcprivacy */; };
-		0D4063D1DAC55B5D257A7932 /* libPods-LinutyDev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B706C2A7AD2A1295ADF154 /* libPods-LinutyDev.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		36DF181DBB31F379E37177DC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8C594B3716F2100126A9A6CD /* PrivacyInfo.xcprivacy */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		79F0A1673069E47A0FF11DB3 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C7EF62B2AEC86C41B3D1FE /* ExpoModulesProvider.swift */; };
+		9C716881DAFF237D37374134 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECEC4D13CD23C34FC38DD4A /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		CCE8FA004CB13C6EF4FD0197 /* libPods-LinutyDev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F554D5DAAB13B6D9340C89 /* libPods-LinutyDev.a */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -20,16 +20,16 @@
 		13B07F961A680F5B00A75B9A /* LinutyDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinutyDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = LinutyDev/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LinutyDev/Info.plist; sourceTree = "<group>"; };
-		47B4F53FBFE3AA7A4DAB840A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = LinutyDev/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		96C7EF62B2AEC86C41B3D1FE /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-LinutyDev/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		2ECEC4D13CD23C34FC38DD4A /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-LinutyDev/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		318CC78B25542F0F6FEC9DD6 /* Pods-LinutyDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinutyDev.debug.xcconfig"; path = "Target Support Files/Pods-LinutyDev/Pods-LinutyDev.debug.xcconfig"; sourceTree = "<group>"; };
+		32F554D5DAAB13B6D9340C89 /* libPods-LinutyDev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LinutyDev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C594B3716F2100126A9A6CD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = LinutyDev/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = LinutyDev/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B0B706C2A7AD2A1295ADF154 /* libPods-LinutyDev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LinutyDev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		E7F0E7B90825BB0A599B9AF7 /* Pods-LinutyDev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinutyDev.release.xcconfig"; path = "Target Support Files/Pods-LinutyDev/Pods-LinutyDev.release.xcconfig"; sourceTree = "<group>"; };
+		CBAFA13DD214A0114BE5CC97 /* Pods-LinutyDev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinutyDev.release.xcconfig"; path = "Target Support Files/Pods-LinutyDev/Pods-LinutyDev.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = LinutyDev/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* LinutyDev-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "LinutyDev-Bridging-Header.h"; path = "LinutyDev/LinutyDev-Bridging-Header.h"; sourceTree = "<group>"; };
-		F314F3EF2E01A3198EE6F1D4 /* Pods-LinutyDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinutyDev.debug.xcconfig"; path = "Target Support Files/Pods-LinutyDev/Pods-LinutyDev.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,23 +37,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D4063D1DAC55B5D257A7932 /* libPods-LinutyDev.a in Frameworks */,
+				CCE8FA004CB13C6EF4FD0197 /* libPods-LinutyDev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0AFA5739F5BC9EE3A85E2506 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F314F3EF2E01A3198EE6F1D4 /* Pods-LinutyDev.debug.xcconfig */,
-				E7F0E7B90825BB0A599B9AF7 /* Pods-LinutyDev.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* LinutyDev */ = {
 			isa = PBXGroup;
 			children = (
@@ -63,16 +53,26 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				47B4F53FBFE3AA7A4DAB840A /* PrivacyInfo.xcprivacy */,
+				8C594B3716F2100126A9A6CD /* PrivacyInfo.xcprivacy */,
 			);
 			name = LinutyDev;
+			sourceTree = "<group>";
+		};
+		2BDFD36173DBA7A0F0D4BF5F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				318CC78B25542F0F6FEC9DD6 /* Pods-LinutyDev.debug.xcconfig */,
+				CBAFA13DD214A0114BE5CC97 /* Pods-LinutyDev.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				B0B706C2A7AD2A1295ADF154 /* libPods-LinutyDev.a */,
+				32F554D5DAAB13B6D9340C89 /* libPods-LinutyDev.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -84,6 +84,14 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
+		838888AEAACAAAF93B4B8A86 /* LinutyDev */ = {
+			isa = PBXGroup;
+			children = (
+				2ECEC4D13CD23C34FC38DD4A /* ExpoModulesProvider.swift */,
+			);
+			name = LinutyDev;
+			sourceTree = "<group>";
+		};
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
@@ -91,8 +99,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				0AFA5739F5BC9EE3A85E2506 /* Pods */,
-				CB2C51F123D2C8D6F52E41EB /* ExpoModulesProviders */,
+				2BDFD36173DBA7A0F0D4BF5F /* Pods */,
+				D6D3E2E336704007F9AC8B03 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -116,20 +124,12 @@
 			path = LinutyDev/Supporting;
 			sourceTree = "<group>";
 		};
-		CB2C51F123D2C8D6F52E41EB /* ExpoModulesProviders */ = {
+		D6D3E2E336704007F9AC8B03 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				F2D06B2EAAF9BE01A69520AE /* LinutyDev */,
+				838888AEAACAAAF93B4B8A86 /* LinutyDev */,
 			);
 			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
-		F2D06B2EAAF9BE01A69520AE /* LinutyDev */ = {
-			isa = PBXGroup;
-			children = (
-				96C7EF62B2AEC86C41B3D1FE /* ExpoModulesProvider.swift */,
-			);
-			name = LinutyDev;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "LinutyDev" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				E11894283CD81B4375290C04 /* [Expo] Configure project */,
+				14E4F22A6E2E570C29A87642 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				0BDD3EB1B1CA1A15C0D326E3 /* [CP] Embed Pods Frameworks */,
+				7A42C975449210BF7F6E84CA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				072807D97CD6150B8EF79761 /* PrivacyInfo.xcprivacy in Resources */,
+				36DF181DBB31F379E37177DC /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,7 +242,31 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0BDD3EB1B1CA1A15C0D326E3 /* [CP] Embed Pods Frameworks */ = {
+		14E4F22A6E2E570C29A87642 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env",
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/LinutyDev/LinutyDev.entitlements",
+				"$(SRCROOT)/Pods/Target Support Files/Pods-LinutyDev/expo-configure-project.sh",
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Pods/Target Support Files/Pods-LinutyDev/ExpoModulesProvider.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-LinutyDev/expo-configure-project.sh\"\n";
+		};
+		7A42C975449210BF7F6E84CA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -310,30 +334,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LinutyDev/Pods-LinutyDev-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E11894283CD81B4375290C04 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env",
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/LinutyDev/LinutyDev.entitlements",
-				"$(SRCROOT)/Pods/Target Support Files/Pods-LinutyDev/expo-configure-project.sh",
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(SRCROOT)/Pods/Target Support Files/Pods-LinutyDev/ExpoModulesProvider.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-LinutyDev/expo-configure-project.sh\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -342,7 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				79F0A1673069E47A0FF11DB3 /* ExpoModulesProvider.swift in Sources */,
+				9C716881DAFF237D37374134 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,7 +351,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F314F3EF2E01A3198EE6F1D4 /* Pods-LinutyDev.debug.xcconfig */;
+			baseConfigurationReference = 318CC78B25542F0F6FEC9DD6 /* Pods-LinutyDev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -387,7 +387,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7F0E7B90825BB0A599B9AF7 /* Pods-LinutyDev.release.xcconfig */;
+			baseConfigurationReference = CBAFA13DD214A0114BE5CC97 /* Pods-LinutyDev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

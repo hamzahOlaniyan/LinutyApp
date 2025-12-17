@@ -2,7 +2,6 @@ import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import Icon from "@/icons";
-import { EventsIcon } from "@/icons/ico/EventsIcon";
 import { FramePersonIcon } from "@/icons/ico/FramePersonIcon";
 import { FriendsIcon } from "@/icons/ico/friendsIcon";
 import { useRouter } from "expo-router";
@@ -45,21 +44,21 @@ export default function index() {
             style={s.smallLink}
             className=""
           >
-            <FriendsIcon size={24} />
+            <FriendsIcon />
             <AppText>Clan member near you</AppText>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => router.push("/explore/stories/")}
             style={s.smallLink}
           >
-            <Icon name="story" size={24} />
+            <Icon name="story" />
             <AppText>Lineage stories</AppText>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => router.push("/explore/gathering")}
             style={s.smallLink}
           >
-            <EventsIcon size={24} />
+            <Icon name="events" />
             <AppText>Upcoming gathering</AppText>
           </TouchableOpacity>
         </View>

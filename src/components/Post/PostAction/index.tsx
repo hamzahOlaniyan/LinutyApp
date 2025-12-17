@@ -78,7 +78,7 @@ export default function PostAction({ post }: PostCardProps) {
         <View style={s.actions}>
           <Pressable hitSlop={8} style={s.button} onPress={handleLike}>
             <Icon name={likes.liked ? "thumbsupSolid" : "thumbsup"} />
-            <AppText color={appColors.secondary}>Like</AppText>
+            <AppText variant={"post_action"}>Like</AppText>
           </Pressable>
 
           <Pressable
@@ -88,12 +88,12 @@ export default function PostAction({ post }: PostCardProps) {
             style={s.button}
           >
             <Icon name="comment" />
-            <AppText color={appColors.secondary}>Comment</AppText>
+            <AppText variant={"post_action"}>Comment</AppText>
           </Pressable>
 
           <Pressable hitSlop={8} accessibilityLabel="repost" style={s.button}>
             <Icon name="repost" />
-            <AppText color={appColors.secondary}>Repost</AppText>
+            <AppText variant={"post_action"}>Repost</AppText>
           </Pressable>
 
           <Pressable
@@ -103,7 +103,7 @@ export default function PostAction({ post }: PostCardProps) {
             style={s.button}
           >
             <Icon name="share" />
-            <AppText color={appColors.secondary}>Share</AppText>
+            <AppText variant={"post_action"}>Share</AppText>
           </Pressable>
         </View>
       </View>

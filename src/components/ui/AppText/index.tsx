@@ -40,7 +40,14 @@ const textVariants = cva("font-Regular text-text", {
       body: "font-Regular",
       medium: "",
       small: "",
-      xs: ""
+      xs: "",
+      post_name: "font-SemiBold",
+      post_username: "text-placeholder",
+      post_content: "",
+      post_info: "text-placeholder",
+      post_date: "text-placeholder",
+      post_action: "",
+      post_visability: "text-placeholder"
     }
   },
   defaultVariants: {
@@ -63,7 +70,15 @@ type VariantName =
   | "body"
   | "medium"
   | "small"
-  | "xs";
+  | "xs"
+  | "post_name"
+  | "post_username"
+  | "post_content"
+  | "post_info"
+  | "post_date"
+  | "post_action"
+  | "post_name"
+  | "post_visability";
 
 const variantFontSizes: Record<VariantName, number> = {
   headerLarge: hp(3),
@@ -71,8 +86,15 @@ const variantFontSizes: Record<VariantName, number> = {
   title: hp(2),
   body: hp(1.9),
   medium: hp(1.7),
-  small: hp(1.5),
-  xs: hp(1.3)
+  small: hp(1.6),
+  xs: hp(1.5),
+  post_name: hp(1.9),
+  post_date: hp(1.4),
+  post_visability: hp(1.4),
+  post_username: hp(1.7),
+  post_content: hp(1.8),
+  post_info: hp(1.6),
+  post_action: hp(1.8)
 };
 
 const AppText = ({

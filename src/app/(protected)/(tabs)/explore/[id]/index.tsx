@@ -2,12 +2,11 @@ import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { Stack } from "expo-router";
-import { useLocalSearchParams } from "expo-router/build/hooks";
 import React from "react";
 import { View } from "react-native";
 
 export default function index() {
-  const { id } = useLocalSearchParams();
+  // const { id } = useLocalSearchParams();
   return (
     <View
       style={{
@@ -17,9 +16,11 @@ export default function index() {
       }}
     >
       <Stack.Screen
-        options={{
-          title: `${id}`
-        }}
+        options={
+          {
+            // title: `${id}`
+          }
+        }
       />
       <AppText color={appColors.white}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,

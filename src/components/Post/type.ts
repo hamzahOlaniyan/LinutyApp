@@ -75,13 +75,13 @@ export type FeedPost = {
   };
 };
 
-// export type Author = {
-//   id: string;
-//   username?: string | null;
-//   firstName?: string | null;
-//   lastName?: string | null;
-//   avatarUrl?: string | null;
-// };
+export type Author = {
+  id: string;
+  username?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  avatarUrl?: string | null;
+};
 
 // export type CommentResponse = {
 //   id: string;

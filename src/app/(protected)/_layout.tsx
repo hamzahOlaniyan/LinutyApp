@@ -1,7 +1,11 @@
-import { Stack } from "expo-router";
+import Icon from "@/icons";
+import { Stack, useRouter } from "expo-router";
 import React from "react";
+import { TouchableOpacity } from "react-native";
 
 export default function _ProtectedLayout() {
+  const router = useRouter();
+
   return (
     <Stack
       screenOptions={{
@@ -14,12 +18,26 @@ export default function _ProtectedLayout() {
         name="me"
         options={{ title: "Profile", headerShown: false }}
       />
+      <Stack.Screen
+        name="post"
+        options={{ title: "Post", headerShown: false }}
+      />
+      <Stack.Screen
+        name="user/[id]"
+        options={{ title: "user", headerShown: false }}
+      />
 
       <Stack.Screen
         name="create-post"
         options={{
-          title: "New post",
-          animation: "none"
+          title: "Create post",
+          animation: "none",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <Icon name="close" />
+            </TouchableOpacity>
+          ),
+          headerTitleAlign: "center"
         }}
       />
 
