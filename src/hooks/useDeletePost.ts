@@ -16,7 +16,7 @@ type Post = { id: string };
       onSuccess: () => {
         qc.setQueryData<CursorPage<Post>>(["/feed"], (old) => {
           if (!old?.data) return old;
-          return { ...old, data: old.data.filter((p: any) => p.id !== postId) };
+          return { ...old, data: old.data.filter((p) => p.id !== postId) };
         });
 
         qc.invalidateQueries({ queryKey: ["/feed"] });
