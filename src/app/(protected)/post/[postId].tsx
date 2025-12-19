@@ -148,16 +148,14 @@ export default function PostIdScreen() {
     };
   }
 
-  const removeImage = (id: string) => {
+  const removeImage = useCallback((id: string) => {
     setDirty(true);
     setMedia(prev => {
       const item = prev.find(m => m.id === id);
-      if (item && !item.isLocal) {
-        setDeletedMediaIds(ids => [...ids, id]);
-      }
+      if (item && !item.isLocal) setDeletedMediaIds(ids => [...ids, id]);
       return prev.filter(m => m.id !== id);
     });
-  };
+  }, []);
 
   const handleSubmit = async () => {
     if (!postId || !me?.id) return;
@@ -207,6 +205,25 @@ export default function PostIdScreen() {
     }
   };
 
+  const renderMediaItem = useCallback(
+    ({ item }: { item: EditableMedia }) => (
+      <View style={{ position: "relative" }}>
+        <Image
+          source={{ uri: item.isLocal ? item.uri! : item.url! }}
+          style={{ width: 90, height: 90, borderRadius: 12 }}
+        />
+        <Pressable
+          onPress={() => removeImage(item.id)}
+          hitSlop={10}
+          style={s.removeBtn}
+        >
+          <Icon name="close" />
+        </Pressable>
+      </View>
+    ),
+    [removeImage]
+  );
+
   return (
     <ScreenView>
       <View style={{ height: hp(20) }} className="rounded-xl p-2">
@@ -233,25 +250,11 @@ export default function PostIdScreen() {
       {media.length > 0 && (
         <FlatList
           horizontal
-          data={media}
-          keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ gap: 10, paddingVertical: 10 }}
-          renderItem={({ item }) => (
-            <View style={{ position: "relative" }}>
-              <Image
-                source={{ uri: item.isLocal ? item.uri! : item.url! }}
-                style={{ width: 90, height: 90, borderRadius: 12 }}
-              />
-              <Pressable
-                onPress={() => removeImage(item.id)}
-                hitSlop={10}
-                style={s.removeBtn}
-              >
-                <Icon name="close" color="white" />
-              </Pressable>
-            </View>
-          )}
+          data={media}
+          keyExtractor={item => item.id}
+          renderItem={renderMediaItem}
         />
       )}
       <View className="elevation-sm p-2">
