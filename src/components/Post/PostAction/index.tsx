@@ -107,13 +107,13 @@ export default function PostAction({ post }: PostCardProps) {
 
       <ModalBottomSheet
         ref={bottomSheetRef}
-        title={`${post._count.comments} Comments`}
+        title={`${post._count.comments ?? 0} Comments`}
         children={
           <CommentsList
-            postAuthorId={post.author.id}
+            postAuthorId={post.author.id ?? ""}
             comments={comments ?? []}
             loading={isLoading}
-            count={post._count.comments}
+            count={post._count.comments ?? null}
             postId={post.id}
           />
         }

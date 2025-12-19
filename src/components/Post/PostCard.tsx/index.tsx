@@ -87,46 +87,50 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
             );
           })}
         {post?.mediaFiles?.length > 1 && (
-          <FlatList
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ backgroundColor: appColors.text }}
-            onViewableItemsChanged={onViewableItemsChanged}
-            viewabilityConfig={viewabilityConfig}
-            data={media}
-            keyExtractor={(item, index) => item.url || index.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                key={item.id}
-                onPress={() =>
-                  router.push(`/(protected)/post/${post.id}/media`)
-                }
-              >
-                <Image
-                  source={{ uri: item.url }}
-                  style={{
-                    width: screenWidth,
-                    height: screenWidth,
-                    aspectRatio: 1 / 1
-                  }}
-                  contentPosition="center"
+          <View>
+            <FlatList
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ backgroundColor: appColors.text }}
+              onViewableItemsChanged={onViewableItemsChanged}
+              viewabilityConfig={viewabilityConfig}
+              data={media}
+              keyExtractor={(item, index) => item.url || index.toString()}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() =>
+                    router.push(`/(protected)/post/${post.id}/media`)
+                  }
+                >
+                  <Image
+                    source={{ uri: item.url }}
+                    style={{
+                      width: screenWidth,
+                      height: screenWidth,
+                      aspectRatio: 1 / 1
+                    }}
+                    contentPosition="center"
+                  />
+                </TouchableOpacity>
+              )}
+            />
+            <View style={s.mediaCounter}>
+              <AppText variant={"xs"} color={appColors.white}>
+                {currentIndex + 1} / {media.length}
+              </AppText>
+            </View>
+            <View style={s.dotsRow}>
+              {post?.mediaFiles?.map((_, i) => (
+                <View
+                  key={i}
+                  style={[s.dot, i === currentIndex && s.dotActive]}
                 />
-              </TouchableOpacity>
-            )}
-          />
+              ))}
+            </View>
+          </View>
         )}
-
-        <View style={s.mediaCounter}>
-          <AppText variant={"xs"} color={appColors.white}>
-            {currentIndex + 1} / {media.length}
-          </AppText>
-        </View>
-        <View style={s.dotsRow}>
-          {post?.mediaFiles?.map((_, i) => (
-            <View key={i} style={[s.dot, i === currentIndex && s.dotActive]} />
-          ))}
-        </View>
       </View>
       {/* ACTIONS */}
       <PostAction post={post} />

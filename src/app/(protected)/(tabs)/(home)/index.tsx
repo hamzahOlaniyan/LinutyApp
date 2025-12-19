@@ -24,37 +24,36 @@ export default function HomeFeed() {
   );
 
   return (
-    // <View className="flex-1 bg-white">
-    <View style={{ flex: 1, paddingTop: top, backgroundColor: "white" }}>
-      <FlatList
-        ListHeaderComponent={<HomeHeaderAction />}
-        data={post}
-        keyExtractor={item => item.id}
-        onRefresh={refetch}
-        refreshing={isLoading}
-        bounces
-        scrollEnabled
-        showsVerticalScrollIndicator={false}
-        alwaysBounceVertical
-        overScrollMode="always"
-        removeClippedSubviews
-        initialNumToRender={6}
-        maxToRenderPerBatch={6}
-        windowSize={7}
-        onEndReachedThreshold={END_REACHED_THRESHOLD}
-        ListEmptyComponent={<EmptyFeed />}
-        contentContainerStyle={{
-          backgroundColor: appColors.background,
-          flex: 1
-        }}
-        ListFooterComponent={
-          isLoading ? (
-            <AppText className="py-4 text-center">Loading…</AppText>
-          ) : null
-        }
-        renderItem={renderItem}
-      />
-      {/* </View> */}
+    <View className="flex-1 bg-white">
+      <View style={{ flex: 1, paddingTop: top, backgroundColor: "white" }}>
+        <FlatList
+          ListHeaderComponent={<HomeHeaderAction />}
+          data={post}
+          keyExtractor={item => item.id}
+          onRefresh={refetch}
+          refreshing={isLoading}
+          bounces
+          scrollEnabled
+          showsVerticalScrollIndicator={false}
+          alwaysBounceVertical
+          overScrollMode="always"
+          removeClippedSubviews
+          initialNumToRender={6}
+          maxToRenderPerBatch={6}
+          windowSize={7}
+          onEndReachedThreshold={END_REACHED_THRESHOLD}
+          ListEmptyComponent={<EmptyFeed />}
+          contentContainerStyle={{
+            backgroundColor: appColors.background
+          }}
+          ListFooterComponent={
+            isLoading ? (
+              <AppText className="py-4 text-center">Loading…</AppText>
+            ) : null
+          }
+          renderItem={renderItem}
+        />
+      </View>
     </View>
   );
 }

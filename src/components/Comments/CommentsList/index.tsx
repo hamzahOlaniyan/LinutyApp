@@ -17,12 +17,7 @@ export default function CommentsList({
   count: number;
   postId: string;
 }) {
-  if (!comments) return null;
-
-  if (loading) return <ActivityIndicator />;
-
   const [replyTo, setReplyTo] = useState<ReplyingTo>(null);
-
   const addComment = useAddComment(postId);
 
   const onSend = useCallback(
@@ -48,10 +43,15 @@ export default function CommentsList({
     [addComment, replyTo]
   );
 
+  if (loading) return <ActivityIndicator />;
+  if (!comments) return null;
+
+  const topLevel = (comments ?? []).filter(c => c.parentCommentId === null);
+
   return (
     <View className="h-full flex-1">
       <FlatList
-        data={comments.filter(c => c.parentCommentId === null) ?? []}
+        data={topLevel}
         renderItem={({ item }) => (
           <CommentCard comment={item} setReplyTo={setReplyTo} postId={postId} />
         )}
