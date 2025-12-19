@@ -24,6 +24,7 @@ api.interceptors.request.use((config) => {
     if (config.headers) delete (config.headers).Authorization;
   }
 
+  
   return config;
 });
 

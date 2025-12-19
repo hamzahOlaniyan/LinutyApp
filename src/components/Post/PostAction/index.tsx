@@ -4,10 +4,7 @@ import { ModalBottomSheet } from "@/components/ui/ModalBottomSheet";
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import { useCommentQuery } from "@/hooks/useCommentQuery";
-import {
-  useMyPostReactionQuery,
-  usePostReactionMutation
-} from "@/hooks/usePostReactionQuery";
+import { PostApi } from "@/hooks/usePostApi";
 import Icon from "@/icons";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useRouter } from "expo-router";
@@ -18,8 +15,8 @@ import { PostCardProps } from "../type";
 
 export default function PostAction({ post }: PostCardProps) {
   const { isLoading, data } = useCommentQuery(post?.id);
-  const reactMutation = usePostReactionMutation(post.id);
-  const { data: myReaction } = useMyPostReactionQuery(post.id);
+  const reactMutation = PostApi.usePostReactionMutation(post.id);
+  const { data: myReaction } = PostApi.useMyPostReactionQuery(post.id);
 
   const [comments, setComments] = useState(data?.data);
   const [likes, setLikes] = useState<{ count: number; liked: boolean }>({

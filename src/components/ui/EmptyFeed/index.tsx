@@ -1,15 +1,19 @@
-import AppText from "@/components/ui/AppText";
 import React, { memo } from "react";
-import { View } from "react-native";
+import AppText from "../AppText";
 
 export const EmptyFeed = memo(() => {
+  // const skeleton = Array.from({ length: 10 }, _ => _);
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <AppText variant="titleLarge" className="font-SemiBold">
-        No posts yet!
-      </AppText>
-      <AppText>Be the first to share something!</AppText>
-    </View>
+    <AppText>load</AppText>
+    // <Animated.View className="h-full flex-1 gap-4 bg-background">
+    //   {skeleton.map((_, idx) => (
+    //     <Animated.View
+    //       key={idx}
+    //       style={{ height: hp(25) }}
+    //       className="w-full animate-pulse bg-white ease-in-out"
+    //     ></Animated.View>
+    //   ))}
+    // </Animated.View>
   );
 });
 

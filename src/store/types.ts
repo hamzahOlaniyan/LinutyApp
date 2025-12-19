@@ -1,6 +1,6 @@
 import { FormDataType } from "@/components/ui/FormInput/types";
-import { Profile } from "@/lib/supabase/supabaseTypes";
 import type { Session, User } from "@supabase/supabase-js";
+import { Profile } from "../../types/supabaseTypes";
 
 // export type SessionDTO = {
 //   user: User;

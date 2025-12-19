@@ -1,6 +1,6 @@
 import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
-import { useDeletePost } from "@/hooks/useDeletePost";
+import { PostApi } from "@/hooks/usePostApi";
 import Icon from "@/icons";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { useRouter } from "expo-router";
@@ -24,7 +24,7 @@ export default function PostOptions({
 }) {
   const router = useRouter();
 
-  const deletePost = useDeletePost(postId);
+  const deletePost = PostApi.useDeletePost(postId);
 
   const postOptions: PostOptionsType[] = [
     { title: "save", icon: <Icon name="bookmark" size={30} /> },

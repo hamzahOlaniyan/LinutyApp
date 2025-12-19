@@ -3,10 +3,10 @@ import Avatar from "@/components/ui/Avatar";
 import Button from "@/components/ui/Button";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
-import { Profile } from "@/lib/supabase/supabaseTypes";
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { Profile } from "../../../../types/supabaseTypes";
 
 export default function Info(me: Profile) {
   const name = `${me?.firstName} ${me?.lastName}`;
@@ -20,7 +20,7 @@ export default function Info(me: Profile) {
           <Avatar path={me?.avatarUrl} size={100} />
           <View className="flex-1 gap-2">
             <View>
-              <AppText variant={"header"} className="capitalize">
+              <AppText variant="profile_name" className="capitalize">
                 {name}
               </AppText>
               <AppText>@{me?.username}</AppText>
@@ -28,13 +28,13 @@ export default function Info(me: Profile) {
 
             <View className="flex-row gap-4">
               <View className="">
-                <AppText className="font-Medium">347</AppText>
+                <AppText className="font-SemiBold">347</AppText>
                 <AppText variant={"small"} color={appColors.placeholder}>
                   Followers
                 </AppText>
               </View>
               <View className="">
-                <AppText className="font-Medium">3</AppText>
+                <AppText className="font-SemiBold">3</AppText>
                 <AppText variant={"small"} color={appColors.placeholder}>
                   Following
                 </AppText>

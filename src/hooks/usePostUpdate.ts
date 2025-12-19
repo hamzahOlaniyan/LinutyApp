@@ -1,7 +1,7 @@
 // import { useQueryClient } from "@tanstack/react-query";
 // import { useApiMutation } from "./useApi";
 
-// export const useDeletePost= (postId: string) => {
+// export const usePostUpdate= (postId: string) => {
 
 // type CursorPage<T> = { data: T[]; nextCursor: string | null };
 // type Post = { id: string };
@@ -9,8 +9,8 @@
 
 //   const qc = useQueryClient();
 
-//   return useApiMutation<{ message: string }, void>(
-//     "delete",
+//   return useApiMutation<{ postId: string }, void>(
+//     "patch",
 //     `/post/${postId}`,
 //     {
 //       onSuccess: () => {
@@ -19,7 +19,8 @@
 //           return { ...old, data: old.data.filter((p) => p.id !== postId) };
 //         });
 
-//         qc.invalidateQueries({ queryKey: ["/feed"] });
+//         qc.invalidateQueries({ queryKey: ["/feed", `/post/${postId}`] });
+
 //       }
 //     }
 //   );

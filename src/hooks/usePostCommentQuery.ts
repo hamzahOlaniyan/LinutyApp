@@ -1,7 +1,7 @@
 import { CursorResponse, PostComment } from "@/components/Post/type";
-import { Comment } from "@/lib/supabase/supabaseTypes";
+import { Comment } from "../../types/supabaseTypes";
 import { useApiMutation, useApiQuery } from "./useApi";
-import { MyReactionResponse, ReactionType } from "./usePostReactionQuery";
+import { MyReactionResponse, ReactionType } from "./usePostApi";
 
 type RepliesQueryOpts = { enabled?: boolean };
 

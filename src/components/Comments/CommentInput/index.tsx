@@ -1,5 +1,5 @@
 // import { ReplyingTo } from "@/app/(protected)/post/[postId]/comment";
-import { ReplyingTo } from "@/components/Post/PostAction";
+import { ReplyingTo } from "@/components/Post/type";
 import AppText from "@/components/ui/AppText";
 import React, { useState } from "react";
 import { Pressable, TextInput, View } from "react-native";
