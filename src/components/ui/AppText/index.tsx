@@ -41,6 +41,7 @@ const textVariants = cva("font-Regular text-text", {
       medium: "",
       small: "",
       xs: "",
+      profile_name: "font-Bold",
       post_name: "font-SemiBold",
       post_username: "text-placeholder",
       post_content: "",
@@ -71,6 +72,7 @@ type VariantName =
   | "medium"
   | "small"
   | "xs"
+  | "profile_name"
   | "post_name"
   | "post_username"
   | "post_content"
@@ -84,10 +86,11 @@ const variantFontSizes: Record<VariantName, number> = {
   headerLarge: hp(3),
   header: hp(2.6),
   title: hp(2),
-  body: hp(1.9),
+  body: hp(1.7),
   medium: hp(1.7),
   small: hp(1.6),
-  xs: hp(1.5),
+  xs: hp(1.4),
+  profile_name: hp(2.1),
   post_name: hp(1.9),
   post_date: hp(1.4),
   post_visability: hp(1.4),

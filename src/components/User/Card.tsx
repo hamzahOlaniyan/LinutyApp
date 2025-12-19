@@ -1,8 +1,8 @@
 import { appColors } from "@/constant/colors";
-import { Profile } from "@/lib/supabase/supabaseTypes";
 import { useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
+import { Profile } from "../../../types/supabaseTypes";
 import AppText from "../ui/AppText";
 import Avatar from "../ui/Avatar";
 

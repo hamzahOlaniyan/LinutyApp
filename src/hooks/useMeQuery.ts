@@ -1,6 +1,6 @@
-import { Profile } from "@/lib/supabase/supabaseTypes";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect } from "react";
+import { Profile } from "../../types/supabaseTypes";
 import { ApiError, useApiQuery } from "./useApi";
 
 export const USER_PROFILE_KEY = "/profile/me";

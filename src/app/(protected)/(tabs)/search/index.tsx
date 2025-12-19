@@ -1,9 +1,9 @@
 import Card from "@/components/User/Card";
 import { wp } from "@/constant/common";
 import { useProfileQuery } from "@/hooks/useProfileQuery";
-import { Profile } from "@/lib/supabase/supabaseTypes";
 import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, ListRenderItem, View } from "react-native";
+import { Profile } from "../../../../../types/supabaseTypes";
 
 export default function Search() {
   const { data } = useProfileQuery();

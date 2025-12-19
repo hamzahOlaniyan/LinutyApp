@@ -19,8 +19,16 @@ export default function _ProtectedLayout() {
         options={{ title: "Profile", headerShown: false }}
       />
       <Stack.Screen
-        name="post"
-        options={{ title: "Post", headerShown: false }}
+        name="post/[postId]"
+        options={{
+          title: "Edit post",
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <Icon name="close" />
+            </TouchableOpacity>
+          )
+        }}
       />
       <Stack.Screen
         name="user/[id]"

@@ -3,7 +3,7 @@ import AppText from "@/components/ui/AppText";
 import Avatar from "@/components/ui/Avatar";
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
-import { useCreatePost } from "@/hooks/useCreatePost";
+import { PostApi } from "@/hooks/usePostApi";
 import Icon from "@/icons";
 import { supabase } from "@/lib/supabase/supabase";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -24,8 +24,8 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type LocalMedia = {
-  id: string;
+export type LocalMedia = {
+  id?: string;
   uri: string;
   mimeType: string;
   width?: number;
@@ -35,7 +35,7 @@ type LocalMedia = {
 
 export default function NewPost() {
   const { me } = useAuthStore();
-  const createPostMutation = useCreatePost();
+  const createPostMutation = PostApi.useCreatePost();
 
   const [content, setContent] = useState("");
   const [media, setMedia] = useState<LocalMedia[]>([]);
@@ -157,25 +157,6 @@ export default function NewPost() {
     }
   };
 
-  //  const { mutate, isPending, error } = useMutation({
-  //     mutationFn: async () => {
-  //        const mediaRes = await uploadMediaSmart(me?.id, preview, "media");
-
-  //        return createPost({
-  //           content: postText,
-  //           author: me!.id,
-  //           media: mediaRes,
-  //        });
-  //     },
-  //     onSuccess: (data) => {
-  //        console.log("✅ NEW POST HAS BEEN ADDED", JSON.stringify(data, null, 2));
-  //        queryClient.invalidateQueries({ queryKey: ["posts"] });
-  //        setPostText("");
-  //        router.back();
-  //     },
-  //     onError: (error) => Alert.alert("Error", error.message),
-  //  });
-
   return (
     <ScrollView
       style={{
@@ -201,12 +182,6 @@ export default function NewPost() {
             </AppText>
           </View>
         </View>
-
-        {/* <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 80}
-          className="relative"
-        > */}
         <View style={{ height: hp(20) }} className="rounded-xl p-2">
           <TextInput
             style={{
@@ -226,9 +201,8 @@ export default function NewPost() {
           onPress={handleSubmit}
           className="absolute right-4 top-0 z-50 bg-teal-500 "
         >
-          <Icon name="plus" />
+          {loading ? <ActivityIndicator /> : <Icon name="plus" />}
         </TouchableOpacity>
-        {/* </KeyboardAvoidingView> */}
         <View className="elevation-sm p-2">
           <TouchableOpacity onPress={pickImages}>
             {loading ? (
@@ -250,7 +224,7 @@ export default function NewPost() {
         <FlatList
           horizontal
           data={media}
-          keyExtractor={item => item.id}
+          // keyExtractor={(item: LocalMedia, index: number) => index}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ gap: 10, paddingVertical: 10 }}
           renderItem={({ item }) => (
@@ -266,7 +240,7 @@ export default function NewPost() {
 
               {/* delete button */}
               <Pressable
-                onPress={() => removeImage(item.id)}
+                onPress={() => removeImage(item.id as string)}
                 hitSlop={10}
                 style={{
                   position: "absolute",
@@ -285,27 +259,7 @@ export default function NewPost() {
             </View>
           )}
         />
-        {/* <Imagepicker
-          size={100}
-          url={null}
-          onPickLocal={assets => setPreview(assets)}
-          picker={
-            <View className="self-end">
-              <ImageIcon size={32} />
-            </View>
-          }
-        /> */}
       </View>
-
-      {/* <Button
-        // onPress={() => mutate()}
-        disabled={!postText.trim()}
-        // isLoading={isPending}
-        size="sm"
-        className="absolute right-4 top-0 rounded-lg bg-neutral-100 p-2"
-        variant="secondary"
-        // color={appColors.blue}
-      ></Button> */}
     </ScrollView>
   );
 }
