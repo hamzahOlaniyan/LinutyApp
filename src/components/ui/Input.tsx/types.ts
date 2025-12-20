@@ -41,7 +41,8 @@ export type InputMode =
   | "select"
   | "date"
   | "metric"
-  | "password";
+  | "password"
+  | "number"
 
 export type InputFieldTypes = {
   label?: string;

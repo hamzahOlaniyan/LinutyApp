@@ -62,7 +62,8 @@ export default function FormInput({
   submitBtnLabel = "Continue",
   onSubmit,
   loading,
-  footerContent
+  footerContent,
+  customButton
 }: InputFieldProps) {
   const { setFormData, setFormErrors, errors, formData } = useFormStore();
 
@@ -80,6 +81,7 @@ export default function FormInput({
       const isPhone = semanticType === "phone";
       const isSelectMode = field.mode === "select";
       const isDateMode = field.mode === "date";
+
       const isMultipleSelect = field.isMultipleSelect;
 
       // --- Required validation ---
@@ -216,11 +218,15 @@ export default function FormInput({
         );
       })}
       {footerContent && <View className="pt-4">{footerContent}</View>}
-      <GradientButton
-        text={submitBtnLabel}
-        onPress={handleSubmit}
-        isLoading={loading}
-      />
+      {customButton ? (
+        customButton
+      ) : (
+        <GradientButton
+          text={submitBtnLabel}
+          onPress={handleSubmit}
+          isLoading={loading}
+        />
+      )}
     </View>
   );
 }

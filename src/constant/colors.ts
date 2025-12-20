@@ -14,6 +14,7 @@ export const appColors = {
   icon: "#677179",
   border: "#ccc",
   bordersLight: "#e8edeb",
+  inputInactive: "#aebbc8",
 
 
   // lightOlive: "#daf2ea",
@@ -31,7 +32,6 @@ export const appColors = {
   // kkkk: "#e1e1e1",
   // searchBar: "#f6f6f6",
   // black: "#000000",
-  // inputInactive: "#aebbc8",
   // inputActive: "#677179",
 
   // buttonOutline: "#006891",

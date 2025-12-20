@@ -791,6 +791,145 @@ export type Database = {
           },
         ]
       }
+      Product: {
+        Row: {
+          availability: Database["public"]["Enums"]["Available"]
+          category: string
+          city: string | null
+          condition: Database["public"]["Enums"]["ProductCondition"]
+          country: string | null
+          createdAt: string
+          currency: string
+          deletedAt: string | null
+          description: string
+          district: string | null
+          expiresAt: string | null
+          id: string
+          lat: number | null
+          lng: number | null
+          locationText: string | null
+          negotiable: boolean
+          price: number
+          publishedAt: string | null
+          saveCount: number
+          sellerId: string
+          status: Database["public"]["Enums"]["ListingStatus"]
+          title: string
+          updatedAt: string
+          viewCount: number
+          visibility: Database["public"]["Enums"]["PostVisibility"]
+        }
+        Insert: {
+          availability: Database["public"]["Enums"]["Available"]
+          category: string
+          city?: string | null
+          condition?: Database["public"]["Enums"]["ProductCondition"]
+          country?: string | null
+          createdAt?: string
+          currency?: string
+          deletedAt?: string | null
+          description: string
+          district?: string | null
+          expiresAt?: string | null
+          id: string
+          lat?: number | null
+          lng?: number | null
+          locationText?: string | null
+          negotiable?: boolean
+          price: number
+          publishedAt?: string | null
+          saveCount?: number
+          sellerId: string
+          status?: Database["public"]["Enums"]["ListingStatus"]
+          title: string
+          updatedAt: string
+          viewCount?: number
+          visibility?: Database["public"]["Enums"]["PostVisibility"]
+        }
+        Update: {
+          availability?: Database["public"]["Enums"]["Available"]
+          category?: string
+          city?: string | null
+          condition?: Database["public"]["Enums"]["ProductCondition"]
+          country?: string | null
+          createdAt?: string
+          currency?: string
+          deletedAt?: string | null
+          description?: string
+          district?: string | null
+          expiresAt?: string | null
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          locationText?: string | null
+          negotiable?: boolean
+          price?: number
+          publishedAt?: string | null
+          saveCount?: number
+          sellerId?: string
+          status?: Database["public"]["Enums"]["ListingStatus"]
+          title?: string
+          updatedAt?: string
+          viewCount?: number
+          visibility?: Database["public"]["Enums"]["PostVisibility"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Product_sellerId_fkey"
+            columns: ["sellerId"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ProductMedia: {
+        Row: {
+          createdAt: string
+          height: number | null
+          id: string
+          isCover: boolean
+          mimeType: string
+          orderIndex: number
+          productId: string
+          sizeBytes: number
+          url: string
+          width: number | null
+        }
+        Insert: {
+          createdAt?: string
+          height?: number | null
+          id: string
+          isCover?: boolean
+          mimeType: string
+          orderIndex?: number
+          productId: string
+          sizeBytes: number
+          url: string
+          width?: number | null
+        }
+        Update: {
+          createdAt?: string
+          height?: number | null
+          id?: string
+          isCover?: boolean
+          mimeType?: string
+          orderIndex?: number
+          productId?: string
+          sizeBytes?: number
+          url?: string
+          width?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ProductMedia_productId_fkey"
+            columns: ["productId"]
+            isOneToOne: false
+            referencedRelation: "Product"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profile: {
         Row: {
           avatarUrl: string | null
@@ -954,6 +1093,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      Available: "IMMEDIATLY" | "IN_A_WEEK" | "IN_A_MONTH" | "OTHER"
       KinshipType:
         | "PARENT"
         | "CHILD"
@@ -967,6 +1107,7 @@ export type Database = {
         | "OTHER"
       LineageRole: "ANCESTOR" | "DESCENDANT" | "SPOUSE" | "EXTENDED"
       LineageType: "FAMILY" | "CLAN" | "SURNAME_LINE" | "TRIBE"
+      ListingStatus: "DRAFT" | "ACTIVE" | "PAUSED" | "SOLD" | "DELETED"
       MediaType: "IMAGE" | "VIDEO" | "DOCUMENT" | "AUDIO" | "OTHER"
       NotificationType:
         | "FOLLOW"
@@ -977,6 +1118,7 @@ export type Database = {
         | "LINEAGE_INVITE"
         | "LINEAGE_ACCEPT"
       PostVisibility: "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE"
+      ProductCondition: "NEW" | "USED_LIKE_NEW" | "USED_GOOD" | "USED_FAIR"
       ReactionType: "LIKE" | "LOVE" | "LAUGH" | "ANGRY" | "SAD"
     }
     CompositeTypes: {
@@ -1105,6 +1247,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      Available: ["IMMEDIATLY", "IN_A_WEEK", "IN_A_MONTH", "OTHER"],
       KinshipType: [
         "PARENT",
         "CHILD",
@@ -1119,6 +1262,7 @@ export const Constants = {
       ],
       LineageRole: ["ANCESTOR", "DESCENDANT", "SPOUSE", "EXTENDED"],
       LineageType: ["FAMILY", "CLAN", "SURNAME_LINE", "TRIBE"],
+      ListingStatus: ["DRAFT", "ACTIVE", "PAUSED", "SOLD", "DELETED"],
       MediaType: ["IMAGE", "VIDEO", "DOCUMENT", "AUDIO", "OTHER"],
       NotificationType: [
         "FOLLOW",
@@ -1130,6 +1274,7 @@ export const Constants = {
         "LINEAGE_ACCEPT",
       ],
       PostVisibility: ["PUBLIC", "FOLLOWERS", "LINEAGE_ONLY", "PRIVATE"],
+      ProductCondition: ["NEW", "USED_LIKE_NEW", "USED_GOOD", "USED_FAIR"],
       ReactionType: ["LIKE", "LOVE", "LAUGH", "ANGRY", "SAD"],
     },
   },

@@ -7,8 +7,8 @@ export default function TabLayout() {
     <Tabs
       tabBar={props => <CustomTabBar {...props} />}
       screenOptions={{
-        // headerStatusBarHeight: hp(3),
-        headerShadowVisible: false
+        headerShadowVisible: false,
+        headerShown: false
       }}
     >
       <Tabs.Screen
@@ -22,8 +22,11 @@ export default function TabLayout() {
       />
       <Tabs.Screen name="explore/index" options={{ title: "explore" }} />
       <Tabs.Screen name="search/index" options={{ title: "search" }} />
-      <Tabs.Screen name="news/index" options={{ title: "news" }} />
-      <Tabs.Screen name="store/index" options={{ title: "store" }} />
+      <Tabs.Screen name="store" />
+      <Tabs.Screen
+        name="news/index"
+        options={{ title: "Comunity news", headerShown: true }}
+      />
     </Tabs>
   );
 }

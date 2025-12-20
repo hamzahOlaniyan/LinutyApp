@@ -191,6 +191,7 @@ export const AppInput: React.FC<AppInputProps> = ({
   const isMetric = inputMode === "metric";
   const isEmailMode = inputMode === "email";
   const isPasswordMode = inputMode === "password";
+  const isNumber = inputMode === "number";
 
   const shouldRenderInput = !isDateMode;
 
@@ -281,7 +282,7 @@ export const AppInput: React.FC<AppInputProps> = ({
           height: hp(7),
           borderWidth: 0.9,
           borderColor: isFocused
-            ? appColors.inputActive
+            ? appColors.inputInactive
             : hasError
               ? appColors.error
               : appColors.inputInactive,
@@ -327,6 +328,7 @@ export const AppInput: React.FC<AppInputProps> = ({
             readOnly={isSelectMode || isDateMode}
             value={getDisplayValue()}
             onFocus={() => setIsFocused(true)}
+            inputMode={isNumber ? "numeric" : isEmailMode ? "email" : undefined}
             onChangeText={rawText => {
               let text = rawText;
 
@@ -404,7 +406,7 @@ export const AppInput: React.FC<AppInputProps> = ({
             </AppText>
 
             <View className="relative">
-              <Icon name="filter" />
+              <Icon name="chevrondown" />
             </View>
           </TouchableOpacity>
         )}

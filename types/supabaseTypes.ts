@@ -1,4 +1,4 @@
-import { Database, TablesInsert } from "../src/lib/supabase/database.types";
+import { Database, TablesInsert } from './database.types';
 
 export type Profile = Database["public"]["Tables"]["profile"]["Row"];
 
@@ -13,6 +13,22 @@ export type CommentInput = TablesInsert<"Comment">;
 export type MediaInput = TablesInsert<"MediaFile">;
 
 export type MediaFile = Database["public"]["Tables"]["MediaFile"]["Row"]
+
+export type ProductTable = Database["public"]["Tables"]["Product"]["Row"]
+export type ProductInput= TablesInsert<"Product">
+
+
+export type ProductMediaTable = Database["public"]["Tables"]["Product"]["Row"]
+
+export type ProductMediaInput = TablesInsert<"ProductMedia">
+export type  ProductCondition = Database["public"]['Enums']["ProductCondition"]
+export type  ProductAvailabilty = Database["public"]['Enums']['Available']
+export type  ProductStatus= Database["public"]['Enums']["ListingStatus"]
+
+
+
+
+
 
 
 
