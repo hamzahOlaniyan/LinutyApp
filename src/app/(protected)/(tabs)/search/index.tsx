@@ -1,4 +1,4 @@
-import Card from "@/components/User/Card";
+import ProfileCard from "@/components/Profile/ProfileCard";
 import { wp } from "@/constant/common";
 import { useProfileQuery } from "@/hooks/useProfileQuery";
 import React, { useCallback, useEffect, useState } from "react";
@@ -15,7 +15,7 @@ export default function Search() {
   }, []);
 
   const renderItem: ListRenderItem<Profile> = useCallback(
-    ({ item }) => <Card item={item} />,
+    ({ item }) => <ProfileCard item={item} />,
     []
   );
 
@@ -24,7 +24,11 @@ export default function Search() {
       <FlatList
         data={profiles ?? []}
         renderItem={renderItem}
-        contentContainerStyle={{ paddingHorizontal: wp(3), rowGap: 20 }}
+        contentContainerStyle={{
+          paddingHorizontal: wp(3),
+          rowGap: 20,
+          paddingBottom: 100
+        }}
       />
     </View>
   );

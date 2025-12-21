@@ -21,7 +21,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen name="explore/index" options={{ title: "explore" }} />
-      <Tabs.Screen name="search/index" options={{ title: "search" }} />
+      <Tabs.Screen
+        name="search/index"
+        options={{ headerShown: true, title: "search" }}
+      />
       <Tabs.Screen name="store" />
       <Tabs.Screen
         name="news/index"

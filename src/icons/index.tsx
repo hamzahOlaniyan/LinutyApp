@@ -15,6 +15,7 @@ import { favorite } from "./ico/favorite";
 import { filter } from "./ico/filter";
 import { home } from "./ico/home";
 import { homeSolid } from "./ico/homeSolid";
+import { lineage } from "./ico/lineage";
 import { logout } from "./ico/logout";
 import { menu } from "./ico/menu";
 import { news } from "./ico/news";
@@ -74,7 +75,8 @@ const icons = {
   deleteTrash,
   account,
   report,
-  events
+  events,
+  lineage
 } as const;
 
 type IconName = keyof typeof icons;

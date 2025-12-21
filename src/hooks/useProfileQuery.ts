@@ -11,7 +11,6 @@ export const useProfileQuery = () => {
     '/profile',
   undefined,
   {enabled: !!accessToken,}
-  
 );
   return { isLoading, data, error, isFetching, refetch, };
 };

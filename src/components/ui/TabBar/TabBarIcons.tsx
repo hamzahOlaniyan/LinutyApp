@@ -30,7 +30,7 @@ export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
     case "search":
       return (
         <View className="items-center justify-center rounded-full bg-neutral-100 p-2">
-          <Icon name="search2" color={appColors.primary} size={24} />
+          <Icon name="lineage" color={appColors.primary} size={24} />
         </View>
       );
     case "store":
