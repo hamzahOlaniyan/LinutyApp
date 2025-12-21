@@ -18,9 +18,10 @@ export type ProductTable = Database["public"]["Tables"]["Product"]["Row"]
 export type ProductInput= TablesInsert<"Product">
 
 
-export type ProductMediaTable = Database["public"]["Tables"]["Product"]["Row"]
-
+export type ProductMediaTable = Database["public"]['Tables']["ProductMedia"]["Row"]
 export type ProductMediaInput = TablesInsert<"ProductMedia">
+
+export type Product = Database["public"]["Tables"]["Product"]["Row"]
 export type  ProductCondition = Database["public"]['Enums']["ProductCondition"]
 export type  ProductAvailabilty = Database["public"]['Enums']['Available']
 export type  ProductStatus= Database["public"]['Enums']["ListingStatus"]

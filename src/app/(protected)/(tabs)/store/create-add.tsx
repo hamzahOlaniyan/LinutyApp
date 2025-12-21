@@ -1,8 +1,12 @@
 import FormHeader from "@/components/Ad/FormHeader";
+import {
+  productAvailabilty,
+  productCategory,
+  productCondition
+} from "@/components/Product/categories";
 import AppText from "@/components/ui/AppText";
 import FormInput from "@/components/ui/FormInput";
 import { Field } from "@/components/ui/FormInput/types";
-import { SelectOption } from "@/components/ui/Input.tsx/types";
 import ScreenView from "@/components/ui/Layout/ScreenView";
 import { appColors } from "@/constant/colors";
 import { COUNTRIES } from "@/data/ProfileData";
@@ -24,10 +28,6 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import {
-  ProductAvailabilty,
-  ProductCondition
-} from "../../../../../types/supabaseTypes";
 import { LocalMedia } from "../../create-post";
 
 export type FormValues = {
@@ -44,44 +44,6 @@ export type FormValues = {
 export type AdFormField = Omit<Field, "name"> & {
   name: keyof FormValues;
 };
-
-type ConditionsTypes = {
-  label: ProductCondition;
-  value: ProductCondition;
-};
-
-type Availability = {
-  label: ProductAvailabilty;
-  value: ProductAvailabilty;
-};
-
-const productCondition: ConditionsTypes[] = [
-  { label: "NEW", value: "NEW" },
-  { label: "USED_LIKE_NEW", value: "USED_LIKE_NEW" },
-  { label: "USED_GOOD", value: "USED_GOOD" },
-  { label: "USED_FAIR", value: "USED_FAIR" }
-];
-
-const productAvailabilty: Availability[] = [
-  { label: "IMMEDIATLY", value: "IMMEDIATLY" },
-  { label: "IN_A_WEEK", value: "IN_A_WEEK" },
-  { label: "IN_A_MONTH", value: "IN_A_MONTH" },
-  { label: "OTHER", value: "OTHER" }
-];
-
-const productCategory: SelectOption[] = [
-  { label: "electrionic", value: "electrionic" },
-  { label: "furniture", value: "furniture" },
-  { label: "vehicle", value: "vehicle" },
-  { label: "other", value: "other" }
-];
-
-export const available = [
-  { label: "immediatly", value: "immediatly" },
-  { label: "in a week", value: "in a week" },
-  { label: "in a month", value: "in a month" },
-  { label: "other", value: "other" }
-];
 
 export const cities = [{ label: "london", value: "london" }];
 

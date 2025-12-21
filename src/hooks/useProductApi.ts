@@ -1,65 +1,74 @@
+import { FeedProduct } from "@/components/Feed/types";
 import { useAuthStore } from "@/store/useAuthStore";
-import { ProductInput, ProductTable } from "../../types/supabaseTypes";
+import { useQueryClient } from "@tanstack/react-query";
+import { Product, ProductInput } from "../../types/supabaseTypes";
 import { useApiMutation, useApiQuery } from "./useApi";
 
 
-// type CursorPage<T> = { data: T[]; nextCursor: string | null };
-// type Post = { id: string };
+type FeedEnvelope = {
+  data: FeedProduct;
+  nextCursor: string | null;
+};
 
-// export type ReactionType = "LIKE" | "LOVE" | "LAUGH" | "ANGRY" | "SAD" | null;
-
-// type ReactToPostParams = {
-//   type?: ReactionType; // default server-side is LIKE
-// };
-
-// export type MyReactionResponse = {
-//   liked: boolean;
-//   type: ReactionType;
-// };
-
-// type ReactToPostResponse =
-//   | { message: string; reacted: true; reaction: { type: ReactionType } }
-//   | { message: string; reacted: false };
-
-//   type AddMediaPayload = {
-//   images: Array<{
-//     url: string;
-//     mimeType?: string;
-//     sizeBytes?: number;
-//     width?: number | null;
-//     height?: number | null;
-//   }>;
-// };
-
+type CursorPage<T> = { data: T[]; nextCursor: string | null };
 
 export class ProductApi {
 
-  static useGetProductById = (productId: string) => {
+  static useGetProductById = (productId: string|null) => {
     const { session } = useAuthStore();
     const accessToken = session?.accessToken; 
-    const { data, isLoading, error, isFetching, refetch, }= useApiQuery<ProductTable>(`/product/${productId}`,{enabled: !!accessToken}
+    const { data, isLoading, error, isFetching, refetch, }= useApiQuery<FeedEnvelope>(`/product/${productId}`,{enabled: !!accessToken}
     );
     return { isLoading, data, error, isFetching, refetch, };
   };
 
-
   static useCreateProduct =  () => {
-    // const qc = useQueryClient();
+    const qc = useQueryClient();
       return useApiMutation<ProductInput>('post', "/product", {
-        // onSuccess: res => {
-        //   const newPost = res;
-        //   // Put it at the top of the feed immediately
-        //   qc.setQueryData<CursorPage<ProductTable>>(["/feed"], old => {
-        //     if (!old) return { data: [newPost], nextCursor: null };
-        //     return {
-        //       ...old,
-        //       data: [newPost, ...(old.data ?? [])]
-        //     };
-        //   });
-        //   // Still refetch in background to sync counts/cursors
-        //   qc.invalidateQueries({ queryKey: ["/feed"] });
-        // }
+        onSuccess: res => {
+          const newProduct = res;
+          qc.setQueryData<CursorPage<ProductInput>>(["/feed"], old => {
+            if (!old) return { data: [newProduct], nextCursor: null };
+            return {
+              ...old,
+              data: [newProduct, ...(old.data ?? [])]
+            };
+          });
+          qc.invalidateQueries({ queryKey: ["/feed"] });
+        }
       });
+  };
+
+  static useGetProductFeed = ()=>{
+    const { session } = useAuthStore();
+    const accessToken = session?.accessToken; 
+
+     const { data, isLoading, error, isFetching, refetch, } = useApiQuery<FeedEnvelope>(
+        '/product/feed',
+      undefined,
+        {
+          enabled: !!accessToken,
+        }
+      );
+      return{data,isLoading,error,isFetching,refetch}
+  }
+
+  static useDeleteProduct=  (productId: string|null) => {
+    const qc = useQueryClient();
+      return useApiMutation<{ message: string }, void>(
+        "delete",
+        `/product/${productId}`,
+        {
+          onSuccess: () => {
+            qc.setQueryData<CursorPage<Product>>(["/feed"], old => {
+              if (!old?.data) return old;
+              return { ...old, data: old.data.filter(p => p.id !== productId) };
+            });
+
+            qc.invalidateQueries({ queryKey: ["/feed"] });
+          }
+        }
+      );
   };
 
   // static usePostUpdate =  (postId: string) => {

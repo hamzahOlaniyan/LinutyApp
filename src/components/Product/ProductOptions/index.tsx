@@ -1,8 +1,9 @@
 import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
-import { PostApi } from "@/hooks/usePostApi";
+import { ProductApi } from "@/hooks/useProductApi";
 import Icon from "@/icons";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+
 import { useRouter } from "expo-router";
 import React from "react";
 import { Alert, TouchableOpacity, View } from "react-native";
@@ -13,44 +14,44 @@ type PostOptionsType = {
   action?: () => void;
 };
 
-export default function PostOptions({
+export default function ProductOption({
   isUserOwner,
-  postId,
+  productId,
   bottomSheetRef
 }: {
-  isUserOwner: boolean;
-  postId: string;
+  isUserOwner?: boolean;
+  productId?: string;
   bottomSheetRef: React.RefObject<BottomSheetMethods | null>;
 }) {
   const router = useRouter();
 
-  const deletePost = PostApi.useDeletePost(postId);
+  const deleteProduct = ProductApi.useDeleteProduct(productId ?? null);
 
-  const postOptions: PostOptionsType[] = [
+  const productOptions: PostOptionsType[] = [
     { title: "save", icon: <Icon name="bookmark" size={30} /> },
     { title: "share", icon: <Icon name="share" size={30} /> },
-    { title: "about this account", icon: <Icon name="account" size={30} /> },
+    { title: "about this account", icon: <Icon name="bookmark" size={30} /> },
     { title: "block", icon: <Icon name="report" size={30} /> },
     { title: "report", icon: <Icon name="report" size={30} /> }
   ];
-  const ownerPostOptions = [
+  const ownerProductOptions = [
     { title: "save", icon: <Icon name="bookmark" size={30} /> },
     {
       title: "edit",
       icon: <Icon name="edit" size={30} />,
-      action: () => router.push(`/(protected)/post/${postId}`)
+      action: () => router.push(`/store/product/edit/${productId}`)
     },
     {
       title: "delete",
-      icon: <Icon size={30} name="deleteTrash" />,
+      icon: <Icon name="deleteTrash" size={30} color={appColors.error} />,
       action: () => handleDelete()
     }
   ];
 
   const deletetion = () => {
-    deletePost.mutate(undefined, {
+    deleteProduct.mutate(undefined, {
       onSuccess: () => {
-        console.log("deleted");
+        console.log("deleted product");
         router.back();
       },
       onError: err => {
@@ -87,7 +88,7 @@ export default function PostOptions({
     <View className="flex-1 gap-6">
       {!isUserOwner ? (
         <>
-          {postOptions.map((n, i) => (
+          {productOptions.map((n, i) => (
             <TouchableOpacity key={i} className="flex-row items-center gap-4">
               {n.icon}
               <AppText>{n.title}</AppText>
@@ -96,7 +97,7 @@ export default function PostOptions({
         </>
       ) : (
         <>
-          {ownerPostOptions.map((n, i) => (
+          {ownerProductOptions.map((n, i) => (
             <TouchableOpacity
               key={i}
               onPress={() => handleCloseSheet(n.action)}
