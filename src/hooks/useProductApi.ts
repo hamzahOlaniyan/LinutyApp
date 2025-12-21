@@ -1,7 +1,7 @@
 import { FeedProduct } from "@/components/Feed/types";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { Product, ProductInput } from "../../types/supabaseTypes";
+import { Product, ProductInput, ProductMediaInput, ProductMediaTable } from "../../types/supabaseTypes";
 import { useApiMutation, useApiQuery } from "./useApi";
 
 
@@ -11,6 +11,17 @@ type FeedEnvelope = {
 };
 
 type CursorPage<T> = { data: T[]; nextCursor: string | null };
+
+  type AddMediaPayload = {
+  images: Array<{
+    url: string;
+    mimeType?: string;
+    sizeBytes?: number;
+    width?: number | null;
+    height?: number | null;
+  }>;
+};
+
 
 export class ProductApi {
 
@@ -71,33 +82,33 @@ export class ProductApi {
       );
   };
 
-  // static usePostUpdate =  (postId: string) => {
+  // static usePostUpdate =  (productId: string) => {
   //   const qc = useQueryClient();
-  //     return useApiMutation< PostInput>("patch", `/post/${postId}`, {
+  //     return useApiMutation< PostInput>("patch", `/post/${productId}`, {
   //       onSuccess: () => {
-  //         qc.setQueryData<CursorPage<Post>>(["/feed", `/post/${postId}`], old => {
+  //         qc.setQueryData<CursorPage<Post>>(["/feed", `/post/${productId}`], old => {
   //           if (!old?.data) return old;
-  //           return { ...old, data: old.data.filter(p => p.id !== postId) };
+  //           return { ...old, data: old.data.filter(p => p.id !== productId) };
   //         });
 
-  //         qc.invalidateQueries({ queryKey: ["/feed", `/post/${postId}`] });
+  //         qc.invalidateQueries({ queryKey: ["/feed", `/post/${productId}`] });
   //       }
   //     });
   // };
 
-  // 1) PATCH content
-  // static useUpdatePostContent = (postId: string) =>
-  //   useApiMutation<PostResponse, { content: string | null }>(
-  //     "patch",
-  //     `/post/${postId}`
-  //   );
+  // 1) PATCH product content
+  static useUpdateProductContent = (productId: string) =>
+    useApiMutation<ProductInput,Partial<ProductInput>>(
+      "patch",
+      `/product/${productId}`
+    );
 
 // 2) POST media (add new images after upload)
-  // static useAddPostMedia = (postId: string) =>
-  //   useApiMutation<MediaFile[], AddMediaPayload>(
-  //     "post",
-  //     `/post/${postId}/media`
-  //   );
+  static useAddProductMedia = (productId: string) =>
+    useApiMutation<ProductMediaInput[], AddMediaPayload>(
+      "post",
+      `/product/${productId}/media`
+    );
 
   // 3) DELETE media
   // static useDeleteMedia = () => {
@@ -108,16 +119,16 @@ export class ProductApi {
   // }
   
 
-//   static useDeletePost =  (postId: string) => {
+//   static useDeletePost =  (productId: string) => {
 //     const qc = useQueryClient();
 //       return useApiMutation<{ message: string }, void>(
 //         "delete",
-//         `/post/${postId}`,
+//         `/post/${productId}`,
 //         {
 //           onSuccess: () => {
 //             qc.setQueryData<CursorPage<Post>>(["/feed"], old => {
 //               if (!old?.data) return old;
-//               return { ...old, data: old.data.filter(p => p.id !== postId) };
+//               return { ...old, data: old.data.filter(p => p.id !== productId) };
 //             });
 
 //             qc.invalidateQueries({ queryKey: ["/feed"] });
@@ -126,29 +137,29 @@ export class ProductApi {
 //       );
 //   };
 
-//   static useMyPostReactionQuery =  (postId: string) => {
-//     return useApiQuery<MyReactionResponse>(`/post/${postId}/reactions/me`);
+//   static useMyPostReactionQuery =  (productId: string) => {
+//     return useApiQuery<MyReactionResponse>(`/post/${productId}/reactions/me`);
 //   };
 
-//   static usePostReactionMutation =  (postId: string) => {
+//   static usePostReactionMutation =  (productId: string) => {
 //     return useApiMutation<ReactToPostResponse, ReactToPostParams>(
 //       "post",
-//       `/post/${postId}/reactions`,
+//       `/post/${productId}/reactions`,
 //       {
 //         invalidateKeys: [
 //           "/post/feed", // if your feed shows counts
-//           `/post/${postId}`, // post details screen
-//           `/post/${postId}/reactions` // if you have a "who reacted" list
+//           `/post/${productId}`, // post details screen
+//           `/post/${productId}/reactions` // if you have a "who reacted" list
 //         ]
 //       }
 //     );
 //   };
 
-//   static useGetMediaByPostId = (postId:string)=>{
-//     const { session } = useAuthStore();
-//     const accessToken = session?.accessToken; 
-//     const { data, isLoading,  refetch, error , isFetching}= useApiQuery<MediaFile[]>(`/post/${postId}/media`,undefined,{enabled:!!accessToken && !!postId});
-//     return{data,isLoading, refetch, error, isFetching}
-//   }
+  static useGetProductMediaById = (productId:string)=>{
+    const { session } = useAuthStore();
+    const accessToken = session?.accessToken; 
+    const { data, isLoading,  refetch, error , isFetching}= useApiQuery<ProductMediaTable[]>(`/product/${productId}/media`,undefined,{enabled:!!accessToken && !!productId});
+    return{data,isLoading, refetch, error, isFetching}
+  }
 }
  

@@ -63,7 +63,8 @@ export default function FormInput({
   onSubmit,
   loading,
   footerContent,
-  customButton
+  customButton,
+  onChangeAnyField
 }: InputFieldProps) {
   const { setFormData, setFormErrors, errors, formData } = useFormStore();
 
@@ -181,14 +182,23 @@ export default function FormInput({
               suffix={suffix}
               value={stringValue}
               onChangeText={text => {
-                if (!isMultipleSelect) {
-                  setFormData({ [name]: text });
+                if (isMultipleSelect) return;
 
-                  if (errors[name]) {
-                    setFormErrors({ [name]: undefined });
-                  }
-                }
+                if (stringValue === text) return;
+                onChangeAnyField?.();
+                setFormData({ [name]: text });
+                if (errors[name]) setFormErrors({ [name]: undefined });
               }}
+              // onChangeText={text => {
+              //   if (!isMultipleSelect) {
+              //     onChangeAnyField?.();
+              //     setFormData({ [name]: text });
+
+              //     if (errors[name]) {
+              //       setFormErrors({ [name]: undefined });
+              //     }
+              //   }
+              // }}
               placeholder={placeholder}
               caption={caption}
               selectOptionsTitle={selectOptionsTitle}
@@ -196,6 +206,7 @@ export default function FormInput({
               minHeight={minHeight}
               onSuffixChange={metric => {
                 if (!suffixFieldName) return;
+                onChangeAnyField?.();
                 setFormData({
                   [suffixFieldName]: metric.symbol
                 });
@@ -206,6 +217,7 @@ export default function FormInput({
               maxDate={maxDate}
               // onChangeSelectedValues={values => {
               //   if (isMultipleSelect) {
+              // onChangeAnyField?.();
               //     setFormData({ [name]: values });
 
               //     if (errors[name]) {

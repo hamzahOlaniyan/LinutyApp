@@ -16,10 +16,12 @@ export const useFormStore = create<FormStore>((set) => ({
       errors: { ...state.errors, ...action }
     })),
 
-    setFormDataErrors: (action: Partial<FormDataType>) =>
-      set((state) => ({
-          errors: {...state.formData, ...state.errors, ...action }
-      })),
+  setFormDataErrors: (action: Partial<FormDataType>) =>
+  set((state) => ({
+    formData: { ...state.formData, ...action },
+    errors: { ...state.errors, ...action } // only if you really want same keys
+  })),
+
 
   // ⭐ Generic reset for any fields
   resetFormData: (fields: Partial<FormDataType>) =>
@@ -35,6 +37,4 @@ export const useFormStore = create<FormStore>((set) => ({
       formData: {},
       errors: {}
     })),
-
-
 }));

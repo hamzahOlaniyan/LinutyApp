@@ -45,9 +45,9 @@ type EditableMedia = {
 };
 
 export default function PostIdScreen() {
+  const { me } = useAuthStore();
   const { postId } = useLocalSearchParams<{ postId?: string }>();
 
-  const { me } = useAuthStore();
   const navigation = useNavigation();
   const qc = useQueryClient();
   const savedRef = useRef(false);
@@ -115,6 +115,15 @@ export default function PostIdScreen() {
     ]);
   };
 
+  const removeImage = useCallback((id: string) => {
+    setDirty(true);
+    setMedia(prev => {
+      const item = prev.find(m => m.id === id);
+      if (item && !item.isLocal) setDeletedMediaIds(ids => [...ids, id]);
+      return prev.filter(m => m.id !== id);
+    });
+  }, []);
+
   async function uploadImage(file: LocalMedia, userId: string) {
     const fileExt = file.uri.split(".").pop() || "jpg";
     const filePath = `posts/${userId}/${Date.now()}-${file.id}.${fileExt}`;
@@ -147,15 +156,6 @@ export default function PostIdScreen() {
       sizeBytes: fileData.byteLength
     };
   }
-
-  const removeImage = useCallback((id: string) => {
-    setDirty(true);
-    setMedia(prev => {
-      const item = prev.find(m => m.id === id);
-      if (item && !item.isLocal) setDeletedMediaIds(ids => [...ids, id]);
-      return prev.filter(m => m.id !== id);
-    });
-  }, []);
 
   const handleSubmit = async () => {
     if (!postId || !me?.id) return;

@@ -1,3 +1,4 @@
+import { COUNTRIES } from "@/data/ProfileData";
 import { ProductAvailabilty, ProductCondition } from "../../../types/supabaseTypes";
 import { SelectOption } from "../ui/Input.tsx/types";
 
@@ -39,3 +40,7 @@ export const available = [
   { label: "in a month", value: "in a month" },
   { label: "other", value: "other" }
 ];
+
+ export const countries = COUNTRIES.map(c => c).flatMap(i => [
+    { label: i, value: i }
+  ]);

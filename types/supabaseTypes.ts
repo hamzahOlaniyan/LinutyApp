@@ -11,7 +11,6 @@ export type Comment = Database["public"]["Tables"]["Comment"]["Row"];
 export type CommentInput = TablesInsert<"Comment">;
 
 export type MediaInput = TablesInsert<"MediaFile">;
-
 export type MediaFile = Database["public"]["Tables"]["MediaFile"]["Row"]
 
 export type ProductTable = Database["public"]["Tables"]["Product"]["Row"]
