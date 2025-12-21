@@ -1,14 +1,16 @@
 import { appColors } from "@/constant/colors";
+import { ExploreProfileItem } from "@/hooks/useProfileQuery";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Button, TouchableOpacity, View } from "react-native";
-import { Profile } from "../../../types/supabaseTypes";
+import { TouchableOpacity, View } from "react-native";
 import AppText from "../ui/AppText";
 import Avatar from "../ui/Avatar";
+import { FriendActionButton } from "../ui/FriendActionButton";
 
-type ProfileCardProps = {
-  item: Partial<Profile>;
+export type ProfileCardProps = {
+  item: ExploreProfileItem;
 };
+
 export default function ProfileCard({ item }: ProfileCardProps) {
   const router = useRouter();
   const name = `${item.firstName} ${item.lastName}`;
@@ -32,7 +34,7 @@ export default function ProfileCard({ item }: ProfileCardProps) {
         </View>
       </View>
       <View>
-        <Button title="follow" />
+        <FriendActionButton item={item} />
       </View>
     </View>
   );

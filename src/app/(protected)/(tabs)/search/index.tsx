@@ -1,9 +1,9 @@
 import ProfileCard from "@/components/Profile/ProfileCard";
+import { ProfileRowItem } from "@/components/ui/FriendActionButton";
 import { wp } from "@/constant/common";
 import { useProfileQuery } from "@/hooks/useProfileQuery";
 import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, ListRenderItem, View } from "react-native";
-import { Profile } from "../../../../../types/supabaseTypes";
 
 export default function Search() {
   const { data } = useProfileQuery();
@@ -14,7 +14,7 @@ export default function Search() {
     if (data) setProfiles(data);
   }, []);
 
-  const renderItem: ListRenderItem<Profile> = useCallback(
+  const renderItem: ListRenderItem<ProfileRowItem> = useCallback(
     ({ item }) => <ProfileCard item={item} />,
     []
   );
@@ -22,7 +22,7 @@ export default function Search() {
   return (
     <View className="flex-1 justify-center bg-white">
       <FlatList
-        data={profiles ?? []}
+        data={profiles}
         renderItem={renderItem}
         contentContainerStyle={{
           paddingHorizontal: wp(3),
