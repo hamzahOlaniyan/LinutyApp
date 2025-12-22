@@ -1,17 +1,16 @@
 import ProfileCard from "@/components/Profile/ProfileCard";
-import { ProfileRowItem } from "@/components/ui/FriendActionButton";
 import { wp } from "@/constant/common";
-import { useProfileQuery } from "@/hooks/useProfileQuery";
+import { ProfileRowItem, useProfileQuery } from "@/hooks/useProfileQuery";
 import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, ListRenderItem, View } from "react-native";
 
 export default function Search() {
   const { data } = useProfileQuery();
 
-  const [profiles, setProfiles] = useState(data);
+  const [profiles, setProfiles] = useState(data?.items);
 
   useEffect(() => {
-    if (data) setProfiles(data);
+    if (data?.items) setProfiles(data?.items);
   }, []);
 
   const renderItem: ListRenderItem<ProfileRowItem> = useCallback(

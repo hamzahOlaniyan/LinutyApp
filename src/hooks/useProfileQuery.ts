@@ -1,6 +1,7 @@
-import { ProfileRowItem } from "@/components/ui/FriendActionButton";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useApiQuery } from "./useApi";
+
+
 
 export type FriendStatus =
   | "NONE"
@@ -8,25 +9,32 @@ export type FriendStatus =
   | "PENDING_INCOMING"
   | "FRIENDS";
 
-export type ExploreProfileItem = {
+export type ProfileRowItem = {
   id: string;
   firstName: string;
   lastName: string;
   username: string;
   avatarUrl: string | null;
-
   friendStatus: FriendStatus;
-  requestId?: string; // needed for accept/decline (incoming)
+  requestId?: string;
 };
+
+
+type FeedEnvelope = {
+  items: ProfileRowItem[];
+  nextCursor: string | null;
+};
+
 export const useProfileQuery = () => {
   const { session } = useAuthStore();
     
   const accessToken = session?.accessToken; 
 
-  const { data, isLoading, error, isFetching, refetch, } = useApiQuery<ProfileRowItem[]>(
+  const { data, isLoading, error, isFetching, refetch, } = useApiQuery<FeedEnvelope>(
     '/profile',
   undefined,
   {enabled: !!accessToken,}
 );
+
   return { isLoading, data, error, isFetching, refetch, };
 };

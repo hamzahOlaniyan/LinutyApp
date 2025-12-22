@@ -89,6 +89,8 @@ export default function Signin() {
           // showToast("Logged in successfully ✅");
         },
         onError: err => {
+          console.log("sign in", err.message, err.response);
+
           if (err.message?.includes("not verified")) {
             setToastDuration(10000);
             showToast(

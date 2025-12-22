@@ -82,20 +82,6 @@ export class ProductApi {
       );
   };
 
-  // static usePostUpdate =  (productId: string) => {
-  //   const qc = useQueryClient();
-  //     return useApiMutation< PostInput>("patch", `/post/${productId}`, {
-  //       onSuccess: () => {
-  //         qc.setQueryData<CursorPage<Post>>(["/feed", `/post/${productId}`], old => {
-  //           if (!old?.data) return old;
-  //           return { ...old, data: old.data.filter(p => p.id !== productId) };
-  //         });
-
-  //         qc.invalidateQueries({ queryKey: ["/feed", `/post/${productId}`] });
-  //       }
-  //     });
-  // };
-
   // 1) PATCH product content
   static useUpdateProductContent = (productId: string) =>
     useApiMutation<ProductInput,Partial<ProductInput>>(
@@ -109,51 +95,6 @@ export class ProductApi {
       "post",
       `/product/${productId}/media`
     );
-
-  // 3) DELETE media
-  // static useDeleteMedia = () => {
-  //   useApiMutation<void, { mediaId: string }>(
-  //     "delete",
-  //     ({ mediaId }) => `/media/${mediaId}` // if your mutation supports route as fn
-  //   );
-  // }
-  
-
-//   static useDeletePost =  (productId: string) => {
-//     const qc = useQueryClient();
-//       return useApiMutation<{ message: string }, void>(
-//         "delete",
-//         `/post/${productId}`,
-//         {
-//           onSuccess: () => {
-//             qc.setQueryData<CursorPage<Post>>(["/feed"], old => {
-//               if (!old?.data) return old;
-//               return { ...old, data: old.data.filter(p => p.id !== productId) };
-//             });
-
-//             qc.invalidateQueries({ queryKey: ["/feed"] });
-//           }
-//         }
-//       );
-//   };
-
-//   static useMyPostReactionQuery =  (productId: string) => {
-//     return useApiQuery<MyReactionResponse>(`/post/${productId}/reactions/me`);
-//   };
-
-//   static usePostReactionMutation =  (productId: string) => {
-//     return useApiMutation<ReactToPostResponse, ReactToPostParams>(
-//       "post",
-//       `/post/${productId}/reactions`,
-//       {
-//         invalidateKeys: [
-//           "/post/feed", // if your feed shows counts
-//           `/post/${productId}`, // post details screen
-//           `/post/${productId}/reactions` // if you have a "who reacted" list
-//         ]
-//       }
-//     );
-//   };
 
   static useGetProductMediaById = (productId:string)=>{
     const { session } = useAuthStore();

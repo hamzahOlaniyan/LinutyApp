@@ -22,11 +22,16 @@ export const useAuthStore = create<AuthStore>()(
       setSession: (session)=>set({session}),
 
       signOut: async () => {
+        console.log("✅ signOut entered"); // <-- should always show
+
         try {
-          await api.post("/auth/logout");
+          console.log("➡️ calling /auth/logout");
+          const res = await api.post("/auth/logout");
+          console.log("✅ logout response", res.status, res.data);
         } catch (err) {
           console.log("logout error (ignored):", err);
         }
+          console.log("➡️ clearing local session");
         set({
           me: null,
           session:null,

@@ -1,5 +1,5 @@
 import { appColors } from "@/constant/colors";
-import { ExploreProfileItem } from "@/hooks/useProfileQuery";
+import { ProfileRowItem } from "@/hooks/useProfileQuery";
 import { useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -8,7 +8,7 @@ import Avatar from "../ui/Avatar";
 import { FriendActionButton } from "../ui/FriendActionButton";
 
 export type ProfileCardProps = {
-  item: ExploreProfileItem;
+  item: ProfileRowItem;
 };
 
 export default function ProfileCard({ item }: ProfileCardProps) {
@@ -34,7 +34,7 @@ export default function ProfileCard({ item }: ProfileCardProps) {
         </View>
       </View>
       <View>
-        <FriendActionButton item={item} />
+        <FriendActionButton item={item} />{" "}
       </View>
     </View>
   );

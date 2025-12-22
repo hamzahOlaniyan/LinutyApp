@@ -8,6 +8,7 @@ const EXPO_PUBLIC_ENDPOINT_URL =
 export const api = axios.create({
   baseURL: EXPO_PUBLIC_ENDPOINT_URL,
   withCredentials: true,
+  // timeout:1000
 });
 
 // --------------------------------------------------
@@ -15,7 +16,6 @@ export const api = axios.create({
 // --------------------------------------------------
 api.interceptors.request.use((config) => {
     const token = useAuthStore.getState().session?.accessToken;
-
 
   if (token) {
     config.headers = config.headers ?? {};

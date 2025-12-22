@@ -1,4 +1,5 @@
-import { FriendsApi } from "@/hooks/FriendsHook";
+import { FriendsApi } from "@/hooks/useFriendsHook";
+import { ProfileRowItem } from "@/hooks/useProfileQuery";
 import { useQueryClient } from "@tanstack/react-query";
 import { TouchableOpacity } from "react-native";
 import AppText from "../AppText";
@@ -9,24 +10,14 @@ type FriendStatus =
   | "PENDING_INCOMING"
   | "FRIENDS";
 
-export type ProfileRowItem = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  username: string;
-  avatarUrl: string | null;
-  friendStatus: FriendStatus;
-  requestId?: string;
-};
-
 export function FriendActionButton({ item }: { item: ProfileRowItem }) {
   const qc = useQueryClient();
 
-  const sendReq = FriendsApi.useSendRequest();
-  const acceptReq = FriendsApi.useAcceptRequest();
-  const declineReq = FriendsApi.useDeclineRequest();
-  const cancelReq = FriendsApi.useCancelRequest();
-  const unfriend = FriendsApi.useUnfriend();
+  const sendReq = FriendsApi.useSendRequest(item.id);
+  const acceptReq = FriendsApi.useAcceptRequest(item.id);
+  const declineReq = FriendsApi.useDeclineRequest(item.id);
+  const cancelReq = FriendsApi.useCancelRequest(item.id);
+  const unfriend = FriendsApi.useUnfriend(item.id);
 
   const isBusy =
     sendReq.isPending ||
@@ -44,6 +35,8 @@ export function FriendActionButton({ item }: { item: ProfileRowItem }) {
   };
 
   const onPress = async () => {
+    console.log("press");
+
     // Optimistic + rollback pattern
     const prev = { friendStatus: item.friendStatus, requestId: item.requestId };
 
@@ -52,35 +45,39 @@ export function FriendActionButton({ item }: { item: ProfileRowItem }) {
         // optimistic -> Requested
         setRow({ friendStatus: "PENDING_OUTGOING" });
 
-        const created = await sendReq.mutateAsync(item.id);
+        const created = await sendReq.mutateAsync();
         // if API returns request id, store it
-        if (created?.id) setRow({ requestId: created.id });
+        if (created?.id) {
+          console.log("request has been sent", created);
+
+          setRow({ requestId: created.id });
+        }
 
         return;
       }
 
-      if (item.friendStatus === "PENDING_OUTGOING") {
-        // cancel
-        setRow({ friendStatus: "NONE", requestId: undefined });
-        await cancelReq.mutateAsync(item.id);
-        return;
-      }
+      // if (item.friendStatus === "PENDING_OUTGOING") {
+      //   // cancel
+      //   setRow({ friendStatus: "NONE", requestId: undefined });
+      //   await cancelReq.mutateAsync(item.id);
+      //   return;
+      // }
 
-      if (item.friendStatus === "PENDING_INCOMING") {
-        // accept (needs requestId)
-        if (!item.requestId)
-          throw new Error("Missing requestId for incoming request");
-        setRow({ friendStatus: "FRIENDS" });
-        await acceptReq.mutateAsync(item.requestId);
-        return;
-      }
+      // if (item.friendStatus === "PENDING_INCOMING") {
+      //   // accept (needs requestId)
+      //   if (!item.requestId)
+      //     throw new Error("Missing requestId for incoming request");
+      //   setRow({ friendStatus: "FRIENDS" });
+      //   await acceptReq.mutateAsync(item.requestId);
+      //   return;
+      // }
 
-      if (item.friendStatus === "FRIENDS") {
-        // unfriend
-        setRow({ friendStatus: "NONE", requestId: undefined });
-        await unfriend.mutateAsync(item.id);
-        return;
-      }
+      // if (item.friendStatus === "FRIENDS") {
+      //   // unfriend
+      //   setRow({ friendStatus: "NONE", requestId: undefined });
+      //   await unfriend.mutateAsync(item.id);
+      //   return;
+      // }
     } catch (e) {
       // rollback
       setRow(prev);
