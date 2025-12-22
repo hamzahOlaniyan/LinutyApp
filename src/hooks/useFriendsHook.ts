@@ -1,16 +1,16 @@
 import { useApiMutation } from "./useApi";
 
 
-type FriendStatus = "NONE" | "PENDING_OUTGOING" | "PENDING_INCOMING" | "FRIENDS";
+// type FriendStatus = "NONE" | "PENDING_OUTGOING" | "PENDING_INCOMING" | "FRIENDS";
 
-type PublicProfileRow = {
-  id: string;
-  name: string;
-  username: string;
-  avatarUrl: string | null;
-  friendStatus: FriendStatus;
-  requestId?: string; // important for accept/decline if incoming (or cancel if outgoing)
-};
+// type PublicProfileRow = {
+//   id: string;
+//   name: string;
+//   username: string;
+//   avatarUrl: string | null;
+//   friendStatus: FriendStatus;
+//   requestId?: string; // important for accept/decline if incoming (or cancel if outgoing)
+// };
 
 
 export class FriendsApi {

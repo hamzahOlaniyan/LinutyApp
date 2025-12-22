@@ -4,11 +4,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { TouchableOpacity } from "react-native";
 import AppText from "../AppText";
 
-type FriendStatus =
-  | "NONE"
-  | "PENDING_OUTGOING"
-  | "PENDING_INCOMING"
-  | "FRIENDS";
+// type FriendStatus =
+//   | "NONE"
+//   | "PENDING_OUTGOING"
+//   | "PENDING_INCOMING"
+//   | "FRIENDS";
 
 export function FriendActionButton({ item }: { item: ProfileRowItem }) {
   const qc = useQueryClient();
