@@ -14,6 +14,7 @@ export type ProfileCardProps = {
 export default function ProfileCard({ item }: ProfileCardProps) {
   const router = useRouter();
   const name = `${item.firstName} ${item.lastName}`;
+
   return (
     <View className="flex-row items-center  justify-between">
       <View className="flex-row items-center gap-2">

@@ -1,9 +1,14 @@
 import { FriendsApi } from "@/hooks/useFriendsHook";
 import { ProfileRowItem } from "@/hooks/useProfileQuery";
+import type { InfiniteData } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
-import { TouchableOpacity } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 import AppText from "../AppText";
 
+export type ExploreProfilesPage = {
+  items: ProfileRowItem[];
+  nextCursor?: string | null;
+};
 // type FriendStatus =
 //   | "NONE"
 //   | "PENDING_OUTGOING"
@@ -27,16 +32,21 @@ export function FriendActionButton({ item }: { item: ProfileRowItem }) {
     unfriend.isPending;
 
   const setRow = (patch: Partial<ProfileRowItem>) => {
-    qc.setQueryData<ProfileRowItem[]>(["/profile"], old => {
+    qc.setQueryData<InfiniteData<ExploreProfilesPage>>(["/profile"], old => {
       if (!old) return old;
-
-      return old.map(p => (p.id === item.id ? { ...p, ...patch } : p));
+      return {
+        ...old,
+        pages: old.pages.map(page => ({
+          ...page,
+          items: page.items.map((p: ProfileRowItem) =>
+            p.id === item.id ? { ...p, ...patch } : p
+          )
+        }))
+      };
     });
   };
 
   const onPress = async () => {
-    console.log("press");
-
     // Optimistic + rollback pattern
     const prev = { friendStatus: item.friendStatus, requestId: item.requestId };
 
@@ -49,35 +59,34 @@ export function FriendActionButton({ item }: { item: ProfileRowItem }) {
         // if API returns request id, store it
         if (created?.id) {
           console.log("request has been sent", created);
-
           setRow({ requestId: created.id });
         }
 
         return;
       }
 
-      // if (item.friendStatus === "PENDING_OUTGOING") {
-      //   // cancel
-      //   setRow({ friendStatus: "NONE", requestId: undefined });
-      //   await cancelReq.mutateAsync(item.id);
-      //   return;
-      // }
+      if (item.friendStatus === "PENDING_OUTGOING") {
+        // cancel
+        setRow({ friendStatus: "NONE", requestId: undefined });
+        await cancelReq.mutateAsync();
+        return;
+      }
 
-      // if (item.friendStatus === "PENDING_INCOMING") {
-      //   // accept (needs requestId)
-      //   if (!item.requestId)
-      //     throw new Error("Missing requestId for incoming request");
-      //   setRow({ friendStatus: "FRIENDS" });
-      //   await acceptReq.mutateAsync(item.requestId);
-      //   return;
-      // }
+      if (item.friendStatus === "PENDING_INCOMING") {
+        // accept (needs requestId)
+        if (!item.requestId)
+          throw new Error("Missing requestId for incoming request");
+        setRow({ friendStatus: "FRIENDS" });
+        await acceptReq.mutateAsync();
+        return;
+      }
 
-      // if (item.friendStatus === "FRIENDS") {
-      //   // unfriend
-      //   setRow({ friendStatus: "NONE", requestId: undefined });
-      //   await unfriend.mutateAsync(item.id);
-      //   return;
-      // }
+      if (item.friendStatus === "FRIENDS") {
+        // unfriend
+        setRow({ friendStatus: "NONE", requestId: undefined });
+        await unfriend.mutateAsync();
+        return;
+      }
     } catch (e) {
       // rollback
       setRow(prev);
@@ -87,9 +96,9 @@ export function FriendActionButton({ item }: { item: ProfileRowItem }) {
 
   const label =
     item.friendStatus === "NONE"
-      ? "Add"
+      ? "+ Add friend"
       : item.friendStatus === "PENDING_OUTGOING"
-        ? "Requested"
+        ? "Cancel Requested"
         : item.friendStatus === "PENDING_INCOMING"
           ? "Accept"
           : "Friends";
@@ -99,14 +108,16 @@ export function FriendActionButton({ item }: { item: ProfileRowItem }) {
       disabled={isBusy}
       onPress={onPress}
       style={{
-        paddingHorizontal: 12,
+        paddingHorizontal: 8,
         paddingVertical: 8,
         borderRadius: 10,
         opacity: isBusy ? 0.6 : 1,
         borderWidth: 1
       }}
     >
-      <AppText>{isBusy ? "..." : label}</AppText>
+      <AppText variant={"xs"}>
+        {isBusy ? <ActivityIndicator size={"small"} /> : label}
+      </AppText>
     </TouchableOpacity>
   );
 }
