@@ -1,10 +1,22 @@
 import Icon from "@/icons";
-import { Stack, useRouter } from "expo-router";
+import { useAuthStore } from "@/store/useAuthStore";
+import { Redirect, Stack, useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 
 export default function _ProtectedLayout() {
   const router = useRouter();
+  const session = useAuthStore(s => s.session);
+  const initialized = useAuthStore(s => s.initialized);
+  const me = useAuthStore(s => s.me);
+
+  const hasCompletedRegistration = !!me?.isProfileComplete;
+
+  if (!initialized) return null;
+
+  if (!hasCompletedRegistration) return <Redirect href="/onboarding-flow" />;
+
+  if (!session) return <Redirect href="/auth" />;
 
   return (
     <Stack

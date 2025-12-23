@@ -13,7 +13,7 @@ type FeedEnvelope = {
 export const useFeedQuery = () => {
   const { session } = useAuthStore();
 
-  const accessToken = session?.accessToken; 
+  const accessToken = session?.access_token; 
 
   const { data, isLoading, error, isFetching, refetch, } = useApiQuery<FeedEnvelope>(
     USER_PROFILE_KEY,

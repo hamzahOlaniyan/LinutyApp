@@ -28,13 +28,18 @@ type FeedEnvelope = {
 export const useProfileQuery = () => {
   const { session } = useAuthStore();
     
-  const accessToken = session?.accessToken; 
+  const accessToken = session?.access_token; 
 
   const { data, isLoading, error, isFetching, refetch, } = useApiQuery<FeedEnvelope>(
     '/profile',
   undefined,
+
+
   {enabled: !!accessToken,}
 );
+
+console.log({error});
+
 
   return { isLoading, data, error, isFetching, refetch, };
 };

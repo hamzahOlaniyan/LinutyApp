@@ -3,21 +3,17 @@ import { useEffect } from "react";
 import { Profile } from "../../types/supabaseTypes";
 import { ApiError, useApiQuery } from "./useApi";
 
-export const USER_PROFILE_KEY = "/profile/me";
-
-// type ApiResponse<T> = {
-//   success: boolean;
-//   message: string;
-//   data: T;
-// };
 
 export const useMeQuery = () => {
   const { me, setMe, session } = useAuthStore();
 
-  const accessToken = session?.accessToken; 
+  const accessToken = session?.access_token; 
+
+  console.log("useMeQuery enabled?", !!accessToken);
+
 
   const { data, isLoading, error } = useApiQuery<Profile>(
-    USER_PROFILE_KEY,
+    "/profile/me",
     undefined,
     {
       retry: (failureCount, error) => {

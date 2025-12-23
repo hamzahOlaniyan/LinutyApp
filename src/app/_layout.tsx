@@ -12,9 +12,8 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import { supabase } from "@/lib/supabase/supabase";
 import "../../global.css";
-
-export const hasCompletedRegistration = false;
 
 export const unstable_settings = {
   anchor: "auth"
@@ -28,11 +27,7 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 }
 
 export default function RootLayout() {
-  const { initialized, init, me, session, hasCompletedOnboarding } =
-    useAuthStore();
-
-  const isLoggedIn = !!session;
-  const hasCompletedRegistration = !!me?.isProfileComplete;
+  const { initialized, init } = useAuthStore();
 
   const [loaded] = useFonts({
     [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
@@ -45,13 +40,19 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loaded && initialized) {
-      SplashScreen.hideAsync();
-    }
+    init();
+  }, []);
+
+  useEffect(() => {
+    if (loaded && initialized) SplashScreen.hideAsync();
   }, [loaded, initialized]);
 
   useEffect(() => {
-    init();
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("AUTH EVENT:", event, "hasSession?", !!session);
+      useAuthStore.getState().setSession(session ?? null);
+    });
+    return () => sub.subscription.unsubscribe();
   }, []);
 
   if (!loaded || !initialized) {
@@ -65,46 +66,7 @@ export default function RootLayout() {
           <PortalProvider>
             <PortalHost name="root" />
             <StatusBar style="auto" />
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack>
-                <Stack.Protected
-                  guard={
-                    isLoggedIn &&
-                    hasCompletedOnboarding &&
-                    hasCompletedRegistration
-                  }
-                >
-                  <Stack.Screen
-                    name="(protected)"
-                    options={{ headerShown: false, animation: "none" }}
-                  />
-                </Stack.Protected>
-
-                <Stack.Protected
-                  guard={
-                    isLoggedIn &&
-                    hasCompletedOnboarding &&
-                    !hasCompletedRegistration
-                  }
-                >
-                  <Stack.Screen
-                    name="onboarding-flow"
-                    options={{ headerShown: false }}
-                  />
-                </Stack.Protected>
-
-                <Stack.Protected guard={!isLoggedIn && hasCompletedOnboarding}>
-                  <Stack.Screen name="auth" options={{ headerShown: false }} />
-                </Stack.Protected>
-
-                <Stack.Protected guard={!hasCompletedOnboarding}>
-                  <Stack.Screen
-                    name="onboarding/index"
-                    options={{ headerShown: false }}
-                  />
-                </Stack.Protected>
-              </Stack>
-            </Stack>
+            <Stack screenOptions={{ headerShown: false }} />
           </PortalProvider>
         </GestureHandlerRootView>
       </AuthLoader>

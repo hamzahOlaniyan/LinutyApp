@@ -1,5 +1,5 @@
-import { api } from "@/lib/api";
 import { queryClient } from "@/lib/queryClient";
+import { supabase } from "@/lib/supabase/supabase";
 import { deleteItemAsync, getItem, setItem } from "expo-secure-store";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -14,30 +14,19 @@ export const useAuthStore = create<AuthStore>()(
       session:null,
 
       init: async () => {
+        set({ initialized: false });
+        const { data } = await supabase.auth.getSession();
+        set({ session: data.session ?? null });
         set({ initialized: true });
       },
 
-      setMe: me => set({ me }),
-
-      setSession: (session)=>set({session}),
-
-      signOut: async () => {
-        console.log("✅ signOut entered"); // <-- should always show
-
-        try {
-          console.log("➡️ calling /auth/logout");
-          const res = await api.post("/auth/logout");
-          console.log("✅ logout response", res.status, res.data);
-        } catch (err) {
-          console.log("logout error (ignored):", err);
-        }
-          console.log("➡️ clearing local session");
-        set({
-          me: null,
-          session:null,
-          hasCompletedOnboarding: false
-        });
-        queryClient.clear();
+      setInitialized: (initialized) => set({ initialized }),
+        setMe: (me) => set({ me }),
+        setSession: (session)=>set({session}),
+        signOut: async () => {
+          await supabase.auth.signOut();
+          set({ session: null, me: null });
+          queryClient.clear();
       },
 
       completeOnboarding: () => {
@@ -56,7 +45,6 @@ export const useAuthStore = create<AuthStore>()(
       })),
       partialize: state => ({
         me: state.me,
-        session: state.session,
         hasCompletedOnboarding: state.hasCompletedOnboarding
       }),
       onRehydrateStorage: () => (state, error) => {
