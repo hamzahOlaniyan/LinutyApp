@@ -28,7 +28,7 @@ export type SignInField = Omit<Field, "name"> & {
 };
 
 export default function Signin() {
-  const { formData, resetFormData } = useFormStore();
+  const { formData } = useFormStore();
 
   const [loading, setLoading] = useState(false);
 
