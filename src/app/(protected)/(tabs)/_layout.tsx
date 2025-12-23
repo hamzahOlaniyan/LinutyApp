@@ -11,25 +11,14 @@ export default function TabLayout() {
         headerShown: false
       }}
     >
-      <Tabs.Screen
-        name="(home)/index"
-        options={{
-          title: "home",
-          headerTitle: "",
-          headerShown: false,
-          headerShadowVisible: false
-        }}
-      />
-      <Tabs.Screen name="explore/index" options={{ title: "explore" }} />
+      <Tabs.Screen name="(home)/index" options={{ title: "home" }} />
+      <Tabs.Screen name="explore" options={{ title: "explore" }} />
       <Tabs.Screen
         name="search/index"
         options={{ headerShown: true, title: "search" }}
       />
       <Tabs.Screen name="store" />
-      <Tabs.Screen
-        name="news/index"
-        options={{ title: "Comunity news", headerShown: true }}
-      />
+      <Tabs.Screen name="news" options={{ title: "news", headerShown: true }} />
     </Tabs>
   );
 }

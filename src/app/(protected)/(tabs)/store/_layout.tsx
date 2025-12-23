@@ -17,7 +17,6 @@ export default function StoreLayout() {
         name="index"
         options={{
           title: "Store",
-          headerTitleAlign: "center",
           headerRight: () => (
             <TouchableOpacity
               onPress={() =>
@@ -39,7 +38,7 @@ export default function StoreLayout() {
         }}
       />
       <Stack.Screen
-        name="seller"
+        name="[sellerId]"
         options={{
           title: "",
           headerTitleAlign: "center"

@@ -8,7 +8,7 @@ import React, { useCallback } from "react";
 import { FlatList, ListRenderItem, View } from "react-native";
 
 export default function StorePage() {
-  const { isLoading, data, refetch } = ProductApi.useGetProductFeed();
+  const { data } = ProductApi.useGetProductFeed();
 
   const products: FeedProduct[] = data?.data;
 
@@ -27,8 +27,8 @@ export default function StorePage() {
           data={products}
           keyExtractor={item => item.id}
           renderItem={renderItem}
-          refreshing={isLoading}
-          onRefresh={refetch}
+          // refreshing={isLoading}
+          // onRefresh={refetch}
           numColumns={2}
           scrollEnabled
           bounces
@@ -45,7 +45,6 @@ export default function StorePage() {
           }}
           contentContainerStyle={{
             paddingBottom: 100,
-            backgroundColor: appColors.primary,
             flex: 1
           }}
         />

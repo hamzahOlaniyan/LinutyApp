@@ -11,7 +11,7 @@ export default function Search() {
 
   useEffect(() => {
     if (data?.items) setProfiles(data?.items);
-  }, []);
+  }, [data]);
 
   const renderItem: ListRenderItem<ProfileRowItem> = useCallback(
     ({ item }) => <ProfileCard item={item} />,

@@ -6,6 +6,12 @@ import { View } from "react-native";
 const size = 24;
 
 export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
+  if (routeName.includes("(home)")) routeName = "home";
+  else if (routeName.startsWith("explore")) routeName = "explore";
+  else if (routeName.startsWith("search")) routeName = "search";
+  else if (routeName.startsWith("store")) routeName = "store";
+  else if (routeName.startsWith("news")) routeName = "news";
+
   switch (routeName) {
     case "home":
       return (
@@ -29,8 +35,12 @@ export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
       );
     case "search":
       return (
-        <View className="items-center justify-center rounded-full bg-neutral-100 p-2">
-          <Icon name="lineage" color={appColors.primary} size={24} />
+        <View className="items-center justify-center rounded-full bg-neutral-200 p-2">
+          <Icon
+            name="lineage"
+            color={isFocused ? appColors.primary : appColors.text}
+            size={24}
+          />
         </View>
       );
     case "store":

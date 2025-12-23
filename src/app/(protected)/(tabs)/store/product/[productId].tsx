@@ -8,7 +8,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 import { Image } from "expo-image";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 
 import ProductOptions from "@/components/Product/ProductOptions";
@@ -55,6 +55,7 @@ export default function ProductScreen() {
   const media = product?.media ?? [];
 
   const { width: screenWidth } = Dimensions.get("window");
+  const router = useRouter();
 
   const isOwner = me?.id === product?.seller.id;
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -74,7 +75,7 @@ export default function ProductScreen() {
                   bottomSheetRef={bottomSheetRef}
                   isUserOwner={isOwner}
                   productId={productId}
-                  type={"product"}
+                  // type={"product"}
                 />
               }
             />
@@ -116,6 +117,13 @@ export default function ProductScreen() {
         <View className="bg-yellow-200">
           <AppText>{product?.title}</AppText>
           <AppText>{product?.price}</AppText>
+          <TouchableOpacity
+            onPress={() =>
+              router.push(`/(protected)/(tabs)/store/${product?.seller.id}`)
+            }
+          >
+            <AppText>see store </AppText>
+          </TouchableOpacity>
         </View>
       </ScreenView>
     </View>
