@@ -27,7 +27,7 @@ export class ProductApi {
 
   static useGetProductById = (productId: string|null) => {
     const { session } = useAuthStore();
-    const accessToken = session?.accessToken; 
+    const accessToken = session?.access_token; 
     const { data, isLoading, error, isFetching, refetch, }= useApiQuery<FeedEnvelope>(`/product/${productId}`,{enabled: !!accessToken}
     );
     return { isLoading, data, error, isFetching, refetch, };
@@ -52,7 +52,7 @@ export class ProductApi {
 
   static useGetProductFeed = ()=>{
     const { session } = useAuthStore();
-    const accessToken = session?.accessToken; 
+    const accessToken = session?.access_token; 
 
      const { data, isLoading, error, isFetching, refetch, } = useApiQuery<FeedEnvelope>(
         '/product/feed',
@@ -98,7 +98,7 @@ export class ProductApi {
 
   static useGetProductMediaById = (productId:string)=>{
     const { session } = useAuthStore();
-    const accessToken = session?.accessToken; 
+    const accessToken = session?.access_token; 
     const { data, isLoading,  refetch, error , isFetching}= useApiQuery<ProductMediaTable[]>(`/product/${productId}/media`,undefined,{enabled:!!accessToken && !!productId});
     return{data,isLoading, refetch, error, isFetching}
   }

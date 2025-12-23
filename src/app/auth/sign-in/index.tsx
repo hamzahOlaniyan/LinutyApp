@@ -1,21 +1,16 @@
-import { LoginParams } from "@/components/types";
-import AppText from "@/components/ui/AppText";
 import Button from "@/components/ui/Button";
 import FormInput from "@/components/ui/FormInput";
 import { Field } from "@/components/ui/FormInput/types";
 import Terms from "@/components/ui/Terms";
-import ToastModal from "@/components/ui/ToastModal";
 import { appColors } from "@/constant/colors";
-import { DEFAULT_TOAST_DURATION, wp } from "@/constant/common";
-import { useApiMutation } from "@/hooks/useApi";
-import { LoginResponse } from "@/store/types";
+import { wp } from "@/constant/common";
+import { supabase } from "@/lib/supabase/supabase";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useFormStore } from "@/store/useFormStore";
-import { AuthResponse } from "@supabase/supabase-js";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export type SignInValues = {
@@ -34,29 +29,8 @@ export type SignInField = Omit<Field, "name"> & {
 
 export default function Signin() {
   const { formData, resetFormData } = useFormStore();
-  const { setSession } = useAuthStore();
 
-  const [toastVisible, setToastVisible] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | React.ReactNode>(
-    ""
-  );
-  const [toastDuration, setToastDuration] = useState(DEFAULT_TOAST_DURATION);
-
-  const showToast = (msg: string | React.ReactNode) => {
-    setToastMessage(msg);
-    setToastVisible(true);
-  };
-
-  const { mutate, isLoading } = useApiMutation<LoginResponse, LoginParams>(
-    "post",
-    "/auth/login"
-  );
-
-  const { mutate: resendVerification, isLoading: sendingVerificationEmail } =
-    useApiMutation<AuthResponse, LoginParams>(
-      "post",
-      "/auth/resend-verification-email"
-    );
+  const [loading, setLoading] = useState(false);
 
   const LoginForm: SignInField[] = [
     {
@@ -74,41 +48,16 @@ export default function Signin() {
     }
   ];
 
-  const handleFormSubmit = async () => {
-    const values = formData as unknown as Partial<SignInValues>;
-    const { email, password } = values;
+  const handleSignInUser = async () => {
+    setLoading(true);
 
-    mutate(
-      { email, password },
-      {
-        onSuccess: async data => {
-          resetFormData({ password: "" });
-          setSession(data);
-          router.replace("/(protected)/(tabs)/(home)");
-          // setToastDuration(DEFAULT_TOAST_DURATION);
-          // showToast("Logged in successfully ✅");
-        },
-        onError: err => {
-          console.log("sign in", err.message, err.response);
+    const { data } = await supabase.auth.signInWithPassword({
+      email: formData.email as string,
+      password: formData.password as string
+    });
 
-          if (err.message?.includes("not verified")) {
-            setToastDuration(10000);
-            showToast(
-              <AppText>
-                <AppText className="text-white">Email not verified. </AppText>
-                <Pressable onPress={() => resendVerification}>
-                  <AppText className="text-primary">
-                    Resend verification email
-                  </AppText>
-                </Pressable>
-              </AppText>
-            );
-          } else {
-            showToast(err.message || "Login failed");
-          }
-        }
-      }
-    );
+    useAuthStore.getState().setSession(data.session);
+    router.replace("/(protected)/(tabs)/(home)");
   };
 
   return (
@@ -127,8 +76,8 @@ export default function Signin() {
         />
         <FormInput
           fields={LoginForm}
-          onSubmit={() => handleFormSubmit()}
-          loading={isLoading || sendingVerificationEmail}
+          onSubmit={() => handleSignInUser()}
+          loading={loading}
           submitBtnLabel="Sign in"
         />
 
@@ -146,12 +95,6 @@ export default function Signin() {
           <Terms />
         </View>
       </View>
-      <ToastModal
-        visible={toastVisible}
-        message={toastMessage}
-        onClose={() => setToastVisible(false)}
-        duration={toastDuration}
-      />
     </SafeAreaView>
   );
 }

@@ -37,7 +37,7 @@ export class PostApi {
 
   static useGetPostById = (postId: string) => {
     const { session } = useAuthStore();
-    const accessToken = session?.accessToken; 
+    const accessToken = session?.access_token; 
     const { data, isLoading, error, isFetching, refetch, }= useApiQuery<PostResponse>(`/post/${postId}`,{enabled: !!accessToken}
     );
     return { isLoading, data, error, isFetching, refetch, };
@@ -138,7 +138,7 @@ export class PostApi {
 
   static useGetMediaByPostId = (postId:string)=>{
     const { session } = useAuthStore();
-    const accessToken = session?.accessToken; 
+    const accessToken = session?.access_token; 
     const { data, isLoading,  refetch, error , isFetching}= useApiQuery<MediaFile[]>(`/post/${postId}/media`,undefined,{enabled:!!accessToken && !!postId});
     return{data,isLoading, refetch, error, isFetching}
   }

@@ -13,7 +13,7 @@ export type CommentEnvelope = {
 export const useCommentQuery = (postId:string) => {
   const { session } = useAuthStore();
 
-  const accessToken = session?.accessToken; 
+  const accessToken = session?.access_token; 
 
   const { data, isLoading, error, isFetching, refetch, } = useApiQuery<CommentEnvelope>(
     `/post/${postId}/comment`,

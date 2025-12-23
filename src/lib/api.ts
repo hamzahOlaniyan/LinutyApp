@@ -15,7 +15,7 @@ export const api = axios.create({
 // REQUEST INTERCEPTOR — ALWAYS use accessToken
 // --------------------------------------------------
 api.interceptors.request.use((config) => {
-    const token = useAuthStore.getState().session?.accessToken;
+    const token = useAuthStore.getState().session?.access_token;
 
   if (token) {
     config.headers = config.headers ?? {};
@@ -31,13 +31,14 @@ api.interceptors.request.use((config) => {
 // --------------------------------------------------
 // RESPONSE INTERCEPTOR — Better error output
 // --------------------------------------------------
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log("API ERROR ===>", JSON.stringify(error, null, 2));
-    return Promise.reject(
-      error.response?.data ?? error.message ?? "Unknown error"
-    );
+    const status = error?.response?.status;
+    const url = error?.config?.url;
+    console.log("HTTP FAIL:", status, url, error?.response?.data);
+    return Promise.reject(error); // ✅ keep axios error
   }
 );
 
