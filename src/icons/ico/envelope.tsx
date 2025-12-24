@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-export const chevrondown = ({ color = "#1f1f1f", size = 24, ...props }) => {
+export const envelope = ({ color = "#1f1f1f", size = 24, ...props }) => {
   return (
     <Svg
       viewBox="0 -960 960 960"
@@ -16,13 +16,3 @@ export const chevrondown = ({ color = "#1f1f1f", size = 24, ...props }) => {
     </Svg>
   );
 };
-
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  height="24px"
-  viewBox="0 -960 960 960"
-  width="24px"
-  fill="#1f1f1f"
->
-  <path />
-</svg>;

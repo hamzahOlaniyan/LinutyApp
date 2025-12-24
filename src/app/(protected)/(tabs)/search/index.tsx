@@ -1,11 +1,11 @@
 import ProfileCard from "@/components/Profile/ProfileCard";
 import { wp } from "@/constant/common";
-import { ProfileRowItem, useProfileQuery } from "@/hooks/useProfileQuery";
+import { ProfileApi, ProfileRowItem } from "@/hooks/useProfileApi";
 import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, ListRenderItem, View } from "react-native";
 
 export default function Search() {
-  const { data } = useProfileQuery();
+  const { data } = ProfileApi.useProfileQuery();
 
   const [profiles, setProfiles] = useState(data?.items);
 

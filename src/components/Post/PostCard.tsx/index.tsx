@@ -20,6 +20,7 @@ import { PostCardProps } from "../type";
 
 const PostCard = memo(function PostCard({ post }: PostCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [readmore, setReadMore] = useState(false);
 
   const media = post?.mediaFiles ?? [];
 
@@ -29,6 +30,7 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
   const viewabilityConfig = useRef<ViewabilityConfig>({
     viewAreaCoveragePercentThreshold: 60
   }).current;
+
   const onViewableItemsChanged = useRef(
     ({
       viewableItems
@@ -45,7 +47,7 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
     <View style={s.container}>
       {/* HEADER: author tap */}
       <PostHeader
-        author={post.author}
+        author={post?.author}
         createdAt={post.createdAt}
         visibility={post.visibility}
         postId={post.id}
@@ -53,17 +55,29 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
 
       {/* BODY: open post */}
       <Pressable
-        onPress={() => router.push(`/post/${post.id}`)}
+        onPress={() => router.push(`/post/${post.id}/${post.id}`)}
         style={s.content}
       >
-        {post.content ? (
-          <AppText variant="post_content">{post?.content}</AppText>
-        ) : null}
+        {Number(post?.content?.length) > 100 && !readmore ? (
+          <>
+            <AppText>
+              {post?.content?.substring(0, 100)}...{" "}
+              <AppText
+                onPress={() => setReadMore(!readmore)}
+                color={appColors.secondary}
+              >
+                more
+              </AppText>
+            </AppText>
+          </>
+        ) : (
+          <AppText>{post?.content} </AppText>
+        )}
       </Pressable>
 
       {/* MEDIA: open media viewer */}
 
-      <View>
+      <View className="mt-2">
         {media.length <= 1 &&
           media.map(m => {
             const aspectRatio =

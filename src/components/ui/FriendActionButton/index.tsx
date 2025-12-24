@@ -1,13 +1,19 @@
 import { FriendsApi } from "@/hooks/useFriendsHook";
-import { ProfileRowItem } from "@/hooks/useProfileQuery";
+import { FriendStatus, ProfileRowItem } from "@/hooks/useProfileApi";
 import type { InfiniteData } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
-import { ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleProp,
+  TouchableOpacity,
+  ViewStyle
+} from "react-native";
 import AppText from "../AppText";
 
 export type ExploreProfilesPage = {
   items: ProfileRowItem[];
   nextCursor?: string | null;
+  friendStatus?: FriendStatus;
 };
 // type FriendStatus =
 //   | "NONE"
@@ -15,7 +21,13 @@ export type ExploreProfilesPage = {
 //   | "PENDING_INCOMING"
 //   | "FRIENDS";
 
-export function FriendActionButton({ item }: { item: ProfileRowItem }) {
+export function FriendActionButton({
+  item,
+  style
+}: {
+  item: ProfileRowItem;
+  style?: StyleProp<ViewStyle>;
+}) {
   const qc = useQueryClient();
 
   const sendReq = FriendsApi.useSendRequest(item.id);
@@ -107,13 +119,16 @@ export function FriendActionButton({ item }: { item: ProfileRowItem }) {
     <TouchableOpacity
       disabled={isBusy}
       onPress={onPress}
-      style={{
-        paddingHorizontal: 8,
-        paddingVertical: 8,
-        borderRadius: 10,
-        opacity: isBusy ? 0.6 : 1,
-        borderWidth: 1
-      }}
+      style={[
+        style,
+        {
+          paddingHorizontal: 8,
+          paddingVertical: 8,
+          borderRadius: 10,
+          opacity: isBusy ? 0.6 : 1,
+          borderWidth: 1
+        }
+      ]}
     >
       <AppText variant={"xs"}>
         {isBusy ? <ActivityIndicator size={"small"} /> : label}

@@ -1,7 +1,7 @@
 
 export type PostVisibility = "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE";
 
-// export type PostListItem = {
+// export type PostItem = {
 //   id: string;
 //   profileId: string;
 //   content: string | null;
@@ -13,6 +13,7 @@ export type PostVisibility = "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE"
 //   commentCount: number;
 //   likeCount: number;
 //   shareCount: number;
+//   mediaFiles: FeedMediaFile[];
 // };
 export type PostCardProps = {
   post: FeedPost;
@@ -44,7 +45,7 @@ export type FeedMediaFile = {
   sizeBytes: number | null;
   createdAt: string;
   updatedAt: string;
-};
+}[];
 
 export type FeedLineage = {
   id: string;
@@ -67,7 +68,7 @@ export type FeedPost = {
   updatedAt: string;
 
   author: FeedAuthor;
-  mediaFiles: FeedMediaFile[];
+  mediaFiles: FeedMediaFile;
   lineage: FeedLineage | null;
   _count: {
     comments: number;

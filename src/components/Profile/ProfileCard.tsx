@@ -1,5 +1,5 @@
 import { appColors } from "@/constant/colors";
-import { ProfileRowItem } from "@/hooks/useProfileQuery";
+import { ProfileRowItem } from "@/hooks/useProfileApi";
 import { useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";

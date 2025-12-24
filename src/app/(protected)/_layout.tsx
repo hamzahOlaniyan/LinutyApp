@@ -14,7 +14,7 @@ export default function _ProtectedLayout() {
 
   if (!initialized) return null;
 
-  if (!hasCompletedRegistration) return <Redirect href="/onboarding-flow" />;
+  // if (!hasCompletedRegistration) return <Redirect href="/onboarding-flow" />;
 
   if (!session) return <Redirect href="/auth" />;
 

@@ -3,6 +3,7 @@ import AppText from "@/components/ui/AppText";
 import StickyTab from "@/components/ui/StickyTab";
 import { hp } from "@/constant/common";
 import { useAuthStore } from "@/store/useAuthStore";
+import { Image } from "expo-image";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -18,7 +19,17 @@ export default function Me() {
       className="flex-1 bg-white"
       style={{ marginBottom: bottom }}
     >
-      <View style={s.coverContainer}></View>
+      {me?.coverUrl && (
+        <View style={s.coverContainer}>
+          {
+            <Image
+              source={{ uri: me?.coverUrl }}
+              contentFit="fill"
+              style={{ width: "100%", height: "100%" }}
+            />
+          }
+        </View>
+      )}
       <Info {...me!} />
 
       <View>
@@ -41,35 +52,6 @@ export default function Me() {
                   quis provident saepe consequuntur magni sed voluptate
                   blanditiis quis provident saepe consequuntur magni sed
                   voluptate blanditiis quis provident saepe consequuntur magni
-                  sed voluptate blanditiis quis provident saepe consequuntur
-                  magni sed voluptate blanditiis quis provident saepe
-                  consequuntur magni sed voluptate blanditiis quis provident
-                  saepe consequuntur magni sed voluptate blanditiis quis
-                  provident saepe consequuntur magni sed voluptate blanditiis
-                  quis provident saepe consequuntur magni sed voluptate
-                  blanditiis quis provident saepe consequuntur magni sed
-                  voluptate blanditiis quis provident saepe consequuntur magni
-                  sed voluptate blanditiis quis provident saepe consequuntur
-                  magni sed voluptate blanditiis quis provident saepe
-                  consequuntur magni sed voluptate blanditiis quis provident
-                  saepe consequuntur magni sed voluptate blanditiis quis
-                  provident saepe consequuntur magni sed voluptate blanditiis
-                  quis provident saepe consequuntur magni sed voluptate
-                  blanditiis quis provident saepe consequuntur magni sed
-                  voluptate blanditiis quis provident saepe consequuntur magni
-                  sed voluptate blanditiis quis provident saepe consequuntur
-                  magni sed voluptate blanditiis quis provident saepe
-                  consequuntur magni sed voluptate blanditiis quis provident
-                  saepe consequuntur magni sed voluptate blanditiis quis
-                  provident saepe consequuntur magni sed voluptate blanditiis
-                  quis provident saepe consequuntur consequuntur magni sed
-                  voluptate blanditiis quis provident saepe consequuntur magni
-                  sed voluptate blanditiis quis provident saepe consequuntur
-                  magni sed voluptate blanditiis quis provident saepe
-                  consequuntur consequuntur magni sed voluptate blanditiis quis
-                  provident saepe consequuntur magni sed voluptate blanditiis
-                  quis provident saepe consequuntur magni sed voluptate
-                  blanditiis quis provident saepe consequuntur
                 </AppText>
               </ScrollView>
             ),
@@ -85,7 +67,7 @@ export default function Me() {
 
 const s = StyleSheet.create({
   coverContainer: {
-    height: hp(20),
+    height: hp(25),
     backgroundColor: "orange",
     flexDirection: "row"
   }

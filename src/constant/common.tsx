@@ -18,7 +18,7 @@ export function displayName(author?: PostComment["author"]) {
   const full = `${author?.firstName ?? ""} ${author?.lastName ?? ""}`.trim();
   const text = !author
     ? "Unknown"
-    : full || (author.username ? `@${author.username}` : "Unknown");
+    : full || (author?.username ? `@${author?.username}` : "Unknown");
 
   return (
     <AppText variant={"medium"} className="font-semibold">
