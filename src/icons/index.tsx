@@ -2,6 +2,7 @@ import React from "react";
 import { account } from "./ico/account";
 import { add_image } from "./ico/add-image";
 import { bookmark } from "./ico/bookmark";
+import { calendar } from "./ico/calendar";
 import { chevrondown } from "./ico/chevrondown";
 import { chevronforward } from "./ico/chevronforward";
 import { close } from "./ico/close";
@@ -10,13 +11,16 @@ import { deleteTrash } from "./ico/delete";
 import { discover } from "./ico/discover";
 import { discoverSolid } from "./ico/discoverSolid";
 import { edit } from "./ico/edit";
+import { envelope } from "./ico/envelope";
 import { events } from "./ico/events";
 import { favorite } from "./ico/favorite";
 import { filter } from "./ico/filter";
 import { home } from "./ico/home";
 import { homeSolid } from "./ico/homeSolid";
 import { lineage } from "./ico/lineage";
+import { location } from "./ico/location";
 import { logout } from "./ico/logout";
+import { mail } from "./ico/mail";
 import { menu } from "./ico/menu";
 import { news } from "./ico/news";
 import { newsSolid } from "./ico/newsSolid";
@@ -76,13 +80,17 @@ const icons = {
   account,
   report,
   events,
-  lineage
+  lineage,
+  envelope,
+  mail,
+  calendar,
+  location
 } as const;
 
-type IconName = keyof typeof icons;
+export type IconName = keyof typeof icons;
 
 type IconProps = {
-  name: IconName;
+  name: IconName | null;
   size?: number;
   strokeWidth?: number;
   color?: string;

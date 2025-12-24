@@ -70,7 +70,7 @@ export default function PostAction({ post }: PostCardProps) {
         <PostInfo
           post={post}
           likeCount={likes?.count}
-          commentCount={post._count.comments}
+          commentCount={post?._count?.comments}
         />
         <View style={s.actions}>
           <Pressable hitSlop={8} style={s.button} onPress={handleLike}>
@@ -107,13 +107,13 @@ export default function PostAction({ post }: PostCardProps) {
 
       <ModalBottomSheet
         ref={bottomSheetRef}
-        title={`${post._count.comments ?? 0} Comments`}
+        title={`${post?._count?.comments ?? 0} Comments`}
         children={
           <CommentsList
-            postAuthorId={post.author.id ?? ""}
+            postAuthorId={post?.author?.id ?? ""}
             comments={comments ?? []}
             loading={isLoading}
-            count={post._count.comments ?? null}
+            count={post?._count?.comments ?? null}
             postId={post.id}
           />
         }

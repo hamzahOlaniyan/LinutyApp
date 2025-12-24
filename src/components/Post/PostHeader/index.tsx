@@ -34,13 +34,13 @@ export default function PostHeader({
   const bottomSheetRef = useRef<ModalBottomSheetRef | null>(null);
   const handleOpenSheet = () => bottomSheetRef.current?.expand();
 
-  const isUserOwner = me?.id === author.id;
+  const isUserOwner = me?.id === author?.id;
 
-  const avatarUri = author.avatarUrl?.replace("/svg?", "/png?");
+  const avatarUri = author?.avatarUrl?.replace("/svg?", "/png?");
 
   const displayName =
-    `${author.firstName ?? ""} ${author.lastName ?? ""}`.trim() ||
-    (author.username ? `@${author.username}` : "Unknown");
+    `${author?.firstName ?? ""} ${author?.lastName ?? ""}`.trim() ||
+    (author?.username ? `@${author?.username}` : "Unknown");
 
   return (
     <View
@@ -49,7 +49,7 @@ export default function PostHeader({
     >
       <View className="flex-1 flex-row items-end gap-2">
         <TouchableOpacity
-          onPress={() => router.push(`/(protected)/user/${author.id}`)}
+          onPress={() => router.push(`/(protected)/profile/${author?.id}`)}
           hitSlop={10}
         >
           {avatarUri ? <Avatar path={avatarUri} size={45} /> : null}
@@ -57,7 +57,7 @@ export default function PostHeader({
         <View className="flex-1">
           <View className="flex-row items-center gap-2">
             <TouchableOpacity
-              onPress={() => router.push(`/(protected)/user/${author.id}`)}
+              onPress={() => router.push(`/(protected)/profile/${author?.id}`)}
               hitSlop={10}
             >
               <AppText variant="post_name">{displayName}</AppText>
@@ -68,10 +68,10 @@ export default function PostHeader({
             <AppText variant="post_visability">· {visibility}</AppText>
           </View>
           <TouchableOpacity
-            onPress={() => router.push(`/(protected)/user/${author.id}`)}
+            onPress={() => router.push(`/(protected)/profile/${author.id}`)}
             hitSlop={10}
           >
-            <AppText variant="post_username">@ {author.username}</AppText>
+            <AppText variant="post_username">@ {author?.username}</AppText>
           </TouchableOpacity>
         </View>
       </View>

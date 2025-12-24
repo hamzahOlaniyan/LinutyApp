@@ -4,11 +4,13 @@ import Button from "@/components/ui/Button";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Profile } from "../../../../types/supabaseTypes";
 
 export default function Info(me: Profile) {
+  const [readmore, setReadMore] = useState(false);
+
   const name = `${me?.firstName} ${me?.lastName}`;
 
   const router = useRouter();
@@ -42,10 +44,29 @@ export default function Info(me: Profile) {
             </View>
           </View>
         </View>
-        <View>
-          <AppText>{me?.bio}</AppText>
-        </View>
-        {/* {ACTIONS} */}
+        {!readmore ? (
+          <AppText className="font-Medium">
+            {me?.bio.substring(0, 95)}...{" "}
+            <AppText
+              onPress={() => setReadMore(!readmore)}
+              color={appColors.secondary}
+            >
+              {" "}
+              more
+            </AppText>
+          </AppText>
+        ) : (
+          <AppText className="font-Medium">
+            {me?.bio}
+            <AppText
+              onPress={() => setReadMore(!readmore)}
+              color={appColors.secondary}
+            >
+              {" "}
+              less
+            </AppText>
+          </AppText>
+        )}
         <View className="mt-4 flex-row justify-between gap-4 ">
           <Button
             size="sm"
