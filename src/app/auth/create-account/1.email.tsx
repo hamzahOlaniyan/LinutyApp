@@ -10,6 +10,7 @@ import StepContainer from "@/components/ui/StepContainer";
 import { useApiMutation } from "@/hooks/useApi";
 import { useFormStore } from "@/store/useFormStore";
 import { useRouter } from "expo-router";
+import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { SignInField, SignInValues } from "../sign-in";
@@ -36,7 +37,7 @@ export default function Email() {
     }
   ];
 
-  const handleEmailSubmit = async () => {
+  const handleNext = async () => {
     const values = formData as unknown as Partial<SignInValues>;
     const { email } = values;
 
@@ -44,6 +45,7 @@ export default function Email() {
       { email },
       {
         onSuccess: async () => {
+          await SecureStore.setItemAsync("pending_email", email ?? "");
           router.push("/auth/create-account/2.name");
         },
         onError: err => {
@@ -65,7 +67,7 @@ export default function Email() {
       >
         <FormInput
           fields={LoginForm}
-          onSubmit={() => handleEmailSubmit()}
+          onSubmit={handleNext}
           loading={isLoading}
           submitBtnLabel="Continue"
         />

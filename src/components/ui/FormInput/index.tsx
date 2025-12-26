@@ -1,7 +1,9 @@
 import { emailRegex, formatLabel } from "@/lib/utils";
 import { useFormStore } from "@/store/useFormStore";
+import { router } from "expo-router";
 import React from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
+import AppText from "../AppText";
 import GradientButton from "../GradientButton";
 import { AppInput } from "../Input.tsx";
 import { FieldType, InputFieldProps } from "./types";
@@ -63,7 +65,8 @@ export default function FormInput({
   onSubmit,
   loading,
   footerContent,
-  onChangeAnyField
+  onChangeAnyField,
+  forgottonPassword = false
 }: InputFieldProps) {
   const { setFormData, setFormErrors, errors, formData } = useFormStore();
 
@@ -219,6 +222,14 @@ export default function FormInput({
         );
       })}
       {footerContent && <View className="pt-4">{footerContent}</View>}
+      {forgottonPassword && (
+        <TouchableOpacity
+          onPress={() => router.push("/")}
+          className="mb-8 self-end text-right"
+        >
+          <AppText>forgotton password</AppText>
+        </TouchableOpacity>
+      )}
 
       {onSubmit && (
         <GradientButton

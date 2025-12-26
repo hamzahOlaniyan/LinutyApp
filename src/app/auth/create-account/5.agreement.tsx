@@ -2,37 +2,36 @@ import AppText from "@/components/ui/AppText";
 import GradientButton from "@/components/ui/GradientButton";
 import ScreenView from "@/components/ui/Layout/ScreenView";
 import StepContainer from "@/components/ui/StepContainer";
+import { AuthApi } from "@/hooks/useAuthApi";
+import { useFormStore } from "@/store/useFormStore";
 import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
+import { SignInValues } from "../sign-in";
 
 export default function Agreement() {
-  // const { formData, resetFormData } = useFormStore();
+  const { formData, resetForm } = useFormStore();
 
   const router = useRouter();
 
-  // console.log(JSON.stringify(formData, null, 2));
-
-  // const { mutate, isLoading } = useApiMutation<AuthResponse>(
-  //   "post",
-  //   "/auth/register"
-  // );
+  const registerUser = AuthApi.register();
 
   const handleEmailSubmit = async () => {
-    // const values = formData as unknown as Partial<SignInValues>;
-    // const { email, password, username, firstName, lastName } = values;
-    // resetFormData();
-    router.push("/auth/create-account/6.otp");
+    const values = formData as unknown as Partial<SignInValues>;
+    const { email, password, username, firstName, lastName } = values;
 
-    // mutate(
-    //   { email, password, username, firstName, lastName },
-    //   {
-    //     onSuccess: async ({ data }) => {
-    //       router.push("/auth/create-account/otp");
-    //     },
-    //     onError: err => {}
-    //   }
-    // );
+    registerUser.mutateAsync(
+      { email, password, username, firstName, lastName },
+      {
+        onSuccess: async () => {
+          resetForm();
+          router.replace("/auth/create-account/6.otp");
+        },
+        onError: err => {
+          console.log("agreement error", err.response?.data);
+        }
+      }
+    );
   };
 
   return (
@@ -65,7 +64,7 @@ export default function Agreement() {
             <GradientButton
               text="continue"
               onPress={handleEmailSubmit}
-              // isLoading={isLoading}
+              isLoading={registerUser.isLoading}
             />
           </View>
         </View>

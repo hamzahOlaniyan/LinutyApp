@@ -18,5 +18,6 @@ export type InputFieldProps = {
   loading?: boolean;
   footerContent?: React.ReactNode;
   customButton?:React.ReactNode;
-  onChangeAnyField?:()=>void
+  onChangeAnyField?:()=>void,
+  forgottonPassword?:boolean
 };

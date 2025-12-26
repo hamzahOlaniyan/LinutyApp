@@ -1,26 +1,20 @@
 import FormInput from "@/components/ui/FormInput";
 import ScreenView from "@/components/ui/Layout/ScreenView";
-import Notice from "@/components/ui/Notice/Index";
 import StepContainer from "@/components/ui/StepContainer";
-import { useApiMutation } from "@/hooks/useApi";
+import { AuthApi } from "@/hooks/useAuthApi";
 import { useFormStore } from "@/store/useFormStore";
-import { AuthResponse } from "@supabase/auth-js";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
-import { View } from "react-native";
-import { SignInField, SignInValues } from "../sign-in";
+import React from "react";
+import { SignInField } from "../sign-in";
 
 export default function Email() {
   const { formData } = useFormStore();
 
   const router = useRouter();
 
-  const [notice, setNotice] = useState<string | null>(null);
+  // const [notice, setNotice] = useState<string | null>(null);
 
-  const { mutate, isLoading } = useApiMutation<AuthResponse>(
-    "post",
-    "/auth/check-username"
-  );
+  const checkUsername = AuthApi.checkUsername();
 
   const LoginForm: SignInField[] = [
     {
@@ -33,17 +27,16 @@ export default function Email() {
   ];
 
   const handleEmailSubmit = async () => {
-    const values = formData as unknown as Partial<SignInValues>;
-    const { username } = values;
+    const username = formData.username?.trim();
 
-    mutate(
-      { username },
+    checkUsername.mutateAsync(
+      { username: username ?? "" },
       {
         onSuccess: async () => {
           router.push("/auth/create-account/4.password");
         },
         onError: err => {
-          setNotice(err.message || null);
+          console.log("error", err.response?.data);
         }
       }
     );
@@ -58,10 +51,10 @@ export default function Email() {
         <FormInput
           fields={LoginForm}
           onSubmit={() => handleEmailSubmit()}
-          loading={isLoading}
+          loading={checkUsername.isLoading}
           submitBtnLabel="Continue"
         />
-        <View className="mt-4">{notice && <Notice message={notice} />}</View>
+        {/* <View className="mt-4">{notice && <Notice message={notice} />}</View> */}
       </StepContainer>
     </ScreenView>
   );

@@ -79,12 +79,13 @@ export default function Signin() {
           onSubmit={() => handleSignInUser()}
           loading={loading}
           submitBtnLabel="Sign in"
+          forgottonPassword
         />
 
         <View className="absolute bottom-5 w-full gap-4">
           <Button
             text="app-start"
-            onPress={() => router.replace("/app-start")}
+            onPress={() => router.replace("/auth/create-account/6.otp")}
             variant="outline"
           />
           <Button
