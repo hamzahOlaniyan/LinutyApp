@@ -8,9 +8,8 @@ export default function Setting() {
   const router = useRouter();
 
   async function handleLogout() {
-    console.log("clicked logged out");
-
-    await signOut();
+    await signOut().then(r => console.log("R", r));
+    // console.log("clicked logged out");
     router.replace("/auth"); // or "/"
   }
   return (

@@ -1,63 +1,59 @@
-import FormInput from "@/components/ui/FormInput";
+import GradientButton from "@/components/ui/GradientButton";
+import Select from "@/components/ui/Select";
 import StepContainer from "@/components/ui/StepContainer";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { COUNTRIES } from "@/data/ProfileData";
-import { useFormStore } from "@/store/useFormStore";
+import { useOnbardingFlowForm } from "@/store/useOnbardingFlowForm";
 import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { SignInValues } from "../auth/sign-in";
-import { OnboardingField } from "./1-date-of-birth";
 
-export default function DateOfBirth() {
+export default function Country() {
+  const { form, errors, updateField, setError } = useOnbardingFlowForm();
   const router = useRouter();
-  const { formData } = useFormStore();
-
-  // console.log(JSON.stringify(formData, null, 2));
-
-  const countries = COUNTRIES.map(c => c).flatMap(i => [
-    { label: i, value: i }
-  ]);
-
-  const DateOfBirth: OnboardingField[] = [
-    {
-      name: "country",
-      placeholder: "Country",
-      required: true,
-      mode: "select",
-      selectOptions: countries
-    }
-  ];
 
   const handleNext = async () => {
-    const values = formData as unknown as Partial<SignInValues>;
-    if (values) {
+    let valid = true;
+
+    if (!form.location) {
+      setError("location", "country of birth is required");
+      valid = false;
+    }
+
+    if (valid) {
       router.push("/onboarding-flow/4-ethnicity");
     }
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
+        paddingHorizontal: wp(4),
+        flex: 1,
+        backgroundColor: appColors.white
       }}
     >
       <StepContainer
         heading="Background Information"
         paragraph="Share your nationality and country of birth to help us build meaningful connections through lineage and community."
       >
-        <View className="my-6 justify-center gap-4">
-          <FormInput
-            fields={DateOfBirth}
-            onSubmit={() => handleNext()}
-            submitBtnLabel="Continue"
+        <View className="relative gap-24">
+          <Select
+            height={90}
+            options={COUNTRIES}
+            searchable
+            placeholder="Location"
+            onSelect={location => updateField("location", location)}
+            error={!!errors.location}
+            errorMessage={errors.location}
+            modalTitle="select country"
           />
+          <View className="my-6 gap-2">
+            <GradientButton onPress={handleNext} text="Next" size="lg" />
+          </View>
         </View>
       </StepContainer>
-    </SafeAreaView>
+    </View>
   );
 }

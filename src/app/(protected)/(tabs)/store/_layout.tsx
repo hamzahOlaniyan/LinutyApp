@@ -46,7 +46,7 @@ export default function StoreLayout() {
       />
 
       <Stack.Screen
-        name="create-add"
+        name="create-product"
         options={{
           title: "Create ad",
           headerTitleAlign: "center",

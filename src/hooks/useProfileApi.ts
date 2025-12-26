@@ -1,7 +1,7 @@
 import { FeedPost } from "@/components/Post/type";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Profile } from "../../types/supabaseTypes";
-import { useApiQuery } from "./useApi";
+import { Profile, ProfileInput } from "../../types/supabaseTypes";
+import { useApiMutation, useApiQuery } from "./useApi";
 
 
 
@@ -88,5 +88,11 @@ export class ProfileApi {
 
     return { isLoading, data, error, isFetching, refetch, };
   };
+
+  static useCompleteRegistration = () =>
+      useApiMutation<Profile, ProfileInput>(
+        "patch",
+        `/profile/complete-registration`
+      );
 
 }

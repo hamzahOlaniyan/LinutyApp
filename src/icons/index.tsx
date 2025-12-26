@@ -3,6 +3,7 @@ import { account } from "./ico/account";
 import { add_image } from "./ico/add-image";
 import { bookmark } from "./ico/bookmark";
 import { calendar } from "./ico/calendar";
+import { check } from "./ico/check";
 import { chevrondown } from "./ico/chevrondown";
 import { chevronforward } from "./ico/chevronforward";
 import { close } from "./ico/close";
@@ -84,7 +85,8 @@ const icons = {
   envelope,
   mail,
   calendar,
-  location
+  location,
+  check
 } as const;
 
 export type IconName = keyof typeof icons;

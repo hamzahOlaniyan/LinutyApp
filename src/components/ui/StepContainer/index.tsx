@@ -18,11 +18,11 @@ export default function StepContainer({
   const router = useRouter();
 
   return (
-    <View className="relative my-8 flex-1 justify-between gap-4">
+    <View className="relative flex-1 justify-between gap-4">
       <View className="gap-4">
         <View className="gap-4">
           {heading && <AppText variant="header">{heading}</AppText>}
-          {paragraph && <AppText variant="titleLarge">{paragraph}</AppText>}
+          {paragraph && <AppText>{paragraph}</AppText>}
         </View>
         <View className="">{children}</View>
       </View>

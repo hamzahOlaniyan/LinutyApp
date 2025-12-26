@@ -33,7 +33,7 @@ export type LocalMedia = {
   size?: number;
 };
 
-export default function NewPost() {
+export default function Create_post() {
   const { me } = useAuthStore();
   const createPostMutation = PostApi.useCreatePost();
 

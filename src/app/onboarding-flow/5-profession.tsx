@@ -1,57 +1,86 @@
-import FormInput from "@/components/ui/FormInput";
+import AppText from "@/components/ui/AppText";
+import GradientButton from "@/components/ui/GradientButton";
+import LSeachBar from "@/components/ui/LSeachBar";
 import StepContainer from "@/components/ui/StepContainer";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
-import { useFormStore } from "@/store/useFormStore";
+import { PROFESSIONS } from "@/data/ProfileData";
+import Icon from "@/icons";
+import { useOnbardingFlowForm } from "@/store/useOnbardingFlowForm";
 import { useRouter } from "expo-router";
-import React from "react";
-import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { SignInValues } from "../auth/sign-in";
-import { OnboardingField } from "./1-date-of-birth";
+import React, { useState } from "react";
+import { FlatList, Pressable, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function DateOfBirth() {
+export default function Profession() {
+  const { updateField } = useOnbardingFlowForm();
+  const [searchText, setSearchText] = useState("");
+  const [selected, setSelected] = useState("");
+  const [showButton, setShowButton] = useState(false);
+
+  const { bottom } = useSafeAreaInsets();
+
   const router = useRouter();
-  const { formData } = useFormStore();
 
-  console.log(JSON.stringify(formData, null, 2));
+  const handlePress = (item: string) => {
+    updateField("profession", item);
+    setSelected(item);
+    setShowButton(true);
+  };
 
-  const DateOfBirth: OnboardingField[] = [
-    {
-      name: "dateOfBirth",
-      placeholder: "Date of birth",
-      required: true,
-      mode: "date"
-    }
-  ];
-
-  const handleNext = async () => {
-    const values = formData as unknown as Partial<SignInValues>;
-    if (values) {
-      router.push("/onboarding-flow/6-interests");
-    }
+  const handleNext = () => {
+    router.push("/onboarding-flow/6-interests");
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
-        paddingHorizontal: wp(3),
+        paddingHorizontal: wp(4),
+        flex: 1,
         backgroundColor: appColors.white,
-        flex: 1
+        marginBottom: bottom,
+        overflow: "hidden"
       }}
     >
       <StepContainer
-        heading="What's is your date of birth?"
-        paragraph="Choose your date of birth. You can always make this private later."
+        heading="What is your Occupation"
+        paragraph="Share your nationality and country of birth to help."
       >
-        <View className="my-6 justify-center gap-4">
-          <FormInput
-            fields={DateOfBirth}
-            onSubmit={() => handleNext()}
-            submitBtnLabel="Continue"
+        <View className="gap-4">
+          <LSeachBar searchBarValue={text => setSearchText(text)} />
+          <FlatList
+            scrollEnabled
+            data={PROFESSIONS?.sort().filter(item =>
+              item.toLowerCase().includes(searchText.toLowerCase())
+            )}
+            keyExtractor={item => item}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              rowGap: 10,
+              paddingBottom: 650,
+              marginBottom: bottom
+            }}
+            renderItem={({ item }) => (
+              <Pressable
+                onPress={() => handlePress(item)}
+                className="flex-row justify-between py-2"
+              >
+                <AppText>{item}</AppText>
+                {selected === item && (
+                  <View style={{ borderWidth: 1.5, borderRadius: 50 }}>
+                    <Icon name="check" />
+                  </View>
+                )}
+              </Pressable>
+            )}
           />
         </View>
       </StepContainer>
-    </SafeAreaView>
+      {showButton && (
+        <View className="absolute bottom-0 h-20 w-full justify-center self-center bg-white">
+          <GradientButton text="Next" onPress={handleNext} />
+        </View>
+      )}
+    </View>
   );
 }

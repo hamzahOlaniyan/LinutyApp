@@ -47,32 +47,19 @@ export type AdFormField = Omit<Field, "name"> & {
 
 export const cities = [{ label: "london", value: "london" }];
 
-export default function Post_Add_screen() {
+export default function Create_product() {
   const { formData, resetForm } = useFormStore();
   const { me } = useAuthStore();
 
   const createProductMutation = ProductApi.useCreateProduct();
 
-  // const [toastVisible, setToastVisible] = useState(false);
-  // const [toastMessage, setToastMessage] = useState<string | React.ReactNode>(
-  //   ""
-  // );
-  // const [toastDuration, setToastDuration] = useState(DEFAULT_TOAST_DURATION);
   const [media, setMedia] = useState<LocalMedia[]>([]);
   const [loading, setLoading] = useState(false);
-
-  // console.log(JSON.stringify(formData, null, 2));
-
-  // const showToast = (msg: string | React.ReactNode) => {
-  //   setToastMessage(msg);
-  //   setToastVisible(true);
-  // };
 
   const countries = COUNTRIES.map(c => c).flatMap(i => [
     { label: i, value: i }
   ]);
 
-  // const router = useRouter();
   const navigation = useNavigation();
 
   const AdForm: AdFormField[] = [

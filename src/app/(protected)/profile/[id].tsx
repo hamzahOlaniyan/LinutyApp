@@ -39,7 +39,7 @@ export default function UserProfile() {
     requestId: profile?.requestId
   };
 
-  console.log("profile", JSON.stringify(profile, null, 2));
+  // console.log("profile", JSON.stringify(profile, null, 2));
 
   const Label = ({
     label,

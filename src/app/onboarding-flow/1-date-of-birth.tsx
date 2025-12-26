@@ -1,71 +1,109 @@
-import FormInput from "@/components/ui/FormInput";
-import { Field } from "@/components/ui/FormInput/types";
+import AppText from "@/components/ui/AppText";
+import GradientButton from "@/components/ui/GradientButton";
 import StepContainer from "@/components/ui/StepContainer";
 import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
+import { hp, wp } from "@/constant/common";
+import { useOnbardingFlowForm } from "@/store/useOnbardingFlowForm";
+import {
+  DateTimePickerAndroid,
+  DateTimePickerEvent
+} from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
-import React from "react";
-import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-
-export type OnboardingFlowValues = {
-  dateOfBirth: string;
-  gender: string;
-  country: string;
-  ethnicity: string;
-  lineage: string[];
-  profession: string;
-  inerests: string[];
-};
-
-export type OnboardingField = Omit<Field, "name"> & {
-  name: keyof OnboardingFlowValues;
-};
+import moment from "moment";
+import React, { useState } from "react";
+import { Pressable, View } from "react-native";
 
 export default function DateOfBirth() {
+  const { form, errors, updateField, setError, nextStep } =
+    useOnbardingFlowForm();
+
+  const [date, setDate] = useState<string>(
+    new Date().toISOString().split("T")[0]
+  );
+  const [age, setAge] = useState(0);
+
   const router = useRouter();
-  // const { formData } = useFormStore();
 
-  // console.log(JSON.stringify(formData, null, 2));
-
-  const DateOfBirth: OnboardingField[] = [
-    {
-      name: "dateOfBirth",
-      placeholder: "Date of birth",
-      required: true,
-      mode: "date"
+  const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    if (selectedDate) {
+      const formattedDate = selectedDate.toISOString().split("T")[0];
+      const age = moment().diff(moment(formattedDate, "YYYY-MM-DD"), "years");
+      setAge(age);
+      updateField("dateOfBirth", formattedDate);
+      setDate(formattedDate);
     }
-  ];
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const showMode = (currentMode: "date" | "time") => {
+    DateTimePickerAndroid.open({
+      value: new Date(date),
+      onChange,
+      mode: currentMode,
+      is24Hour: true
+    });
+  };
 
   const handleNext = async () => {
-    // const values = formData as unknown as Partial<SignInValues>;
-    // console.log({ values });
+    let valid = true;
 
-    // if (values) {
-    // }
-    router.push("/onboarding-flow/2-gender");
+    if (!form.dateOfBirth) {
+      setError("dateOfBirth", "Date of birth is required!");
+      valid = false;
+      return;
+    }
+    if (age < 18) {
+      setError("dateOfBirth", "You must be at least 18 years old.");
+      return;
+    }
+    if (valid) {
+      nextStep();
+      router.push("/onboarding-flow/2-gender");
+    }
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
+        paddingHorizontal: wp(4),
+        flex: 1,
+        backgroundColor: appColors.white
       }}
     >
       <StepContainer
         heading="What's is your date of birth?"
         paragraph="Choose your date of birth. You can always make this private later."
       >
-        <View className="my-6 justify-center gap-4">
-          <FormInput
-            fields={DateOfBirth}
-            onSubmit={handleNext}
-            submitBtnLabel="Continue"
-          />
+        <View
+          style={{
+            height: hp(7),
+            borderWidth: 0.9,
+            marginBottom: 3,
+            borderColor: appColors.inputInactive,
+            borderRadius: 15
+          }}
+          className={`w-full flex-row items-center justify-between px-4 `}
+        >
+          <AppText>{moment(date).format("D MMMM YYYY")}</AppText>
+          <Pressable
+            onPress={showDatepicker}
+            className="absolute h-full w-full opacity-0"
+          >
+            <AppText>Show date picker!</AppText>
+          </Pressable>
+          <AppText>{`(${moment().diff(moment(date, "YYYY-MM-DD"), "years")} years old)`}</AppText>
+        </View>
+        {errors.dateOfBirth && (
+          <AppText color={appColors.error}>{errors.dateOfBirth}</AppText>
+        )}
+
+        <View className="my-6 gap-2">
+          <GradientButton onPress={handleNext} text="Next" size="lg" />
         </View>
       </StepContainer>
-    </SafeAreaView>
+    </View>
   );
 }

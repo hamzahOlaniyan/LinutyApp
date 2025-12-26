@@ -30,7 +30,7 @@ export default function CreateAccount() {
             height: "40%",
             alignSelf: "center",
             zIndex: 0,
-            backgroundColor: appColors.extralightOlive,
+            backgroundColor: appColors.background,
             borderRadius: 20
           }}
         />
@@ -45,7 +45,7 @@ export default function CreateAccount() {
             size="lg"
           />
           <Button
-            onPress={() => router.back()}
+            onPress={() => router.replace("/auth")}
             text="Already have an account"
             size="lg"
             variant="outline"

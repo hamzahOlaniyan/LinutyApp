@@ -50,7 +50,7 @@ import {
   ProductInput,
   ProductStatus
 } from "../../../../../../../types/supabaseTypes";
-import { AdFormField } from "../../create-add";
+import { AdFormField } from "../../create-product";
 
 type EditableMedia = {
   id: string;
