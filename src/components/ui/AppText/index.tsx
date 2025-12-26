@@ -36,6 +36,7 @@ const textVariants = cva("font-Regular text-text", {
     variant: {
       headerLarge: "font-Bold",
       header: "font-SemiBold",
+      titleLarge: "",
       title: "font-SemiBold",
       body: "font-Regular",
       medium: "",
@@ -67,6 +68,7 @@ export type CustomTextProps = RNTextProps &
 type VariantName =
   | "headerLarge"
   | "header"
+  | "titleLarge"
   | "title"
   | "body"
   | "medium"
@@ -85,6 +87,7 @@ type VariantName =
 const variantFontSizes: Record<VariantName, number> = {
   headerLarge: hp(3),
   header: hp(2.6),
+  titleLarge: hp(2.3),
   title: hp(2),
   body: hp(1.7),
   medium: hp(1.7),

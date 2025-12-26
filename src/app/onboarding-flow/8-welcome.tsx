@@ -1,57 +1,76 @@
-import FormInput from "@/components/ui/FormInput";
-import StepContainer from "@/components/ui/StepContainer";
-import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
-import { useFormStore } from "@/store/useFormStore";
+import AppText from "@/components/ui/AppText";
+import Button from "@/components/ui/Button";
+import GradientButton from "@/components/ui/GradientButton";
+import ScreenView from "@/components/ui/Layout/ScreenView";
+import { useAuthStore } from "@/store/useAuthStore";
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
-import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { SignInValues } from "../auth/sign-in";
-import { OnboardingField } from "./1-date-of-birth";
+import { Dimensions, View } from "react-native";
 
-export default function DateOfBirth() {
+export default function Step8() {
+  // const { form, reset } = useOnbardingFlowForm();
+  const { session } = useAuthStore();
+  // const fetchProfile = useAuthStore(s => s.fetchProfile);
+
   const router = useRouter();
-  const { formData } = useFormStore();
 
-  console.log(JSON.stringify(formData, null, 2));
+  const screenWidth = Dimensions.get("window").width;
 
-  const DateOfBirth: OnboardingField[] = [
-    {
-      name: "dateOfBirth",
-      placeholder: "Date of birth",
-      required: true,
-      mode: "date"
-    }
-  ];
-
-  const handleNext = async () => {
-    const values = formData as unknown as Partial<SignInValues>;
-    if (values) {
-      router.replace("/(protected)/(tabs)");
-    }
-  };
+  // useEffect(() => {
+  //    const timer = setTimeout(() => {
+  //       fetchProfile(userId);
+  //       router.replace("/(app)/(tabs)");
+  //       reset();
+  //    }, 6000);
+  //    return () => clearTimeout(timer);
+  // }, []);
 
   return (
-    <SafeAreaView
-      style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
-      }}
-    >
-      <StepContainer
-        heading="What's is your date of birth?"
-        paragraph="Choose your date of birth. You can always make this private later."
-      >
-        <View className="my-6 justify-center gap-4">
-          <FormInput
-            fields={DateOfBirth}
-            onSubmit={() => handleNext()}
-            submitBtnLabel="Continue"
+    <ScreenView>
+      <View className="gap-2">
+        <Image
+          source={require("@/assets/images/linuty.png")}
+          style={{ width: 75, height: 75, alignSelf: "center" }}
+          contentFit="contain"
+        />
+        <View className="">
+          <View>
+            <AppText variant={"headerLarge"} className="text-center font-Black">
+              You're all set! 🎉
+            </AppText>
+            <AppText variant={"titleLarge"} className="text-center font-Medium">
+              Welcome to the community!
+            </AppText>
+          </View>
+          <Image
+            source={require("@/assets/images/welcome.png")}
+            accessibilityLabel="Avatar"
+            contentFit="contain"
+            contentPosition={"center"}
+            style={{
+              width: screenWidth / 1.1,
+              height: 300
+            }}
+          />
+          <AppText variant={"title"} className="text-center font-Medium">
+            Your profile is complete. You can now connect, join clans, ans
+            explore new interests
+          </AppText>
+        </View>
+
+        <View className="mt-8 gap-4">
+          <GradientButton
+            text="Go to home"
+            onPress={() => router.replace("/(protected)/(tabs)/(home)")}
+          />
+          <Button
+            variant="outline"
+            text="View my profile"
+            onPress={() => router.replace("/me")}
           />
         </View>
-      </StepContainer>
-    </SafeAreaView>
+      </View>
+    </ScreenView>
   );
 }

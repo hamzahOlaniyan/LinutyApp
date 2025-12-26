@@ -4,6 +4,7 @@ import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { ProfileApi } from "@/hooks/useProfileApi";
 import Icon from "@/icons";
+import { queryClient } from "@/lib/queryClient";
 import { supabase } from "@/lib/supabase/supabase";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useOnbardingFlowForm } from "@/store/useOnbardingFlowForm";
@@ -12,17 +13,30 @@ import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
-import { LocalMedia } from "../(protected)/create-post";
-import { MediaFile, ProfileInput } from "../../../types/supabaseTypes";
+
+type completeRegistrationInput = {
+  location?: string;
+  dateOfBirth?: string;
+  clan_tree?: string[];
+  gender?: string | null;
+  ethnicity?: string | null;
+  fullName?: string | null;
+  avatarUrl?: string | null;
+  profession?: string | null;
+  interest?: string[];
+  appInterests?: string[];
+  isProfileComplete?: boolean;
+};
 
 export default function ProfilePic() {
   const { me } = useAuthStore();
-  const { form, setError, reset } = useOnbardingFlowForm();
+  const { form, setError } = useOnbardingFlowForm();
 
   const updateProfile = ProfileApi.useCompleteRegistration();
 
   const [loading, setLoading] = useState(false);
-  const [profilePic, setProfilePic] = useState<MediaFile | null>(null);
+  const [profilePic, setProfilePic] =
+    useState<ImagePicker.ImagePickerAsset | null>(null);
 
   const router = useRouter();
 
@@ -49,7 +63,10 @@ export default function ProfilePic() {
     setProfilePic(asset);
   };
 
-  async function uploadAvatar(file: LocalMedia, userId: string) {
+  async function uploadAvatar(
+    file: ImagePicker.ImagePickerAsset,
+    userId: string
+  ) {
     if (!file?.uri) throw new Error("No file uri provided");
 
     const uri = file.uri;
@@ -95,7 +112,7 @@ export default function ProfilePic() {
 
     const avatarUrl = await uploadAvatar(profilePic, me.id);
 
-    const content: Partial<ProfileInput> = {
+    const content: completeRegistrationInput = {
       dateOfBirth: form.dateOfBirth,
       gender: form.gender,
       location: form.location,
@@ -110,15 +127,13 @@ export default function ProfilePic() {
     };
 
     try {
-      console.log(
-        "completeRegistration payload:",
-        JSON.stringify(content, null, 2)
-      );
       await updateProfile.mutateAsync(content, {
         onSuccess: async () => {
+          queryClient.invalidateQueries({ queryKey: ["me"] });
+          queryClient.invalidateQueries({ queryKey: ["profile"] });
           console.log("✅form completed,");
           router.replace("/onboarding-flow/8-welcome");
-          reset();
+          // reset();
         },
         onError: err => {
           console.log("❌ something went wrong", err.message);

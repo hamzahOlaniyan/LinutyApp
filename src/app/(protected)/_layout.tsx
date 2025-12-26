@@ -10,15 +10,14 @@ export default function _ProtectedLayout() {
   const initialized = useAuthStore(s => s.initialized);
   const me = useAuthStore(s => s.me);
 
-  console.log("isProfileComplete", me.isProfileComplete);
-
   const hasCompletedRegistration = !!me?.isProfileComplete;
 
   if (!initialized) return null;
 
-  if (!hasCompletedRegistration) return <Redirect href="/onboarding-flow" />;
+  if (session && !hasCompletedRegistration)
+    return <Redirect href="/onboarding-flow" />;
 
-  if (!session) return <Redirect href="/auth" />;
+  if (!session && !hasCompletedRegistration) return <Redirect href="/auth" />;
 
   return (
     <Stack
