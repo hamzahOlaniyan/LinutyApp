@@ -63,7 +63,6 @@ export default function FormInput({
   onSubmit,
   loading,
   footerContent,
-  customButton,
   onChangeAnyField
 }: InputFieldProps) {
   const { setFormData, setFormErrors, errors, formData } = useFormStore();
@@ -215,24 +214,13 @@ export default function FormInput({
               selectedValues={selectedValues}
               minDate={minDate}
               maxDate={maxDate}
-              // onChangeSelectedValues={values => {
-              //   if (isMultipleSelect) {
-              // onChangeAnyField?.();
-              //     setFormData({ [name]: values });
-
-              //     if (errors[name]) {
-              //       setFormErrors({ [name]: undefined });
-              //     }
-              //   }
-              // }}
             />
           </View>
         );
       })}
       {footerContent && <View className="pt-4">{footerContent}</View>}
-      {customButton ? (
-        customButton
-      ) : (
+
+      {onSubmit && (
         <GradientButton
           text={submitBtnLabel}
           onPress={handleSubmit}

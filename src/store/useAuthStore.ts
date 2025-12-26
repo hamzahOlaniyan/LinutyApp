@@ -21,12 +21,17 @@ export const useAuthStore = create<AuthStore>()(
       },
 
       setInitialized: (initialized) => set({ initialized }),
-        setMe: (me) => set({ me }),
-        setSession: (session)=>set({session}),
-        signOut: async () => {
-          await supabase.auth.signOut();
-          set({ session: null, me: null });
-          queryClient.clear();
+      
+      setMe: (me) => set({ me }),
+
+      setSession: (session)=>set({session}),
+        
+      signOut: async () => {
+      const {error} =   await supabase.auth.signOut();
+      console.log('LOG OUT ERROR', error?.message);
+      
+        set({ session: null, me: null });
+        queryClient.clear();
       },
 
       completeOnboarding: () => {

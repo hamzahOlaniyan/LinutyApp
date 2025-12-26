@@ -304,6 +304,7 @@ export const AppInput: React.FC<AppInputProps> = ({
               </AppText>
               {date && <AppText>{`(${age} years old)`}</AppText>}
             </Pressable>
+            {/* <Icon name={"calendar"} /> */}
           </View>
         )}
 

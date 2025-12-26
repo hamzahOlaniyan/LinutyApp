@@ -1,6 +1,8 @@
 import { Database, TablesInsert } from './database.types';
 
 export type Profile = Database["public"]["Tables"]["profile"]["Row"];
+export type ProfileInput = TablesInsert<"profile">;
+
 
 export type PostResponse = Database["public"]["Tables"]["Post"]["Row"];
 export type PostInput = TablesInsert<"Post">

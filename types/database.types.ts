@@ -47,6 +47,21 @@ export type Database = {
         }
         Relationships: []
       }
+      AppInterest: {
+        Row: {
+          id: string
+          name: string
+        }
+        Insert: {
+          id: string
+          name: string
+        }
+        Update: {
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       Block: {
         Row: {
           blockedId: string
@@ -82,6 +97,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      Clan: {
+        Row: {
+          createdAt: string
+          id: string
+          name: string
+        }
+        Insert: {
+          createdAt?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          createdAt?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
       }
       Comment: {
         Row: {
@@ -251,36 +284,78 @@ export type Database = {
           },
         ]
       }
-      Follow: {
+      FriendRequest: {
         Row: {
+          addresseeId: string
           createdAt: string
-          followeeId: string
-          followerId: string
           id: string
+          requesterId: string
+          respondedAt: string | null
+          status: Database["public"]["Enums"]["FriendRequestStatus"]
         }
         Insert: {
+          addresseeId: string
           createdAt?: string
-          followeeId: string
-          followerId: string
           id: string
+          requesterId: string
+          respondedAt?: string | null
+          status?: Database["public"]["Enums"]["FriendRequestStatus"]
         }
         Update: {
+          addresseeId?: string
           createdAt?: string
-          followeeId?: string
-          followerId?: string
           id?: string
+          requesterId?: string
+          respondedAt?: string | null
+          status?: Database["public"]["Enums"]["FriendRequestStatus"]
         }
         Relationships: [
           {
-            foreignKeyName: "Follow_followeeId_fkey"
-            columns: ["followeeId"]
+            foreignKeyName: "FriendRequest_addresseeId_fkey"
+            columns: ["addresseeId"]
             isOneToOne: false
             referencedRelation: "profile"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "Follow_followerId_fkey"
-            columns: ["followerId"]
+            foreignKeyName: "FriendRequest_requesterId_fkey"
+            columns: ["requesterId"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      Friendship: {
+        Row: {
+          createdAt: string
+          id: string
+          userAId: string
+          userBId: string
+        }
+        Insert: {
+          createdAt?: string
+          id: string
+          userAId: string
+          userBId: string
+        }
+        Update: {
+          createdAt?: string
+          id?: string
+          userAId?: string
+          userBId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Friendship_userAId_fkey"
+            columns: ["userAId"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Friendship_userBId_fkey"
+            columns: ["userBId"]
             isOneToOne: false
             referencedRelation: "profile"
             referencedColumns: ["id"]
@@ -615,7 +690,6 @@ export type Database = {
       }
       Notification: {
         Row: {
-          actorId: string | null
           commentId: string | null
           createdAt: string
           id: string
@@ -624,10 +698,11 @@ export type Database = {
           messageId: string | null
           postId: string | null
           recipientId: string
+          requestId: string | null
+          senderId: string | null
           type: Database["public"]["Enums"]["NotificationType"]
         }
         Insert: {
-          actorId?: string | null
           commentId?: string | null
           createdAt?: string
           id: string
@@ -636,10 +711,11 @@ export type Database = {
           messageId?: string | null
           postId?: string | null
           recipientId: string
+          requestId?: string | null
+          senderId?: string | null
           type: Database["public"]["Enums"]["NotificationType"]
         }
         Update: {
-          actorId?: string | null
           commentId?: string | null
           createdAt?: string
           id?: string
@@ -648,16 +724,11 @@ export type Database = {
           messageId?: string | null
           postId?: string | null
           recipientId?: string
+          requestId?: string | null
+          senderId?: string | null
           type?: Database["public"]["Enums"]["NotificationType"]
         }
         Relationships: [
-          {
-            foreignKeyName: "Notification_actorId_fkey"
-            columns: ["actorId"]
-            isOneToOne: false
-            referencedRelation: "profile"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "Notification_commentId_fkey"
             columns: ["commentId"]
@@ -689,6 +760,20 @@ export type Database = {
           {
             foreignKeyName: "Notification_recipientId_fkey"
             columns: ["recipientId"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Notification_requestId_fkey"
+            columns: ["requestId"]
+            isOneToOne: false
+            referencedRelation: "FriendRequest"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Notification_senderId_fkey"
+            columns: ["senderId"]
             isOneToOne: false
             referencedRelation: "profile"
             referencedColumns: ["id"]
@@ -944,6 +1029,7 @@ export type Database = {
           email: string
           ethnicity: string | null
           firstName: string
+          fullName: string | null
           gender: string | null
           id: string
           isProfileComplete: boolean
@@ -953,6 +1039,7 @@ export type Database = {
           lineageRootVillage: string | null
           location: string
           occupation: string | null
+          profession: string | null
           updatedAt: string
           userId: string
           username: string
@@ -970,6 +1057,7 @@ export type Database = {
           email: string
           ethnicity?: string | null
           firstName?: string
+          fullName?: string | null
           gender?: string | null
           id: string
           isProfileComplete?: boolean
@@ -979,6 +1067,7 @@ export type Database = {
           lineageRootVillage?: string | null
           location?: string
           occupation?: string | null
+          profession?: string | null
           updatedAt: string
           userId: string
           username: string
@@ -996,6 +1085,7 @@ export type Database = {
           email?: string
           ethnicity?: string | null
           firstName?: string
+          fullName?: string | null
           gender?: string | null
           id?: string
           isProfileComplete?: boolean
@@ -1005,11 +1095,81 @@ export type Database = {
           lineageRootVillage?: string | null
           location?: string
           occupation?: string | null
+          profession?: string | null
           updatedAt?: string
           userId?: string
           username?: string
         }
         Relationships: []
+      }
+      ProfileAppInterests: {
+        Row: {
+          createdAt: string
+          interestId: string
+          userId: string
+        }
+        Insert: {
+          createdAt?: string
+          interestId: string
+          userId: string
+        }
+        Update: {
+          createdAt?: string
+          interestId?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ProfileAppInterests_interestId_fkey"
+            columns: ["interestId"]
+            isOneToOne: false
+            referencedRelation: "AppInterest"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ProfileAppInterests_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ProfileClan: {
+        Row: {
+          clanId: string
+          id: string
+          order: number
+          profileId: string
+        }
+        Insert: {
+          clanId: string
+          id: string
+          order: number
+          profileId: string
+        }
+        Update: {
+          clanId?: string
+          id?: string
+          order?: number
+          profileId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ProfileClan_clanId_fkey"
+            columns: ["clanId"]
+            isOneToOne: false
+            referencedRelation: "Clan"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ProfileClan_profileId_fkey"
+            columns: ["profileId"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       ProfileInterest: {
         Row: {
@@ -1094,6 +1254,7 @@ export type Database = {
     }
     Enums: {
       Available: "IMMEDIATLY" | "IN_A_WEEK" | "IN_A_MONTH" | "OTHER"
+      FriendRequestStatus: "PENDING" | "ACCEPTED" | "DECLINED" | "CANCELLED"
       KinshipType:
         | "PARENT"
         | "CHILD"
@@ -1110,7 +1271,7 @@ export type Database = {
       ListingStatus: "DRAFT" | "ACTIVE" | "PAUSED" | "SOLD" | "DELETED"
       MediaType: "IMAGE" | "VIDEO" | "DOCUMENT" | "AUDIO" | "OTHER"
       NotificationType:
-        | "FOLLOW"
+        | "FRIEND_REQUEST"
         | "LIKE"
         | "COMMENT"
         | "MENTION"
@@ -1248,6 +1409,7 @@ export const Constants = {
   public: {
     Enums: {
       Available: ["IMMEDIATLY", "IN_A_WEEK", "IN_A_MONTH", "OTHER"],
+      FriendRequestStatus: ["PENDING", "ACCEPTED", "DECLINED", "CANCELLED"],
       KinshipType: [
         "PARENT",
         "CHILD",
@@ -1265,7 +1427,7 @@ export const Constants = {
       ListingStatus: ["DRAFT", "ACTIVE", "PAUSED", "SOLD", "DELETED"],
       MediaType: ["IMAGE", "VIDEO", "DOCUMENT", "AUDIO", "OTHER"],
       NotificationType: [
-        "FOLLOW",
+        "FRIEND_REQUEST",
         "LIKE",
         "COMMENT",
         "MENTION",

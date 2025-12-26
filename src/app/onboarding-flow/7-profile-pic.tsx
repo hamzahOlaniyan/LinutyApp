@@ -1,57 +1,201 @@
-import FormInput from "@/components/ui/FormInput";
+import GradientButton from "@/components/ui/GradientButton";
 import StepContainer from "@/components/ui/StepContainer";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
-import { useFormStore } from "@/store/useFormStore";
+import { ProfileApi } from "@/hooks/useProfileApi";
+import Icon from "@/icons";
+import { supabase } from "@/lib/supabase/supabase";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useOnbardingFlowForm } from "@/store/useOnbardingFlowForm";
+import { Image } from "expo-image";
+import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
-import React from "react";
-import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { SignInValues } from "../auth/sign-in";
-import { OnboardingField } from "./1-date-of-birth";
+import React, { useState } from "react";
+import { TouchableOpacity, View } from "react-native";
+import { LocalMedia } from "../(protected)/create-post";
+import { MediaFile, ProfileInput } from "../../../types/supabaseTypes";
 
-export default function DateOfBirth() {
+export default function ProfilePic() {
+  const { me } = useAuthStore();
+  const { form, setError, reset } = useOnbardingFlowForm();
+
+  const updateProfile = ProfileApi.useCompleteRegistration();
+
+  const [loading, setLoading] = useState(false);
+  const [profilePic, setProfilePic] = useState<MediaFile | null>(null);
+
   const router = useRouter();
-  const { formData } = useFormStore();
 
-  // console.log(JSON.stringify(formData, null, 2));
+  const pickImages = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [4, 3],
+      allowsMultipleSelection: false,
+      quality: 1
+    });
 
-  const DateOfBirth: OnboardingField[] = [
-    {
-      name: "dateOfBirth",
-      placeholder: "Date of birth",
-      required: true,
-      mode: "date"
+    if (result.canceled) {
+      setProfilePic(null);
+      return;
     }
-  ];
 
-  const handleNext = async () => {
-    const values = formData as unknown as Partial<SignInValues>;
-    if (values) {
-      router.push("/onboarding-flow/8-welcome");
+    const asset = result.assets?.[0];
+    if (!asset?.uri) {
+      setProfilePic(null);
+      return;
     }
+
+    setProfilePic(asset);
   };
 
+  async function uploadAvatar(file: LocalMedia, userId: string) {
+    if (!file?.uri) throw new Error("No file uri provided");
+
+    const uri = file.uri;
+    const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
+    const filePath = `profile-pic/${userId}/${Date.now()}-${file.id ?? "avatar"}.${fileExt}`;
+
+    const response = await fetch(uri);
+    const arrayBuffer = await response.arrayBuffer();
+    const fileData = new Uint8Array(arrayBuffer);
+
+    const { error } = await supabase.storage
+      .from("profile-avatar")
+      .upload(filePath, fileData, {
+        contentType: file.mimeType ?? "image/jpeg",
+        upsert: false
+      });
+
+    if (error) throw error;
+
+    const { data } = supabase.storage
+      .from("profile-avatar")
+      .getPublicUrl(filePath);
+    return data.publicUrl; // returns string
+  }
+
+  console.log("FormData", JSON.stringify(form, null, 2));
+
+  async function completeRegistration() {
+    setLoading(true);
+
+    if (!me?.id) {
+      setLoading(false);
+      return;
+    }
+
+    console.log("profilePic before upload:", profilePic);
+
+    if (!profilePic?.uri) {
+      setLoading(false);
+      setError?.("avatarUrl", "Please select a profile picture"); // if you have this
+      return;
+    }
+
+    const avatarUrl = await uploadAvatar(profilePic, me.id);
+
+    const content: Partial<ProfileInput> = {
+      dateOfBirth: form.dateOfBirth,
+      gender: form.gender,
+      location: form.location,
+      ethnicity: form.ethnicity,
+      fullName: form.fullName,
+      clan_tree: form.clan_tree,
+      avatarUrl,
+      profession: form.profession,
+      appInterests: form.appInterests,
+      interest: form.interests,
+      isProfileComplete: true
+    };
+
+    try {
+      console.log(
+        "completeRegistration payload:",
+        JSON.stringify(content, null, 2)
+      );
+      await updateProfile.mutateAsync(content, {
+        onSuccess: async () => {
+          console.log("✅form completed,");
+          router.replace("/onboarding-flow/8-welcome");
+          reset();
+        },
+        onError: err => {
+          console.log("❌ something went wrong", err.message);
+        }
+      });
+    } catch (err) {
+      console.error("failed sending formr", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <SafeAreaView
+    <View
       style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
+        paddingHorizontal: wp(4),
+        flex: 1,
+        backgroundColor: appColors.white
       }}
     >
       <StepContainer
-        heading="What's is your date of birth?"
-        paragraph="Choose your date of birth. You can always make this private later."
+        heading="Add a profile picture"
+        paragraph="Add a profile picture so that friends know it's you. Everyone will be able to see your picture."
       >
-        <View className="my-6 justify-center gap-4">
-          <FormInput
-            fields={DateOfBirth}
-            onSubmit={() => handleNext()}
-            submitBtnLabel="Continue"
-          />
+        <View className="relative">
+          <View className="relative">
+            <View
+              style={{
+                width: 150,
+                height: 150,
+                backgroundColor: "grey",
+                borderRadius: 400,
+                alignSelf: "center",
+                position: "relative",
+                justifyContent: "center",
+                alignContent: "center"
+              }}
+            >
+              {profilePic ? (
+                <Image
+                  source={{ uri: profilePic.uri }}
+                  style={{ width: 150, height: 150, borderRadius: 400 }}
+                />
+              ) : (
+                <Image
+                  source={require("@/assets/images/person-placeholder.jpg")}
+                  style={{
+                    width: 150,
+                    height: 150,
+                    borderRadius: 400,
+                    overflow: "hidden"
+                  }}
+                />
+              )}
+              <View className="absolute bottom-0 right-0 z-50 self-center">
+                <TouchableOpacity
+                  className="h-10 w-10 items-center justify-center rounded-full bg-neutral-400"
+                  onPress={pickImages}
+                >
+                  <Icon name="edit" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+          {profilePic && (
+            <View className="my-6 gap-2">
+              <GradientButton
+                onPress={completeRegistration}
+                text="Next"
+                size="lg"
+                isLoading={loading}
+              />
+            </View>
+          )}
         </View>
       </StepContainer>
-    </SafeAreaView>
+    </View>
   );
 }

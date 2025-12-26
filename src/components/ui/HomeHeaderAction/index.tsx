@@ -1,5 +1,6 @@
 import { hp, wp } from "@/constant/common";
 import Icon from "@/icons";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -8,6 +9,7 @@ import Avatar from "../Avatar";
 
 export default function HomeHeaderAction() {
   const router = useRouter();
+  const { me } = useAuthStore();
 
   return (
     <View
@@ -27,7 +29,7 @@ export default function HomeHeaderAction() {
           <Icon name="notification" size={28} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => router.push("/(protected)/me")}>
-          <Avatar path={""} />
+          <Avatar path={me?.avatarUrl} />
         </TouchableOpacity>
       </View>
     </View>

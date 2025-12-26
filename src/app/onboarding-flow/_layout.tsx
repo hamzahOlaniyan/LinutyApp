@@ -3,9 +3,8 @@ import { Stack } from "expo-router";
 
 export default function OnboardingFlowLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack screenOptions={{ headerShadowVisible: false, headerTitle: "" }}>
       <Stack.Screen name="index" />
-      {/* add more onboarding screens if needed */}
     </Stack>
   );
 }
