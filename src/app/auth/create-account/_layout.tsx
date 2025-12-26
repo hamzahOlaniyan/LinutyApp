@@ -2,5 +2,13 @@ import { Stack } from "expo-router";
 import React from "react";
 
 export default function CreateAccountLayout() {
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: true,
+        headerTitle: "",
+        headerShadowVisible: false
+      }}
+    />
+  );
 }

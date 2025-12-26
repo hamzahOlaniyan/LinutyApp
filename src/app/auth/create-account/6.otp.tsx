@@ -1,12 +1,10 @@
 import FormInput from "@/components/ui/FormInput";
+import ScreenView from "@/components/ui/Layout/ScreenView";
 import StepContainer from "@/components/ui/StepContainer";
-import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
 import { useFormStore } from "@/store/useFormStore";
 import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { SignInField } from "../sign-in";
 
 export default function OTP() {
@@ -29,13 +27,7 @@ export default function OTP() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
-      }}
-    >
+    <ScreenView>
       <StepContainer
         heading="Enter the 6 digit confirmation code"
         paragraph={`We have sent a verification code to your email address ${formData.email}. To confirm enter the 6-digit code.`}
@@ -46,13 +38,8 @@ export default function OTP() {
             onSubmit={() => handleOTP()}
             submitBtnLabel="Continue"
           />
-          {/* {canResend ? (
-                  <Button text="Resend OTP" onPress={resendOtp} />
-               ) : (
-                  <AppText align="center"> Resend OTP in: {timer} sec</AppText>
-               )} */}
         </View>
       </StepContainer>
-    </SafeAreaView>
+    </ScreenView>
   );
 }

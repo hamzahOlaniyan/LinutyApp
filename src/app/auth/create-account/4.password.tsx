@@ -1,13 +1,11 @@
 import FormInput from "@/components/ui/FormInput";
+import ScreenView from "@/components/ui/Layout/ScreenView";
 import Notice from "@/components/ui/Notice/Index";
 import StepContainer from "@/components/ui/StepContainer";
-import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
 import { useFormStore } from "@/store/useFormStore";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { SignInField } from "../sign-in";
 
 export default function Email() {
@@ -43,13 +41,7 @@ export default function Email() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
-      }}
-    >
+    <ScreenView>
       <StepContainer
         heading="Create a password"
         paragraph="Your password should be at least 8 characters long. Avoid using easily guessed information. (Password must a contain uppercase,lowercase, digits & symbol)."
@@ -61,6 +53,6 @@ export default function Email() {
         />
         <View className="mt-4">{notice && <Notice message={notice} />}</View>
       </StepContainer>
-    </SafeAreaView>
+    </ScreenView>
   );
 }

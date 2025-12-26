@@ -42,6 +42,7 @@ import { thumbsup } from "./ico/thumbsup";
 import { thumbsupSolid } from "./ico/thumbsupSolid";
 import { visibility } from "./ico/visibility";
 import { visibility_off } from "./ico/visibility-off";
+import { warning } from "./ico/warning";
 
 const icons = {
   bookmark,
@@ -86,7 +87,8 @@ const icons = {
   mail,
   calendar,
   location,
-  check
+  check,
+  warning
 } as const;
 
 export type IconName = keyof typeof icons;
@@ -104,7 +106,9 @@ const Icon: React.FC<IconProps> = ({
   strokeWidth = 0,
   color = "#404040"
 }) => {
+  if (!name) return null;
   const IconComponent = icons[name as keyof typeof icons];
+  if (!IconComponent) return null;
 
   return <IconComponent size={size} strokeWidth={strokeWidth} color={color} />;
 };

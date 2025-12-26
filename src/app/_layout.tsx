@@ -7,11 +7,12 @@ import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 
-import { SplashScreen, Stack } from "expo-router";
+import { router, SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+// import { NoticeHost } from "@/components/ui/Notice/Index";
 import { supabase } from "@/lib/supabase/supabase";
 import "../../global.css";
 
@@ -49,6 +50,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) router.replace("/auth");
       console.log("AUTH EVENT:", event, "hasSession?", !!session);
       useAuthStore.getState().setSession(session ?? null);
     });
@@ -65,6 +67,8 @@ export default function RootLayout() {
         <GestureHandlerRootView className="flex-1">
           <PortalProvider>
             <PortalHost name="root" />
+            {/* <NoticeHost topOffset={50} /> */}
+
             <StatusBar style="auto" />
             <Stack screenOptions={{ headerShown: false }} />
           </PortalProvider>

@@ -1,26 +1,19 @@
 import AppText from "@/components/ui/AppText";
 import Button from "@/components/ui/Button";
 import GradientButton from "@/components/ui/GradientButton";
+import ScreenView from "@/components/ui/Layout/ScreenView";
 import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CreateAccount() {
   const router = useRouter();
 
   return (
-    <SafeAreaView
-      style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
-      }}
-    >
-      <View className="mt-8 gap-4">
+    <ScreenView>
+      <View className="gap-4">
         <AppText variant="header">Join Linuty</AppText>
         <Image
           source={require("@/assets/images/lin.png")}
@@ -52,6 +45,6 @@ export default function CreateAccount() {
           />
         </View>
       </View>
-    </SafeAreaView>
+    </ScreenView>
   );
 }

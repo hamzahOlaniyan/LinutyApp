@@ -14,7 +14,7 @@ import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export type SignInValues = {
-  email: string;
+  email: string | undefined;
   password: string;
   firstName: string;
   lastName: string;

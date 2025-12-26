@@ -7,12 +7,15 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query";
 
+type ApiErrorBody = { message?: string };
+
+
 export type ApiError = {
   response?: {
     data?: unknown;
     status?: number;
   };
-  message?: string|null;
+  message?:ApiErrorBody
 };
 
 type MutationMethod = "post" | "patch" | "delete";

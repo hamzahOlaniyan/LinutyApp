@@ -1,15 +1,13 @@
 import FormInput from "@/components/ui/FormInput";
+import ScreenView from "@/components/ui/Layout/ScreenView";
 import Notice from "@/components/ui/Notice/Index";
 import StepContainer from "@/components/ui/StepContainer";
-import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
 import { useApiMutation } from "@/hooks/useApi";
 import { useFormStore } from "@/store/useFormStore";
 import { AuthResponse } from "@supabase/auth-js";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { SignInField, SignInValues } from "../sign-in";
 
 export default function Email() {
@@ -52,13 +50,7 @@ export default function Email() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
-      }}
-    >
+    <ScreenView>
       <StepContainer
         heading="Create a username"
         paragraph="Pick a unique username that represents you on Linuty. This will be your identity across the app, making it easy for others to find and connect with you."
@@ -71,6 +63,6 @@ export default function Email() {
         />
         <View className="mt-4">{notice && <Notice message={notice} />}</View>
       </StepContainer>
-    </SafeAreaView>
+    </ScreenView>
   );
 }

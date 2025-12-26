@@ -1,12 +1,10 @@
 import AppText from "@/components/ui/AppText";
 import GradientButton from "@/components/ui/GradientButton";
+import ScreenView from "@/components/ui/Layout/ScreenView";
 import StepContainer from "@/components/ui/StepContainer";
-import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
 import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Agreement() {
   // const { formData, resetFormData } = useFormStore();
@@ -38,13 +36,7 @@ export default function Agreement() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
-      }}
-    >
+    <ScreenView>
       <StepContainer heading="Agree to Linuty's terms and policies">
         <View className="gap-5">
           <AppText>
@@ -78,6 +70,6 @@ export default function Agreement() {
           </View>
         </View>
       </StepContainer>
-    </SafeAreaView>
+    </ScreenView>
   );
 }

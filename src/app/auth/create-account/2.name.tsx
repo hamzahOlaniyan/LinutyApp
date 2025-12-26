@@ -1,10 +1,8 @@
 import FormInput from "@/components/ui/FormInput";
+import ScreenView from "@/components/ui/Layout/ScreenView";
 import StepContainer from "@/components/ui/StepContainer";
-import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
 import { useRouter } from "expo-router";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { SignInField } from "../sign-in";
 
 export default function Username() {
@@ -32,13 +30,7 @@ export default function Username() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        paddingHorizontal: wp(3),
-        backgroundColor: appColors.white,
-        flex: 1
-      }}
-    >
+    <ScreenView>
       <StepContainer
         heading="What's your name?"
         paragraph="This helps your friends, family, and community to easily recognize and connect."
@@ -49,6 +41,6 @@ export default function Username() {
           submitBtnLabel="Next"
         />
       </StepContainer>
-    </SafeAreaView>
+    </ScreenView>
   );
 }
