@@ -2,17 +2,12 @@ import AppText from "@/components/ui/AppText";
 import Button from "@/components/ui/Button";
 import GradientButton from "@/components/ui/GradientButton";
 import ScreenView from "@/components/ui/Layout/ScreenView";
-import { useAuthStore } from "@/store/useAuthStore";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Dimensions, View } from "react-native";
 
 export default function Step8() {
-  // const { form, reset } = useOnbardingFlowForm();
-  const { session } = useAuthStore();
-  // const fetchProfile = useAuthStore(s => s.fetchProfile);
-
   const router = useRouter();
 
   const screenWidth = Dimensions.get("window").width;
