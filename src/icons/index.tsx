@@ -1,5 +1,6 @@
 import React from "react";
 import { account } from "./ico/account";
+import { accountSolid } from "./ico/accountSolid";
 import { add_image } from "./ico/add-image";
 import { bookmark } from "./ico/bookmark";
 import { calendar } from "./ico/calendar";
@@ -20,6 +21,7 @@ import { home } from "./ico/home";
 import { homeSolid } from "./ico/homeSolid";
 import { lineage } from "./ico/lineage";
 import { location } from "./ico/location";
+import { locationSolid } from "./ico/locationSolid";
 import { logout } from "./ico/logout";
 import { mail } from "./ico/mail";
 import { menu } from "./ico/menu";
@@ -40,6 +42,7 @@ import { story } from "./ico/story";
 import { threeDots } from "./ico/threedots";
 import { thumbsup } from "./ico/thumbsup";
 import { thumbsupSolid } from "./ico/thumbsupSolid";
+import { verifySolid } from "./ico/verifySolid";
 import { visibility } from "./ico/visibility";
 import { visibility_off } from "./ico/visibility-off";
 import { warning } from "./ico/warning";
@@ -88,7 +91,10 @@ const icons = {
   calendar,
   location,
   check,
-  warning
+  warning,
+  verifySolid,
+  locationSolid,
+  accountSolid
 } as const;
 
 export type IconName = keyof typeof icons;
@@ -98,6 +104,7 @@ type IconProps = {
   size?: number;
   strokeWidth?: number;
   color?: string;
+  fill?: string;
 };
 
 const Icon: React.FC<IconProps> = ({

@@ -10,7 +10,7 @@ export default function ScreenView({
 }) {
   return (
     <View
-      style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }}
+      style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white }}
       className="flex-1"
     >
       {children}

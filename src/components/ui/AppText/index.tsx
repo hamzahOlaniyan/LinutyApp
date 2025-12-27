@@ -88,7 +88,7 @@ const variantFontSizes: Record<VariantName, number> = {
   headerLarge: hp(3),
   header: hp(2.6),
   titleLarge: hp(2.3),
-  title: hp(2),
+  title: hp(1.9),
   body: hp(1.7),
   medium: hp(1.7),
   small: hp(1.6),
