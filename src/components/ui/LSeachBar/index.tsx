@@ -3,8 +3,13 @@ import { appColors } from "@/constant/colors";
 import { hp } from "@/constant/common";
 import Icon from "@/icons";
 import React, { useState } from "react";
-import { StyleSheet, TextInput, TextInputProps, View } from "react-native";
-import AppText from "../AppText";
+import {
+  Pressable,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  View
+} from "react-native";
 
 type SearchBarProps = TextInputProps & {
   onPress?: () => void;
@@ -25,7 +30,7 @@ export default function LSeachBar({
 
   return (
     <View style={style.container}>
-      <Icon name="search2" />
+      <Icon name="search2" color={appColors.icon} />
       <TextInput
         value={value}
         onChangeText={text => handleChange(text)}
@@ -35,9 +40,9 @@ export default function LSeachBar({
         autoCapitalize="none"
       />
       {value && (
-        <AppText className="text-xl" onPress={() => setValue("")}>
-          X
-        </AppText>
+        <Pressable onPress={() => setValue("")}>
+          <Icon name="close" />
+        </Pressable>
       )}
     </View>
   );
@@ -46,11 +51,9 @@ export default function LSeachBar({
 const style = StyleSheet.create({
   container: {
     flexDirection: "row",
-    borderColor: appColors.border,
-    backgroundColor: appColors.white,
+    backgroundColor: appColors.searchbar,
     height: hp(6),
     width: "100%",
-    borderWidth: 1,
     borderRadius: 12,
     justifyContent: "center",
     alignContent: "center",
@@ -59,7 +62,7 @@ const style = StyleSheet.create({
     gap: 8
   },
   input: {
-    // height: "100%",
-    fontFamily: Font.Regular
+    fontFamily: Font.Regular,
+    fontSize: hp(1.8)
   }
 });

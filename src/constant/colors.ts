@@ -18,6 +18,7 @@ export const appColors = {
   info: "#2F80ED",
   warning: "#F2994A",
   warinigText:"#a65f00",
+  searchbar:"#f4f5f8",
 
 
   // lightOlive: "#daf2ea",

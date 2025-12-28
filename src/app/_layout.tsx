@@ -67,8 +67,6 @@ export default function RootLayout() {
         <GestureHandlerRootView className="flex-1">
           <PortalProvider>
             <PortalHost name="root" />
-            {/* <NoticeHost topOffset={50} /> */}
-
             <StatusBar style="auto" />
             <Stack screenOptions={{ headerShown: false }} />
           </PortalProvider>

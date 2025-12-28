@@ -40,7 +40,6 @@ export default function Country() {
       >
         <View className="relative gap-24">
           <Select
-            height={90}
             options={COUNTRIES}
             searchable
             placeholder="Location"

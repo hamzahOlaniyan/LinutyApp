@@ -43,7 +43,7 @@ export default function Profession() {
       }}
     >
       <StepContainer
-        heading="What is your Occupation"
+        heading="What is your proffession?"
         paragraph="Share your nationality and country of birth to help."
       >
         <View className="gap-4">

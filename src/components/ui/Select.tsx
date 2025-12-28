@@ -1,20 +1,23 @@
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import BottomSheet from "@gorhom/bottom-sheet";
-import React, { useEffect, useRef, useState } from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AppText from "./AppText";
 import LSeachBar from "./LSeachBar";
 import { ModalBottomSheet } from "./ModalBottomSheet";
 
 interface SelectButtonProps {
-  options: string[] | [] | null;
+  options: string[];
   onSelect: (value: string) => void;
   placeholder: string;
   modalTitle?: string;
   label?: string;
-  height?: number;
+  snapPoints?: string[];
+  snap?: number;
   error?: boolean;
   errorMessage?: string;
   searchable?: boolean;
@@ -30,6 +33,8 @@ export default function Select({
   error,
   errorMessage,
   selectedValue,
+  snapPoints,
+  snap,
   searchable = false
 }: SelectButtonProps) {
   const [selected, setSelected] = useState<string | null>(null);
@@ -37,8 +42,8 @@ export default function Select({
   const [isFocused, setIsFocused] = useState(false);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const handleOpenSheet = () => bottomSheetRef.current?.expand();
-  const handleCloseSheet = () => bottomSheetRef.current?.close();
+
+  const { bottom } = useSafeAreaInsets();
 
   useEffect(() => {
     if (typeof selectedValue !== "undefined") {
@@ -46,21 +51,38 @@ export default function Select({
     }
   }, [selectedValue]);
 
+  const handleSnapPress = useCallback((index: number) => {
+    bottomSheetRef.current?.snapToIndex(index);
+  }, []);
+
+  const handleClosePress = useCallback(() => {
+    bottomSheetRef.current?.close();
+  }, []);
+
   const handleSelect = (option: string) => {
     setSelected(option);
     onSelect(option);
-    handleCloseSheet();
-    if (bottomSheetRef.current) {
-      bottomSheetRef.current.close();
-    }
+    handleClosePress();
   };
+
+  const renderItem = useCallback(
+    ({ item }: { item: string }) => (
+      <TouchableOpacity
+        onPress={() => handleSelect(item)}
+        style={{ paddingVertical: 12 }}
+      >
+        <AppText>{item}</AppText>
+      </TouchableOpacity>
+    ),
+    []
+  );
 
   return (
     <View className="h-full flex-1 gap-2">
       {label && <AppText>{label}</AppText>}
       <View>
         <TouchableOpacity
-          onPress={() => handleOpenSheet()}
+          onPress={() => handleSnapPress(Number(snap))}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           style={{
@@ -91,40 +113,41 @@ export default function Select({
           <AppText color={appColors.error}>{errorMessage}</AppText>
         ) : null}
       </View>
-      {/* <Portal hostName="root"> */}
-      <ModalBottomSheet
-        ref={bottomSheetRef}
-        title={modalTitle}
-        children={
-          <View style={{ paddingHorizontal: wp(3) }}>
-            {searchable && (
-              <LSeachBar
-                placeholder="search"
-                searchBarValue={text => setSearchText(text)}
+      <Portal hostName="root" />
+
+      {/* MODEL BOTTOMSHEET */}
+      <Portal hostName="root">
+        <ModalBottomSheet
+          ref={bottomSheetRef}
+          title={modalTitle}
+          // data={data}
+          snapPoints={snapPoints}
+          children={
+            <View style={{ paddingHorizontal: wp(3), marginBottom: bottom }}>
+              {searchable && (
+                <LSeachBar
+                  placeholder="search"
+                  searchBarValue={text => setSearchText(text)}
+                />
+              )}
+              <BottomSheetFlatList
+                data={options?.filter(o =>
+                  o.toLowerCase().includes(searchText.toLowerCase())
+                )}
+                renderItem={renderItem}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.contentContainer}
               />
-            )}
-            {/* <Pressable onPress={handleCloseSheet}> */}
-            <FlatList
-              data={options?.filter(search =>
-                search.toLowerCase().includes(searchText.toLowerCase())
-              )}
-              scrollEnabled
-              keyExtractor={item => item}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() => handleSelect(item)}
-                  style={{ paddingVertical: 12 }}
-                >
-                  <AppText>{item}</AppText>
-                </TouchableOpacity>
-              )}
-              contentContainerStyle={{ paddingBottom: 100 }}
-              showsVerticalScrollIndicator={false}
-            />
-            {/* </Pressable> */}
-          </View>
-        }
-      />
+            </View>
+          }
+        />
+      </Portal>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    paddingBottom: 200
+  }
+});
