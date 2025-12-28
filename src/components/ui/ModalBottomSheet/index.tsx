@@ -11,14 +11,13 @@ interface Props {
   title?: React.ReactNode;
   children: React.ReactNode;
   snapPoints?: string[];
-  // data?: string[] | [] | null;
 }
 export type ModalBottomSheetRef = BottomSheet;
 
 export const ModalBottomSheet = forwardRef<ModalBottomSheetRef, Props>(
   (props, ref) => {
     const snapPoints = useMemo(
-      () => props.snapPoints ?? ["30%", "50%", "91%"],
+      () => props.snapPoints ?? ["30%", "50%", "93%"],
       [props.snapPoints]
     );
 
@@ -37,6 +36,7 @@ export const ModalBottomSheet = forwardRef<ModalBottomSheetRef, Props>(
     return (
       <BottomSheet
         ref={ref}
+        index={-1}
         snapPoints={snapPoints}
         enableDynamicSizing={false}
         enablePanDownToClose

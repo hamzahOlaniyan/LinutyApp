@@ -7,6 +7,7 @@ import { useCommentQuery } from "@/hooks/useCommentQuery";
 import { PostApi } from "@/hooks/usePostApi";
 import Icon from "@/icons";
 import BottomSheet from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
 import { useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -104,20 +105,21 @@ export default function PostAction({ post }: PostCardProps) {
           </Pressable>
         </View>
       </View>
-
-      <ModalBottomSheet
-        ref={bottomSheetRef}
-        title={`${post?._count?.comments ?? 0} Comments`}
-        children={
-          <CommentsList
-            postAuthorId={post?.author?.id ?? ""}
-            comments={comments ?? []}
-            loading={isLoading}
-            count={post?._count?.comments ?? null}
-            postId={post.id}
-          />
-        }
-      />
+      <Portal hostName="root">
+        <ModalBottomSheet
+          ref={bottomSheetRef}
+          title={`${post?._count?.comments ?? 0} Comments`}
+          children={
+            <CommentsList
+              postAuthorId={post?.author?.id ?? ""}
+              comments={comments ?? []}
+              loading={isLoading}
+              count={post?._count?.comments ?? null}
+              postId={post.id}
+            />
+          }
+        />
+      </Portal>
     </>
   );
 }

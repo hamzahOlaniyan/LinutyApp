@@ -1,18 +1,16 @@
 import { Font } from "@/assets/fonts/FontFamily";
 import AppText from "@/components/ui/AppText";
 import GradientButton from "@/components/ui/GradientButton";
-import Select from "@/components/ui/Select";
+import Select from "@/components/ui/Select/Select";
 import StepContainer from "@/components/ui/StepContainer";
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import { ClanNode, ETHNICITIES, Ethnicity } from "@/data/ClanTree";
 import Icon from "@/icons";
 import { useOnbardingFlowForm } from "@/store/useOnbardingFlowForm";
-import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  Pressable,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -121,7 +119,7 @@ export default function EthnicityScreen() {
         <View className="flex-1 gap-4">
           <Select
             label="Your ethnicity"
-            height={90}
+            snap={2}
             options={ETHNICITIES.map(item => item.name)}
             placeholder="Ethnicity"
             searchable
@@ -136,7 +134,7 @@ export default function EthnicityScreen() {
           {selectedEthnicityName && (
             <Select
               label={`Is your father ${selectedEthnicityName} ?`}
-              height={90}
+              snap={2}
               options={["Yes", "No"]}
               placeholder={`Is your father ${selectedEthnicityName} ?`}
               selectedValue={form.isFather ?? undefined}
@@ -147,54 +145,58 @@ export default function EthnicityScreen() {
           )}
           <View className="flex-1 gap-6">
             {selectedEthnicityName && form.isFather === "Yes" && (
-              <View className="gap-6">
-                {path.length > 0 && (
-                  <>
-                    {atLeaf && (
-                      <AppText color={appColors.grey}>
-                        Your selected clan
-                      </AppText>
-                    )}
-
-                    <AppText
-                      style={{ flex: 1, width: "100%" }}
-                      color={appColors.text}
-                    >
-                      {path
-                        .map((p, idx) => `${idx + 1}. ${p.name}    `)
-                        .join("")}
+              <View>
+                <View className="gap-3">
+                  {!atLeaf && (
+                    <AppText variant={"titleLarge"}>
+                      Select your sub clans
                     </AppText>
-                  </>
-                )}
-
-                <View className="flex-row items-center justify-between gap-12">
-                  {!atLeaf && <AppText>* Select your sub clans</AppText>}
+                  )}
                   {path.length > 0 && (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        flex: 1
-                      }}
-                    >
-                      <Pressable
+                    <>
+                      {atLeaf && (
+                        <AppText
+                          variant={"titleLarge"}
+                          className="font-SemiBold"
+                        >
+                          Your selected clan
+                        </AppText>
+                      )}
+                      <View className="flex-1 gap-2 rounded-md bg-background/30 p-2">
+                        <AppText
+                          style={{ flex: 1 }}
+                          color={appColors.text}
+                          variant="title"
+                        >
+                          {path
+                            .map(p => `${p.name} -  `)
+                            // .map((p, idx) => `${idx + 1}. ${p.name}   `)
+                            .join("")}
+                        </AppText>
+                      </View>
+                    </>
+                  )}
+
+                  {path.length > 0 && (
+                    <View className="flex-row justify-between">
+                      <TouchableOpacity
                         onPress={handleBack}
-                        className="flex-row items-center justify-center gap-1 self-end"
+                        className="flex-row items-center"
                       >
-                        <Ionicons
-                          name="arrow-back-sharp"
-                          size={12}
-                          color="black"
-                          className="relative top-[1px]"
-                        />
-                        <AppText>back 1 step</AppText>
-                      </Pressable>
+                        <Icon name="chevronback" size={16} />
+                        <AppText variant={"small"} className="font-Medium">
+                          back 1 step
+                        </AppText>
+                      </TouchableOpacity>
                       <TouchableOpacity
                         onPress={resetClanTree}
                         style={{ alignSelf: "center" }}
+                        className="flex-row items-center gap-2"
                       >
-                        <AppText color={appColors.error}>reset</AppText>
+                        <Icon name="reset" size={16} />
+                        <AppText variant={"small"} className="font-Medium">
+                          reset
+                        </AppText>
                       </TouchableOpacity>
                     </View>
                   )}
@@ -208,12 +210,12 @@ export default function EthnicityScreen() {
                     key={clan.id}
                     onPress={() => handleClanSelect(clan)}
                     style={[
-                      { borderWidth: 1, borderColor: appColors.border },
+                      { borderWidth: 1, borderColor: appColors.inputInactive },
                       style.selectabaleBtn
                     ]}
                   >
-                    <AppText>{clan.name}</AppText>
-                    <Icon name="plus" />
+                    <AppText className="font-Medium">{clan.name}</AppText>
+                    <Icon name="plus" size={20} />
                   </TouchableOpacity>
                 ))}
               </View>
@@ -221,13 +223,15 @@ export default function EthnicityScreen() {
 
             {atLeaf && (
               <View className="gap-4">
-                <AppText>* Please enter your abtiriis</AppText>
+                <AppText variant={"titleLarge"} className="font-SemiBold">
+                  Please enter your abtiriis
+                </AppText>
                 <View
                   style={{
                     height: hp(7),
                     borderWidth: 1,
                     marginBottom: 3,
-                    borderColor: appColors.placeholder,
+                    borderColor: appColors.inputInactive,
                     borderRadius: 15,
                     flex: 1
                   }}
@@ -251,7 +255,7 @@ export default function EthnicityScreen() {
               </View>
             )}
 
-            <View className="my-6">
+            <View>
               {atLeaf && <GradientButton text="Next" onPress={handleNext} />}
               {form.isFather === "No" && (
                 <GradientButton text="Next" onPress={handleNext} />
@@ -266,13 +270,13 @@ export default function EthnicityScreen() {
 
 const style = StyleSheet.create({
   selectabaleBtn: {
-    height: hp(5),
+    height: hp(4.5),
     paddingHorizontal: 16,
     borderRadius: 400,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    gap: 6
+    gap: 1
   },
   image: {
     flex: 1,

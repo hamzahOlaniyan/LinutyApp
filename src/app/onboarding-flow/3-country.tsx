@@ -1,5 +1,5 @@
 import GradientButton from "@/components/ui/GradientButton";
-import Select from "@/components/ui/Select";
+import Select from "@/components/ui/Select/Select";
 import StepContainer from "@/components/ui/StepContainer";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
@@ -41,6 +41,7 @@ export default function Country() {
         <View className="relative gap-24">
           <Select
             options={COUNTRIES}
+            snap={2}
             searchable
             placeholder="Location"
             onSelect={location => updateField("location", location)}

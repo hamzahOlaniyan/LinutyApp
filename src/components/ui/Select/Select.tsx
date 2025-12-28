@@ -6,23 +6,10 @@ import { Portal } from "@gorhom/portal";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import AppText from "./AppText";
-import LSeachBar from "./LSeachBar";
-import { ModalBottomSheet } from "./ModalBottomSheet";
-
-interface SelectButtonProps {
-  options: string[];
-  onSelect: (value: string) => void;
-  placeholder: string;
-  modalTitle?: string;
-  label?: string;
-  snapPoints?: string[];
-  snap?: number;
-  error?: boolean;
-  errorMessage?: string;
-  searchable?: boolean;
-  selectedValue?: string;
-}
+import AppText from "../AppText";
+import LSeachBar from "../LSeachBar";
+import { ModalBottomSheet } from "../ModalBottomSheet";
+import { SelectButtonProps } from "./type";
 
 export default function Select({
   options = [],
@@ -79,10 +66,10 @@ export default function Select({
 
   return (
     <View className="h-full flex-1 gap-2">
-      {label && <AppText>{label}</AppText>}
+      {label && <AppText variant={"title"}>{label}</AppText>}
       <View>
         <TouchableOpacity
-          onPress={() => handleSnapPress(Number(snap))}
+          onPress={() => handleSnapPress(Number(snap ?? null))}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           style={{
@@ -113,17 +100,21 @@ export default function Select({
           <AppText color={appColors.error}>{errorMessage}</AppText>
         ) : null}
       </View>
-      <Portal hostName="root" />
 
       {/* MODEL BOTTOMSHEET */}
       <Portal hostName="root">
         <ModalBottomSheet
           ref={bottomSheetRef}
           title={modalTitle}
-          // data={data}
           snapPoints={snapPoints}
           children={
-            <View style={{ paddingHorizontal: wp(3), marginBottom: bottom }}>
+            <View
+              style={{
+                paddingHorizontal: wp(3),
+                marginBottom: bottom,
+                gap: 12
+              }}
+            >
               {searchable && (
                 <LSeachBar
                   placeholder="search"

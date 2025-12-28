@@ -1,7 +1,7 @@
 import Svg, { Path } from "react-native-svg";
 import { IconProps } from "../types";
 
-export const chevrondown = ({ ...props }: IconProps) => {
+export const chevronback = ({ ...props }: IconProps) => {
   return (
     <Svg
       viewBox="0 -960 960 960"
@@ -11,7 +11,7 @@ export const chevrondown = ({ ...props }: IconProps) => {
       {...props}
     >
       <Path
-        d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
+        d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"
         fill={props.color}
       />
     </Svg>

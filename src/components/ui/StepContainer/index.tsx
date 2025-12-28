@@ -27,7 +27,11 @@ export default function StepContainer({
       <View className="gap-4">
         <View className="gap-4">
           {heading && <AppText variant="header">{heading}</AppText>}
-          {paragraph && <AppText>{paragraph}</AppText>}
+          {paragraph && (
+            <AppText variant="titleMed" className="font-Regular">
+              {paragraph}
+            </AppText>
+          )}
         </View>
         <View className="">{children}</View>
       </View>

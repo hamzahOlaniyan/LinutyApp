@@ -5,6 +5,7 @@ import { add_image } from "./ico/add-image";
 import { bookmark } from "./ico/bookmark";
 import { calendar } from "./ico/calendar";
 import { check } from "./ico/check";
+import { chevronback } from "./ico/chevronback";
 import { chevrondown } from "./ico/chevrondown";
 import { chevronforward } from "./ico/chevronforward";
 import { close } from "./ico/close";
@@ -32,6 +33,7 @@ import { notification } from "./ico/notification";
 import { plus } from "./ico/plus";
 import { report } from "./ico/report";
 import { repost } from "./ico/repost";
+import { reset } from "./ico/reset";
 import { search } from "./ico/search";
 import { search2 } from "./ico/search2";
 import { share } from "./ico/share";
@@ -94,7 +96,9 @@ const icons = {
   warning,
   verifySolid,
   locationSolid,
-  accountSolid
+  accountSolid,
+  reset,
+  chevronback
 } as const;
 
 export type IconName = keyof typeof icons;

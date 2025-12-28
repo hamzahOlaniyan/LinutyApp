@@ -37,6 +37,7 @@ const textVariants = cva("font-Regular text-text", {
       headerLarge: "font-Bold",
       header: "font-SemiBold",
       titleLarge: "",
+      titleMed: "",
       title: "font-SemiBold",
       body: "font-Regular",
       medium: "",
@@ -69,6 +70,7 @@ type VariantName =
   | "headerLarge"
   | "header"
   | "titleLarge"
+  | "titleMed"
   | "title"
   | "body"
   | "medium"
@@ -88,6 +90,7 @@ const variantFontSizes: Record<VariantName, number> = {
   headerLarge: hp(3),
   header: hp(2.6),
   titleLarge: hp(2.3),
+  titleMed: hp(2),
   title: hp(1.9),
   body: hp(1.7),
   medium: hp(1.7),
