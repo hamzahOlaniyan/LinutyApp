@@ -63,28 +63,13 @@ export class PostApi {
       });
   };
 
-  // static usePostUpdate =  (postId: string) => {
-  //   const qc = useQueryClient();
-  //     return useApiMutation< PostInput>("patch", `/post/${postId}`, {
-  //       onSuccess: () => {
-  //         qc.setQueryData<CursorPage<Post>>(["/feed", `/post/${postId}`], old => {
-  //           if (!old?.data) return old;
-  //           return { ...old, data: old.data.filter(p => p.id !== postId) };
-  //         });
 
-  //         qc.invalidateQueries({ queryKey: ["/feed", `/post/${postId}`] });
-  //       }
-  //     });
-  // };
-
-  // 1) PATCH content
   static useUpdatePostContent = (postId: string) =>
     useApiMutation<PostResponse, { content: string | null }>(
       "patch",
       `/post/${postId}`
     );
 
-// 2) POST media (add new images after upload)
   static useAddPostMedia = (postId: string) =>
     useApiMutation<MediaFile[], AddMediaPayload>(
       "post",
@@ -136,7 +121,7 @@ export class PostApi {
     );
   };
 
-  static useGetMediaByPostId = (postId:string)=>{
+  static getPostMedia = (postId:string)=>{
     const { session } = useAuthStore();
     const accessToken = session?.access_token; 
     const { data, isLoading,  refetch, error , isFetching}= useApiQuery<MediaFile[]>(`/post/${postId}/media`,undefined,{enabled:!!accessToken && !!postId});

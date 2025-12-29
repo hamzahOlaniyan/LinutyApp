@@ -53,7 +53,7 @@ export default function PostIdScreen() {
   const savedRef = useRef(false);
 
   const { data: postData } = PostApi.useGetPostById(postId ?? "");
-  const { data: mediaFiles } = PostApi.useGetMediaByPostId(postId ?? "");
+  const { data: mediaFiles } = PostApi.getPostMedia(postId ?? "");
 
   const updateContent = PostApi.useUpdatePostContent(postId ?? "");
   const addMedia = PostApi.useAddPostMedia(postId ?? "");

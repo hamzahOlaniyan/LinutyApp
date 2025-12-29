@@ -12,9 +12,6 @@ export default function _ProtectedLayout() {
 
   const hasCompletedRegistration = !!me?.isProfileComplete;
 
-  // console.log("hasCompletedRegistration", hasCompletedRegistration);
-  // console.log("me", JSON.stringify(me, null, 2));
-
   if (!initialized) return null;
 
   if (session && !hasCompletedRegistration)
@@ -34,18 +31,7 @@ export default function _ProtectedLayout() {
         name="me"
         options={{ title: "Profile", headerShown: false }}
       />
-      <Stack.Screen
-        name="post/[postId]"
-        options={{
-          title: "Edit post",
-          headerTitleAlign: "center",
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => router.back()}>
-              <Icon name="close" />
-            </TouchableOpacity>
-          )
-        }}
-      />
+      <Stack.Screen name="post" options={{ headerShown: false }} />
       <Stack.Screen
         name="user/[id]"
         options={{ title: "user", headerShown: false }}

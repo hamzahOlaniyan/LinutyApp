@@ -106,7 +106,6 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
               horizontal
               pagingEnabled
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ backgroundColor: appColors.text }}
               onViewableItemsChanged={onViewableItemsChanged}
               viewabilityConfig={viewabilityConfig}
               data={media}

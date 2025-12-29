@@ -41,8 +41,6 @@ export default function RootLayout() {
     init();
   }, []);
 
-  console.log({ session });
-
   useEffect(() => {
     if (loaded && initialized) SplashScreen.hideAsync();
   }, [loaded, initialized]);
