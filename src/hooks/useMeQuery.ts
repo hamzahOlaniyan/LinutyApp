@@ -9,24 +9,23 @@ export const useMeQuery = () => {
 
   const accessToken = session?.access_token; 
 
-  console.log("useMeQuery enabled?", !!accessToken);
-
 
   const { data, isLoading, error } = useApiQuery<Profile>(
     "/profile/me",
     undefined,
     {
-      retry: (failureCount, error) => {
-        if (error?.response?.status === 401) return false;
-        return failureCount < 2;
-      },
-      staleTime: 0,
+    //   retry: (failureCount, error) => {
+    //     if (error?.response?.status === 401) return false;
+    //     return failureCount < 2;
+    //   },
+      // staleTime: 0,
       enabled: !!accessToken,
-       refetchOnMount: "always",
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
+      //  refetchOnMount: "always",
+      // refetchOnReconnect: true,
+      // refetchOnWindowFocus: true,
     }
   );
+
 
   useEffect(() => {
     if(data) setMe(data)

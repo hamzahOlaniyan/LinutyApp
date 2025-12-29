@@ -22,7 +22,7 @@ export default function CommentsList({
 
   const onSend = useCallback(
     (content: string) => {
-      console.log({ content, parentCommentId: replyTo?.parentCommentId });
+      // console.log({ content, parentCommentId: replyTo?.parentCommentId });
 
       addComment.mutate(
         {

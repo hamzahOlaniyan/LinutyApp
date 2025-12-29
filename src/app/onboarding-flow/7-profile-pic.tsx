@@ -92,7 +92,7 @@ export default function ProfilePic() {
     return data.publicUrl; // returns string
   }
 
-  console.log("FormData", JSON.stringify(form, null, 2));
+  // console.log("FormData", JSON.stringify(form, null, 2));
 
   async function completeRegistration() {
     setLoading(true);
@@ -102,7 +102,7 @@ export default function ProfilePic() {
       return;
     }
 
-    console.log("profilePic before upload:", profilePic);
+    // console.log("profilePic before upload:", profilePic);
 
     if (!profilePic?.uri) {
       setLoading(false);

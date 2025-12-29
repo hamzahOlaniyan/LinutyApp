@@ -185,7 +185,7 @@ export default function Create_product() {
   }
 
   const handleSubmit = async () => {
-    console.log("clicked");
+    // console.log("clicked");
     const values = formData as unknown as Partial<AdFormField>;
 
     try {

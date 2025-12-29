@@ -29,11 +29,11 @@ export default async function OTP() {
     })();
   }, []);
 
-  console.log("email otp", email);
+  // console.log("email otp", email);
 
   const verifyOtp = AuthApi.verifyOtp();
 
-  console.log({ email });
+  // console.log({ email });
 
   const LoginForm: SignInField[] = [
     {

@@ -12,6 +12,9 @@ export default function _ProtectedLayout() {
 
   const hasCompletedRegistration = !!me?.isProfileComplete;
 
+  // console.log("hasCompletedRegistration", hasCompletedRegistration);
+  // console.log("me", JSON.stringify(me, null, 2));
+
   if (!initialized) return null;
 
   if (session && !hasCompletedRegistration)

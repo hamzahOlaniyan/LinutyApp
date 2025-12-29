@@ -2,18 +2,15 @@ import { Font } from "@/assets/fonts/FontFamily";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import { useMeQuery } from "@/hooks/useMeQuery";
 import { queryClient } from "@/lib/queryClient";
+import { supabase } from "@/lib/supabase/supabase";
 import { useAuthStore } from "@/store/useAuthStore";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-
 import { router, SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
-// import { NoticeHost } from "@/components/ui/Notice/Index";
-import { supabase } from "@/lib/supabase/supabase";
 import "../../global.css";
 
 export const unstable_settings = {
@@ -28,7 +25,7 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 }
 
 export default function RootLayout() {
-  const { initialized, init } = useAuthStore();
+  const { initialized, init, session } = useAuthStore();
 
   const [loaded] = useFonts({
     [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
@@ -43,6 +40,8 @@ export default function RootLayout() {
   useEffect(() => {
     init();
   }, []);
+
+  console.log({ session });
 
   useEffect(() => {
     if (loaded && initialized) SplashScreen.hideAsync();
