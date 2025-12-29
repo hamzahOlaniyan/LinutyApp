@@ -1,6 +1,5 @@
 import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
-import { wp } from "@/constant/common";
 import { PostApi } from "@/hooks/usePostApi";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
@@ -17,7 +16,7 @@ import { MediaFile } from "../../../../../types/supabaseTypes";
 
 export default function media() {
   const { postId } = useLocalSearchParams<{ postId: string }>();
-  const { data, isLoading } = PostApi.getPostMedia(postId);
+  const { data } = PostApi.getPostMedia(postId);
 
   const [media, setMedia] = useState<MediaFile[]>();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -89,20 +88,6 @@ export default function media() {
 }
 
 const s = StyleSheet.create({
-  container: {
-    backgroundColor: appColors.white,
-    paddingTop: 12,
-    paddingBottom: 6,
-    marginBottom: 12
-  },
-  content: {
-    paddingHorizontal: wp(3),
-    marginTop: 12
-  },
-  image: {
-    backgroundColor: "red"
-  },
-  mediaContainer: { position: "relative" },
   mediaCounter: {
     position: "absolute",
     right: 12,
