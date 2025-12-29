@@ -55,7 +55,7 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
 
       {/* BODY: open post */}
       <Pressable
-        onPress={() => router.push(`/post/${post.id}/${post.id}`)}
+        // onPress={() => router.push(`/post/${post.id}/${post.id}`)}
         style={s.content}
       >
         {Number(post?.content?.length) > 100 && !readmore ? (
@@ -63,15 +63,25 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
             <AppText>
               {post?.content?.substring(0, 100)}...{" "}
               <AppText
-                onPress={() => setReadMore(!readmore)}
-                color={appColors.secondary}
+                onPress={() => setReadMore(true)}
+                color={appColors.placeholder}
+                className="font-Medium"
               >
                 more
               </AppText>
             </AppText>
           </>
         ) : (
-          <AppText>{post?.content} </AppText>
+          <AppText>
+            {post?.content}{" "}
+            <AppText
+              onPress={() => setReadMore(false)}
+              color={appColors.placeholder}
+              className="font-Medium"
+            >
+              {readmore ? "less" : ""}
+            </AppText>{" "}
+          </AppText>
         )}
       </Pressable>
 

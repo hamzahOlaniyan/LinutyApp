@@ -90,7 +90,9 @@ export default function PostOptions({
           {postOptions.map((n, i) => (
             <TouchableOpacity key={i} className="flex-row items-center gap-4">
               {n.icon}
-              <AppText>{n.title}</AppText>
+              <AppText variant={"title"} className="font-Regular capitalize">
+                {n.title}
+              </AppText>
             </TouchableOpacity>
           ))}
         </>
@@ -104,6 +106,8 @@ export default function PostOptions({
             >
               {n.icon}
               <AppText
+                variant={"title"}
+                className="capitalize"
                 color={n.title === "delete" ? appColors.error : appColors.text}
               >
                 {n.title}

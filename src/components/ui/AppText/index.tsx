@@ -62,6 +62,7 @@ export type CustomTextProps = RNTextProps &
   VariantProps<typeof textVariants> & {
     children?: React.ReactNode;
     color?: string;
+    onPress?: () => void;
   };
 
 // 👇 per-variant font sizes using hp()
@@ -100,7 +101,7 @@ const variantFontSizes: Record<VariantName, number> = {
   post_name: hp(1.9),
   post_date: hp(1.4),
   post_visability: hp(1.4),
-  post_username: hp(1.7),
+  post_username: hp(1.5),
   post_content: hp(1.8),
   post_info: hp(1.6),
   post_action: hp(1.8)
@@ -112,6 +113,7 @@ const AppText = ({
   children,
   style,
   color,
+  onPress,
   ...props
 }: CustomTextProps) => {
   const finalClasses = twMerge(textVariants({ variant }), className);
@@ -121,7 +123,12 @@ const AppText = ({
   const textStyle: TextStyle = { fontSize, ...(color ? { color } : {}) };
 
   return (
-    <RNText {...props} className={finalClasses} style={[textStyle, style]}>
+    <RNText
+      {...props}
+      onPress={onPress}
+      className={finalClasses}
+      style={[textStyle, style]}
+    >
       {children}
     </RNText>
   );

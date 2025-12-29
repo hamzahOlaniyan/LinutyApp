@@ -4,28 +4,28 @@ import { useApiMutation } from "./useApi";
 
 
 export const AuthApi = {
-  checkEmail() {
+  async checkEmail() {
     return useApiMutation<{ message: string }, { email: string }>(
       "post",
       "/auth/check-email"
     );
   },
 
-  verifyOtp() {
+  async verifyOtp() {
     return useApiMutation<{ message: string }, { email: string; otp: string }>(
       "post",
       "/auth/verify-otp"
     );
   },
 
-  checkUsername(){ 
+  async checkUsername(){ 
     return useApiMutation<{ message: string },{username:string}>(
       "post",
       "/auth/check-username"
     );
   },
 
-  register(){ 
+  async register(){ 
     return useApiMutation<AuthResponse>(
       "post",
       "/auth/register"

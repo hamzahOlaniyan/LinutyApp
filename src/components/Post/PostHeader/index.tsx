@@ -8,6 +8,7 @@ import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import Icon from "@/icons";
 import { useAuthStore } from "@/store/useAuthStore";
+import { Portal } from "@gorhom/portal";
 import { useRouter } from "expo-router";
 import moment from "moment";
 import React, { useRef } from "react";
@@ -63,7 +64,7 @@ export default function PostHeader({
               <AppText variant="post_name">{displayName}</AppText>
             </TouchableOpacity>
             <AppText variant="post_date">
-              · {moment(createdAt).fromNow()}
+              · {moment(createdAt).fromNow(true)}
             </AppText>
             <AppText variant="post_visability">· {visibility}</AppText>
           </View>
@@ -71,26 +72,30 @@ export default function PostHeader({
             onPress={() => router.push(`/(protected)/profile/${author.id}`)}
             hitSlop={10}
           >
-            <AppText variant="post_username">@ {author?.username}</AppText>
+            <AppText variant="post_username">@{author?.username}</AppText>
           </TouchableOpacity>
         </View>
       </View>
       {/* MORE menu */}
 
-      <Pressable onPress={handleOpenSheet} hitSlop={10} className="px-2 py-2">
+      <Pressable onPress={handleOpenSheet} hitSlop={20}>
         <Icon name="threeDots" color={appColors.icon} />
       </Pressable>
-      <ModalBottomSheet
-        ref={bottomSheetRef}
-        snapPoints={["45%"]}
-        children={
-          <PostOptions
-            isUserOwner={isUserOwner}
-            postId={postId}
-            bottomSheetRef={bottomSheetRef}
-          />
-        }
-      />
+      <Portal hostName="root">
+        <ModalBottomSheet
+          ref={bottomSheetRef}
+          snapPoints={["40%"]}
+          children={
+            <View style={{ paddingHorizontal: wp(4), flex: 1 }}>
+              <PostOptions
+                isUserOwner={isUserOwner}
+                postId={postId}
+                bottomSheetRef={bottomSheetRef}
+              />
+            </View>
+          }
+        />
+      </Portal>
     </View>
   );
 }
