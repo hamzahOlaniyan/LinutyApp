@@ -18,29 +18,8 @@ export const appColors = {
   info: "#2F80ED",
   warning: "#F2994A",
   warinigText:"#a65f00",
-  searchbar:"#f4f5f8",
+  searchbar:"#eceef3",
 
-
-  // lightOlive: "#daf2ea",
-  // selectedTeply: "#f3fbf8",
-  // colouredText: "#dbf5ff",
-  // purple: "#e9ddf0",
-  // blue: "#0072b1",
-  // dark_whitesmoke: "#f1f1f1",
-  // whitesmoke: "#f5f5f5",
-  // offWhite: "#f7f7f7",
-  // lightGrey: "#717171",
-  // success: "#00a86b",
-  // warning: "#ff4d00",
-
-  // kkkk: "#e1e1e1",
-  // searchBar: "#f6f6f6",
-  // black: "#000000",
-  // inputActive: "#677179",
-
-  // buttonOutline: "#006891",
-  // border: "#d6d6d6",
-  // searchBorder: "#f4f4f4",
 
   gradients: {
     primary: ["#68be91", "#006891", "#36326c"] as const,

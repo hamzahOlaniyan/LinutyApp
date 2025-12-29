@@ -24,11 +24,11 @@ export default memo(function CommentCard({
 }: {
   comment: PostComment;
   setReplyTo: (value: ReplyingTo) => void | null;
-  postId: string;
+  postId?: string;
 }) {
-  const { data } = useCommentRepliesQuery(comment.id);
-  const reactToComment = useReactToComment(postId, comment.id);
-  const { data: myReaction } = useMyCommentReactionQuery(comment.id);
+  const { data } = useCommentRepliesQuery(comment?.id);
+  const reactToComment = useReactToComment(postId ?? "", comment?.id);
+  const { data: myReaction } = useMyCommentReactionQuery(comment?.id);
 
   const [likes, setLikes] = useState<{ count: number; liked: boolean }>({
     count: Number(comment?.likeCount ?? 0),
@@ -77,7 +77,9 @@ export default memo(function CommentCard({
   const replyCount = replies?.length ?? 0;
   // const likeCount = comment?.likeCount ?? 0;
 
-  const name = useMemo(() => displayName(comment.author), [comment.author]);
+  const name = useMemo(() => displayName(comment?.author), [comment?.author]);
+
+  // console.log(JSON.stringify(comment, null, 2));
 
   return (
     <View className="flex-row gap-2">
@@ -93,14 +95,14 @@ export default memo(function CommentCard({
                 </Pressable>
               </View>
               <AppText
-                variant="small"
+                variant="xs"
                 className="capitalize"
                 color={appColors.placeholder}
               >
                 @{comment?.author?.username}
               </AppText>
             </View>
-            <AppText>{comment.content!}</AppText>
+            <AppText>{comment?.content}</AppText>
           </View>
           {/* actions */}
           <View className="flex-row items-center justify-between">
@@ -132,6 +134,7 @@ export default memo(function CommentCard({
                 <Icon
                   name={likes?.liked ? "thumbsupSolid" : "thumbsup"}
                   size={18}
+                  color={appColors.icon}
                 />
                 <AppText variant={"small"} color={appColors.secondary}>
                   {likes.count > 0 ? `${likes.count}` : ""}
@@ -142,21 +145,25 @@ export default memo(function CommentCard({
         </View>
 
         {replies && replies?.length === 0 ? null : (
-          <View className="flex-row gap-2">
+          <View className="flex-row items-center gap-6">
+            <AppText variant={"small"} className="font-SemiBold">
+              {replyCount === 1 ? "1 reply" : `${replyCount} replies`}
+            </AppText>
             <TouchableOpacity
               onPress={() => setExpanded(!expanded)}
-              className="flex-row items-end"
+              className="flex-row items-center"
             >
-              <AppText>view</AppText>
-              {<Icon name={expanded ? "chevrondown" : "chevronforward"} />}
+              <AppText color={appColors.placeholder} className="font-SemiBold">
+                view
+              </AppText>
+              {
+                <Icon
+                  name={expanded ? "chevrondown" : "chevronforward"}
+                  size={24}
+                  color={appColors.placeholder}
+                />
+              }
             </TouchableOpacity>
-            <AppText>
-              {replyCount > 0 && (
-                <AppText>
-                  {replyCount === 1 ? "1 reply" : `${replyCount} replies`}
-                </AppText>
-              )}
-            </AppText>
           </View>
         )}
         {expanded &&

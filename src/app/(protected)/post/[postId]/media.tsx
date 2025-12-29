@@ -43,8 +43,6 @@ export default function media() {
     viewAreaCoveragePercentThreshold: 60
   }).current;
 
-  console.log(JSON.stringify(media, null, 2));
-
   return (
     <View className="flex-1 bg-text">
       <FlatList

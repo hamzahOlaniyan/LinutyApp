@@ -194,19 +194,6 @@ export type PostComment = {
 };
 
 export type ReplyingTo = { parentCommentId: string; name: string } | null;
-// export type CommentItemTypes = {
-//   comment: PostComment; // top-level
-//   onReply: (parent: { id: string; name: string }) => void;
-// };
-
-
-// export type UiComment = DbComment & {
-//   author?: CommentAuthor;
-//   _count?: { replies: number };
-
-//   created_at: string;
-//   parentId: string | null;
-// };
 
 
 
