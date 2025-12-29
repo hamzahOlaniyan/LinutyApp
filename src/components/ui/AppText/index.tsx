@@ -31,7 +31,7 @@ import { twMerge } from "tailwind-merge";
  * @returns {JSX.Element} A styled React Native `Text` element.
  */
 
-const textVariants = cva("font-Regular text-text", {
+const textVariants = cva("font-Regular text-text disabled:text-neutral-400", {
   variants: {
     variant: {
       headerLarge: "font-Bold",

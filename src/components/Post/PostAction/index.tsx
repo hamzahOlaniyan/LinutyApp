@@ -155,14 +155,18 @@ export default function PostAction({ post }: PostCardProps) {
           children={
             <View style={{ marginBottom: bottom, flex: 1 }}>
               <ScreenView>
-                <BottomSheetFlatList
-                  data={comments}
-                  renderItem={renderItem}
-                  showsHorizontalScrollIndicator={false}
-                  showsVerticalScrollIndicator={false}
-                  scrollEventThrottle={4}
-                  contentContainerStyle={s.contentContainer}
-                />
+                {comments?.length === 0 ? (
+                  <AppText variant={"title"}>be the first to comment</AppText>
+                ) : (
+                  <BottomSheetFlatList
+                    data={comments}
+                    renderItem={renderItem}
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                    scrollEventThrottle={4}
+                    contentContainerStyle={s.contentContainer}
+                  />
+                )}
               </ScreenView>
               <CommentInput
                 onSend={onSend}

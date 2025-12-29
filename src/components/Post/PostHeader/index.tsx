@@ -56,12 +56,14 @@ export default function PostHeader({
           {avatarUri ? <Avatar path={avatarUri} size={45} /> : null}
         </TouchableOpacity>
         <View className="flex-1">
-          <View className="flex-row items-center gap-2">
+          <View className="flex-1 flex-row items-center gap-2">
             <TouchableOpacity
               onPress={() => router.push(`/(protected)/profile/${author?.id}`)}
               hitSlop={10}
             >
-              <AppText variant="post_name">{displayName}</AppText>
+              <AppText variant="post_name" className="flex-1 capitalize">
+                {displayName}
+              </AppText>
             </TouchableOpacity>
             <AppText variant="post_date">
               · {moment(createdAt).fromNow(true)}

@@ -174,14 +174,31 @@ export default function Create_post() {
         >
           <Avatar path={me?.avatarUrl} size={45} />
           <View className="flex-1">
-            <AppText variant={"small"} className="font-Medium capitalize">
-              {name}
-            </AppText>
-            <AppText variant={"xs"} color={appColors.placeholder}>
+            <AppText className="font-SemiBold capitalize">{name}</AppText>
+            <AppText variant={"small"} color={appColors.placeholder}>
               @{me?.username}
             </AppText>
           </View>
+          <TouchableOpacity
+            onPress={handleSubmit}
+            disabled={!content}
+            className="rounded-full  bg-teal-500  px-4 py-2 disabled:bg-neutral-300"
+          >
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <View className="flex-row items-center">
+                <AppText
+                  color={appColors.white}
+                  className="font-Medium disabled:text-neutral-400"
+                >
+                  Post
+                </AppText>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
+
         <View style={{ height: hp(20) }} className="rounded-xl p-2">
           <TextInput
             style={{
@@ -197,68 +214,72 @@ export default function Create_post() {
             autoFocus
           />
         </View>
-        <TouchableOpacity
-          onPress={handleSubmit}
-          className="absolute right-4 top-0 z-50 bg-teal-500 "
+        <View
+          style={{
+            paddingHorizontal: wp(3)
+          }}
         >
-          {loading ? <ActivityIndicator /> : <Icon name="plus" />}
-        </TouchableOpacity>
-        <View className="elevation-sm p-2">
-          <TouchableOpacity onPress={pickImages}>
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
-              <Icon name="add_image" size={32} />
-            )}
-          </TouchableOpacity>
-        </View>
-        {/* {media && (
-          <Image source={{ uri: media }} style={{ width: 300, height: 300 }} />
-        )} */}
+          <View className="elevation-sm p-2">
+            <TouchableOpacity onPress={pickImages} className="w-[110px]">
+              <View className="flex-row items-start justify-between rounded-md bg-neutral-100 p-2">
+                <View className="justify-start ">
+                  <Icon name="add_image" size={24} />
+                  <AppText variant={"xs"}>Photo/Video</AppText>
+                </View>
+                <Icon name="plus" size={18} />
+              </View>
+            </TouchableOpacity>
+          </View>
 
-        {media.length > 0 && (
-          <Pressable onPress={() => setMedia([])}>
-            <AppText>Remove all</AppText>
-          </Pressable>
-        )}
-        <FlatList
-          horizontal
-          data={media}
-          // keyExtractor={(item: LocalMedia, index: number) => index}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ gap: 10, paddingVertical: 10 }}
-          renderItem={({ item }) => (
-            <View style={{ position: "relative" }}>
-              <Image
-                source={{ uri: item.uri }}
-                style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: 12
-                }}
-              />
-
-              {/* delete button */}
-              <Pressable
-                onPress={() => removeImage(item.id as string)}
-                hitSlop={10}
-                style={{
-                  position: "absolute",
-                  top: 6,
-                  right: 6,
-                  width: 24,
-                  height: 24,
-                  borderRadius: 12,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "rgba(0,0,0,0.6)"
-                }}
-              >
-                <AppText style={{ color: "white", fontSize: 14 }}>✕</AppText>
-              </Pressable>
-            </View>
+          {media.length > 0 && (
+            <Pressable onPress={() => setMedia([])} className="justify-end">
+              <AppText variant={"small"} className="text-right text-error">
+                Remove all
+              </AppText>
+            </Pressable>
           )}
-        />
+          <FlatList
+            horizontal
+            data={media}
+            // keyExtractor={(item: LocalMedia, index: number) => index}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              gap: 10,
+              paddingVertical: 10
+            }}
+            renderItem={({ item }) => (
+              <View style={{ position: "relative" }}>
+                <Image
+                  source={{ uri: item.uri }}
+                  style={{
+                    width: 90,
+                    height: 90,
+                    borderRadius: 12
+                  }}
+                />
+
+                {/* delete button */}
+                <Pressable
+                  onPress={() => removeImage(item.id as string)}
+                  hitSlop={10}
+                  style={{
+                    position: "absolute",
+                    top: 6,
+                    right: 6,
+                    width: 24,
+                    height: 24,
+                    borderRadius: 12,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "rgba(0,0,0,0.6)"
+                  }}
+                >
+                  <AppText style={{ color: "white", fontSize: 14 }}>✕</AppText>
+                </Pressable>
+              </View>
+            )}
+          />
+        </View>
       </View>
     </ScrollView>
   );

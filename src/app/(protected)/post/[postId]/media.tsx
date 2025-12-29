@@ -54,8 +54,10 @@ export default function media() {
         data={media}
         keyExtractor={(item, index) => item.url || index.toString()}
         renderItem={({ item }) => {
-          // const aspectRatio =
-          // item.width && item.height ? item.width / item.height : 2 / 3;
+          const aspectRatio =
+            item.width && item.height
+              ? (item.width / item.height) * 1.1
+              : 2 / 3;
 
           return (
             <Image
@@ -63,9 +65,9 @@ export default function media() {
               style={{
                 width: screenWidth,
                 height: screenWidth,
-                aspectRatio: 2 / 3
+                aspectRatio: aspectRatio
               }}
-              contentFit="fill"
+              contentFit="contain"
               contentPosition="center"
             />
           );

@@ -71,6 +71,7 @@ export default function CommentInput({
           onPress={submit}
           disabled={isSending || !text.trim()}
           style={s.send}
+          className="disabled:bg-neutral-200"
         >
           {isSending ? (
             <ActivityIndicator size={"small"} />
@@ -111,10 +112,12 @@ const s = StyleSheet.create({
     paddingHorizontal: 12
   },
   send: {
-    height: hp(5.3),
+    height: 45,
+    width: 45,
     justifyContent: "center",
+    alignItems: "center",
     backgroundColor: appColors.primary,
-    borderRadius: 12,
+    borderRadius: 50,
     paddingHorizontal: 8
   }
 });

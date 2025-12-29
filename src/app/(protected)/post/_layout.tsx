@@ -24,7 +24,6 @@ export default function _PostLayout() {
         name="[postId]/media"
         options={{
           animation: "none",
-          presentation: "fullScreenModal",
           headerShadowVisible: false,
           headerTitle: "",
           headerStyle: { backgroundColor: appColors.text },

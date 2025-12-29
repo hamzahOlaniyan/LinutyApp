@@ -34,15 +34,15 @@ export default function PostOptions({
     { title: "report", icon: <Icon name="report" size={30} /> }
   ];
   const ownerPostOptions = [
-    { title: "save", icon: <Icon name="bookmark" size={30} /> },
+    { title: "save", icon: <Icon name="bookmark" size={28} /> },
     {
       title: "edit",
-      icon: <Icon name="edit" size={30} />,
+      icon: <Icon name="edit" size={28} />,
       action: () => router.push(`/(protected)/post/${postId}`)
     },
     {
       title: "delete",
-      icon: <Icon size={30} name="deleteTrash" />,
+      icon: <Icon size={28} name="deleteTrash" color={appColors.error} />,
       action: () => handleDelete()
     }
   ];
@@ -90,9 +90,7 @@ export default function PostOptions({
           {postOptions.map((n, i) => (
             <TouchableOpacity key={i} className="flex-row items-center gap-4">
               {n.icon}
-              <AppText variant={"title"} className="font-Regular capitalize">
-                {n.title}
-              </AppText>
+              <AppText className="font-Regular capitalize">{n.title}</AppText>
             </TouchableOpacity>
           ))}
         </>
@@ -106,7 +104,6 @@ export default function PostOptions({
             >
               {n.icon}
               <AppText
-                variant={"title"}
                 className="capitalize"
                 color={n.title === "delete" ? appColors.error : appColors.text}
               >

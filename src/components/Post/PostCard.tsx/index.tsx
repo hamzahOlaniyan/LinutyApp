@@ -122,6 +122,7 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
               keyExtractor={(item, index) => item.url || index.toString()}
               renderItem={({ item }) => (
                 <TouchableOpacity
+                  activeOpacity={0.8}
                   key={item.id}
                   onPress={() =>
                     router.push(`/(protected)/post/${post.id}/media`)
