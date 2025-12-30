@@ -35,7 +35,7 @@ export type LocalMedia = {
 
 export default function Create_post() {
   const { me } = useAuthStore();
-  const createPostMutation = PostApi.useCreatePost();
+  const createPostMutation = PostApi.createPost();
 
   const [content, setContent] = useState("");
   const [media, setMedia] = useState<LocalMedia[]>([]);

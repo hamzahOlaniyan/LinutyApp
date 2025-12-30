@@ -55,8 +55,8 @@ export default function PostIdScreen() {
   const { data: postData } = PostApi.useGetPostById(postId ?? "");
   const { data: mediaFiles } = PostApi.getPostMedia(postId ?? "");
 
-  const updateContent = PostApi.useUpdatePostContent(postId ?? "");
-  const addMedia = PostApi.useAddPostMedia(postId ?? "");
+  const updateContent = PostApi.updatePostContent(postId ?? "");
+  const addMedia = PostApi.addPostMedia(postId ?? "");
 
   const [post, setPost] = useState<PostResponse | null>(null);
   const [media, setMedia] = useState<EditableMedia[]>([]);

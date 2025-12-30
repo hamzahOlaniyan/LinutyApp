@@ -24,7 +24,7 @@ export default function PostOptions({
 }) {
   const router = useRouter();
 
-  const deletePost = PostApi.useDeletePost(postId);
+  const deletePost = PostApi.deletePost(postId);
 
   const postOptions: PostOptionsType[] = [
     { title: "save", icon: <Icon name="bookmark" size={30} /> },

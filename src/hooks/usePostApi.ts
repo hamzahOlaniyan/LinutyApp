@@ -33,18 +33,19 @@ type ReactToPostResponse =
 };
 
 
-export class PostApi {
+export const PostApi =  {
+  
 
-  static useGetPostById = (postId: string) => {
+  useGetPostById (postId: string){
     const { session } = useAuthStore();
     const accessToken = session?.access_token; 
     const { data, isLoading, error, isFetching, refetch, }= useApiQuery<PostResponse>(`/post/${postId}`,{enabled: !!accessToken}
     );
     return { isLoading, data, error, isFetching, refetch, };
-  };
+  },
 
 
-  static useCreatePost =  () => {
+  createPost(){
     const qc = useQueryClient();
       return useApiMutation<PostInput>("post", "/post", {
         onSuccess: res => {
@@ -61,31 +62,24 @@ export class PostApi {
           qc.invalidateQueries({ queryKey: ["/feed"] });
         }
       });
-  };
+  },
 
 
-  static useUpdatePostContent = (postId: string) =>
-    useApiMutation<PostResponse, { content: string | null }>(
-      "patch",
-      `/post/${postId}`
-    );
+  updatePostContent(postId: string){
+    return useApiMutation<PostResponse, { content: string | null }>(
+       "patch",
+       `/post/${postId}`
+     )
+  },
 
-  static useAddPostMedia = (postId: string) =>
-    useApiMutation<MediaFile[], AddMediaPayload>(
-      "post",
-      `/post/${postId}/media`
-    );
+  addPostMedia(postId: string){
+     return useApiMutation<MediaFile[], AddMediaPayload>(
+       "post",
+       `/post/${postId}/media`
+     )
+  },
 
-  // 3) DELETE media
-  // static useDeleteMedia = () => {
-  //   useApiMutation<void, { mediaId: string }>(
-  //     "delete",
-  //     ({ mediaId }) => `/media/${mediaId}` // if your mutation supports route as fn
-  //   );
-  // }
-  
-
-  static useDeletePost =  (postId: string) => {
+  deletePost(postId: string){
     const qc = useQueryClient();
       return useApiMutation<{ message: string }, void>(
         "delete",
@@ -101,13 +95,13 @@ export class PostApi {
           }
         }
       );
-  };
+  },
 
-  static useMyPostReactionQuery =  (postId: string) => {
+  getMyReaction(postId: string){
     return useApiQuery<MyReactionResponse>(`/post/${postId}/reactions/me`);
-  };
+  },
 
-  static usePostReactionMutation =  (postId: string) => {
+  addReaction(postId: string){
     return useApiMutation<ReactToPostResponse, ReactToPostParams>(
       "post",
       `/post/${postId}/reactions`,
@@ -119,13 +113,13 @@ export class PostApi {
         ]
       }
     );
-  };
+  },
 
-  static getPostMedia = (postId:string)=>{
+   getPostMedia(postId:string){
     const { session } = useAuthStore();
     const accessToken = session?.access_token; 
     const { data, isLoading,  refetch, error , isFetching}= useApiQuery<MediaFile[]>(`/post/${postId}/media`,undefined,{enabled:!!accessToken && !!postId});
     return{data,isLoading, refetch, error, isFetching}
   }
-}
+} as const
  

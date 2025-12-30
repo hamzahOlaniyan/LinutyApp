@@ -20,8 +20,8 @@ import { PostCardProps, PostComment, ReplyingTo } from "../type";
 
 export default function PostAction({ post }: PostCardProps) {
   const { data } = useCommentQuery(post?.id);
-  const reactMutation = PostApi.usePostReactionMutation(post.id);
-  const { data: myReaction } = PostApi.useMyPostReactionQuery(post.id);
+  const { data: myReaction } = PostApi.getMyReaction(post.id);
+  const reactMutation = PostApi.addReaction(post.id);
   const addComment = useAddComment(post.id);
 
   const [comments, setComments] = useState(data?.data);
