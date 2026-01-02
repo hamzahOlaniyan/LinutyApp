@@ -18,7 +18,11 @@ import PostAction from "../PostAction";
 import PostHeader from "../PostHeader";
 import { PostCardProps } from "../type";
 
-const PostCard = memo(function PostCard({ post }: PostCardProps) {
+const PostCard = memo(function PostCard({
+  post,
+  onOpenComments,
+  commentCount
+}: PostCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [readmore, setReadMore] = useState(false);
 
@@ -157,7 +161,11 @@ const PostCard = memo(function PostCard({ post }: PostCardProps) {
         )}
       </View>
       {/* ACTIONS */}
-      <PostAction post={post} />
+      <PostAction
+        post={post}
+        onOpenComments={onOpenComments}
+        commentCount={commentCount}
+      />
     </View>
   );
 });

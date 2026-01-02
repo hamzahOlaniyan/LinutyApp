@@ -10,26 +10,23 @@ export type CommentEnvelope = {
 };
 
 
-export const useCommentQuery = (postId:string) => {
+export const usePostComments = (postId: string) => {
   const { session } = useAuthStore();
+  const accessToken = session?.access_token;
 
-  const accessToken = session?.access_token; 
-
-  const { data, isLoading, error, isFetching, refetch, } = useApiQuery<CommentEnvelope>(
+  return useApiQuery<CommentEnvelope>(
     `/post/${postId}/comment`,
-  { limit: 20 },
-
+   undefined,
     {
-      retry: (failureCount, error) => {
-        if (error?.response?.status === 401) return false;
-        return failureCount < 2;
-      },
-      staleTime: 0,
-      enabled: !!accessToken,
-      refetchOnMount: "always",
-      refetchOnReconnect: true,
-      refetchOnWindowFocus: true,
+      // retry: (failureCount, error) => {
+      //   if (error?.response?.status === 401) return false;
+      //   return failureCount < 2;
+      // },
+      // staleTime: 0,
+      enabled: !!accessToken && !!postId, // ✅ IMPORTANT
+      // refetchOnMount: "always",
+      // refetchOnReconnect: true,
+      // refetchOnWindowFocus: true
     }
   );
-  return { isLoading, data, error, isFetching, refetch, };
 };

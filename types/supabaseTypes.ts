@@ -27,6 +27,9 @@ export type  ProductCondition = Database["public"]['Enums']["ProductCondition"]
 export type  ProductAvailabilty = Database["public"]['Enums']['Available']
 export type  ProductStatus= Database["public"]['Enums']["ListingStatus"]
 
+export type  NotificationsType = Database["public"]["Tables"]["Notification"]["Row"]
+
+
 
 
 

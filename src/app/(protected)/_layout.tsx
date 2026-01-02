@@ -1,23 +1,26 @@
 import Icon from "@/icons";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Redirect, Stack, useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 
 export default function _ProtectedLayout() {
   const router = useRouter();
-  const session = useAuthStore(s => s.session);
+  // const session = useAuthStore(s => s.session);
   const initialized = useAuthStore(s => s.initialized);
-  const me = useAuthStore(s => s.me);
+  // const me = useAuthStore(s => s.me);
 
-  const hasCompletedRegistration = !!me?.isProfileComplete;
+  // const hasCompletedRegistration = !!me?.isProfileComplete;
 
   if (!initialized) return null;
 
-  if (session && !hasCompletedRegistration)
-    return <Redirect href="/onboarding-flow" />;
+  // if (session && !hasCompletedRegistration) {
+  //   return <Redirect href="/onboarding-flow" />;
+  // }
 
-  if (!session && !hasCompletedRegistration) return <Redirect href="/auth" />;
+  // if (!session && !hasCompletedRegistration) return <Redirect href="/auth" />;
+
+  // if (session && me) return <Redirect href="/(protected)/(tabs)/(home)" />;
 
   return (
     <Stack
@@ -36,7 +39,7 @@ export default function _ProtectedLayout() {
         options={{ headerShown: false, animation: "none" }}
       />
       <Stack.Screen
-        name="user/[id]"
+        name="profile/[id]"
         options={{ title: "user", headerShown: false }}
       />
 

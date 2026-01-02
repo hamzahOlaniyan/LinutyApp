@@ -19,12 +19,10 @@ export type PostCardProps = {
   post: FeedPost;
   likeCount?: number;
   commentCount?:number;
+  commentId?:string
+  onOpenComments?: (postId: string) => void;
+
 };
-
-// export type PostCardProps = {
-//   post: FeedPost;
-// };
-
 
 export type FeedAuthor = {
   id: string;
@@ -83,6 +81,11 @@ export type Author = {
   lastName?: string | null;
   avatarUrl?: string | null;
 };
+
+export type PostShortInfo = {
+  id:string,
+  content:string
+}
 
 // export type CommentResponse = {
 //   id: string;

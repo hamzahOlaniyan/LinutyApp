@@ -1,11 +1,8 @@
 import { PostComment, ReplyingTo } from "@/components/Post/type";
 import { appColors } from "@/constant/colors";
-import { displayName, toPng } from "@/constant/common";
-import {
-  useCommentRepliesQuery,
-  useMyCommentReactionQuery,
-  useReactToComment
-} from "@/hooks/usePostCommentQuery";
+import { toPng } from "@/constant/common";
+
+import { CommentApi } from "@/hooks/useCommentApi";
 import Icon from "@/icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -23,12 +20,12 @@ export default memo(function CommentCard({
   postId
 }: {
   comment: PostComment;
-  setReplyTo: (value: ReplyingTo) => void | null;
-  postId?: string;
+  setReplyTo?: (value: ReplyingTo) => void | null;
+  postId?: string | null;
 }) {
-  const { data } = useCommentRepliesQuery(comment?.id);
-  const reactToComment = useReactToComment(postId ?? "", comment?.id);
-  const { data: myReaction } = useMyCommentReactionQuery(comment?.id);
+  const { data: commentReplies } = CommentApi.getReplies(comment?.id);
+  const reactToComment = CommentApi.reactToComment(postId ?? "", comment?.id);
+  const { data: myReaction } = CommentApi.getMyReaction(comment?.id);
 
   const [likes, setLikes] = useState<{ count: number; liked: boolean }>({
     count: Number(comment?.likeCount ?? 0),
@@ -44,14 +41,14 @@ export default memo(function CommentCard({
     setLikes(prev => ({ ...prev, liked: myReaction.liked }));
   }, [myReaction?.liked]);
 
-  const [replies, setReplies] = useState(data?.data);
+  const [replies, setReplies] = useState(commentReplies?.data);
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    if (data) {
-      setReplies(data?.data);
+    if (commentReplies) {
+      setReplies(commentReplies?.data);
     }
-  }, [data]);
+  }, [commentReplies]);
 
   const handleLike = () => {
     // optimistic
@@ -75,11 +72,16 @@ export default memo(function CommentCard({
   };
 
   const replyCount = replies?.length ?? 0;
-  // const likeCount = comment?.likeCount ?? 0;
 
-  const name = useMemo(() => displayName(comment?.author), [comment?.author]);
-
-  // console.log(JSON.stringify(comment, null, 2));
+  const name = useMemo(
+    () => (
+      <AppText
+        variant={"small"}
+        className="flex-1 font-SemiBold capitalize"
+      >{`${comment.author.firstName} ${comment.author.lastName}`}</AppText>
+    ),
+    [comment?.author.firstName, comment.author.lastName]
+  );
 
   return (
     <View className="flex-row gap-2">
@@ -88,7 +90,7 @@ export default memo(function CommentCard({
         <View className="">
           <View className="gap-2">
             <View>
-              <View className="flex-row  items-center justify-between gap-1">
+              <View className="flex-row items-center justify-between gap-1 font-Medium">
                 {name}
                 <Pressable>
                   <Icon name="threeDots" color={appColors.icon} size={20} />
@@ -107,14 +109,14 @@ export default memo(function CommentCard({
           {/* actions */}
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center gap-4">
-              <AppText variant={"small"} color={appColors.placeholder}>
+              <AppText variant={"xs"} color={appColors.placeholder}>
                 {dayjs(comment?.created_at).fromNow(true)} |
               </AppText>
 
               <TouchableOpacity
                 className="my-2 flex-row items-center gap-1"
                 onPress={() =>
-                  setReplyTo({
+                  setReplyTo?.({
                     parentCommentId: comment?.id ?? null,
                     name: `${comment.author.firstName} ${comment.author.lastName}`
                   })
@@ -167,7 +169,9 @@ export default memo(function CommentCard({
           </View>
         )}
         {expanded &&
-          replies?.map(reply => <ReplyRow key={reply.id} reply={reply} />)}
+          replies?.map(reply => (
+            <ReplyRow key={reply.id} reply={reply} postId={postId ?? ""} />
+          ))}
       </View>
     </View>
   );

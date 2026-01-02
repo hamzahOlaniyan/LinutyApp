@@ -44,6 +44,14 @@ export const PostApi =  {
     return { isLoading, data, error, isFetching, refetch, };
   },
 
+  getPostCreator(postId:string){
+     const { session } = useAuthStore();
+    const accessToken = session?.access_token; 
+    const { data, isLoading, error, isFetching, refetch, }= useApiQuery<{profileId:string}>(`/post/${postId}/creatorId`,{enabled: !!accessToken}
+    );
+    return { isLoading, data, error, isFetching, refetch, };
+  },
+
 
   createPost(){
     const qc = useQueryClient();

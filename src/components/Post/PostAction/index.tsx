@@ -1,45 +1,28 @@
-import CommentCard from "@/components/Comments/CommentCard";
-import CommentInput from "@/components/Comments/CommentInput";
 import AppText from "@/components/ui/AppText";
-import ScreenView from "@/components/ui/Layout/ScreenView";
-import { ModalBottomSheet } from "@/components/ui/ModalBottomSheet";
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
-import { useCommentQuery } from "@/hooks/useCommentQuery";
 import { PostApi } from "@/hooks/usePostApi";
-import { useAddComment } from "@/hooks/usePostCommentQuery";
 import Icon from "@/icons";
-import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { Portal } from "@gorhom/portal";
 import { useRouter } from "expo-router";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PostInfo from "../PostInfo";
-import { PostCardProps, PostComment, ReplyingTo } from "../type";
+import { PostCardProps } from "../type";
 
-export default function PostAction({ post }: PostCardProps) {
-  const { data } = useCommentQuery(post?.id);
+export default function PostAction({
+  post,
+  onOpenComments,
+  commentCount
+}: PostCardProps) {
   const { data: myReaction } = PostApi.getMyReaction(post.id);
   const reactMutation = PostApi.addReaction(post.id);
-  const addComment = useAddComment(post.id);
 
-  const [comments, setComments] = useState(data?.data);
+  const router = useRouter();
+
   const [likes, setLikes] = useState<{ count: number; liked: boolean }>({
     count: post.likeCount ?? 0,
     liked: false
   });
-  const [replyTo, setReplyTo] = useState<ReplyingTo>(null);
-
-  // console.log(JSON.stringify(post, null, 2));
-
-  const { bottom } = useSafeAreaInsets();
-
-  useEffect(() => {
-    if (data) {
-      setComments(data?.data);
-    }
-  }, [data]);
 
   useEffect(() => {
     setLikes(prev => ({ ...prev, count: post.likeCount ?? 0 }));
@@ -70,51 +53,13 @@ export default function PostAction({ post }: PostCardProps) {
     );
   };
 
-  const onSend = useCallback(
-    (content: string) => {
-      // console.log({ content, parentCommentId: replyTo?.parentCommentId });
-
-      addComment.mutate(
-        {
-          content,
-          parentCommentId: replyTo?.parentCommentId
-        },
-        {
-          onSuccess: async () => {
-            console.log("✅ comment addes");
-          },
-
-          onError: async error =>
-            console.log("❌ something when wrong", error.message)
-        }
-      );
-      setReplyTo(null);
-    },
-    [addComment, replyTo]
-  );
-
-  const onCancel = () => {
-    setReplyTo(null);
-  };
-
-  const router = useRouter();
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const handleOpenSheet = () => bottomSheetRef.current?.expand();
-
-  const renderItem = useCallback(
-    ({ item }: { item: PostComment }) => (
-      <CommentCard comment={item} setReplyTo={setReplyTo} postId={post.id} />
-    ),
-    []
-  );
-
   return (
     <>
       <View style={s.container}>
         <PostInfo
           post={post}
           likeCount={likes?.count}
-          commentCount={post?._count?.comments}
+          commentCount={commentCount}
         />
         <View style={s.actions}>
           <Pressable hitSlop={8} style={s.button} onPress={handleLike}>
@@ -123,7 +68,7 @@ export default function PostAction({ post }: PostCardProps) {
           </Pressable>
 
           <Pressable
-            onPress={() => handleOpenSheet()}
+            onPress={() => onOpenComments?.(post.id ?? "")}
             hitSlop={8}
             accessibilityLabel="View comments"
             style={s.button}
@@ -148,43 +93,6 @@ export default function PostAction({ post }: PostCardProps) {
           </Pressable>
         </View>
       </View>
-      <Portal hostName="root">
-        <ModalBottomSheet
-          ref={bottomSheetRef}
-          title={`${post?._count?.comments ?? 0} Comments`}
-          children={
-            <View style={{ marginBottom: bottom, flex: 1 }}>
-              <ScreenView>
-                {comments?.length === 0 ? (
-                  <AppText variant={"title"}>be the first to comment</AppText>
-                ) : (
-                  <BottomSheetFlatList
-                    data={comments}
-                    renderItem={renderItem}
-                    showsHorizontalScrollIndicator={false}
-                    showsVerticalScrollIndicator={false}
-                    scrollEventThrottle={4}
-                    contentContainerStyle={s.contentContainer}
-                  />
-                )}
-              </ScreenView>
-              <CommentInput
-                onSend={onSend}
-                replyingTo={replyTo}
-                onCancelReply={onCancel}
-              />
-            </View>
-
-            // <CommentsList
-            //   postAuthorId={post?.author?.id ?? ""}
-            //   comments={comments ?? []}
-            //   loading={isLoading}
-            //   count={post?._count?.comments ?? null}
-            //   postId={post.id}
-            // />
-          }
-        />
-      </Portal>
     </>
   );
 }
@@ -204,9 +112,5 @@ const s = StyleSheet.create({
     gap: 3,
     alignItems: "center",
     height: "100%"
-  },
-  contentContainer: {
-    paddingBottom: 50,
-    gap: 20
   }
 });

@@ -18,13 +18,13 @@ import {
 export default function CommentInput({
   onSend,
   onCancelReply,
-  isSending,
-  replyingTo
+  replyingTo,
+  loading
 }: {
   replyingTo: ReplyingTo;
   onCancelReply: () => void;
   onSend: (content: string) => void;
-  isSending?: boolean;
+  loading: boolean;
 }) {
   const { me } = useAuthStore();
   const [text, setText] = useState("");
@@ -48,12 +48,15 @@ export default function CommentInput({
     <View>
       {replyingTo ? (
         <View style={s.reply}>
-          <AppText variant={"small"} className="font-Medium">
-            @{replyingTo.name}
-          </AppText>
-          <Pressable hitSlop={10} onPress={onCancelReply}>
-            <Icon name={"close"} />
-          </Pressable>
+          <View className="flex-1 flex-row items-center gap-2">
+            <AppText variant={"xs"}>reply to:</AppText>
+            <AppText variant={"xs"} className="font-Medium capitalize">
+              @{replyingTo.name}
+            </AppText>
+            <Pressable hitSlop={10} onPress={onCancelReply}>
+              <Icon name={"close"} />
+            </Pressable>
+          </View>
         </View>
       ) : null}
       <View style={s.inputContainer}>
@@ -63,17 +66,16 @@ export default function CommentInput({
           onChangeText={setText}
           placeholder="Write a comment…"
           multiline
-          autoFocus
           style={s.input}
         />
 
         <Pressable
           onPress={submit}
-          disabled={isSending || !text.trim()}
+          disabled={loading || !text.trim()}
           style={s.send}
           className="disabled:bg-neutral-200"
         >
-          {isSending ? (
+          {loading ? (
             <ActivityIndicator size={"small"} />
           ) : (
             <Icon name="chevronforward" color={appColors.white} size={28} />
@@ -89,10 +91,8 @@ const s = StyleSheet.create({
     paddingHorizontal: wp(3),
     backgroundColor: appColors.background,
     flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    paddingVertical: 6
+    alignItems: "center",
+    paddingVertical: 12
   },
   inputContainer: {
     paddingHorizontal: wp(3),
