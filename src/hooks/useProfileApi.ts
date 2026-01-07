@@ -95,4 +95,12 @@ export class ProfileApi {
         `/profile/complete-registration`
       );
 
+  static getPostsByProfileId(profileId:string){
+    const { session } = useAuthStore();
+    const accessToken = session?.access_token; 
+    const { data, isLoading, error, isFetching, refetch, }= useApiQuery<FeedPost[]>(`/profile/post/${profileId}`,{enabled: !!accessToken && !!profileId}
+    );
+  return { isLoading, data, error, isFetching, refetch, };
+  }
+
 }

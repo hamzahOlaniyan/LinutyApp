@@ -31,32 +31,35 @@ import { twMerge } from "tailwind-merge";
  * @returns {JSX.Element} A styled React Native `Text` element.
  */
 
-const textVariants = cva("font-Regular text-text disabled:text-neutral-400", {
-  variants: {
-    variant: {
-      headerLarge: "font-Bold",
-      header: "font-SemiBold",
-      titleLarge: "",
-      titleMed: "",
-      title: "font-SemiBold",
-      body: "font-Regular",
-      medium: "",
-      small: "",
-      xs: "",
-      profile_name: "font-Bold",
-      post_name: "font-SemiBold",
-      post_username: "text-placeholder",
-      post_content: "",
-      post_info: "text-placeholder",
-      post_date: "text-placeholder",
-      post_action: "",
-      post_visability: "text-placeholder"
+const textVariants = cva(
+  "font-Regular text-text disabled:text-neutral-400 tracking-tighter",
+  {
+    variants: {
+      variant: {
+        headerLarge: "font-Bold",
+        header: "font-SemiBold",
+        titleLarge: "",
+        titleMed: "",
+        title: "font-SemiBold",
+        body: "font-Regular",
+        medium: "",
+        small: "",
+        xs: "",
+        profile_name: "font-Bold",
+        post_name: "font-SemiBold ",
+        post_username: "text-placeholder",
+        post_content: "",
+        post_info: "text-placeholder",
+        post_date: "text-placeholder",
+        post_action: "",
+        post_visability: "text-placeholder"
+      }
+    },
+    defaultVariants: {
+      variant: "body"
     }
-  },
-  defaultVariants: {
-    variant: "body"
   }
-});
+);
 
 export type CustomTextProps = RNTextProps &
   VariantProps<typeof textVariants> & {
@@ -93,7 +96,7 @@ const variantFontSizes: Record<VariantName, number> = {
   titleLarge: hp(2.3),
   titleMed: hp(2),
   title: hp(1.9),
-  body: hp(1.7),
+  body: hp(1.75),
   medium: hp(1.7),
   small: hp(1.6),
   xs: hp(1.4),

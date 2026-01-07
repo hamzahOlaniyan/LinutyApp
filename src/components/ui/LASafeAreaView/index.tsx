@@ -5,14 +5,16 @@ import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LASafeAreaView({
-  children
+  children,
+  padding
 }: {
   children: React.ReactNode;
+  padding?: boolean;
 }) {
   return (
     <SafeAreaView
       style={{
-        paddingHorizontal: wp(3),
+        paddingHorizontal: padding ? wp(3) : 0,
         backgroundColor: appColors.white,
         flex: 1,
         justifyContent: "center"

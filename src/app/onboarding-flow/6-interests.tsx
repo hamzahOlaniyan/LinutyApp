@@ -63,7 +63,7 @@ export default function Step6_3() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{
-          paddingHorizontal: wp(4),
+          paddingHorizontal: wp(3),
           marginBottom: bottom,
           backgroundColor: appColors.white
         }}

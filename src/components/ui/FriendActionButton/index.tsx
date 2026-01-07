@@ -2,13 +2,13 @@ import { FriendsApi } from "@/hooks/useFriendsHook";
 import { FriendStatus, ProfileRowItem } from "@/hooks/useProfileApi";
 import type { InfiniteData } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
+import { cva } from "class-variance-authority";
 import {
   ActivityIndicator,
-  StyleProp,
-  TouchableOpacity,
-  ViewStyle
+  TouchableOpacity as RNTouchableOpacity
 } from "react-native";
 import AppText from "../AppText";
+import { FriendActionButtonProps } from "./type";
 
 export type ExploreProfilesPage = {
   items: ProfileRowItem[];
@@ -21,13 +21,47 @@ export type ExploreProfilesPage = {
 //   | "PENDING_INCOMING"
 //   | "FRIENDS";
 
+export const buttonVariants = cva(
+  "p-2 rounded-full justify-center items-center",
+  {
+    variants: {
+      variant: {
+        profile: "bg-primary text-white font-Medium text-xl",
+        search: "bg-yellow-300 border "
+      }
+    },
+    defaultVariants: {
+      variant: "search"
+    }
+  }
+);
+
+const buttonTextVariants = cva("font-Medium text-lg", {
+  variants: {
+    variant: {
+      profile: "text-white",
+      search: "text-blue-500" // or different
+    }
+  },
+  defaultVariants: { variant: "search" }
+});
+
+// export type CustomButtonProps = TouchableOpacityProps &
+//   VariantProps<typeof buttonVariants> & {
+//     children?: React.ReactNode;
+//     color?: string;
+//     onPress?: () => void;
+//   };
+
 export function FriendActionButton({
   item,
-  style
-}: {
-  item: ProfileRowItem;
-  style?: StyleProp<ViewStyle>;
-}) {
+  style,
+  variant,
+  // className,
+  // children,
+  // color,
+  ...props
+}: FriendActionButtonProps) {
   const qc = useQueryClient();
 
   const sendReq = FriendsApi.useSendRequest(item.id);
@@ -115,24 +149,19 @@ export function FriendActionButton({
           ? "Accept"
           : "Friends";
 
+  // const finalClasses = twMerge(ButtonVariants({ buttonVariant }), className);
+
   return (
-    <TouchableOpacity
+    <RNTouchableOpacity
+      {...props}
+      style={[style]}
       disabled={isBusy}
       onPress={onPress}
-      style={[
-        style,
-        {
-          paddingHorizontal: 8,
-          paddingVertical: 8,
-          borderRadius: 10,
-          opacity: isBusy ? 0.6 : 1,
-          borderWidth: 1
-        }
-      ]}
+      className={buttonVariants({ variant })}
     >
-      <AppText variant={"xs"}>
+      <AppText className={buttonTextVariants({ variant })}>
         {isBusy ? <ActivityIndicator size={"small"} /> : label}
       </AppText>
-    </TouchableOpacity>
+    </RNTouchableOpacity>
   );
 }

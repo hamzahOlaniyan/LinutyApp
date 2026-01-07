@@ -26,13 +26,13 @@ describe("AppText", () => {
     expect(text.props.className).toContain("font-Regular");
     expect(text.props.className).toContain("text-text");
 
-    // hp is mocked so body => hp(1.7) === 1.7
+    // hp is mocked so body => hp(1.75) === 1.75
     const styleArray = Array.isArray(text.props.style)
       ? text.props.style
       : [text.props.style];
 
     const style = styleArray[0];
-    expect(style.fontSize).toBe(1.7);
+    expect(style.fontSize).toBe(1.75);
   });
 
   it("applies header variant styles and font size", () => {

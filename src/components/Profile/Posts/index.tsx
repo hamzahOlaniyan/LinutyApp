@@ -3,21 +3,17 @@ import CommentInput from "@/components/Comments/CommentInput";
 import PostCard from "@/components/Post/PostCard.tsx";
 import { FeedPost, PostComment, ReplyingTo } from "@/components/Post/type";
 import AppText from "@/components/ui/AppText";
-import EmptyFeed from "@/components/ui/EmptyFeed";
-import HomeHeaderAction from "@/components/ui/HomeHeaderAction";
 import ScreenView from "@/components/ui/Layout/ScreenView";
 import { ModalBottomSheet } from "@/components/ui/ModalBottomSheet";
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import { CommentApi } from "@/hooks/useCommentApi";
 import { usePostComments } from "@/hooks/useCommentQuery";
-import { useFeedQuery } from "@/hooks/useFeedQuery";
 import BottomSheet, {
   BottomSheetFlatList,
   BottomSheetFlatListMethods
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
-import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -27,104 +23,38 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { PostResponse } from "../../../../types/supabaseTypes";
 
-export default function HomeFeed() {
-  const {
-    postId,
-    openComments: open,
-    commentId
-  } = useLocalSearchParams<{
-    postId?: string;
-    openComments?: string;
-    commentId?: string;
-  }>();
+type ProfilePostsProps = {
+  item: PostResponse[] | undefined;
+};
 
-  const { isLoading, data: postFeed, refetch } = useFeedQuery();
-
-  const [posts, setPosts] = useState<FeedPost[]>([]);
+export default function ProfilePosts({ item }: ProfilePostsProps) {
   const [comments, setComments] = useState<PostComment[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
-  const [initialCommentId, setInitialCommentId] = useState<string | null>(null);
+  // const [initialCommentId, setInitialCommentId] = useState<string | null>(null);
   const [replyTo, setReplyTo] = useState<ReplyingTo>(null);
 
-  const topLevelComments = comments.filter(p => p.parentCommentId == null);
-
-  const {
-    data: commentsEnvelope,
-    isLoading: commentsLoading,
-    refetch: refetchComments
-  } = usePostComments(selectedPostId ?? "");
-
+  const { data: commentsEnvelope, isLoading: commentsLoading } =
+    usePostComments(selectedPostId ?? "");
   const addComment = CommentApi.addComment(selectedPostId ?? "");
-
-  const { top, bottom } = useSafeAreaInsets();
-  const router = useRouter();
-
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const listRef = useRef<FlatList<FeedPost>>(null);
-  const commentsListRef = useRef<BottomSheetFlatListMethods>(null);
-
-  const END_REACHED_THRESHOLD = 0.5;
-
-  useEffect(() => {
-    if (postFeed) setPosts(postFeed?.data ?? []);
-  }, [postFeed]);
 
   useEffect(() => {
     if (commentsEnvelope) setComments(commentsEnvelope?.data ?? []);
   }, [commentsEnvelope]);
 
-  useEffect(() => {
-    if (selectedPostId) refetchComments();
-  }, [selectedPostId]);
+  const { bottom } = useSafeAreaInsets();
 
-  const scrollToPost = useCallback(
-    (pid: string) => {
-      const index = posts.findIndex(p => p.id === pid);
-      if (index < 0) return;
+  const topLevelComments = comments.filter(p => p.parentCommentId == null);
 
-      requestAnimationFrame(() => {
-        listRef.current?.scrollToIndex({ index, animated: true });
-      });
-    },
-    [posts]
-  );
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const commentsListRef = useRef<BottomSheetFlatListMethods>(null);
 
-  const openCommentsSheet = useCallback((pid: string, cid?: string) => {
+  const openCommentsSheet = useCallback((pid: string) => {
     setSelectedPostId(pid);
-    setInitialCommentId(cid ?? null);
-
-    scrollToPost(pid);
-
+    // setInitialCommentId(cid ?? null);
     requestAnimationFrame(() => bottomSheetRef.current?.expand());
   }, []);
-
-  useEffect(() => {
-    if (open !== "true" || !postId) return;
-
-    openCommentsSheet(
-      String(postId),
-      commentId ? String(commentId) : undefined
-    );
-
-    router.setParams({
-      openComments: undefined,
-      postId: undefined,
-      commentId: undefined
-    });
-  }, [open, postId, commentId, openCommentsSheet]);
-
-  useEffect(() => {
-    if (!initialCommentId) return;
-    if (!comments.length) return;
-
-    const idx = comments.findIndex(c => c.id === initialCommentId);
-    if (idx < 0) return;
-
-    setTimeout(() => {
-      commentsListRef.current?.scrollToIndex({ index: idx, animated: true });
-    }, 250);
-  }, [initialCommentId, comments]);
 
   const onSend = useCallback(
     (content: string) => {
@@ -159,7 +89,7 @@ export default function HomeFeed() {
         commentCount={topLevelComments.length}
       />
     ),
-    [openCommentsSheet]
+    []
   );
 
   const renderCommentItem = useCallback(
@@ -174,16 +104,18 @@ export default function HomeFeed() {
   );
 
   return (
-    <View className="flex-1 bg-white">
-      <View style={{ flex: 1, paddingTop: top, backgroundColor: "white" }}>
+    <View
+      style={{ backgroundColor: appColors.background, paddingTop: 0, flex: 1 }}
+    >
+      {item && item.length === 0 ? (
+        <View className="p-4">
+          <AppText>You have no posts</AppText>
+        </View>
+      ) : (
         <FlatList
-          ref={listRef}
-          data={posts}
+          data={item}
           keyExtractor={item => item.id}
           renderItem={renderPostItem}
-          ListHeaderComponent={<HomeHeaderAction />}
-          onRefresh={refetch}
-          refreshing={isLoading}
           bounces
           scrollEnabled
           showsVerticalScrollIndicator={false}
@@ -193,18 +125,11 @@ export default function HomeFeed() {
           initialNumToRender={6}
           maxToRenderPerBatch={6}
           windowSize={7}
-          onEndReachedThreshold={END_REACHED_THRESHOLD}
-          ListEmptyComponent={<EmptyFeed />}
           contentContainerStyle={{
             backgroundColor: appColors.background
           }}
-          ListFooterComponent={
-            isLoading ? (
-              <AppText className="py-4 text-center">Loading…</AppText>
-            ) : null
-          }
         />
-      </View>
+      )}
       <Portal hostName="root">
         <ModalBottomSheet
           ref={bottomSheetRef}

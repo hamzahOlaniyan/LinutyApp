@@ -88,7 +88,7 @@ export default function PostHeader({
           ref={bottomSheetRef}
           snapPoints={["40%"]}
           children={
-            <View style={{ paddingHorizontal: wp(4), flex: 1 }}>
+            <View style={{ paddingHorizontal: wp(3), flex: 1 }}>
               <PostOptions
                 isUserOwner={isUserOwner}
                 postId={postId}

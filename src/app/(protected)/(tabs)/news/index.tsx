@@ -42,7 +42,7 @@ export default function NewsScreen() {
               // onPress={() => setCategory(item)}
             />
           )}
-          contentContainerStyle={{ gap: 10, paddingLeft: wp(4) }}
+          contentContainerStyle={{ gap: 10, paddingLeft: wp(3) }}
         />
       </View>
       {isLoading ? (

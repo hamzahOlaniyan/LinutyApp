@@ -1,33 +1,43 @@
+import { FeedPost } from "@/components/Post/type";
+import ActionButtons from "@/components/Profile/ActionButtons";
+import CoverImage from "@/components/Profile/CoverImage";
+import ProfilePosts from "@/components/Profile/Posts";
+import ProfileName from "@/components/Profile/ProfileName";
+import Stats from "@/components/Profile/Stats";
 import AppText from "@/components/ui/AppText";
 import Avatar from "@/components/ui/Avatar";
-import { FriendActionButton } from "@/components/ui/FriendActionButton";
+import LASafeAreaView from "@/components/ui/LASafeAreaView";
 import ScreenView from "@/components/ui/Layout/ScreenView";
 import StickyTab from "@/components/ui/StickyTab";
 import { appColors } from "@/constant/colors";
-import { hp } from "@/constant/common";
 import {
   FriendStatus,
   ProfileApi,
   ProfileRowItem
 } from "@/hooks/useProfileApi";
-import Icon, { IconName } from "@/icons";
-import { Image } from "expo-image";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 export default function UserProfile() {
   const { id } = useLocalSearchParams<{ id: string }>();
 
+  const { data: POSTS } = ProfileApi.getPostsByProfileId(id ?? "");
   const { data } = ProfileApi.useGetProfileById(id);
 
   const [profile, setProfile] = useState(data);
+  const [posts, setPosts] = useState<FeedPost[]>([]);
+  const [readmore, setReadMore] = useState(false);
+
+  useEffect(() => {
+    if (POSTS) setPosts(POSTS ?? []);
+  }, [POSTS]);
 
   useEffect(() => {
     if (data) setProfile(data);
   }, [data]);
 
-  const name = `${profile?.firstName} ${profile?.lastName}`;
+  const name = `${profile?.firstName.trim()} ${profile?.lastName.trim()}`;
 
   const friendshipItem: ProfileRowItem = {
     id: profile?.id as string,
@@ -39,127 +49,74 @@ export default function UserProfile() {
     requestId: profile?.requestId
   };
 
-  // console.log("profile", JSON.stringify(profile, null, 2));
-
-  const Label = ({
-    label,
-    value,
-    icon = "account"
-  }: {
-    label: string;
-    value: React.ReactNode;
-    icon: IconName;
-  }) => {
-    return (
-      <View className="flex-row gap-2">
-        <Icon name={icon} size={18} />
-        <AppText className="font-Medium capitalize">{label} :</AppText>
-        <AppText className="capitalize">{value}</AppText>
-      </View>
-    );
-  };
+  // const Label = ({
+  //   label,
+  //   value,
+  //   icon = "account"
+  // }: {
+  //   label: string;
+  //   value: React.ReactNode;
+  //   icon: IconName;
+  // }) => {
+  //   return (
+  //     <View className="flex-row gap-2">
+  //       <Icon name={icon} size={18} />
+  //       <AppText className="font-Medium capitalize">{label} :</AppText>
+  //       <AppText className="capitalize">{value}</AppText>
+  //     </View>
+  //   );
+  // };
 
   return (
-    <ScrollView className="flex-1 bg-white pb-20">
-      <Stack.Screen
-        options={{ title: `${profile?.firstName} ${profile?.lastName}` }}
-      />
-      <View style={s.coverContainer}>
-        {profile?.coverUrl && (
-          <Image
-            source={{ uri: profile?.coverUrl }}
-            contentFit="fill"
-            style={{
-              width: "100%",
-              height: "100%"
-            }}
-          />
-        )}
-      </View>
-      <ScreenView>
-        <View className="relative -top-[60px]">
-          <View className="items-center justify-center gap-3">
-            <View className="rounded-full border-[6px] border-white">
-              <Avatar path={profile?.avatarUrl} size={120} />
+    <LASafeAreaView padding={false}>
+      <ScrollView className="flex-1 bg-white">
+        {/* <Stack.Screen
+          options={{
+            title: `${profile?.firstName} ${profile?.lastName}`
+          }}
+        /> */}
+        <CoverImage coverImage={profile?.coverUrl} />
+        <ScreenView>
+          <View className="relative ">
+            <View className="items-center justify-center gap-3">
+              <Avatar
+                path={profile?.avatarUrl}
+                size={120}
+                style={{ borderWidth: 6, borderColor: appColors.white }}
+              />
+              <ProfileName name={name} username={profile?.username} />
+              <Stats friendCount={profile?.friendsCount} />
             </View>
-            <AppText variant={"header"}>{name}</AppText>
-            <AppText variant={"small"} color={appColors.placeholder}>
-              @{profile?.username}
+
+            <AppText className="relative">
+              {!readmore
+                ? `${profile?.bio.substring(0, 120)}...`
+                : profile?.bio}
+              <AppText
+                className="font-Medium"
+                onPress={() => setReadMore(!readmore)}
+              >
+                {readmore ? "  show less" : "  show more"}
+              </AppText>
             </AppText>
-            <View className="my-4 w-full flex-row items-center justify-center gap-6">
-              <View className="items-center justify-center px-6">
-                <AppText variant={"title"}>213</AppText>
-                <AppText variant={"small"} color={appColors.placeholder}>
-                  Posts
-                </AppText>
-              </View>
-              <View className="h-full w-[1px] bg-neutral-300" />
-              <View className="items-center justify-center px-6">
-                <AppText variant={"title"}>{profile?.friendsCount}</AppText>
-                <AppText variant={"small"} color={appColors.placeholder}>
-                  Friends
-                </AppText>
-              </View>
-              <View className="h-full w-[1px] bg-neutral-300 " />
-              <View className="items-center justify-center px-6">
-                <AppText variant={"title"}>231</AppText>
-                <AppText variant={"small"} color={appColors.placeholder}>
-                  Friends
-                </AppText>
-              </View>
-            </View>
+            <ActionButtons friendshipItem={friendshipItem} />
           </View>
-
-          <View className="gap-6">
-            <AppText>{profile?.bio}</AppText>
-            <View className="gap-2">
-              <Label
-                icon="location"
-                label="location"
-                value={`${(profile?.city, profile?.country, profile?.district)}`}
-              />
-              <Label
-                icon="calendar"
-                label="registered since"
-                value={profile?.createdAt}
-              />
-            </View>
-          </View>
-
-          <View className="my-4">
-            <View className="flex-row gap-2 py-6">
-              <FriendActionButton
-                item={friendshipItem}
-                style={{ flex: 1, height: hp(5) }}
-              />
-              <TouchableOpacity className="items-center justify-center rounded-lg bg-neutral-200 px-4">
-                <Icon name="mail" />
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity className="items-center justify-center rounded-lg bg-neutral-200 p-4">
-              <AppText>Visit store</AppText>
-            </TouchableOpacity>
-          </View>
-
-          <StickyTab
-            routes={[
-              { key: "Posts", title: "Posts" },
-              { key: "Pictures", title: "Pictures" }
-            ]}
-            scenes={{
-              Posts: <AppText>Pictures</AppText>,
-              Pictures: <AppText>Info</AppText>
-            }}
-          />
-        </View>
-      </ScreenView>
-    </ScrollView>
+        </ScreenView>
+        <StickyTab
+          routes={[
+            { key: "Posts", title: "Posts" },
+            { key: "Images", title: "Pictures" },
+            { key: "Video", title: "Pictures" },
+            { key: "Info", title: "Details" }
+          ]}
+          scenes={{
+            Posts: <ProfilePosts item={posts} />,
+            Pictures: <AppText>Pictures</AppText>,
+            Info: <AppText>Info</AppText>,
+            Store: <AppText>posStorets</AppText>
+          }}
+        />
+      </ScrollView>
+    </LASafeAreaView>
   );
 }
-
-const s = StyleSheet.create({
-  coverContainer: {
-    height: hp(25),
-    flexDirection: "row"
-  }
-});

@@ -124,7 +124,7 @@ export default function Gender() {
   return (
     <View
       style={{
-        paddingHorizontal: wp(4),
+        paddingHorizontal: wp(3),
         flex: 1,
         backgroundColor: appColors.white
       }}

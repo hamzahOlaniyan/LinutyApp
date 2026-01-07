@@ -52,7 +52,6 @@ export const PostApi =  {
     return { isLoading, data, error, isFetching, refetch, };
   },
 
-
   createPost(){
     const qc = useQueryClient();
       return useApiMutation<PostInput>("post", "/post", {
@@ -71,7 +70,6 @@ export const PostApi =  {
         }
       });
   },
-
 
   updatePostContent(postId: string){
     return useApiMutation<PostResponse, { content: string | null }>(

@@ -14,7 +14,7 @@ export default function ScreenView({
     <View
       style={[
         style,
-        { paddingHorizontal: wp(4), backgroundColor: appColors.white }
+        { paddingHorizontal: wp(3), backgroundColor: appColors.white }
       ]}
       className="flex-1"
     >

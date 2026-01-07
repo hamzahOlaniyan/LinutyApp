@@ -38,7 +38,7 @@ export default function NewDetail() {
       showsVerticalScrollIndicator={false}
       style={{ backgroundColor: appColors.white }}
     >
-      <View style={{ paddingHorizontal: wp(4), gap: 4 }}>
+      <View style={{ paddingHorizontal: wp(3), gap: 4 }}>
         <View className="flex-row justify-between">
           <AppText color={appColors.placeholder}>{item?.category}</AppText>
           <AppText color={appColors.placeholder}>
@@ -60,7 +60,7 @@ export default function NewDetail() {
         }}
         contentFit="cover"
       />
-      <View style={{ paddingHorizontal: wp(4), gap: 8, paddingBottom: 100 }}>
+      <View style={{ paddingHorizontal: wp(3), gap: 8, paddingBottom: 100 }}>
         <View className=" flex-1 justify-between">
           <View className="flex-row gap-1">
             <AppText>Written by:</AppText>

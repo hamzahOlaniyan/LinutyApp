@@ -27,11 +27,9 @@ export default function Avatar({
 
 const styles = StyleSheet.create({
   avatar: {
-    backgroundColor: "orange",
     borderRadius: 200,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden"
-  },
-  image: {}
+  }
 });

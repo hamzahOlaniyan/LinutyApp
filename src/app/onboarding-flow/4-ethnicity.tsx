@@ -110,7 +110,7 @@ export default function EthnicityScreen() {
 
   return (
     <ScrollView
-      style={{ paddingHorizontal: wp(4), backgroundColor: appColors.white }}
+      style={{ paddingHorizontal: wp(3), backgroundColor: appColors.white }}
     >
       <StepContainer
         heading="What is your lineage"
