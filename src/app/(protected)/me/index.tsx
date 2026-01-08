@@ -1,18 +1,28 @@
 import Info from "@/components/Me/Info";
+import { FeedPost } from "@/components/Post/type";
+import ProfilePosts from "@/components/Profile/Posts";
 import AppText from "@/components/ui/AppText";
 import StickyTab from "@/components/ui/StickyTab";
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
+import { ProfileApi } from "@/hooks/useProfileApi";
 import Icon from "@/icons";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Image } from "expo-image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Me() {
   const { me } = useAuthStore();
   const { bottom } = useSafeAreaInsets();
+
+  const { data: POSTS } = ProfileApi.getPostsByProfileId(me?.id ?? "");
+  const [posts, setPosts] = useState<FeedPost[]>([]);
+
+  useEffect(() => {
+    if (POSTS) setPosts(POSTS ?? []);
+  }, [POSTS]);
 
   return (
     <ScrollView
@@ -60,20 +70,7 @@ export default function Me() {
             { key: "Store", title: "Your store" }
           ]}
           scenes={{
-            Posts: (
-              <ScrollView scrollEnabled>
-                <AppText>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Beatae magni sed voluptate blanditiis quis provident saepe
-                  consequuntur magni sed voluptate blanditiis quis provident
-                  saepe consequuntur magni sed voluptate blanditiis quis
-                  provident saepe consequuntur magni sed voluptate blanditiis
-                  quis provident saepe consequuntur magni sed voluptate
-                  blanditiis quis provident saepe consequuntur magni sed
-                  voluptate blanditiis quis provident saepe consequuntur magni
-                </AppText>
-              </ScrollView>
-            ),
+            Posts: <ProfilePosts item={posts} />,
             Pictures: <AppText>Pictures</AppText>,
             Info: <AppText>Info</AppText>,
             Store: <AppText>posStorets</AppText>

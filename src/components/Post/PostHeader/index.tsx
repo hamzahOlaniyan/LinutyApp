@@ -50,7 +50,13 @@ export default function PostHeader({
     >
       <View className="flex-1 flex-row items-end gap-2">
         <TouchableOpacity
-          onPress={() => router.push(`/(protected)/profile/${author?.id}`)}
+          onPress={() => {
+            if (me?.id === author.id) {
+              router.push(`/me`);
+            } else {
+              router.push(`/(protected)/profile/${author?.id}`);
+            }
+          }}
           hitSlop={10}
         >
           {avatarUri ? <Avatar path={avatarUri} size={45} /> : null}

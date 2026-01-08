@@ -1,4 +1,4 @@
-import { ProfileRowItem } from "@/hooks/useProfileApi";
+import { FriendStatus, ProfileRowItem } from "@/hooks/type";
 import { VariantProps } from "class-variance-authority";
 import { StyleProp, ViewStyle } from "react-native";
 import { buttonVariants } from ".";
@@ -15,3 +15,9 @@ export type FriendActionButtonProps = {
   color?:string;
   onPress?:()=>void
 }
+
+export type ExploreProfilesPage = {
+  items: ProfileRowItem[];
+  nextCursor?: string | null;
+  friendStatus?: FriendStatus;
+};

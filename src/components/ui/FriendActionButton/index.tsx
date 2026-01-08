@@ -1,5 +1,5 @@
+import { ProfileRowItem } from "@/hooks/type";
 import { FriendsApi } from "@/hooks/useFriendsHook";
-import { FriendStatus, ProfileRowItem } from "@/hooks/useProfileApi";
 import type { InfiniteData } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import { cva } from "class-variance-authority";
@@ -8,18 +8,7 @@ import {
   TouchableOpacity as RNTouchableOpacity
 } from "react-native";
 import AppText from "../AppText";
-import { FriendActionButtonProps } from "./type";
-
-export type ExploreProfilesPage = {
-  items: ProfileRowItem[];
-  nextCursor?: string | null;
-  friendStatus?: FriendStatus;
-};
-// type FriendStatus =
-//   | "NONE"
-//   | "PENDING_OUTGOING"
-//   | "PENDING_INCOMING"
-//   | "FRIENDS";
+import { ExploreProfilesPage, FriendActionButtonProps } from "./type";
 
 export const buttonVariants = cva(
   "p-2 rounded-full justify-center items-center",
@@ -40,7 +29,7 @@ const buttonTextVariants = cva("font-Medium text-lg", {
   variants: {
     variant: {
       profile: "text-white",
-      search: "text-blue-500" // or different
+      search: "text-blue-500"
     }
   },
   defaultVariants: { variant: "search" }

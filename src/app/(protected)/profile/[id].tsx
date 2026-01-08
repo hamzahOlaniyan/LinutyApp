@@ -6,18 +6,15 @@ import ProfileName from "@/components/Profile/ProfileName";
 import Stats from "@/components/Profile/Stats";
 import AppText from "@/components/ui/AppText";
 import Avatar from "@/components/ui/Avatar";
-import LASafeAreaView from "@/components/ui/LASafeAreaView";
 import ScreenView from "@/components/ui/Layout/ScreenView";
 import StickyTab from "@/components/ui/StickyTab";
 import { appColors } from "@/constant/colors";
-import {
-  FriendStatus,
-  ProfileApi,
-  ProfileRowItem
-} from "@/hooks/useProfileApi";
-import { useLocalSearchParams } from "expo-router";
+import { FriendStatus, ProfileRowItem } from "@/hooks/type";
+import { ProfileApi } from "@/hooks/useProfileApi";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function UserProfile() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -36,6 +33,8 @@ export default function UserProfile() {
   useEffect(() => {
     if (data) setProfile(data);
   }, [data]);
+
+  const { bottom } = useSafeAreaInsets();
 
   const name = `${profile?.firstName.trim()} ${profile?.lastName.trim()}`;
 
@@ -68,24 +67,38 @@ export default function UserProfile() {
   // };
 
   return (
-    <LASafeAreaView padding={false}>
-      <ScrollView className="flex-1 bg-white">
-        {/* <Stack.Screen
-          options={{
-            title: `${profile?.firstName} ${profile?.lastName}`
-          }}
-        /> */}
+    <>
+      <Stack.Screen
+        options={{
+          title: `${name}`
+        }}
+      />
+      <ScrollView
+        className="flex-1 bg-white"
+        showsVerticalScrollIndicator={false}
+        stickyHeaderIndices={[2]}
+        style={{ marginBottom: bottom }}
+      >
         <CoverImage coverImage={profile?.coverUrl} />
         <ScreenView>
-          <View className="relative ">
+          <View className="relative -top-[60px]">
             <View className="items-center justify-center gap-3">
-              <Avatar
-                path={profile?.avatarUrl}
-                size={120}
-                style={{ borderWidth: 6, borderColor: appColors.white }}
-              />
+              <TouchableOpacity
+                onPress={() =>
+                  router.push({
+                    pathname: "/(protected)/profile/profile-pic",
+                    params: { avatarUrl: profile?.avatarUrl, name: name }
+                  })
+                }
+              >
+                <Avatar
+                  path={profile?.avatarUrl}
+                  size={120}
+                  style={{ borderWidth: 6, borderColor: appColors.white }}
+                />
+              </TouchableOpacity>
               <ProfileName name={name} username={profile?.username} />
-              <Stats friendCount={profile?.friendsCount} />
+              <Stats friendCount={profile?.friendsCount} profileId={id} />
             </View>
 
             <AppText className="relative">
@@ -102,6 +115,7 @@ export default function UserProfile() {
             <ActionButtons friendshipItem={friendshipItem} />
           </View>
         </ScreenView>
+        <View className="h-[1px] w-full bg-gray-200" />
         <StickyTab
           routes={[
             { key: "Posts", title: "Posts" },
@@ -117,6 +131,6 @@ export default function UserProfile() {
           }}
         />
       </ScrollView>
-    </LASafeAreaView>
+    </>
   );
 }

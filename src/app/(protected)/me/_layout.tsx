@@ -28,6 +28,10 @@ export default function _layout() {
       <Stack.Screen name="setting" options={{ headerShown: true }} />
       <Stack.Screen name="settings" options={{ headerShown: true }} />
       <Stack.Screen name="edit" options={{ headerShown: true }} />
+      <Stack.Screen
+        name="avatar"
+        options={{ headerShown: true, title: "Profile picture" }}
+      />
     </Stack>
   );
 }

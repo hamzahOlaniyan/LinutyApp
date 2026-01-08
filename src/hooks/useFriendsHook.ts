@@ -1,16 +1,5 @@
-import { useApiMutation } from "./useApi";
-
-
-// type FriendStatus = "NONE" | "PENDING_OUTGOING" | "PENDING_INCOMING" | "FRIENDS";
-
-// type PublicProfileRow = {
-//   id: string;
-//   name: string;
-//   username: string;
-//   avatarUrl: string | null;
-//   friendStatus: FriendStatus;
-//   requestId?: string; // important for accept/decline if incoming (or cancel if outgoing)
-// };
+import { FriendsEnvelop } from "./type";
+import { useApiMutation, useApiQuery } from "./useApi";
 
 
 export class FriendsApi {
@@ -28,4 +17,14 @@ export class FriendsApi {
 
   static useUnfriend = (profileId: string) =>
     useApiMutation<void, void>("delete", `/friends/${profileId}`);
+
+  static getFriendCount=(profileId:string)=> {
+    const {data} = useApiQuery<{count:number}>(`/friends/${profileId}/count`,undefined,{enabled: !!profileId})
+    return data
+  } 
+
+  static getFriends=(profileId:string)=> {
+    const {data} = useApiQuery<FriendsEnvelop>(`/friends/${profileId}`,undefined,{enabled: !!profileId})
+    return data
+  } 
 }

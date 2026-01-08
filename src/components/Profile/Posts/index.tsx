@@ -32,7 +32,6 @@ type ProfilePostsProps = {
 export default function ProfilePosts({ item }: ProfilePostsProps) {
   const [comments, setComments] = useState<PostComment[]>([]);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
-  // const [initialCommentId, setInitialCommentId] = useState<string | null>(null);
   const [replyTo, setReplyTo] = useState<ReplyingTo>(null);
 
   const { data: commentsEnvelope, isLoading: commentsLoading } =
@@ -52,7 +51,6 @@ export default function ProfilePosts({ item }: ProfilePostsProps) {
 
   const openCommentsSheet = useCallback((pid: string) => {
     setSelectedPostId(pid);
-    // setInitialCommentId(cid ?? null);
     requestAnimationFrame(() => bottomSheetRef.current?.expand());
   }, []);
 
@@ -119,8 +117,6 @@ export default function ProfilePosts({ item }: ProfilePostsProps) {
           bounces
           scrollEnabled
           showsVerticalScrollIndicator={false}
-          alwaysBounceVertical
-          overScrollMode="always"
           removeClippedSubviews
           initialNumToRender={6}
           maxToRenderPerBatch={6}

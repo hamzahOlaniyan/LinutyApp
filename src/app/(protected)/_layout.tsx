@@ -39,7 +39,7 @@ export default function _ProtectedLayout() {
         options={{ headerShown: false, animation: "none" }}
       />
       <Stack.Screen
-        name="profile/[id]"
+        name="profile"
         options={{ title: "user", headerShown: false }}
       />
 

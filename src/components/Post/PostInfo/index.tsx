@@ -1,19 +1,17 @@
-import AppText from "@/components/ui/AppText";
 import { hp, wp } from "@/constant/common";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { PostCardProps } from "../type";
 
-export default function PostInfo({ likeCount, commentCount }: PostCardProps) {
+export default function PostInfo() {
   return (
     <View style={s.container}>
-      {Number(likeCount) >= 1 ? (
+      {/* {Number(likeCount) >= 1 ? (
         <AppText variant="post_info">{Number(likeCount)} like ·</AppText>
       ) : null}
 
       {commentCount && commentCount && (
         <AppText variant="post_info">{commentCount} comments</AppText>
-      )}
+      )} */}
 
       {/* <AppText color={appColors.placeholder} className="text-right">
         {post?._count.comments && post._count.comments} repost |

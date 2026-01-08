@@ -5,7 +5,7 @@ import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Profile } from "../../../../types/supabaseTypes";
 
 export default function Info(me: Profile) {
@@ -19,7 +19,9 @@ export default function Info(me: Profile) {
     <View style={{ paddingHorizontal: wp(3), marginTop: 12, marginBottom: 30 }}>
       <View style={s.infoContainer}>
         <View style={s.infoWrapper}>
-          <Avatar path={me?.avatarUrl} size={100} />
+          <TouchableOpacity onPress={() => router.push("/me/avatar")}>
+            <Avatar path={me?.avatarUrl} size={100} />
+          </TouchableOpacity>
           <View className="flex-1 gap-2">
             <View>
               <AppText variant="profile_name" className="capitalize">

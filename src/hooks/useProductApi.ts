@@ -100,7 +100,7 @@ export class ProductApi {
     const { session } = useAuthStore();
     const accessToken = session?.access_token; 
     const { data, isLoading,  refetch, error , isFetching}= useApiQuery<ProductMediaTable[]>(`/product/${productId}/media`,undefined,{enabled:!!accessToken && !!productId});
-    return{data,isLoading, refetch, error, isFetching}
+    return {data,isLoading, refetch, error, isFetching}
   }
 }
  

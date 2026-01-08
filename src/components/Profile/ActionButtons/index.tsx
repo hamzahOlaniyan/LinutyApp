@@ -1,7 +1,7 @@
 import AppText from "@/components/ui/AppText";
 import { FriendActionButton } from "@/components/ui/FriendActionButton";
 import { hp } from "@/constant/common";
-import { ProfileRowItem } from "@/hooks/useProfileApi";
+import { ProfileRowItem } from "@/hooks/type";
 import Icon from "@/icons";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";

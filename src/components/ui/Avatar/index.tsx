@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden"
+    overflow: "hidden",
+    backgroundColor: "white"
   }
 });

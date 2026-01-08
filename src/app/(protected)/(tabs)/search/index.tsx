@@ -1,6 +1,7 @@
-import ProfileCard from "@/components/Profile/ProfileCard";
+import ProfileCard from "@/components/Profile/ProfileCard/ProfileCard";
 import { wp } from "@/constant/common";
-import { ProfileApi, ProfileRowItem } from "@/hooks/useProfileApi";
+import { ProfileRowItem } from "@/hooks/type";
+import { ProfileApi } from "@/hooks/useProfileApi";
 import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, ListRenderItem, View } from "react-native";
 

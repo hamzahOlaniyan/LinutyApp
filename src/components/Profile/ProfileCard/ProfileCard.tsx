@@ -1,17 +1,21 @@
 import { appColors } from "@/constant/colors";
-import { ProfileRowItem } from "@/hooks/useProfileApi";
+import { ProfileRowItem } from "@/hooks/type";
 import { useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
-import AppText from "../ui/AppText";
-import Avatar from "../ui/Avatar";
-import { FriendActionButton } from "../ui/FriendActionButton";
+import AppText from "../../ui/AppText";
+import Avatar from "../../ui/Avatar";
+import { FriendActionButton } from "../../ui/FriendActionButton";
 
 export type ProfileCardProps = {
   item: ProfileRowItem;
+  isFriends?: boolean;
 };
 
-export default function ProfileCard({ item }: ProfileCardProps) {
+export default function ProfileCard({
+  item,
+  isFriends = false
+}: ProfileCardProps) {
   const router = useRouter();
   const name = `${item.firstName} ${item.lastName}`;
 
@@ -34,9 +38,7 @@ export default function ProfileCard({ item }: ProfileCardProps) {
           </AppText>
         </View>
       </View>
-      <View>
-        <FriendActionButton item={item} />{" "}
-      </View>
+      <View>{!isFriends && <FriendActionButton item={item} />}</View>
     </View>
   );
 }

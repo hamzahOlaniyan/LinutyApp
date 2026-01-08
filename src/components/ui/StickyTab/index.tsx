@@ -2,7 +2,7 @@ import { Font } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import React, { useRef, useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import TabButton from "./TabButton";
 // import FilterButton from "./FilterButton";
 
@@ -16,13 +16,17 @@ type Props = {
   activeColor?: string;
   inactiveColor?: string;
   indicatorColor?: string;
+  style?: StyleProp<ViewStyle>;
+  className?: string;
 };
 
 export default function StickyTab({
   routes,
   scenes,
   initialKey,
-  activeColor = appColors.primary
+  activeColor = appColors.primary,
+  style,
+  className
 }: Props) {
   const [activeKey, setActiveKey] = useState(initialKey ?? routes[0].key);
   const scrollRef = useRef<ScrollView>(null);
@@ -30,11 +34,12 @@ export default function StickyTab({
   return (
     <>
       <ScrollView
-        style={{ flex: 1, backgroundColor: appColors.white }}
+        style={[style, { flex: 1, backgroundColor: appColors.white }]}
         contentContainerStyle={{ paddingBottom: 200 }}
         stickyHeaderIndices={[1]}
         showsVerticalScrollIndicator={false}
         ref={scrollRef}
+        className={className}
       >
         {/* <View>{header}</View> */}
 
