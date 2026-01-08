@@ -2,28 +2,31 @@ import { FeedPost } from "@/components/Post/type";
 import ActionButtons from "@/components/Profile/ActionButtons";
 import CoverImage from "@/components/Profile/CoverImage";
 import ProfilePosts from "@/components/Profile/Posts";
+import ProfileMedia from "@/components/Profile/ProfileMedia";
 import ProfileName from "@/components/Profile/ProfileName";
 import Stats from "@/components/Profile/Stats";
 import AppText from "@/components/ui/AppText";
-import Avatar from "@/components/ui/Avatar";
 import ScreenView from "@/components/ui/Layout/ScreenView";
 import StickyTab from "@/components/ui/StickyTab";
-import { appColors } from "@/constant/colors";
 import { FriendStatus, ProfileRowItem } from "@/hooks/type";
+import { MediaApi } from "@/hooks/useMediaApi";
 import { ProfileApi } from "@/hooks/useProfileApi";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { MediaFile } from "../../../../types/supabaseTypes";
 
 export default function UserProfile() {
   const { id } = useLocalSearchParams<{ id: string }>();
 
   const { data: POSTS } = ProfileApi.getPostsByProfileId(id ?? "");
   const { data } = ProfileApi.useGetProfileById(id);
+  const mediaFolder = MediaApi.getMedia(id ?? "");
 
   const [profile, setProfile] = useState(data);
   const [posts, setPosts] = useState<FeedPost[]>([]);
+  const [media, setMedia] = useState<MediaFile[]>([]);
   const [readmore, setReadMore] = useState(false);
 
   useEffect(() => {
@@ -33,6 +36,10 @@ export default function UserProfile() {
   useEffect(() => {
     if (data) setProfile(data);
   }, [data]);
+
+  useEffect(() => {
+    if (mediaFolder) setMedia(mediaFolder);
+  }, [mediaFolder]);
 
   const { bottom } = useSafeAreaInsets();
 
@@ -79,55 +86,44 @@ export default function UserProfile() {
         stickyHeaderIndices={[2]}
         style={{ marginBottom: bottom }}
       >
-        <CoverImage coverImage={profile?.coverUrl} />
+        <View>
+          <CoverImage
+            coverImage={profile?.coverUrl}
+            path={profile?.avatarUrl}
+          />
+          <ProfileName name={name} username={profile?.username} />
+          <Stats friendCount={profile?.friendsCount} profileId={id} />
+        </View>
         <ScreenView>
-          <View className="relative -top-[60px]">
-            <View className="items-center justify-center gap-3">
-              <TouchableOpacity
-                onPress={() =>
-                  router.push({
-                    pathname: "/(protected)/profile/profile-pic",
-                    params: { avatarUrl: profile?.avatarUrl, name: name }
-                  })
-                }
-              >
-                <Avatar
-                  path={profile?.avatarUrl}
-                  size={120}
-                  style={{ borderWidth: 6, borderColor: appColors.white }}
-                />
-              </TouchableOpacity>
-              <ProfileName name={name} username={profile?.username} />
-              <Stats friendCount={profile?.friendsCount} profileId={id} />
-            </View>
-
-            <AppText className="relative">
-              {!readmore
-                ? `${profile?.bio.substring(0, 120)}...`
-                : profile?.bio}
-              <AppText
-                className="font-Medium"
-                onPress={() => setReadMore(!readmore)}
-              >
-                {readmore ? "  show less" : "  show more"}
-              </AppText>
+          <AppText className="relative">
+            {!readmore ? `${profile?.bio.substring(0, 120)}...` : profile?.bio}
+            <AppText
+              className="font-Medium"
+              onPress={() => setReadMore(!readmore)}
+            >
+              {readmore ? "  show less" : "  show more"}
             </AppText>
-            <ActionButtons friendshipItem={friendshipItem} />
-          </View>
+          </AppText>
+          <ActionButtons friendshipItem={friendshipItem} />
         </ScreenView>
-        <View className="h-[1px] w-full bg-gray-200" />
         <StickyTab
           routes={[
             { key: "Posts", title: "Posts" },
-            { key: "Images", title: "Pictures" },
-            { key: "Video", title: "Pictures" },
-            { key: "Info", title: "Details" }
+            { key: "Pictures", title: "Pictures" },
+            { key: "Video", title: "Video" },
+            { key: "Info", title: "Info" }
           ]}
           scenes={{
             Posts: <ProfilePosts item={posts} />,
-            Pictures: <AppText>Pictures</AppText>,
-            Info: <AppText>Info</AppText>,
-            Store: <AppText>posStorets</AppText>
+            Pictures: <ProfileMedia data={media} />,
+            Videos: <AppText>posStorets</AppText>,
+            Info: (
+              <TouchableOpacity
+                onPress={() => router.push("/(protected)/profile/info")}
+              >
+                <AppText>Info</AppText>
+              </TouchableOpacity>
+            )
           }}
         />
       </ScrollView>

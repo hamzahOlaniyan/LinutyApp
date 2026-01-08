@@ -11,7 +11,7 @@ type ProfileName = {
 export default function ProfileName({ name, username }: ProfileName) {
   return (
     <View className="leading-1 flex-1 justify-center">
-      <AppText variant="profile_name" className="flex-1 capitalize">
+      <AppText variant="profile_name" className="flex-1 text-center capitalize">
         {name}
       </AppText>
       <AppText color={appColors.placeholder} className="text-center">

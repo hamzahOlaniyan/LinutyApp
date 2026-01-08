@@ -1,10 +1,12 @@
 import Info from "@/components/Me/Info";
 import { FeedPost } from "@/components/Post/type";
 import ProfilePosts from "@/components/Profile/Posts";
+import ProfileMedia from "@/components/Profile/ProfileMedia";
 import AppText from "@/components/ui/AppText";
 import StickyTab from "@/components/ui/StickyTab";
 import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
+import { MediaApi } from "@/hooks/useMediaApi";
 import { ProfileApi } from "@/hooks/useProfileApi";
 import Icon from "@/icons";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -12,13 +14,21 @@ import { Image } from "expo-image";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { MediaFile } from "../../../../types/supabaseTypes";
 
 export default function Me() {
   const { me } = useAuthStore();
   const { bottom } = useSafeAreaInsets();
 
   const { data: POSTS } = ProfileApi.getPostsByProfileId(me?.id ?? "");
+  const data = MediaApi.getMedia(me?.id ?? "");
+
   const [posts, setPosts] = useState<FeedPost[]>([]);
+  const [media, setMedia] = useState<MediaFile[]>([]);
+
+  useEffect(() => {
+    if (data) setMedia(data);
+  }, [data]);
 
   useEffect(() => {
     if (POSTS) setPosts(POSTS ?? []);
@@ -61,22 +71,20 @@ export default function Me() {
       )}
       <Info {...me!} />
 
-      <View>
-        <StickyTab
-          routes={[
-            { key: "Posts", title: "Posts" },
-            { key: "Pictures", title: "Pictures" },
-            { key: "Info", title: "Details" },
-            { key: "Store", title: "Your store" }
-          ]}
-          scenes={{
-            Posts: <ProfilePosts item={posts} />,
-            Pictures: <AppText>Pictures</AppText>,
-            Info: <AppText>Info</AppText>,
-            Store: <AppText>posStorets</AppText>
-          }}
-        />
-      </View>
+      <StickyTab
+        routes={[
+          { key: "Posts", title: "Posts" },
+          { key: "Pictures", title: "Pictures" },
+          { key: "Videos", title: "Videos" },
+          { key: "Info", title: "Info" }
+        ]}
+        scenes={{
+          Posts: <ProfilePosts item={posts} />,
+          Pictures: <ProfileMedia data={media} />,
+          Videos: <AppText>posStorets</AppText>,
+          Info: <AppText>Info</AppText>
+        }}
+      />
     </ScrollView>
   );
 }

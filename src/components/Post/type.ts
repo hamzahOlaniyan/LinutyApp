@@ -1,20 +1,22 @@
 
 export type PostVisibility = "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE";
 
-// export type PostItem = {
-//   id: string;
-//   profileId: string;
-//   content: string | null;
-//   visibility: "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE";
-//   locationText: string | null;
-//   lineageId: string | null;
-//   createdAt: string;
-//   updatedAt: string;
-//   commentCount: number;
-//   likeCount: number;
-//   shareCount: number;
-//   mediaFiles: FeedMediaFile[];
-// };
+export type PostItem = {
+  id: string;
+  profileId: string;
+  content: string | null;
+  visibility: "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE";
+  locationText: string | null;
+  lineageId: string | null;
+  createdAt: string;
+  updatedAt: string;
+  commentCount: number;
+  likeCount: number;
+  shareCount: number;
+  mediaFiles: FeedMediaFile[];
+  author:Author
+};
+
 export type PostCardProps = {
   post: FeedPost;
   likeCount?: number;
@@ -80,6 +82,7 @@ export type Author = {
   firstName?: string | null;
   lastName?: string | null;
   avatarUrl?: string | null;
+  isVerified?:boolean
 };
 
 export type PostShortInfo = {

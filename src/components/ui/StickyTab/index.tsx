@@ -48,7 +48,7 @@ export default function StickyTab({
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.tabBar}
+          contentContainerStyle={styles.tabBarContainer}
         >
           {routes.map(route => {
             const isActive = route.key === activeKey;
@@ -71,11 +71,13 @@ export default function StickyTab({
 }
 
 const styles = StyleSheet.create({
-  tabBar: {
+  tabBarContainer: {
     flexDirection: "row",
     gap: 10,
     paddingHorizontal: wp(3),
-    paddingVertical: 10
+    paddingBottom: 24,
+    paddingTop: 12,
+    flex: 1
   },
   tabButton: {
     paddingVertical: 6,
