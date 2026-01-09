@@ -14,6 +14,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       scheme: "linutyapp",
       userInterfaceStyle: "automatic",
       newArchEnabled: true,
+      splash: {
+         image: "./src/assets/images/logo.png",
+         resizeMode: "contain",
+         backgroundColor: "#ffffff",
+      },
 
       ios: {
          supportsTablet: true,
@@ -31,28 +36,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
          bundler: "metro",
          output: "static",
       },
-      plugins: [
-         "expo-router",
-         [
-            "expo-splash-screen",
-            {
-               backgroundColor: "#ffffff",
-               image: "./src/assets/images/icon-white.png",
-               dark: {
-                  image: "./assets/icon-white.png",
-                  backgroundColor: "#000000",
-               },
-               imageWidth: 300,
-            },
-         ],
-      ],
+      plugins: ["expo-router"],
       experiments: {
          typedRoutes: true,
       },
       extra: {
-         supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
-         supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
-         router: {},
+         EXPO_PUBLIC_ENDPOINT_URL: process.env.EXPO_PUBLIC_ENDPOINT_URL,
          eas: {
             projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
          },

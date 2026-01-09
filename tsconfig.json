@@ -6,6 +6,15 @@
          "@/*": ["./src/*"]
       }
    },
-   "exclude": ["node_modules"],
-   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"]
+   "include": [
+      "**/*.ts",
+      "**/*.tsx",
+      ".expo/types/**/*.ts",
+      "expo-env.d.ts",
+      "nativewind-env.d.ts",
+      "src/components/ui/ToastModal",
+      "src/constants/colors.js",
+      "index.js"
+   ],
+   "exclude": ["node-module"]
 }
