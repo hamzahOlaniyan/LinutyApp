@@ -81,8 +81,8 @@ yarn-error.*
 # @end expo-cli
 
 # generated native folders
-/ios
-/android
+# /ios
+# /android
 
 
 commitlint.config.cjs
