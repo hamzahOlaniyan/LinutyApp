@@ -1,110 +1,74 @@
-import { TiktokFont } from "@/assets/fonts/FontFamily";
+import { Font } from "@/assets/fonts/FontFamily";
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import { useMeQuery } from "@/hooks/useMeQuery";
+import { queryClient } from "@/lib/queryClient";
+import { supabase } from "@/lib/supabase/supabase";
+import { useAuthStore } from "@/store/useAuthStore";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { router, SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../../global.css";
-import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
-import { QueryProvider } from "../provider/QueryProvider";
-import { useAuthStore } from "../store/authStore";
 
-// const logoutAndClearSession = async () => {
-//    await supabase.auth.signOut(); // clear Supabase session
-//    await AsyncStorage.removeItem("auth-store"); // clear Zustand persist
-//    useAuthStore.getState().resetSession(); // clear in-memory state
-// };
+export const unstable_settings = {
+  anchor: "auth"
+};
+
+SplashScreen.preventAutoHideAsync();
+
+function AuthLoader({ children }: { children: React.ReactNode }) {
+  useMeQuery();
+  return <>{children}</>;
+}
 
 export default function RootLayout() {
-   const setSession = useAuthStore((s) => s.setSession);
-   const fetchProfile = useAuthStore((s) => s.fetchProfile);
-   const reset = useAuthStore((state) => state.resetSession);
+  const { initialized, init } = useAuthStore();
 
-   // const router = useRouter();
+  const [loaded] = useFonts({
+    [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
+    [Font.ExtraBold]: require("@/assets/fonts/TikTokSans-ExtraBold.ttf"),
+    [Font.Bold]: require("@/assets/fonts/TikTokSans-Bold.ttf"),
+    [Font.SemiBold]: require("@/assets/fonts/TikTokSans-SemiBold.ttf"),
+    [Font.Medium]: require("@/assets/fonts/TikTokSans-Medium.ttf"),
+    [Font.Regular]: require("@/assets/fonts/TikTokSans-Regular.ttf"),
+    [Font.Light]: require("@/assets/fonts/TikTokSans-Light.ttf")
+  });
 
-   const [loaded] = useFonts({
-      [TiktokFont.TiktokBlack]: require("@/assets/fonts/Roboto-Black.ttf"),
-      [TiktokFont.TiktokExtraBold]: require("@/assets/fonts/Roboto-ExtraBold.ttf"),
-      [TiktokFont.TiktokBold]: require("@/assets/fonts/Roboto-SemiBold.ttf"),
-      [TiktokFont.TiktokSemiBold]: require("@/assets/fonts/Roboto-SemiBold.ttf"),
-      [TiktokFont.TiktokMedium]: require("@/assets/fonts/Roboto-Medium.ttf"),
-      [TiktokFont.TiktokRegular]: require("@/assets/fonts/Roboto-Regular.ttf"),
-      [TiktokFont.TiktokLight]: require("@/assets/fonts/Roboto-Light.ttf"),
-   });
+  useEffect(() => {
+    init();
+  }, []);
 
-   // useEffect(() => {
-   //    const checkGhostSession = async () => {
-   //       const { data } = await supabase.auth.getSession();
+  useEffect(() => {
+    if (loaded && initialized) SplashScreen.hideAsync();
+  }, [loaded, initialized]);
 
-   //       if (data.session?.user) {
-   //          const { data: profile } = await supabase
-   //             .from("profiles")
-   //             .select("*")
-   //             .eq("id", data.session.user.id)
-   //             .single();
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) router.replace("/auth");
+      console.log("AUTH EVENT:", event, "hasSession?", !!session);
+      useAuthStore.getState().setSession(session ?? null);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
-   //          if (!profile) {
-   //             await logoutAndClearSession();
-   //          }
-   //       }
-   //    };
-   //    checkGhostSession();
-   // }, []);
+  if (!loaded || !initialized) {
+    return <LoadingScreen />;
+  }
 
-   // useEffect(() => {
-   //    const unsub = useAuthStore.persist.onFinishHydration(() => {
-   //       useAuthStore.setState({ hasHydrated: true, loading: false });
-   //    });
-   //    return unsub;
-   // }, []);
-
-   // useEffect(() => {
-   //    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
-   //       if (session?.user) {
-   //          setSession(session);
-   //          // fetchProfile(session?.user?.id);
-   //       } else {
-   //          await AsyncStorage.removeItem("auth-store");
-   //          reset();
-   //       }
-   //    });
-
-   //    return () => {
-   //       authListener.subscription.unsubscribe();
-   //    };
-   // }, []);
-
-   // useEffect(() => {
-   //    const subscription = Linking.addEventListener("url", async ({ url }: { url: string }) => {
-   //       const { data } = await supabase.auth.exchangeCodeForSession(url);
-   //       if (data.session) {
-   //          console.log("Password reset session started!");
-   //          router.replace("/(auth)/reset-password");
-   //       }
-   //    });
-
-   //    return () => subscription.remove();
-   // }, []);
-
-   // const queryClient = new QueryClient();
-
-   return (
-      <QueryProvider>
-         {/* <QueryClientProvider client={queryClient}> */}
-         <GestureHandlerRootView className="flex-1">
-            <PortalProvider>
-               <PortalHost name="root" />
-               <SafeAreaProvider>
-                  <GluestackUIProvider>
-                     <StatusBar style="auto" />
-                     <Stack screenOptions={{ headerShown: false }} />
-                  </GluestackUIProvider>
-               </SafeAreaProvider>
-            </PortalProvider>
-         </GestureHandlerRootView>
-         {/* </QueryClientProvider> */}
-      </QueryProvider>
-   );
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthLoader>
+        <GestureHandlerRootView className="flex-1">
+          <PortalProvider>
+            <PortalHost name="root" />
+            <StatusBar style="auto" />
+            <Stack screenOptions={{ headerShown: false }} />
+          </PortalProvider>
+        </GestureHandlerRootView>
+      </AuthLoader>
+    </QueryClientProvider>
+  );
 }

@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormInput renders all fields and the submit button (snapshot) 1`] = `
+<View
+  className=""
+>
+  <View
+    className="mb-4"
+  >
+    <View>
+      <Text>
+        First name
+      </Text>
+      <TextInput
+        onChangeText={[Function]}
+        placeholder="First name"
+        testID="input-First name"
+        value=""
+      />
+    </View>
+  </View>
+  <View
+    className="mb-4"
+  >
+    <View>
+      <Text>
+        Email
+      </Text>
+      <TextInput
+        onChangeText={[Function]}
+        placeholder="Email"
+        testID="input-Email"
+        value=""
+      />
+    </View>
+  </View>
+  <View
+    className="mb-4"
+  >
+    <View>
+      <Text>
+        Phone
+      </Text>
+      <TextInput
+        onChangeText={[Function]}
+        placeholder="Phone"
+        testID="input-Phone"
+        value=""
+      />
+    </View>
+  </View>
+</View>
+`;

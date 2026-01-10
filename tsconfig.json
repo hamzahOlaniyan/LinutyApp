@@ -1,11 +1,21 @@
 {
-   "extends": "expo/tsconfig.base",
-   "compilerOptions": {
-      "strict": true,
-      "paths": {
-         "@/*": ["./*"]
-      }
-   },
-   "exclude": ["node_modules"],
-   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"]
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "nativewind-env.d.ts",
+    "src/components/ui/ToastModal",
+    "src/constants/colors.js",
+    "index.js",
+    "src/app/(protected)/post/[postId]"
+  ],
+  "exclude": ["node-module"]
 }

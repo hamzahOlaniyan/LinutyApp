@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToastModal renders message when visible and matches snapshot 1`] = `
+<View
+  className="relative flex-1 items-center justify-end"
+>
+  <View
+    style={
+      {
+        "backgroundColor": "black",
+        "borderRadius": 12,
+        "bottom": 133.4,
+        "elevation": 2,
+        "maxWidth": "60%",
+        "paddingHorizontal": 24,
+        "paddingVertical": 10,
+      }
+    }
+  >
+    <Text>
+      Hello toast
+    </Text>
+  </View>
+</View>
+`;
