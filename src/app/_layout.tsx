@@ -8,12 +8,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import {
-  router,
-  Slot,
-  SplashScreen,
-  useRootNavigationState
-} from "expo-router";
+import { router, Slot, SplashScreen } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -31,8 +26,7 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 }
 
 export default function RootLayout() {
-  const { initialized, init, session, hasCompletedAppStart } = useAuthStore();
-  const navState = useRootNavigationState();
+  const { initialized, init } = useAuthStore();
 
   const [loaded] = useFonts({
     [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
