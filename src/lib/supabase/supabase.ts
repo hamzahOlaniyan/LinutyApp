@@ -2,33 +2,26 @@ import type { SupportedStorage } from "@supabase/supabase-js";
 import { createClient } from '@supabase/supabase-js';
 import 'react-native-url-polyfill/auto';
 
+const isReactNative =
+  typeof navigator !== "undefined" && navigator.product === "ReactNative";
+
+const isWeb =
+  typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+
 let storage: SupportedStorage | undefined;
 
-if (typeof window !== "undefined") {
-    storage = window.localStorage;
-}else{
-  try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const AsyncStorage = require("@react-native-async-storage/async-storage").default;
-      storage = AsyncStorage;
-    } catch {
-      // During expo export / node environment: no storage available
-      storage = undefined;
-    }
+if (isWeb) {
+  storage = window.localStorage;
+} else if (isReactNative) {
+  // ✅ only in real RN runtime
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  storage = require("@react-native-async-storage/async-storage").default;
+} else {
+  // ✅ Node / expo export: no storage
+  storage = undefined;
 }
 
-// const ExpoWebSecureStoreAdapter = {
-//   getItem: (key: string) => {
-//     // console.debug("getItem", { key })
-//     return AsyncStorage.getItem(key)
-//   },
-//   setItem: (key: string, value: string) => {
-//     return AsyncStorage.setItem(key, value)
-//   },
-//   removeItem: (key: string) => {
-//     return AsyncStorage.removeItem(key)
-//   },
-// };
+
 export const supabase = createClient(
   process.env.EXPO_PUBLIC_SUPABASE_URL ?? '',
   process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? '',
