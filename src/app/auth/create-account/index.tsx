@@ -4,7 +4,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import ScreenView from "@/components/ui/Layout/ScreenView";
 import { appColors } from "@/constant/colors";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 
@@ -13,6 +13,7 @@ export default function CreateAccount() {
 
   return (
     <ScreenView>
+      <Stack.Screen options={{ headerShown: false }} />
       <View className="gap-4">
         <AppText variant="header">Join Linuty</AppText>
         <Image

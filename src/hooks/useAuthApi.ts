@@ -28,9 +28,15 @@ export const AuthApi = {
   async register(){ 
     return useApiMutation<AuthResponse>(
       "post",
-      "/auth/register"
+      "/api/auth/register"
     );
+  },
+   
+
+ useResetPassword(){
+     return useApiMutation<{status:string, message:string},{ email: string }>('post', '/api/auth/reset-password')
   }
+    
 
 } as const;
 

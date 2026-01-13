@@ -2,14 +2,29 @@ import { useAuthStore } from "@/store/useAuthStore";
 import axios from "axios";
 import Constants from "expo-constants";
 
-const EXPO_PUBLIC_ENDPOINT_URL =
-  Constants.expoConfig?.extra?.EXPO_PUBLIC_ENDPOINT_URL;
+
+const extra = Constants.expoConfig?.extra;
+
+const BASE_URL =
+  extra?.EXPO_PUBLIC_ENDPOINT_URL ??
+  process.env.EXPO_PUBLIC_ENDPOINT_URL ??
+  "http://localhost:8080/api";
+
+console.log("API BASE URL:", BASE_URL);
 
 export const api = axios.create({
-  baseURL: EXPO_PUBLIC_ENDPOINT_URL,
+  baseURL: BASE_URL,
   withCredentials: true,
-  // timeout:1000
 });
+
+// const EXPO_PUBLIC_ENDPOINT_URL =
+//   Constants.expoConfig?.extra?.EXPO_PUBLIC_ENDPOINT_URL;
+
+// export const api = axios.create({
+//   baseURL: EXPO_PUBLIC_ENDPOINT_URL,
+//   withCredentials: true,
+//   // timeout:1000
+// });
 
 // --------------------------------------------------
 // REQUEST INTERCEPTOR — ALWAYS use accessToken
@@ -23,8 +38,6 @@ api.interceptors.request.use((config) => {
   }else{
     if (config.headers) delete (config.headers).Authorization;
   }
-
-  
   return config;
 });
 
@@ -58,3 +71,4 @@ export async function fetchNews() {
 
    return res.json();
 }
+

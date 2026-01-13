@@ -10,5 +10,13 @@ export default function AuthLayout() {
 
   if (session) return <Redirect href="/(protected)/(tabs)/(home)" />;
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: true,
+        headerTitle: "",
+        headerShadowVisible: false
+      }}
+    />
+  );
 }

@@ -26,6 +26,7 @@
       "channel": "preview"
     },
     "production": {
+      "env": { "APP_VARIANT": "production" },
       "autoIncrement": true,
       "channel": "production"
     }

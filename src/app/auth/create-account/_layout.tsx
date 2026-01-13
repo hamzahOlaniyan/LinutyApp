@@ -5,7 +5,7 @@ export default function CreateAccountLayout() {
   return (
     <Stack
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         headerTitle: "",
         headerShadowVisible: false
       }}

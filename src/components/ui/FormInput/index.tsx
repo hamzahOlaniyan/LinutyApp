@@ -224,7 +224,7 @@ export default function FormInput({
       {footerContent && <View className="pt-4">{footerContent}</View>}
       {forgottonPassword && (
         <TouchableOpacity
-          onPress={() => router.push("/")}
+          onPress={() => router.push("/auth/forgotten-password")}
           className="mb-8 self-end text-right"
         >
           <AppText>forgotton password</AppText>

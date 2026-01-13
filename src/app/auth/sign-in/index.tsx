@@ -84,16 +84,6 @@ export default function Signin() {
 
         <View className="absolute bottom-5 w-full gap-4">
           <Button
-            text="app-start"
-            onPress={() => router.replace("/auth/create-account/6.otp")}
-            variant="outline"
-          />
-          <Button
-            text="onboarding-flow"
-            onPress={() => router.replace("/onboarding-flow/8-welcome")}
-            variant="outline"
-          />
-          <Button
             text="Create new account"
             onPress={() => router.push("/auth/create-account")}
             variant="outline"
