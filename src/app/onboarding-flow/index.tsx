@@ -1,14 +1,23 @@
 import AppText from "@/components/ui/AppText";
+import Button from "@/components/ui/Button";
 import GradientButton from "@/components/ui/GradientButton";
 import ScreenView from "@/components/ui/Layout/ScreenView";
 import { appColors } from "@/constant/colors";
 import Icon, { IconName } from "@/icons";
-import { router } from "expo-router";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function OnboardingStart() {
+  const signOut = useAuthStore(s => s.signOut);
+  const router = useRouter();
+
+  async function handleLogout() {
+    await signOut();
+  }
+
   const { bottom } = useSafeAreaInsets();
   return (
     <ScreenView>
@@ -57,6 +66,7 @@ export default function OnboardingStart() {
         </View>
 
         <View className="bottom-4">
+          <Button variant="plain" text="sign out" onPress={handleLogout} />
           <AppText variant={"xs"} className="text-center">
             By continuing, you agree to provide accurate information.
           </AppText>

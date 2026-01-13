@@ -7,8 +7,7 @@ import { ApiError, useApiQuery } from "./useApi";
 export const useMeQuery = () => {
   const { me, setMe, session } = useAuthStore();
 
-  const accessToken = session?.access_token; 
-
+  const accessToken = session?.access_token;   
 
   const { data, isLoading, error } = useApiQuery<Profile>(
     "/profile/me",

@@ -1,17 +1,14 @@
 import { useAuthStore } from "@/store/useAuthStore";
-import { useRouter } from "expo-router";
 import React from "react";
 import { Button, Text, View } from "react-native";
 
 export default function Setting() {
-  const { signOut } = useAuthStore();
-  const router = useRouter();
+  const signOut = useAuthStore(s => s.signOut);
 
   async function handleLogout() {
-    await signOut().then(r => console.log("R", r));
-    // console.log("clicked logged out");
-    router.replace("/auth"); // or "/"
+    await signOut();
   }
+
   return (
     <View>
       <Text>Setting</Text>

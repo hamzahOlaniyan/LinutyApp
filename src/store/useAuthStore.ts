@@ -1,6 +1,6 @@
 import { queryClient } from "@/lib/queryClient";
 import { supabase } from "@/lib/supabase/supabase";
-import { deleteItemAsync, getItem, setItem } from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { AuthStore } from "./types";
@@ -9,14 +9,17 @@ export const useAuthStore = create<AuthStore>()(
   persist(
     set => ({
       initialized: false,
-      hasCompletedOnboarding: false,
+      hasCompletedAppStart: false,
       me: null,
       session:null,
+      signingOut: false,
+
 
       init: async () => {
-        set({ initialized: false });
+        set({ initialized: false});
         const { data } = await supabase.auth.getSession();
-        set({ session: data.session ?? null });
+        // console.log("SESSION AFTER SIGNOUT:", data.session);
+        set({ session: data.session});
         set({ initialized: true });
       },
 
@@ -27,34 +30,29 @@ export const useAuthStore = create<AuthStore>()(
       setSession: (session)=>set({session}),
         
       signOut: async () => {
-      const {error} =   await supabase.auth.signOut();
-      console.log('LOG OUT ERROR', error?.message);
-      
-        set({ session: null, me: null });
-        queryClient.clear();
+        set({ signingOut: true });
+        try {
+           await supabase.auth.signOut({scope:"local"});
+           // console.log('LOG OUT ERROR', error?.message);
+           set({ session: null, me: null });
+           queryClient.clear();
+        } finally {
+          set({ signingOut: false });
+        }
       },
 
-      completeOnboarding: () => {
-        set(state => ({ ...state, hasCompletedOnboarding: true }));
-      },
-      resetOnboarding: () => {
-        set(state => ({ ...state, hasCompletedOnboarding: false }));
-      }
+      setHascompleteAppStart: (value) => set({ hasCompletedAppStart: value }),
+
+      completeAppStart:() => set({ hasCompletedAppStart: true }),
+
     }),
     {
       name: "auth-store",
-      storage: createJSONStorage(() => ({
-        getItem,
-        setItem,
-        removeItem: deleteItemAsync
-      })),
+      storage: createJSONStorage(() => AsyncStorage),
       partialize: state => ({
+        hasCompletedAppStart: state.hasCompletedAppStart,
         me: state.me,
-        hasCompletedOnboarding: state.hasCompletedOnboarding
       }),
-      onRehydrateStorage: () => (state, error) => {
-        if (error) return null;
-      }
     }
   )
 );

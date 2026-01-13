@@ -1,26 +1,32 @@
 import Icon from "@/icons";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Stack, useRouter } from "expo-router";
-import React from "react";
+import { Redirect, Stack, useRouter } from "expo-router";
+import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 
 export default function _ProtectedLayout() {
   const router = useRouter();
-  // const session = useAuthStore(s => s.session);
-  const initialized = useAuthStore(s => s.initialized);
-  // const me = useAuthStore(s => s.me);
+  const { me, initialized, session, hasCompletedAppStart } = useAuthStore();
 
-  // const hasCompletedRegistration = !!me?.isProfileComplete;
+  const hasCompletedRegistration = me?.isProfileComplete;
 
   if (!initialized) return null;
 
-  // if (session && !hasCompletedRegistration) {
-  //   return <Redirect href="/onboarding-flow" />;
-  // }
+  useEffect(() => {
+    if (!hasCompletedAppStart) {
+      router.replace("/app-start");
+      return;
+    }
+    if (!session) {
+      router.replace("/auth");
+      return;
+    }
+    router.replace("/(protected)/(tabs)/(home)");
+  }, [hasCompletedAppStart, session]);
 
-  // if (!session && !hasCompletedRegistration) return <Redirect href="/auth" />;
+  if (!hasCompletedRegistration) return <Redirect href="/onboarding-flow" />;
 
-  // if (session && me) return <Redirect href="/(protected)/(tabs)/(home)" />;
+  if (!session && !me) return <Redirect href="/auth" />;
 
   return (
     <Stack

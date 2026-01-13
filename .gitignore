@@ -79,7 +79,7 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
-
+ 
 # generated native folders
 # /ios
 # /android

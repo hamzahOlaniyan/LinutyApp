@@ -1,5 +1,6 @@
 import { Font } from "@/assets/fonts/FontFamily";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import { SigningOutOverlay } from "@/components/ui/SignOutOverlay";
 import { useMeQuery } from "@/hooks/useMeQuery";
 import { queryClient } from "@/lib/queryClient";
 import { supabase } from "@/lib/supabase/supabase";
@@ -7,7 +8,12 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { PortalHost, PortalProvider } from "@gorhom/portal";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { router, SplashScreen, Stack } from "expo-router";
+import {
+  router,
+  Slot,
+  SplashScreen,
+  useRootNavigationState
+} from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -25,7 +31,8 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 }
 
 export default function RootLayout() {
-  const { initialized, init } = useAuthStore();
+  const { initialized, init, session, hasCompletedAppStart } = useAuthStore();
+  const navState = useRootNavigationState();
 
   const [loaded] = useFonts({
     [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),
@@ -47,9 +54,9 @@ export default function RootLayout() {
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) router.replace("/auth");
-      console.log("AUTH EVENT:", event, "hasSession?", !!session);
       useAuthStore.getState().setSession(session ?? null);
+      if (!session) router.replace("/auth");
+      // console.log("AUTH EVENT:", event, "hasSession?", !!session);
     });
     return () => sub.subscription.unsubscribe();
   }, []);
@@ -65,7 +72,8 @@ export default function RootLayout() {
           <PortalProvider>
             <PortalHost name="root" />
             <StatusBar style="auto" />
-            <Stack screenOptions={{ headerShown: false }} />
+            <Slot screenOptions={{ headerShown: false }} />
+            <SigningOutOverlay />
           </PortalProvider>
         </GestureHandlerRootView>
       </AuthLoader>
