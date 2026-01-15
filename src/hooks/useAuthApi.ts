@@ -1,4 +1,6 @@
+import { CompleteRegistrationInput } from "@/store/types";
 import { AuthResponse } from "@supabase/supabase-js";
+import { Profile } from "../../types/supabaseTypes";
 import { ApiResponse } from "./type";
 import { useApiMutation } from "./useApi";
 
@@ -42,6 +44,13 @@ export class AuthApi  {
   static useResetPassword(){
      return useApiMutation<{status:string, message:string},{ email: string }>('post', '/auth/reset-password')
   }
+
+  static useCompleteRegistration = () =>
+        useApiMutation<Profile, CompleteRegistrationInput>(
+          "patch",
+          `/auth/me/complete`
+        );
+  
 } 
 
 

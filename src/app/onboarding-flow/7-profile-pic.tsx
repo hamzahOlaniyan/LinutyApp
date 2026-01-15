@@ -2,12 +2,16 @@ import GradientButton from "@/components/ui/GradientButton";
 import StepContainer from "@/components/ui/StepContainer";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
+import { AuthApi } from "@/hooks/useAuthApi";
 import Icon from "@/icons";
+import { queryClient } from "@/lib/queryClient";
+import { supabase } from "@/lib/supabase/supabase";
 import { CompleteRegistrationInput } from "@/store/types";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useOnbardingFlowForm } from "@/store/useOnbardingFlowForm";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 
@@ -15,13 +19,13 @@ export default function ProfilePic() {
   const { me } = useAuthStore();
   const { form, setError } = useOnbardingFlowForm();
 
-  // const updateProfile = ProfileApi.useCompleteRegistration();
+  const updateProfile = AuthApi.useCompleteRegistration();
 
   const [loading, setLoading] = useState(false);
   const [profilePic, setProfilePic] =
     useState<ImagePicker.ImagePickerAsset | null>(null);
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const pickImages = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -46,39 +50,37 @@ export default function ProfilePic() {
     setProfilePic(asset);
   };
 
-  // async function uploadAvatar(
-  //   file: ImagePicker.ImagePickerAsset,
-  //   userId: string
-  // ) {
-  //   if (!file?.uri) throw new Error("No file uri provided");
+  async function uploadAvatar(
+    file: ImagePicker.ImagePickerAsset,
+    userId: string
+  ) {
+    if (!file?.uri) throw new Error("No file uri provided");
 
-  //   const uri = file.uri;
-  //   const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
-  //   const filePath = `profile-pic/${userId}/${Date.now()}-${file.fileName ?? "avatar"}.${fileExt}`;
+    const uri = file.uri;
+    const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
+    const filePath = `profile-pic/${userId}/${Date.now()}-${file.fileName ?? "avatar"}.${fileExt}`;
 
-  //   const response = await fetch(uri);
-  //   const arrayBuffer = await response.arrayBuffer();
-  //   const fileData = new Uint8Array(arrayBuffer);
+    const response = await fetch(uri);
+    const arrayBuffer = await response.arrayBuffer();
+    const fileData = new Uint8Array(arrayBuffer);
 
-  //   const { error } = await supabase.storage
-  //     .from("profile-avatar")
-  //     .upload(filePath, fileData, {
-  //       contentType: file.mimeType ?? "image/jpeg",
-  //       upsert: false
-  //     });
+    const { error } = await supabase.storage
+      .from("profile-avatar")
+      .upload(filePath, fileData, {
+        contentType: file.mimeType ?? "image/jpeg",
+        upsert: false
+      });
 
-  //   if (error) throw error;
+    if (error) throw error;
 
-  //   const { data } = supabase.storage
-  //     .from("profile-avatar")
-  //     .getPublicUrl(filePath);
-  //   return data.publicUrl;
-  // }
+    const { data } = supabase.storage
+      .from("profile-avatar")
+      .getPublicUrl(filePath);
+    return data.publicUrl;
+  }
 
   async function completeRegistration() {
     setLoading(true);
-    console.log("clicked");
-    console.log(me?.id);
 
     if (!me?.id) {
       setLoading(false);
@@ -91,7 +93,7 @@ export default function ProfilePic() {
       return;
     }
 
-    // const avatarUrl = await uploadAvatar(profilePic, me.id);
+    const avatarUrl = await uploadAvatar(profilePic, me.id);
 
     const content: CompleteRegistrationInput = {
       dateOfBirth: form.dateOfBirth,
@@ -101,33 +103,33 @@ export default function ProfilePic() {
       lineage: form.lineage,
       rootClan: form.rootClan,
       clan: form.clan,
-      avatarUrl: "",
+      avatarUrl,
       profession: form.profession,
       appInterests: form.appInterests,
       interests: form.interests,
       isProfileComplete: true
     };
 
-    console.log("payload", { content });
+    try {
+      await updateProfile.mutateAsync(content, {
+        onSuccess: async data => {
+          console.log(JSON.stringify(data, null, 2));
 
-    // try {
-    //   await updateProfile.mutateAsync(content, {
-    //     onSuccess: async () => {
-    //       queryClient.invalidateQueries({ queryKey: ["me"] });
-    //       queryClient.invalidateQueries({ queryKey: ["profile"] });
-    //       console.log("✅form completed,");
-    //       router.replace("/onboarding-flow/8-welcome");
-    //       // reset();
-    //     },
-    //     onError: err => {
-    //       console.log("❌ something went wrong", err.message);
-    //     }
-    //   });
-    // } catch (err) {
-    //   console.error("failed sending formr", err);
-    // } finally {
-    //   setLoading(false);
-    // }
+          queryClient.invalidateQueries({ queryKey: ["me"] });
+          queryClient.invalidateQueries({ queryKey: ["profile"] });
+          console.log("✅form completed,");
+          router.replace("/onboarding-flow/8-welcome");
+          // reset();
+        },
+        onError: err => {
+          console.log("❌ something went wrong", err.response?.data);
+        }
+      });
+    } catch (err) {
+      console.error("failed sending formr", err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -197,4 +199,7 @@ export default function ProfilePic() {
       </StepContainer>
     </View>
   );
+}
+function uploadAvatar(profilePic: ImagePicker.ImagePickerAsset, id: string) {
+  throw new Error("Function not implemented.");
 }

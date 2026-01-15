@@ -24,7 +24,7 @@ export default function NewsCard({ item }: { item: NewResponse }) {
       }
       style={{
         paddingVertical: 10,
-        borderBottomColor: appColors.bordersLight,
+        borderBottomColor: appColors.border,
         borderBottomWidth: 1
       }}
       className="flex-1 flex-row items-center gap-3"

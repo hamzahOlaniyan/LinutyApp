@@ -52,7 +52,6 @@ export default function Signin() {
 
   const handleSignInUser = async () => {
     setLoading(true);
-    console.log("clicked");
 
     const { data } = await supabase.auth.signInWithPassword({
       email: formData.email as string,

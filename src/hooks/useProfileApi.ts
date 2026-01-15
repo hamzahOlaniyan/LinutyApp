@@ -1,9 +1,7 @@
 import { FeedPost } from "@/components/Post/type";
-import { CompleteRegistrationInput } from "@/store/types";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Profile } from "../../types/supabaseTypes";
 import { FeedEnvelope, ProfileWithFriendStatus } from "./type";
-import { useApiMutation, useApiQuery } from "./useApi";
+import { useApiQuery } from "./useApi";
 
 
 
@@ -28,16 +26,10 @@ export class ProfileApi {
     undefined,
     {enabled: !!accessToken,}
   );
-
     return { isLoading, data, error, isFetching, refetch, };
   };
 
-  static useCompleteRegistration = () =>
-      useApiMutation<Profile, CompleteRegistrationInput>(
-        "patch",
-        `/profile/complete-registration`
-      );
-
+  
   static getPostsByProfileId(profileId:string){
     const { session } = useAuthStore();
     const accessToken = session?.access_token; 

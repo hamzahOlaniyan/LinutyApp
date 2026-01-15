@@ -13,21 +13,21 @@ export default function _ProtectedLayout() {
   if (!initialized) return null;
 
   useEffect(() => {
-    if (!hasCompletedAppStart) {
-      router.replace("/app-start");
-      return;
-    }
-    if (!session) {
-      router.replace("/auth");
-      return;
-    }
-    router.replace("/(protected)/(tabs)/(home)");
-  }, [hasCompletedAppStart, session]);
+    // if (!hasCompletedAppStart) {
+    //   router.replace("/app-start");
+    //   return;
+    // }
+    if (!session && !me) <Redirect href="/auth" />;
+    if (session && !hasCompletedRegistration)
+      <Redirect href="/onboarding-flow" />;
 
-  if (!session && !me) return <Redirect href="/auth" />;
+    // if (session && !hasCompletedRegistration)
+    //   return <Redirect href="/onboarding-flow" />;
+  }, [hasCompletedAppStart, session, hasCompletedRegistration]);
 
-  if (session && !hasCompletedRegistration)
-    return <Redirect href="/onboarding-flow" />;
+  // if (!session && ) return <Redirect href="/auth" />;
+
+  // if (session) return <Redirect href="/(protected)/(tabs)/(home)" />;
 
   return (
     <Stack
