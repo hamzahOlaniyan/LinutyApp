@@ -18,7 +18,7 @@ export type ApiError = {
   message?:ApiErrorBody
 };
 
-type MutationMethod = "post" | "patch" | "delete";
+type MutationMethod = "post" | "patch"| "put" | "delete";
 
 type ApiMutationOptions<TResponse, TParams, TContext> = Omit<
   UseMutationOptions<TResponse, ApiError, TParams, TContext>,

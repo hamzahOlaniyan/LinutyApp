@@ -14,13 +14,16 @@ export default function Agreement() {
 
   const router = useRouter();
 
-  const registerUser = AuthApi.register();
+  const signin = AuthApi.signup();
 
   const handleEmailSubmit = async () => {
+    console.log("clicked");
+
     const values = formData as unknown as Partial<SignInValues>;
+    if (!values) return;
     const { email, password, username, firstName, lastName } = values;
 
-    registerUser.mutateAsync(
+    await signin.mutateAsync(
       { email, password, username, firstName, lastName },
       {
         onSuccess: async () => {
@@ -64,7 +67,7 @@ export default function Agreement() {
             <GradientButton
               text="continue"
               onPress={handleEmailSubmit}
-              isLoading={registerUser.isLoading}
+              isLoading={signin.isLoading}
             />
           </View>
         </View>

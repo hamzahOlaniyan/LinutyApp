@@ -29,3 +29,18 @@ export type FormStore = {
 };
 
 
+export type CompleteRegistrationInput = {
+  dateOfBirth: string;
+  gender: "male" | "female" | "other" | "";
+  country: string;
+  ethnicity: string;
+  clan: string[];
+  rootClan: string;
+  lineage: string;
+  profession: string;
+  appInterests: string[];
+  interests: string[];
+  avatarUrl: string;
+  interest?: string[];
+  isProfileComplete?: boolean;
+};

@@ -1,6 +1,7 @@
 import { FeedPost } from "@/components/Post/type";
+import { CompleteRegistrationInput } from "@/store/types";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Profile, ProfileInput } from "../../types/supabaseTypes";
+import { Profile } from "../../types/supabaseTypes";
 import { FeedEnvelope, ProfileWithFriendStatus } from "./type";
 import { useApiMutation, useApiQuery } from "./useApi";
 
@@ -32,7 +33,7 @@ export class ProfileApi {
   };
 
   static useCompleteRegistration = () =>
-      useApiMutation<Profile, ProfileInput>(
+      useApiMutation<Profile, CompleteRegistrationInput>(
         "patch",
         `/profile/complete-registration`
       );
@@ -46,3 +47,4 @@ export class ProfileApi {
   }
 
 }
+

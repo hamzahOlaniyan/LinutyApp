@@ -8,7 +8,7 @@ const extra = Constants.expoConfig?.extra;
 const BASE_URL =
   extra?.EXPO_PUBLIC_ENDPOINT_URL ??
   process.env.EXPO_PUBLIC_ENDPOINT_URL ??
-  "http://localhost:8080/api";
+  "http://10.0.2.2:8080/api";
 
 console.log("API BASE URL:", BASE_URL);
 

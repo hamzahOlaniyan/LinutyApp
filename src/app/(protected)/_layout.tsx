@@ -24,9 +24,10 @@ export default function _ProtectedLayout() {
     router.replace("/(protected)/(tabs)/(home)");
   }, [hasCompletedAppStart, session]);
 
-  if (!hasCompletedRegistration) return <Redirect href="/onboarding-flow" />;
-
   if (!session && !me) return <Redirect href="/auth" />;
+
+  if (session && !hasCompletedRegistration)
+    return <Redirect href="/onboarding-flow" />;
 
   return (
     <Stack

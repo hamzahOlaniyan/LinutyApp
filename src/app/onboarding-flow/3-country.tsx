@@ -16,8 +16,8 @@ export default function Country() {
   const handleNext = async () => {
     let valid = true;
 
-    if (!form.location) {
-      setError("location", "country of birth is required");
+    if (!form.country) {
+      setError("country", "country of birth is required");
       valid = false;
     }
 
@@ -43,10 +43,10 @@ export default function Country() {
             options={COUNTRIES}
             snap={2}
             searchable
-            placeholder="Location"
-            onSelect={location => updateField("location", location)}
-            error={!!errors.location}
-            errorMessage={errors.location}
+            placeholder="Country"
+            onSelect={country => updateField("country", country)}
+            error={!!errors.country}
+            errorMessage={errors.country}
             modalTitle="select country"
           />
           <View className="my-6 gap-2">

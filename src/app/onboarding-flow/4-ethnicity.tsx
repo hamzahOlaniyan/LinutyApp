@@ -42,8 +42,8 @@ export default function EthnicityScreen() {
     setPath(newPath);
 
     updateField(
-      "clan_tree",
-      newPath.map(p => p.id)
+      "clan",
+      newPath.map(p => p.name)
     );
 
     if (clan.children && clan.children.length > 0) {
@@ -60,14 +60,13 @@ export default function EthnicityScreen() {
       setPath(newPath);
 
       updateField(
-        "clan_tree",
+        "clan",
         newPath.map(p => p.name)
       );
 
       if (newPath.length > 0) {
         setCurrentLevel(newPath[newPath.length - 1].children || []);
       } else {
-        // back to root clans of selected ethnicity
         const ethnicity = ETHNICITIES.find(
           e => e.name === selectedEthnicityName
         );
@@ -84,8 +83,7 @@ export default function EthnicityScreen() {
     if (path.length > 0) {
       setPath([]);
       setCurrentLevel(ethnicity?.clans as []);
-      updateField("clan_tree", "");
-      // updateField("lineage_ids", "");
+      updateField("clan", "");
     }
   };
 
@@ -93,17 +91,17 @@ export default function EthnicityScreen() {
     if (form.isFather === "No") {
       router.push("/onboarding-flow/5-profession");
     }
-    updateField("clan_tree", [...path.map(n => n.name)].filter(Boolean));
+    updateField("clan", [...path.map(n => n.name)].filter(Boolean));
+    updateField("rootClan", [...path.map(n => n.name)].filter(Boolean)[0]);
 
     let valid = true;
 
-    if (!form.clan_tree) {
-      setError("clan_tree", "Field is required");
+    if (!form.clan) {
+      setError("clan", "Field is required");
       valid = false;
       return;
     }
     if (valid) {
-      // nextStep();
       router.push("/onboarding-flow/5-profession");
     }
   };
@@ -239,8 +237,8 @@ export default function EthnicityScreen() {
                 >
                   <TextInput
                     placeholder="Names"
-                    value={form.fullName}
-                    onChangeText={name => updateField("fullName", name)}
+                    value={form.lineage}
+                    onChangeText={name => updateField("lineage", name)}
                     style={{ fontSize: hp(2), fontFamily: Font.Medium }}
                     placeholderTextColor={"#a3a3a3"}
                     className="flex-1 px-2"
@@ -249,8 +247,8 @@ export default function EthnicityScreen() {
                     {lastSelected}
                   </AppText>
                 </View>
-                {errors.fullName && (
-                  <AppText color={appColors.error}>{errors.fullName}</AppText>
+                {errors.lineage && (
+                  <AppText color={appColors.error}>{errors.lineage}</AppText>
                 )}
               </View>
             )}

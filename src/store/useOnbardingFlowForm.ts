@@ -1,4 +1,3 @@
-// stores/useOnbardingFlowForm.ts
 import { create } from "zustand";
 
 export type OnboardingFlowState = {
@@ -7,10 +6,11 @@ export type OnboardingFlowState = {
    {
       dateOfBirth: string;
       gender: "male" | "female" | "other" | "";
-      location: string;
+      country: string;
       ethnicity: string;
-      clan_tree:string[];
-      fullName:string;
+      clan:string[];
+      rootClan:string;
+      lineage:string;
       profession: string;
       appInterests: string[];
       interests: string[];
@@ -32,10 +32,11 @@ export const useOnbardingFlowForm = create<OnboardingFlowState>((set) => ({
    form: {
       dateOfBirth: "",
       gender: "",
-      location: "",
+      country: "",
       ethnicity: "",
-      clan_tree: [],
-      fullName:"",
+      clan: [],
+      rootClan:"",
+      lineage:"",
       avatarUrl: "",
       profession: "",
       appInterests: [],
@@ -59,10 +60,11 @@ export const useOnbardingFlowForm = create<OnboardingFlowState>((set) => ({
          form: {
             dateOfBirth: "",
             gender: "",
-            location: "",
+            country: "",
             ethnicity: "",
-            clan_tree: [],
-            fullName:"",
+            clan: [],
+            rootClan:"",
+            lineage:"",
             profession: "",
             appInterests: [],
             interests: [],

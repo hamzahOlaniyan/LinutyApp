@@ -4,19 +4,9 @@ exports[`LoadingScreen renders a full-screen container with the logo (snapshot) 
 <View
   className="transition-discrete flex-1  items-center justify-center bg-white"
 >
-  <View
-    className="animate-spin duration-100 ease-in-out motion-reduce:duration-0"
-  >
-    <View
-      style={
-        {
-          "height": 100,
-          "opacity": 0.3,
-          "width": 100,
-        }
-      }
-      testID="loading-logo"
-    />
-  </View>
+  <ActivityIndicator
+    size="large"
+    testID="loading"
+  />
 </View>
 `;

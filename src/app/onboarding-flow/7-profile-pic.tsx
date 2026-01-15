@@ -2,43 +2,26 @@ import GradientButton from "@/components/ui/GradientButton";
 import StepContainer from "@/components/ui/StepContainer";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
-import { ProfileApi } from "@/hooks/useProfileApi";
 import Icon from "@/icons";
-import { queryClient } from "@/lib/queryClient";
-import { supabase } from "@/lib/supabase/supabase";
+import { CompleteRegistrationInput } from "@/store/types";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useOnbardingFlowForm } from "@/store/useOnbardingFlowForm";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
-import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
-
-type completeRegistrationInput = {
-  location?: string;
-  dateOfBirth?: string;
-  clan_tree?: string[];
-  gender?: string | null;
-  ethnicity?: string | null;
-  fullName?: string | null;
-  avatarUrl?: string | null;
-  profession?: string | null;
-  interest?: string[];
-  appInterests?: string[];
-  isProfileComplete?: boolean;
-};
 
 export default function ProfilePic() {
   const { me } = useAuthStore();
   const { form, setError } = useOnbardingFlowForm();
 
-  const updateProfile = ProfileApi.useCompleteRegistration();
+  // const updateProfile = ProfileApi.useCompleteRegistration();
 
   const [loading, setLoading] = useState(false);
   const [profilePic, setProfilePic] =
     useState<ImagePicker.ImagePickerAsset | null>(null);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const pickImages = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -63,87 +46,88 @@ export default function ProfilePic() {
     setProfilePic(asset);
   };
 
-  async function uploadAvatar(
-    file: ImagePicker.ImagePickerAsset,
-    userId: string
-  ) {
-    if (!file?.uri) throw new Error("No file uri provided");
+  // async function uploadAvatar(
+  //   file: ImagePicker.ImagePickerAsset,
+  //   userId: string
+  // ) {
+  //   if (!file?.uri) throw new Error("No file uri provided");
 
-    const uri = file.uri;
-    const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
-    const filePath = `profile-pic/${userId}/${Date.now()}-${file.id ?? "avatar"}.${fileExt}`;
+  //   const uri = file.uri;
+  //   const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
+  //   const filePath = `profile-pic/${userId}/${Date.now()}-${file.fileName ?? "avatar"}.${fileExt}`;
 
-    const response = await fetch(uri);
-    const arrayBuffer = await response.arrayBuffer();
-    const fileData = new Uint8Array(arrayBuffer);
+  //   const response = await fetch(uri);
+  //   const arrayBuffer = await response.arrayBuffer();
+  //   const fileData = new Uint8Array(arrayBuffer);
 
-    const { error } = await supabase.storage
-      .from("profile-avatar")
-      .upload(filePath, fileData, {
-        contentType: file.mimeType ?? "image/jpeg",
-        upsert: false
-      });
+  //   const { error } = await supabase.storage
+  //     .from("profile-avatar")
+  //     .upload(filePath, fileData, {
+  //       contentType: file.mimeType ?? "image/jpeg",
+  //       upsert: false
+  //     });
 
-    if (error) throw error;
+  //   if (error) throw error;
 
-    const { data } = supabase.storage
-      .from("profile-avatar")
-      .getPublicUrl(filePath);
-    return data.publicUrl; // returns string
-  }
-
-  // console.log("FormData", JSON.stringify(form, null, 2));
+  //   const { data } = supabase.storage
+  //     .from("profile-avatar")
+  //     .getPublicUrl(filePath);
+  //   return data.publicUrl;
+  // }
 
   async function completeRegistration() {
     setLoading(true);
+    console.log("clicked");
+    console.log(me?.id);
 
     if (!me?.id) {
       setLoading(false);
       return;
     }
 
-    // console.log("profilePic before upload:", profilePic);
-
     if (!profilePic?.uri) {
       setLoading(false);
-      setError?.("avatarUrl", "Please select a profile picture"); // if you have this
+      setError?.("avatarUrl", "Please select a profile picture");
       return;
     }
 
-    const avatarUrl = await uploadAvatar(profilePic, me.id);
+    // const avatarUrl = await uploadAvatar(profilePic, me.id);
 
-    const content: completeRegistrationInput = {
+    const content: CompleteRegistrationInput = {
       dateOfBirth: form.dateOfBirth,
       gender: form.gender,
-      location: form.location,
       ethnicity: form.ethnicity,
-      fullName: form.fullName,
-      clan_tree: form.clan_tree,
-      avatarUrl,
+      country: form.country,
+      lineage: form.lineage,
+      rootClan: form.rootClan,
+      clan: form.clan,
+      avatarUrl: "",
       profession: form.profession,
       appInterests: form.appInterests,
-      interest: form.interests,
+      interests: form.interests,
       isProfileComplete: true
     };
 
-    try {
-      await updateProfile.mutateAsync(content, {
-        onSuccess: async () => {
-          queryClient.invalidateQueries({ queryKey: ["me"] });
-          queryClient.invalidateQueries({ queryKey: ["profile"] });
-          console.log("✅form completed,");
-          router.replace("/onboarding-flow/8-welcome");
-          // reset();
-        },
-        onError: err => {
-          console.log("❌ something went wrong", err.message);
-        }
-      });
-    } catch (err) {
-      console.error("failed sending formr", err);
-    } finally {
-      setLoading(false);
-    }
+    console.log("payload", { content });
+
+    // try {
+    //   await updateProfile.mutateAsync(content, {
+    //     onSuccess: async () => {
+    //       queryClient.invalidateQueries({ queryKey: ["me"] });
+    //       queryClient.invalidateQueries({ queryKey: ["profile"] });
+    //       console.log("✅form completed,");
+    //       router.replace("/onboarding-flow/8-welcome");
+    //       // reset();
+    //     },
+    //     onError: err => {
+    //       console.log("❌ something went wrong", err.message);
+    //     }
+    //   });
+    // } catch (err) {
+    //   console.error("failed sending formr", err);
+    // } finally {
+    //   setLoading(false);
+    // }
   }
 
   return (

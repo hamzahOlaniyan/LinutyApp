@@ -1,43 +1,47 @@
 import { AuthResponse } from "@supabase/supabase-js";
+import { ApiResponse } from "./type";
 import { useApiMutation } from "./useApi";
 
 
 
-export const AuthApi = {
-  async checkEmail() {
+export class AuthApi  {
+
+   static signup(){ 
+    return useApiMutation<AuthResponse>(
+      "post",
+      "/auth/signup"
+    );
+  }
+  static checkEmail() {
     return useApiMutation<{ message: string }, { email: string }>(
       "post",
       "/auth/check-email"
     );
-  },
-
-  async verifyOtp() {
-    return useApiMutation<{ message: string }, { email: string; otp: string }>(
+  }
+  static verifyEmailOtp() {
+    return useApiMutation<ApiResponse, { email: string; code: string, purpose:string }>(
       "post",
-      "/auth/verify-otp"
+      "/auth/otp/verify"
     );
-  },
+  }
 
-  async checkUsername(){ 
+   static sendEmailOtp() {
+    return useApiMutation<ApiResponse, { email: string; purpose: string }>(
+      "post",
+      "/auth/otp/send"
+    );
+  }
+  
+  static checkUsername(){ 
     return useApiMutation<{ message: string },{username:string}>(
       "post",
       "/auth/check-username"
     );
-  },
-
-  async register(){ 
-    return useApiMutation<AuthResponse>(
-      "post",
-      "/api/auth/register"
-    );
-  },
-   
-
- useResetPassword(){
-     return useApiMutation<{status:string, message:string},{ email: string }>('post', '/api/auth/reset-password')
   }
-    
-
-} as const;
+ 
+  static useResetPassword(){
+     return useApiMutation<{status:string, message:string},{ email: string }>('post', '/auth/reset-password')
+  }
+} 
 
 

@@ -1,6 +1,14 @@
 import { FeedPost } from "@/components/Post/type";
 import { Profile } from "../../types/supabaseTypes";
 
+export type ApiResponse = {
+  status: "success" | "failed";
+  data: string[];
+  message: string;
+  available?: boolean;
+  verified: boolean;
+};
+
 export type FriendStatus =
   | "NONE"
   | "PENDING_OUTGOING"

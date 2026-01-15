@@ -6,11 +6,11 @@ import React from "react";
 import { View } from "react-native";
 
 export default function AppStart() {
-  const { completeOnboarding } = useAuthStore();
+  const { completeAppStart } = useAuthStore();
   const router = useRouter();
 
   const handleOnboarding = () => {
-    completeOnboarding();
+    completeAppStart();
     router.push("/auth/sign-in");
   };
   return (
