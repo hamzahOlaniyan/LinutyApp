@@ -26,7 +26,7 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 }
 
 export default function RootLayout() {
-  const { initialized, init, session, me } = useAuthStore();
+  const { initialized, init } = useAuthStore();
 
   const [loaded] = useFonts({
     [Font.Black]: require("@/assets/fonts/TikTokSans-Black.ttf"),

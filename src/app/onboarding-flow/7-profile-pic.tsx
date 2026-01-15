@@ -200,6 +200,3 @@ export default function ProfilePic() {
     </View>
   );
 }
-function uploadAvatar(profilePic: ImagePicker.ImagePickerAsset, id: string) {
-  throw new Error("Function not implemented.");
-}
