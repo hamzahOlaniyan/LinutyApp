@@ -1,24 +1,50 @@
+import AppText from "@/components/ui/AppText";
 import { hp, wp } from "@/constant/common";
+import { Image } from "expo-image";
+import { router } from "expo-router";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { reactionsItem } from "../type";
 
-export default function PostInfo() {
+type PostInfoType = {
+  commentCount: number | undefined;
+  reactions?: reactionsItem[];
+  postId: string;
+};
+export default function PostInfo({
+  commentCount,
+  reactions,
+  postId
+}: PostInfoType) {
+  const likeCount = reactions?.filter(l => l.type === "LIKE").length;
   return (
     <View style={s.container}>
-      {/* {Number(likeCount) >= 1 ? (
-        <AppText variant="post_info">{Number(likeCount)} like ·</AppText>
-      ) : null}
-
-      {commentCount && commentCount && (
+      {reactions && (
+        <TouchableOpacity
+          hitSlop={10}
+          onPress={() => router.push(`/(protected)/post/${postId}/reactions`)}
+          className="flex-row gap-2"
+        >
+          <FlatList
+            data={reactions.slice(0, 3)}
+            renderItem={({ item }) => (
+              <Image
+                source={{ uri: item.profile.avatarUrl ?? "" }}
+                style={s.image}
+              />
+            )}
+            horizontal
+            contentContainerStyle={{ gap: 6 }}
+          />
+          <AppText variant="post_info">{reactions?.length}</AppText>
+        </TouchableOpacity>
+      )}
+      <View className="flex-row gap-2">
+        <AppText variant="post_info">{likeCount} likes</AppText>
+        <AppText>·</AppText>
         <AppText variant="post_info">{commentCount} comments</AppText>
-      )} */}
-
-      {/* <AppText color={appColors.placeholder} className="text-right">
-        {post?._count.comments && post._count.comments} repost |
-      </AppText>
-      <AppText color={appColors.placeholder} className="text-right">
-        {post?._count.comments && post._count.comments} share
-      </AppText> */}
+      </View>
     </View>
   );
 }
@@ -27,7 +53,13 @@ const s = StyleSheet.create({
     paddingHorizontal: wp(3),
     paddingVertical: hp(0.5),
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     gap: 6
+  },
+  image: {
+    width: 26,
+    height: 26,
+    borderRadius: 30,
+    backgroundColor: "blue"
   }
 });

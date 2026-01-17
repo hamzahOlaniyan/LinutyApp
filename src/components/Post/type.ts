@@ -1,6 +1,15 @@
 
 export type PostVisibility = "PUBLIC" | "FOLLOWERS" | "LINEAGE_ONLY" | "PRIVATE";
 
+export type reactionsItem = {
+  id: string;
+  postId: string;
+  profileId: string;
+  type: 'LIKE'| "LOVE"| "ANGRY"|"SAD"|'LAUGH';
+  createdAt: Date;
+  profile:Author
+}
+
 export type PostItem = {
   id: string;
   profileId: string;
@@ -14,15 +23,18 @@ export type PostItem = {
   likeCount: number;
   shareCount: number;
   mediaFiles: FeedMediaFile[];
-  author:Author
+  author:Author;
+  likes: reactionsItem[]
 };
 
 export type PostCardProps = {
   post: FeedPost;
   likeCount?: number;
   commentCount?:number;
-  commentId?:string
+  commentId?:string,
+  reactions?: reactionsItem[]
   onOpenComments?: (postId: string) => void;
+
 
 };
 
@@ -59,17 +71,13 @@ export type FeedPost = {
   profileId: string;
   content: string | null;
   visibility: PostVisibility;
-  locationText: string | null;
-  lineageId: string | null;
   commentCount: number;
   likeCount: number;
-  shareCount: number;
+  // shareCount: number;
   createdAt: string;
-  updatedAt: string;
 
   author: FeedAuthor;
   mediaFiles: FeedMediaFile;
-  lineage: FeedLineage | null;
   _count: {
     comments: number;
     reactions: number;

@@ -14,8 +14,9 @@ export default function PostAction({
   onOpenComments,
   commentCount
 }: PostCardProps) {
-  const { data: myReaction } = PostApi.getMyReaction(post.id);
-  const reactMutation = PostApi.addReaction(post.id);
+  const { data: REACTIONS } = PostApi.getReactions(post.id);
+  const { data: MY_REACTION } = PostApi.getMyReaction(post.id);
+  const ADD_REACTION = PostApi.addReaction(post.id);
 
   const router = useRouter();
 
@@ -29,9 +30,9 @@ export default function PostAction({
   }, [post.likeCount]);
 
   useEffect(() => {
-    if (!myReaction) return;
-    setLikes(prev => ({ ...prev, liked: myReaction.liked }));
-  }, [myReaction?.liked]);
+    if (!MY_REACTION) return;
+    setLikes(prev => ({ ...prev, liked: MY_REACTION.liked }));
+  }, [MY_REACTION?.liked]);
 
   const handleLike = () => {
     // optimistic
@@ -39,7 +40,7 @@ export default function PostAction({
       count: prev.liked ? Math.max(0, prev.count - 1) : prev.count + 1,
       liked: !prev.liked
     }));
-    reactMutation.mutate(
+    ADD_REACTION.mutate(
       { type: "LIKE" },
       {
         onError: () => {
@@ -57,8 +58,8 @@ export default function PostAction({
     <>
       <View style={s.container}>
         <PostInfo
-          post={post}
-          likeCount={likes?.count}
+          postId={post.id}
+          reactions={REACTIONS}
           commentCount={commentCount}
         />
         <View style={s.actions}>

@@ -1,3 +1,4 @@
+import { reactionsItem } from "@/components/Post/type";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { MediaFile, PostInput, PostResponse } from "../../types/supabaseTypes";
@@ -101,6 +102,10 @@ export const PostApi =  {
           }
         }
       );
+  },
+
+  getReactions(postId: string){
+    return useApiQuery<reactionsItem[]>(`/post/${postId}/reaction`);
   },
 
   getMyReaction(postId: string){

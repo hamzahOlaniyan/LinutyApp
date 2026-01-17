@@ -20,13 +20,14 @@ import { PostCardProps } from "../type";
 
 const PostCard = memo(function PostCard({
   post,
-  onOpenComments,
-  commentCount
+  onOpenComments
 }: PostCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [readmore, setReadMore] = useState(false);
 
   const media = post?.mediaFiles ?? [];
+
+  const commentCount = post._count.comments;
 
   const router = useRouter();
   const { width: screenWidth } = Dimensions.get("window");

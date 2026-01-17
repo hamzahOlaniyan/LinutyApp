@@ -48,6 +48,7 @@ export default function HomeFeed() {
   const [replyTo, setReplyTo] = useState<ReplyingTo>(null);
 
   const topLevelComments = comments.filter(p => p.parentCommentId == null);
+  const commentCount = topLevelComments.length;
 
   const {
     data: commentsEnvelope,
@@ -152,13 +153,7 @@ export default function HomeFeed() {
   };
 
   const renderPostItem: ListRenderItem<FeedPost> = useCallback(
-    ({ item }) => (
-      <PostCard
-        post={item}
-        onOpenComments={openCommentsSheet}
-        commentCount={topLevelComments.length}
-      />
-    ),
+    ({ item }) => <PostCard post={item} onOpenComments={openCommentsSheet} />,
     [openCommentsSheet]
   );
 
@@ -208,7 +203,7 @@ export default function HomeFeed() {
       <Portal hostName="root">
         <ModalBottomSheet
           ref={bottomSheetRef}
-          title={`${topLevelComments.length} Comments`}
+          title={`${commentCount} Comments`}
           children={
             <View style={{ marginBottom: bottom, flex: 1 }}>
               <ScreenView>
@@ -221,7 +216,7 @@ export default function HomeFeed() {
                     ) : (
                       <BottomSheetFlatList
                         ref={commentsListRef}
-                        data={comments.filter(p => p.parentCommentId == null)}
+                        data={topLevelComments}
                         renderItem={renderCommentItem}
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
