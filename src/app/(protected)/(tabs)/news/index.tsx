@@ -12,10 +12,6 @@ import { ActivityIndicator, FlatList, View } from "react-native";
 
 export default function NewsScreen() {
   const { data, isLoading } = useNews();
-  // const [category, setCategory] = useState("all");
-
-  // if (isLoading) return <ActivityIndicator />;
-  // if (isError) return <Text>Error: {(error as Error).message}</Text>;
 
   const newsCategory = [
     "all",
@@ -48,7 +44,6 @@ export default function NewsScreen() {
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        // <NewsSkeleton />
         <>
           <FlatList
             data={data?.results || []}

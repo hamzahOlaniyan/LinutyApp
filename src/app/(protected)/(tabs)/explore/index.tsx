@@ -3,7 +3,6 @@ import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import Icon from "@/icons";
 import { FramePersonIcon } from "@/icons/ico/FramePersonIcon";
-import { FriendsIcon } from "@/icons/ico/friendsIcon";
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -44,7 +43,7 @@ export default function index() {
             style={s.smallLink}
             className=""
           >
-            <FriendsIcon />
+            <Icon name={"friendsIcon"} />
             <AppText>Clan member near you</AppText>
           </TouchableOpacity>
           <TouchableOpacity

@@ -24,6 +24,7 @@ import { group } from "./ico/group";
 import { home } from "./ico/home";
 import { homeSolid } from "./ico/homeSolid";
 import { lineage } from "./ico/lineage";
+import { lineageSolid } from "./ico/lineageSolid";
 import { location } from "./ico/location";
 import { locationSolid } from "./ico/locationSolid";
 import { logout } from "./ico/logout";
@@ -104,7 +105,8 @@ const icons = {
   chevronback,
   group,
   friendsIcon,
-  friendsIconSolid
+  friendsIconSolid,
+  lineageSolid
 } as const;
 
 export type IconName = keyof typeof icons;

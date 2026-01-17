@@ -1,4 +1,5 @@
 import Svg, { Path } from "react-native-svg";
+import { IconProps } from "../types";
 
 export const lineage = ({ ...props }: IconProps) => {
   return (
