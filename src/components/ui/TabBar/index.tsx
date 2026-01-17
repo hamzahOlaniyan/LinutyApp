@@ -40,11 +40,17 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({
             style={styles.button}
           >
             {TabBarIcon(route.name, isFocused)}
-            {label === "search" ? null : (
-              <AppText variant="xs" className="font-Regular text-xs capitalize">
-                {label}
-              </AppText>
-            )}
+            {/* {label === "search" ? null : ( */}
+            <AppText
+              style={{
+                color: isFocused ? appColors.primary : appColors.text
+              }}
+              variant="xs"
+              className="font-SemiBold text-xs capitalize"
+            >
+              {label}
+            </AppText>
+            {/* )} */}
           </TouchableOpacity>
         );
       })}

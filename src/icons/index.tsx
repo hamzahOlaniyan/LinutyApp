@@ -18,6 +18,9 @@ import { envelope } from "./ico/envelope";
 import { events } from "./ico/events";
 import { favorite } from "./ico/favorite";
 import { filter } from "./ico/filter";
+import { friendsIcon } from "./ico/friendsIcon";
+import { friendsIconSolid } from "./ico/friendsIconSolid";
+import { group } from "./ico/group";
 import { home } from "./ico/home";
 import { homeSolid } from "./ico/homeSolid";
 import { lineage } from "./ico/lineage";
@@ -98,7 +101,10 @@ const icons = {
   locationSolid,
   accountSolid,
   reset,
-  chevronback
+  chevronback,
+  group,
+  friendsIcon,
+  friendsIconSolid
 } as const;
 
 export type IconName = keyof typeof icons;

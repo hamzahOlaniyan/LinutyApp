@@ -2,7 +2,7 @@ import AppText from "@/components/ui/AppText";
 import { hp, wp } from "@/constant/common";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { reactionsItem } from "../type";
@@ -18,6 +18,16 @@ export default function PostInfo({
   postId
 }: PostInfoType) {
   const likeCount = reactions?.filter(l => l.type === "LIKE").length;
+
+  const renderItem = useCallback(
+    ({ item }: { item: reactionsItem }) => {
+      return (
+        <Image source={{ uri: item.profile.avatarUrl ?? "" }} style={s.image} />
+      );
+    },
+    [postId]
+  );
+
   return (
     <View style={s.container}>
       {reactions && (
@@ -28,12 +38,7 @@ export default function PostInfo({
         >
           <FlatList
             data={reactions.slice(0, 3)}
-            renderItem={({ item }) => (
-              <Image
-                source={{ uri: item.profile.avatarUrl ?? "" }}
-                style={s.image}
-              />
-            )}
+            renderItem={renderItem}
             horizontal
             contentContainerStyle={{ gap: 6 }}
           />

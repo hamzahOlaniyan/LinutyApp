@@ -19,7 +19,7 @@ export default function NewDetail() {
     item?: string;
   }>();
 
-  const { width: screenWidth } = Dimensions.get("screen");
+  const { width: screenWidth } = Dimensions.get("window");
 
   const item = params.item ? JSON.parse(params.item) : null;
 

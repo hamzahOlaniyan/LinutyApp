@@ -1,7 +1,7 @@
 import Svg, { Path } from "react-native-svg";
 import { IconProps } from "../types";
 
-export const FriendsIconSolid = ({ ...props }: IconProps) => {
+export const friendsIconSolid = ({ ...props }: IconProps) => {
   return (
     <Svg
       viewBox="0 -960 960 960"

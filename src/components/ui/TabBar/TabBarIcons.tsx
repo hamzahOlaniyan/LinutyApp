@@ -1,7 +1,6 @@
 import { appColors } from "@/constant/colors";
 import Icon from "@/icons";
 import React from "react";
-import { View } from "react-native";
 
 const size = 24;
 
@@ -27,21 +26,21 @@ export const TabBarIcon = (routeName: string, isFocused?: boolean) => {
       return (
         <>
           {isFocused ? (
-            <Icon name="discoverSolid" color={appColors.primary} size={size} />
+            <Icon name="lineage" color={appColors.primary} size={size} />
           ) : (
-            <Icon name="discover" color={appColors.text} size={size} />
+            <Icon name="lineage" color={appColors.text} size={size} />
           )}
         </>
       );
     case "search":
       return (
-        <View className="items-center justify-center rounded-full bg-neutral-200 p-2">
-          <Icon
-            name="lineage"
-            color={isFocused ? appColors.primary : appColors.text}
-            size={24}
-          />
-        </View>
+        <>
+          {isFocused ? (
+            <Icon name="friendsIcon" color={appColors.primary} size={size} />
+          ) : (
+            <Icon name="discover" color={appColors.text} size={size} />
+          )}
+        </>
       );
     case "store":
       return (

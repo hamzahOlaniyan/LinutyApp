@@ -8,7 +8,6 @@ import HomeHeaderAction from "@/components/ui/HomeHeaderAction";
 import ScreenView from "@/components/ui/Layout/ScreenView";
 import { ModalBottomSheet } from "@/components/ui/ModalBottomSheet";
 import { appColors } from "@/constant/colors";
-import { hp, wp } from "@/constant/common";
 import { CommentApi } from "@/hooks/useCommentApi";
 import { usePostComments } from "@/hooks/useCommentQuery";
 import { useFeedQuery } from "@/hooks/useFeedQuery";
@@ -18,15 +17,25 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import {
   ActivityIndicator,
   FlatList,
   ListRenderItem,
-  StyleSheet,
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+type FeedItemProps = {
+  post: FeedPost;
+  onOpenComments: (postId: string) => void;
+};
 
 export default function HomeFeed() {
   const {
@@ -94,20 +103,17 @@ export default function HomeFeed() {
   const openCommentsSheet = useCallback((pid: string, cid?: string) => {
     setSelectedPostId(pid);
     setInitialCommentId(cid ?? null);
-
     scrollToPost(pid);
-
     requestAnimationFrame(() => bottomSheetRef.current?.expand());
   }, []);
 
+  //  const openCommentsSheet = useCallback(
+  //     String(postId),
+  //     commentId ? String(commentId) : undefined
+  //   );
+
   useEffect(() => {
     if (open !== "true" || !postId) return;
-
-    openCommentsSheet(
-      String(postId),
-      commentId ? String(commentId) : undefined
-    );
-
     router.setParams({
       openComments: undefined,
       postId: undefined,
@@ -152,8 +158,28 @@ export default function HomeFeed() {
     setReplyTo(null);
   };
 
-  const renderPostItem: ListRenderItem<FeedPost> = useCallback(
-    ({ item }) => <PostCard post={item} onOpenComments={openCommentsSheet} />,
+  const onRefresh = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  const FeedItem = React.memo(function FeedItem({
+    post,
+    onOpenComments
+  }: FeedItemProps) {
+    return (
+      <PostCard post={post} onOpenComments={() => onOpenComments(post.id)} />
+    );
+  });
+
+  const onOpenComments = useCallback(
+    (postId: string) => {
+      openCommentsSheet(postId);
+    },
+    [openCommentsSheet]
+  );
+
+  const renderPostItem = useCallback<ListRenderItem<FeedPost>>(
+    ({ item }) => <FeedItem post={item} onOpenComments={onOpenComments} />,
     [openCommentsSheet]
   );
 
@@ -168,6 +194,13 @@ export default function HomeFeed() {
     [selectedPostId]
   );
 
+  const header = useMemo(() => <HomeHeaderAction />, []);
+
+  const contentStyle = useMemo(
+    () => ({ backgroundColor: appColors.background }),
+    [appColors.background]
+  );
+
   return (
     <View className="flex-1 bg-white">
       <View style={{ flex: 1, paddingTop: top, backgroundColor: "white" }}>
@@ -176,8 +209,8 @@ export default function HomeFeed() {
           data={posts}
           keyExtractor={item => item.id}
           renderItem={renderPostItem}
-          ListHeaderComponent={<HomeHeaderAction />}
-          onRefresh={refetch}
+          ListHeaderComponent={header}
+          onRefresh={onRefresh}
           refreshing={isLoading}
           bounces
           scrollEnabled
@@ -221,7 +254,7 @@ export default function HomeFeed() {
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                         scrollEventThrottle={4}
-                        contentContainerStyle={s.contentContainer}
+                        contentContainerStyle={contentStyle}
                       />
                     )}
                   </>
@@ -240,25 +273,3 @@ export default function HomeFeed() {
     </View>
   );
 }
-
-const s = StyleSheet.create({
-  container: { paddingTop: 12 },
-  actions: {
-    paddingHorizontal: wp(3),
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderTopColor: appColors.border,
-    borderTopWidth: 0.2
-  },
-  button: {
-    paddingVertical: hp(1),
-    flexDirection: "row",
-    gap: 3,
-    alignItems: "center",
-    height: "100%"
-  },
-  contentContainer: {
-    paddingBottom: 50,
-    gap: 20
-  }
-});
