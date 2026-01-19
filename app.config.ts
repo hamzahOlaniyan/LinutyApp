@@ -55,7 +55,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     },
   };
 
-  // Apply variant-specific settings
   if (variant === "development") {
     return {
       ...baseConfig,
@@ -64,14 +63,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         EXPO_PUBLIC_ENDPOINT_URL: process.env.EXPO_PUBLIC_ENDPOINT_URL,
         eas: {
           projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
-          eas: {
-          projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
-        },
       },
     },
       android: {
         ...baseConfig.android,
-        package: "com.hamzaholaniyan.linuttydev", // unique package name
+        package: "com.hamzaholaniyan.linuttydev",
         versionCode: 15, // increment this only when updating dev build
       },
       ios: { "bundleIdentifier": "com.hamzaholaniyan.linuttydev" }

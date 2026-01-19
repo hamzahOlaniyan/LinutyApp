@@ -26,9 +26,9 @@ export default function TabLayout() {
         }}
       >
         {focused ? (
-          <Icon name={focusedIcon} color={appColors.primary} size={28} />
+          <Icon name={focusedIcon} color={appColors.primary} size={24} />
         ) : (
-          <Icon name={icon} color={appColors.text} size={28} />
+          <Icon name={icon} color={appColors.text} size={24} />
         )}
       </View>
     );
@@ -89,7 +89,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="store"
         options={{
-          title: "store",
+          title: "Community Store",
           headerShown: false,
           popToTopOnBlur: true,
           tabBarIcon: ({ focused }) => (

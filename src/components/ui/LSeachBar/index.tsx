@@ -52,9 +52,9 @@ const style = StyleSheet.create({
   container: {
     flexDirection: "row",
     backgroundColor: appColors.searchbar,
-    height: hp(6),
+    height: hp(5.5),
     width: "100%",
-    borderRadius: 12,
+    borderRadius: 100,
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
