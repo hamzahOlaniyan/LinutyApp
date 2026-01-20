@@ -25,7 +25,7 @@ export default function Step8() {
     <ScreenView>
       <View className="gap-2">
         <Image
-          source={require("@/assets/images/linuty.png")}
+          source={require("@/assets/images/logo.png")}
           style={{ width: 75, height: 75, alignSelf: "center" }}
           contentFit="contain"
         />
