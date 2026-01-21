@@ -108,8 +108,13 @@
 // };
 
 // app.config.ts
-import "dotenv/config";
+// import "dotenv/config";
 import type { ConfigContext, ExpoConfig } from "expo/config";
+
+if (!process.env.EAS_BUILD) {
+  // only for local `npx expo start` etc.
+  require("dotenv").config();
+}
 
 type Variant = "development" | "preview" | "production";
 
@@ -136,10 +141,11 @@ const IDS: Record<Variant, { androidPackage: string; iosBundleId: string; displa
   };
 
 function getVariant(): Variant {
-  const v = (process.env.APP_VARIANT || "development") as Variant;
+  const v = (process.env.EAS_BUILD_PROFILE || process.env.APP_VARIANT || "development") as Variant;
   if (!["development", "preview", "production"].includes(v)) return "development";
   return v;
 }
+
 
 function pickEndpoint(variant: Variant) {
   if (variant === "development") return process.env.EXPO_PUBLIC_ENDPOINT_URL; 
