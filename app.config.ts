@@ -4,11 +4,19 @@ import { ConfigContext, ExpoConfig } from "expo/config";
 export default ({ config }: ConfigContext): ExpoConfig => {
   const variant = process.env.APP_VARIANT || "development";
 
+    const baseExtra = {
+    EXPO_PUBLIC_SUPABASE_URL: process.env.EXPO_PUBLIC_SUPABASE_URL,
+    EXPO_PUBLIC_SUPABASE_ANON_KEY: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+    EXPO_PUBLIC_PROD_API_URL: process.env.EXPO_PUBLIC_PROD_API_URL,
+    EXPO_PUBLIC_ENDPOINT_URL: process.env.EXPO_PUBLIC_ENDPOINT_URL,
+    eas: { projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015" },
+  };
+
   const baseConfig = {
     ...config,
     name: "LinutyApp",
     slug: "LinutyApp",
-    version: "1.3.0",
+    version: "1.5.0",
     orientation: "portrait",
     icon: "./src/assets/images/icon.png",
     scheme: "linutyapp",
@@ -40,12 +48,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     experiments: {
       typedRoutes: true,
     },
-    extra: {
-      EXPO_PUBLIC_ENDPOINT_URL: process.env.EXPO_PUBLIC_PROD_API_URL,
-      eas: {
-        projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
-      },
-    },
+    extra: baseExtra,
     owner: "hamzaholaniyan",
 
     runtimeVersion: "1.0.0",
@@ -55,26 +58,16 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     },
   };
 
-  // Apply variant-specific settings
   if (variant === "development") {
     return {
       ...baseConfig,
       name: "Linuty Dev",
-      extra: {
-        EXPO_PUBLIC_ENDPOINT_URL: process.env.EXPO_PUBLIC_ENDPOINT_URL,
-        eas: {
-          projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
-          eas: {
-          projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
-        },
-      },
-    },
       android: {
         ...baseConfig.android,
-        package: "com.hamzaholaniyan.linuttydev", // unique package name
-        versionCode: 15, // increment this only when updating dev build
+        package: "com.hamzaholaniyan.linutydev", 
+        versionCode: 15, 
       },
-      ios: { "bundleIdentifier": "com.hamzaholaniyan.linuttydev" }
+      ios: { "bundleIdentifier": "com.hamzaholaniyan.linutydev" }
     } as ExpoConfig;
   }
 
@@ -82,19 +75,15 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     return {
       ...baseConfig,
       name: "Linuty Preview",
-       extra: {
-        EXPO_PUBLIC_ENDPOINT_URL: process.env.EXPO_PUBLIC_PROD_API_URL,
-        eas: {
-          projectId: "9ba15d7e-509f-4f7c-ae54-827330c67015",
-        },
-    },
       android: {
         ...baseConfig.android,
-        package: "com.hamzaholaniyan.linuttypreview", // unique package name
-        versionCode: 20, // increment this only when updating preview build
+        package: "com.hamzaholaniyan.linuttypreview", 
+        versionCode: 20, 
       },
-      ios: { "bundleIdentifier": "com.hamzaholaniyan.linuttypreview" }
-
+      ios: { "bundleIdentifier": "com.hamzaholaniyan.linutypreview" },
+      extra: {
+        ...baseExtra, 
+      },
     } as ExpoConfig;
   }
 

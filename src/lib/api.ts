@@ -1,34 +1,15 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import axios from "axios";
-import Constants from "expo-constants";
 
 
-const extra = Constants.expoConfig?.extra;
+const BASE_URL = process.env.EXPO_PUBLIC_PROD_API_URL;
 
-const BASE_URL =
-  extra?.EXPO_PUBLIC_ENDPOINT_URL ??
-  process.env.EXPO_PUBLIC_ENDPOINT_URL ??
-  "http://10.0.2.2:8080/api";
-
-console.log("API BASE URL:", BASE_URL);
 
 export const api = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });
 
-// const EXPO_PUBLIC_ENDPOINT_URL =
-//   Constants.expoConfig?.extra?.EXPO_PUBLIC_ENDPOINT_URL;
-
-// export const api = axios.create({
-//   baseURL: EXPO_PUBLIC_ENDPOINT_URL,
-//   withCredentials: true,
-//   // timeout:1000
-// });
-
-// --------------------------------------------------
-// REQUEST INTERCEPTOR — ALWAYS use accessToken
-// --------------------------------------------------
 api.interceptors.request.use((config) => {
     const token = useAuthStore.getState().session?.access_token;
 
