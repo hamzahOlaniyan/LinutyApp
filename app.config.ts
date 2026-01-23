@@ -50,9 +50,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     },
     extra: baseExtra,
     owner: "hamzaholaniyan",
-
-    runtimeVersion: "1.0.0",
-
     updates: {
       url: "https://u.expo.dev/9ba15d7e-509f-4f7c-ae54-827330c67015",
     },
