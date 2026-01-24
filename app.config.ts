@@ -16,7 +16,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ...config,
     name: "LinutyApp",
     slug: "LinutyApp",
-    version: "1.5.0",
+    version: "2.0.0",
     orientation: "portrait",
     icon: "./src/assets/images/icon.png",
     scheme: "linutyapp",
@@ -49,6 +49,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       typedRoutes: true,
     },
     extra: baseExtra,
+    runtimeVersion: {
+      policy: "appVersion"
+    },
+
     owner: "hamzaholaniyan",
     updates: {
       url: "https://u.expo.dev/9ba15d7e-509f-4f7c-ae54-827330c67015",

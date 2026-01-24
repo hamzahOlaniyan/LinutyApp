@@ -3,6 +3,8 @@ import axios from "axios";
 
 
 const BASE_URL = process.env.EXPO_PUBLIC_ENDPOINT_URL;
+// const BASE_URL = process.env.EXPO_PUBLIC_PROD_API_URL;
+
 
 
 

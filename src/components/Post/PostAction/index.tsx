@@ -4,7 +4,7 @@ import { hp, wp } from "@/constant/common";
 import { PostApi } from "@/hooks/usePostApi";
 import Icon from "@/icons";
 import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import PostInfo from "../PostInfo";
 import { PostCardProps } from "../type";
@@ -20,39 +20,75 @@ export default function PostAction({
 
   const router = useRouter();
 
+  const isOptimisticRef = useRef(false);
+
   const [likes, setLikes] = useState<{ count: number; liked: boolean }>({
     count: post.likeCount ?? 0,
     liked: false
   });
 
   useEffect(() => {
+    if (isOptimisticRef.current) return;
     setLikes(prev => ({ ...prev, count: post.likeCount ?? 0 }));
   }, [post.likeCount]);
 
   useEffect(() => {
-    if (!MY_REACTION) return;
-    setLikes(prev => ({ ...prev, liked: MY_REACTION.liked }));
+    if (isOptimisticRef.current) return;
+    setLikes(prev => ({ ...prev, liked: MY_REACTION?.liked ?? false }));
   }, [MY_REACTION?.liked]);
 
   const handleLike = () => {
-    // optimistic
-    setLikes(prev => ({
+    const prev = likes;
+    const next = {
       count: prev.liked ? Math.max(0, prev.count - 1) : prev.count + 1,
       liked: !prev.liked
-    }));
+    };
+    isOptimisticRef.current = true;
+    setLikes(next);
+
     ADD_REACTION.mutate(
       { type: "LIKE" },
       {
         onError: () => {
-          // rollback
-          setLikes(prev => ({
-            count: prev.liked ? Math.max(0, prev.count - 1) : prev.count + 1,
-            liked: !prev.liked
-          }));
+          setLikes(prev);
+          isOptimisticRef.current = false;
+        },
+        onSettled: () => {
+          // let server state take over again after refetch happens
+          isOptimisticRef.current = false;
         }
       }
     );
   };
+
+  // useEffect(() => {
+  //   setLikes(prev => ({ ...prev, count: post.likeCount ?? 0 }));
+  // }, [post.likeCount]);
+
+  // useEffect(() => {
+  //   if (!MY_REACTION) return;
+  //   setLikes(prev => ({ ...prev, liked: MY_REACTION.liked }));
+  // }, [MY_REACTION?.liked]);
+
+  // const handleLike = () => {
+  //   const prev = likes;
+
+  //   const next = {
+  //     count: prev.liked ? Math.max(0, prev.count - 1) : prev.count + 1,
+  //     liked: !prev.liked
+  //   };
+
+  //   setLikes(next);
+
+  //   ADD_REACTION.mutate(
+  //     { type: "LIKE" },
+  //     {
+  //       onError: () => {
+  //         setLikes(prev);
+  //       }
+  //     }
+  //   );
+  // };
 
   return (
     <>

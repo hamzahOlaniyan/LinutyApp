@@ -16,7 +16,9 @@ import BottomSheet, {
   BottomSheetFlatListMethods
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
+import Constants from "expo-constants";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import * as Updates from "expo-updates";
 import React, {
   useCallback,
   useEffect,
@@ -31,6 +33,13 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+console.log("channel", Updates.channel); // easiest
+console.log("runtimeVersion", Updates.runtimeVersion);
+console.log("updateId", Updates.updateId);
+console.log("nativeBuildVersion", Updates.runtimeVersion); // android versionCode / iOS build number
+
+console.log("appVersion", Constants.expoConfig?.version);
 
 type FeedItemProps = {
   post: FeedPost;

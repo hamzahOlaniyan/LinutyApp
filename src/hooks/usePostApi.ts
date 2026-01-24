@@ -16,7 +16,7 @@ type ReactToPostParams = {
 
 export type MyReactionResponse = {
   liked: boolean;
-  type: ReactionType;
+  type: ReactionType | null;
 };
 
 type ReactToPostResponse =
@@ -113,10 +113,33 @@ export const PostApi =  {
   },
 
   addReaction(postId: string){
+    const qc = useQueryClient();
     return useApiMutation<ReactToPostResponse, ReactToPostParams>(
       "post",
       `/post/${postId}/reactions`,
       {
+       onMutate: async (vars) => {
+          const key = [`/post/${postId}/reactions/me`];
+
+          const prev = qc.getQueryData<MyReactionResponse>(key);
+
+          qc.setQueryData<MyReactionResponse>(key, {
+            liked: prev?.type === vars.type ? !prev?.liked : true,
+            type: vars.type && prev?.liked ? null : (vars.type ?? null),
+          });
+
+          return { prevMyReaction: prev };
+        },
+         onError: (_err, _vars, ctx: any) => {
+          if (ctx?.prevFeed) qc.setQueryData(["/post/feed"], ctx.prevFeed);
+          if (ctx?.prevPost) qc.setQueryData([`/post/${postId}`], ctx.prevPost);
+        },
+
+        onSettled: () => {
+          qc.invalidateQueries({ queryKey: ["/post/feed"] });
+          qc.invalidateQueries({ queryKey: [`/post/${postId}`] });
+          qc.invalidateQueries({ queryKey: [`/post/${postId}/reactions`] });
+        },
         invalidateKeys: [
           "/post/feed", // if your feed shows counts
           `/post/${postId}`, // post details screen
