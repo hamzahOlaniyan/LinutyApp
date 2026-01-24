@@ -1,7 +1,6 @@
 import AppText from "@/components/ui/AppText";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
-import dayjs from "dayjs";
 import { Image } from "expo-image";
 import { RelativePathString, useLocalSearchParams } from "expo-router";
 import React from "react";
@@ -40,12 +39,14 @@ export default function NewDetail() {
     >
       <View style={{ paddingHorizontal: wp(3), gap: 4 }}>
         <View className="flex-row justify-between">
-          <AppText color={appColors.placeholder}>{item?.category}</AppText>
-          <AppText color={appColors.placeholder}>
+          {/* <AppText color={appColors.placeholder}>{item?.category}</AppText> */}
+          {/* <AppText color={appColors.placeholder}>
             {dayjs(item?.pubDate).format("ddd DD MMM YYYY")}
-          </AppText>
+          </AppText> */}
         </View>
-        <AppText>{item.title}</AppText>
+        <AppText variant={"titleLarge"} className="font-SemiBold">
+          {item.title}
+        </AppText>
         <AppText color={appColors.placeholder}>
           {item?.source_url.replace(/^https?:\/\//, "")}
         </AppText>

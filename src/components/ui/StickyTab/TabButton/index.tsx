@@ -7,7 +7,7 @@ import AppText from "../../AppText";
 type Props = ButtonProps & {
   isActive?: boolean;
   activeColor?: string;
-  title: string;
+  title: string | undefined;
   onPress?: () => void;
 };
 export default function TabButton({
@@ -25,11 +25,20 @@ export default function TabButton({
           height: hp(4),
           backgroundColor: isActive ? activeColor : appColors.white,
           borderColor: appColors.grey,
-          borderWidth: isActive ? 0 : 1
+          borderWidth: isActive ? 0 : 1,
+          justifyContent: "center",
+          alignItems: "center",
+          alignContent: "center"
         }
       ]}
     >
-      <AppText color={isActive ? appColors.white : ""}>{title}</AppText>
+      <AppText
+        variant={"small"}
+        className="capitalize"
+        color={isActive ? appColors.white : ""}
+      >
+        {title}
+      </AppText>
     </Pressable>
   );
 }

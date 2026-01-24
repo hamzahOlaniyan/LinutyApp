@@ -1,17 +1,28 @@
+import AppText from "@/components/ui/AppText";
 import { Stack } from "expo-router";
+import { View } from "react-native";
 
 export default function CommunityLayout() {
   return (
-    <Stack screenOptions={{ headerShadowVisible: false, headerShown: false }}>
-      <Stack.Screen name="index" options={{}} />
-      label
+    <Stack screenOptions={{ headerShadowVisible: false }}>
       <Stack.Screen
-        name="[id]"
+        name="index"
         options={{
-          title: "article detail",
-          headerTitle: () => ""
+          headerTitle: "",
+          headerLeft: () => (
+            <View>
+              <AppText variant={"header"} className="font-Bold">
+                Discover
+              </AppText>
+              <AppText className="font-Medium">
+                Latest news from the community
+              </AppText>
+            </View>
+          )
         }}
       />
+
+      <Stack.Screen name="[article_id]" options={{ headerTitle: "" }} />
     </Stack>
   );
 }

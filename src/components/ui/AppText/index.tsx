@@ -51,7 +51,7 @@ const textVariants = cva(
         post_content: "",
         post_info: "text-placeholder",
         post_date: "text-placeholder",
-        post_action: "",
+        post_action: "font-Medium",
         post_visability: "text-placeholder"
       }
     },
@@ -107,7 +107,7 @@ const variantFontSizes: Record<VariantName, number> = {
   post_username: hp(1.5),
   post_content: hp(1.8),
   post_info: hp(1.6),
-  post_action: hp(1.8)
+  post_action: hp(1.7)
 };
 
 const AppText = ({

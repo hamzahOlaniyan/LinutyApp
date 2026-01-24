@@ -1,41 +1,52 @@
-// import NewsCard from "@/components/news/NewsCard";
-// import NewsSkeleton from "@/components/news/NewsSkeleton";
-// import FilterButton from "@/components/ui/FilterButton";
-// import ScreenHeader from "@/components/ui/ScreenHeader";
 import NewsCard from "@/components/news/Card";
+import { NewResponse } from "@/components/news/type";
 import TabButton from "@/components/ui/StickyTab/TabButton";
 import { appColors } from "@/constant/colors";
 import { wp } from "@/constant/common";
 import { useNews } from "@/hooks/useNews";
-import React from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import React, { useCallback, useState } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  ListRenderItem,
+  View
+} from "react-native";
+
+type ResultItem = { category?: string | string[] };
 
 export default function NewsScreen() {
   const { data, isLoading } = useNews();
 
-  const newsCategory = [
-    "all",
-    "politics",
-    "sport",
-    "entertainment",
-    "business",
-    "lifestyle",
-    "crime"
-  ];
+  const [selectedCat, setSelectedCat] = useState("All");
+
+  const category: string[] = data?.results
+    .map((i: ResultItem) => i.category)
+    .flat();
+
+  const uniqueWords: string[] = ["All", ...new Set(category)];
+
+  const renderItem = useCallback<ListRenderItem<NewResponse>>(
+    ({ item }) => {
+      return <NewsCard item={item} />;
+    },
+    [data]
+  );
+
+  console.log({ selectedCat });
 
   return (
     <View style={{ backgroundColor: appColors.white, flex: 1 }}>
-      <View className="py-2">
+      <View className="py-4">
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={newsCategory}
+          data={uniqueWords}
           keyExtractor={item => item}
-          renderItem={({ item }) => (
+          renderItem={({ item }: { item: string }) => (
             <TabButton
               key={item}
               title={item}
-              // onPress={() => setCategory(item)}
+              onPress={() => setSelectedCat(item)}
             />
           )}
           contentContainerStyle={{ gap: 10, paddingLeft: wp(3) }}
@@ -46,13 +57,14 @@ export default function NewsScreen() {
       ) : (
         <>
           <FlatList
-            data={data?.results || []}
+            data={data?.results}
             keyExtractor={item => item?.link}
             refreshing
-            renderItem={({ item }) => <NewsCard item={item} />}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={{
               paddingHorizontal: wp(3),
-              paddingBottom: 400
+              paddingBottom: 100
             }}
           />
         </>

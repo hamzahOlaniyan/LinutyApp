@@ -178,7 +178,7 @@ const s = StyleSheet.create({
     backgroundColor: appColors.white,
     paddingTop: 12,
     paddingBottom: 6,
-    marginBottom: 12
+    marginBottom: 10
   },
   content: {
     paddingHorizontal: wp(3),

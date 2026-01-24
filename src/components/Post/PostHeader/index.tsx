@@ -39,10 +39,6 @@ export default function PostHeader({
 
   const avatarUri = author?.avatarUrl?.replace("/svg?", "/png?");
 
-  const displayName =
-    `${author?.firstName ?? ""} ${author?.lastName ?? ""}`.trim() ||
-    (author?.username ? `@${author?.username}` : "Unknown");
-
   return (
     <View
       style={{ paddingHorizontal: wp(2), paddingVertical: 2 }}
@@ -68,7 +64,7 @@ export default function PostHeader({
               hitSlop={10}
             >
               <AppText variant="post_name" className="flex-1 capitalize">
-                {displayName}
+                {author.fullName}
               </AppText>
             </TouchableOpacity>
             <AppText variant="post_date">

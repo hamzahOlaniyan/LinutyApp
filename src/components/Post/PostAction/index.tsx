@@ -64,7 +64,7 @@ export default function PostAction({
         />
         <View style={s.actions}>
           <Pressable hitSlop={8} style={s.button} onPress={handleLike}>
-            <Icon name={likes.liked ? "thumbsupSolid" : "thumbsup"} />
+            <Icon name={likes.liked ? "thumbsupSolid" : "thumbsup"} size={20} />
             <AppText variant={"post_action"}>Like</AppText>
           </Pressable>
 
@@ -74,12 +74,12 @@ export default function PostAction({
             accessibilityLabel="View comments"
             style={s.button}
           >
-            <Icon name="comment" />
+            <Icon name="comment" size={20} />
             <AppText variant={"post_action"}>Comment</AppText>
           </Pressable>
 
           <Pressable hitSlop={8} accessibilityLabel="repost" style={s.button}>
-            <Icon name="repost" />
+            <Icon name="repost" size={20} />
             <AppText variant={"post_action"}>Repost</AppText>
           </Pressable>
 
@@ -89,7 +89,7 @@ export default function PostAction({
             accessibilityLabel="share post"
             style={s.button}
           >
-            <Icon name="share" />
+            <Icon name="share" size={20} />
             <AppText variant={"post_action"}>Share</AppText>
           </Pressable>
         </View>
@@ -105,7 +105,7 @@ const s = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     borderTopColor: appColors.border,
-    borderTopWidth: 0.2
+    borderTopWidth: 1
   },
   button: {
     paddingVertical: hp(1),

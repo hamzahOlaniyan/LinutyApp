@@ -202,7 +202,7 @@ export default function HomeFeed() {
   );
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1">
       <View style={{ flex: 1, paddingTop: top, backgroundColor: "white" }}>
         <FlatList
           ref={listRef}
