@@ -119,6 +119,8 @@ export const PostApi =  {
       `/post/${postId}/reactions`,
       {
        onMutate: async (vars) => {
+         await qc.cancelQueries({ queryKey: [`/post/${postId}/reactions`, `/post/feed`,`/post/${postId}/reactions` ] });
+
           const key = [`/post/${postId}/reactions/me`];
 
           const prev = qc.getQueryData<MyReactionResponse>(key);
@@ -130,11 +132,6 @@ export const PostApi =  {
 
           return { prevMyReaction: prev };
         },
-         onError: (_err, _vars, ctx: any) => {
-          if (ctx?.prevFeed) qc.setQueryData(["/post/feed"], ctx.prevFeed);
-          if (ctx?.prevPost) qc.setQueryData([`/post/${postId}`], ctx.prevPost);
-        },
-
         onSettled: () => {
           qc.invalidateQueries({ queryKey: ["/post/feed"] });
           qc.invalidateQueries({ queryKey: [`/post/${postId}`] });
