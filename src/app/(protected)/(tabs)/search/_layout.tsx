@@ -1,9 +1,7 @@
 import AppText from "@/components/ui/AppText";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 
 export default function StoreLayout() {
-  const router = useRouter();
-
   return (
     <Stack
       screenOptions={{
