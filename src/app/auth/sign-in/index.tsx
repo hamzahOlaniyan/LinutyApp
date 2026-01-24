@@ -1,4 +1,3 @@
-import AppText from "@/components/ui/AppText";
 import Button from "@/components/ui/Button";
 import FormInput from "@/components/ui/FormInput";
 import { Field } from "@/components/ui/FormInput/types";
@@ -11,7 +10,7 @@ import { useFormStore } from "@/store/useFormStore";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Modal, Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export type SignInValues = {
@@ -32,7 +31,6 @@ export default function Signin() {
   const { formData } = useFormStore();
 
   const [loading, setLoading] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
 
   const LoginForm: SignInField[] = [
     {
@@ -71,16 +69,23 @@ export default function Signin() {
       }}
     >
       <View className="flex-1 gap-20 pt-32">
-        <Pressable
-          style={[styles.button, styles.buttonOpen]}
-          onPress={() => setModalVisible(true)}
-        >
-          <AppText style={styles.textStyle}>Show Modal</AppText>
-        </Pressable>
         <Image
-          source={require("@/assets/images/logo.png")}
-          style={{ width: 75, height: 75, alignSelf: "center" }}
+          source={require("@/assets/images/linuty2.png")}
+          style={{
+            width: 120,
+            height: 120,
+            alignSelf: "center",
+            borderRadius: 24,
+            backgroundColor: "lime"
+          }}
           contentFit="contain"
+        />
+        <Image
+          source={require("@/assets/images/linuty.png")}
+          style={{
+            alignSelf: "center",
+            backgroundColor: "red"
+          }}
         />
         <FormInput
           fields={LoginForm}
@@ -99,29 +104,6 @@ export default function Signin() {
           <Terms />
         </View>
       </View>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        backdropColor="red"
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View className="absolute left-0 right-0 top-0 h-full w-full bg-black/50">
-          {/* <View style={styles.centeredView}> */}
-          <View style={styles.modalView}>
-            <AppText style={styles.modalText}>Hello World!</AppText>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <AppText style={styles.textStyle}>Hide Modal</AppText>
-            </Pressable>
-          </View>
-        </View>
-        {/* </View> */}
-      </Modal>
     </SafeAreaView>
   );
 }

@@ -18,8 +18,7 @@ export const appColors = {
   info: "#2F80ED",
   warning: "#F2994A",
   warinigText:"#a65f00",
-  searchbar:"#eceef3",
-
+searchbar:"#f5f5f5",
 
   gradients: {
     primary: ["#68be91", "#006891", "#36326c"] as const,

@@ -1,31 +1,31 @@
-import { Font } from "@/assets/fonts/FontFamily";
 import AppText from "@/components/ui/AppText";
 import { Stack, useRouter } from "expo-router";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 
 export default function StoreLayout() {
   const router = useRouter();
+
   return (
     <Stack
       screenOptions={{
         headerShadowVisible: false,
-        headerTitleStyle: { fontSize: 20, fontFamily: Font.Bold },
+        // headerTitleStyle: { fontSize: 20, fontFamily: Font.Bold },
         headerTitleAlign: "left"
       }}
     >
       <Stack.Screen
         name="index"
         options={{
-          title: "Store",
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() =>
-                router.push(`/(protected)/(tabs)/store/create-add`)
-              }
-              className="rounded-lg border p-2"
-            >
-              <AppText>+ post add</AppText>
-            </TouchableOpacity>
+          title: "",
+          headerLeft: () => (
+            <View>
+              <AppText variant={"header"} className="font-Bold">
+                Community Store
+              </AppText>
+              <AppText className="font-Medium">
+                Support local creators, small business and community initiatives
+              </AppText>
+            </View>
           )
         }}
       />

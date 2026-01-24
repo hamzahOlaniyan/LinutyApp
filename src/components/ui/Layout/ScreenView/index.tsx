@@ -5,10 +5,12 @@ import { StyleProp, View, ViewStyle } from "react-native";
 
 export default function ScreenView({
   children,
-  style
+  style,
+  className
 }: {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  className?: string;
 }) {
   return (
     <View
@@ -16,7 +18,7 @@ export default function ScreenView({
         style,
         { paddingHorizontal: wp(3), backgroundColor: appColors.white }
       ]}
-      className="flex-1"
+      className={`flex-1 ${className}`}
     >
       {children}
     </View>
