@@ -25,10 +25,10 @@ export default function ProfileCard({
         <TouchableOpacity
           onPress={() => router.push(`/(protected)/profile/${item.id}`)}
         >
-          <Avatar path={item.avatarUrl} size={60} />
+          <Avatar path={item.avatarUrl} size={55} />
         </TouchableOpacity>
         <View className="">
-          <AppText className="font-Medium">{name}</AppText>
+          <AppText className="font-SemiBold">{name}</AppText>
           <AppText
             variant={"small"}
             color={appColors.placeholder}

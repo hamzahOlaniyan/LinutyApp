@@ -6,7 +6,7 @@ import { useApiMutation, useApiQuery } from "./useApi";
 
 
 type FeedEnvelope = {
-  data: FeedProduct;
+  data: FeedProduct[];
   nextCursor: string | null;
 };
 
@@ -101,6 +101,21 @@ export class ProductApi {
     const accessToken = session?.access_token; 
     const { data, isLoading,  refetch, error , isFetching}= useApiQuery<ProductMediaTable[]>(`/product/${productId}/media`,undefined,{enabled:!!accessToken && !!productId});
     return {data,isLoading, refetch, error, isFetching}
+  }
+
+  static getProductByProfileId =(profileId:string)=>{
+    const { session } = useAuthStore();
+    const accessToken = session?.access_token; 
+
+     const { data, isLoading, error, isFetching, refetch, } = useApiQuery<FeedEnvelope>(
+        `/product/${profileId}/products`,
+      undefined,
+        {
+          enabled: !!accessToken,
+        }
+      );
+      return{data,isLoading,error,isFetching,refetch}
+
   }
 }
  

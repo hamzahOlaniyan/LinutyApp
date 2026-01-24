@@ -5,18 +5,18 @@ import { useQueryClient } from "@tanstack/react-query";
 import { cva } from "class-variance-authority";
 import {
   ActivityIndicator,
-  TouchableOpacity as RNTouchableOpacity
+  TouchableOpacity as RNTouchableOpacity,
+  Text
 } from "react-native";
-import AppText from "../AppText";
 import { ExploreProfilesPage, FriendActionButtonProps } from "./type";
 
 export const buttonVariants = cva(
-  "p-2 rounded-full justify-center items-center",
+  "p-1 px-3 rounded-full justify-center items-center",
   {
     variants: {
       variant: {
-        profile: "bg-primary text-white font-Medium text-xl",
-        search: "bg-yellow-300 border "
+        profile: "bg-primary",
+        search: "border"
       }
     },
     defaultVariants: {
@@ -25,11 +25,11 @@ export const buttonVariants = cva(
   }
 );
 
-const buttonTextVariants = cva("font-Medium text-lg", {
+const buttonTextVariants = cva("font-Medium", {
   variants: {
     variant: {
       profile: "text-white",
-      search: "text-blue-500"
+      search: "text-sm"
     }
   },
   defaultVariants: { variant: "search" }
@@ -131,7 +131,7 @@ export function FriendActionButton({
 
   const label =
     item.friendStatus === "NONE"
-      ? "+ Add friend"
+      ? "Add friend"
       : item.friendStatus === "PENDING_OUTGOING"
         ? "Cancel Requested"
         : item.friendStatus === "PENDING_INCOMING"
@@ -148,9 +148,9 @@ export function FriendActionButton({
       onPress={onPress}
       className={buttonVariants({ variant })}
     >
-      <AppText className={buttonTextVariants({ variant })}>
+      <Text className={buttonTextVariants({ variant })}>
         {isBusy ? <ActivityIndicator size={"small"} /> : label}
-      </AppText>
+      </Text>
     </RNTouchableOpacity>
   );
 }

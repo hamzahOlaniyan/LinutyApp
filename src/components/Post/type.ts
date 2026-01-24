@@ -88,6 +88,7 @@ export type Author = {
   id: string;
   username?: string | null;
   firstName?: string | null;
+  fullName?: string |null;
   lastName?: string | null;
   avatarUrl?: string | null;
   isVerified?:boolean

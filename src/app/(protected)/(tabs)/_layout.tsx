@@ -1,4 +1,3 @@
-import { Font } from "@/assets/fonts/FontFamily";
 import { appColors } from "@/constant/colors";
 import Icon, { IconName } from "@/icons";
 import { Tabs } from "expo-router";
@@ -26,9 +25,9 @@ export default function TabLayout() {
         }}
       >
         {focused ? (
-          <Icon name={focusedIcon} color={appColors.primary} size={28} />
+          <Icon name={focusedIcon} color={appColors.primary} size={24} />
         ) : (
-          <Icon name={icon} color={appColors.text} size={28} />
+          <Icon name={icon} color={appColors.text} size={24} />
         )}
       </View>
     );
@@ -37,21 +36,22 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        headerShown: false,
+        tabBarLabel: "",
         tabBarActiveTintColor: appColors.primary,
-        tabBarInactiveTintColor: appColors.text,
-        tabBarLabelStyle: {
-          textTransform: "capitalize",
-          fontFamily: Font.SemiBold
-        },
+        // tabBarInactiveTintColor: appColors.text,
+        // tabBarLabelStyle: {
+        //   textTransform: "capitalize",
+        //   fontFamily: Font.SemiBold
+        // },
         tabBarStyle: {
-          paddingTop: 3
+          paddingTop: 5
         }
       }}
     >
       <Tabs.Screen
         name="(home)/index"
         options={{
-          headerShown: false,
           title: "home",
           tabBarIcon: ({ focused }) => (
             <TabbarIcon focused={focused} icon="home" focusedIcon="homeSolid" />
@@ -62,7 +62,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="explore"
         options={{
-          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabbarIcon
               focused={focused}
@@ -73,10 +72,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="search/index"
+        name="search"
         options={{
           title: "search",
-          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabbarIcon
               focused={focused}
@@ -90,7 +88,6 @@ export default function TabLayout() {
         name="store"
         options={{
           title: "store",
-          headerShown: false,
           popToTopOnBlur: true,
           tabBarIcon: ({ focused }) => (
             <TabbarIcon
@@ -105,7 +102,6 @@ export default function TabLayout() {
         name="news"
         options={{
           title: "news",
-          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabbarIcon focused={focused} icon="news" focusedIcon="newsSolid" />
           )

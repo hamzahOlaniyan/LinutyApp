@@ -27,7 +27,7 @@ const PostCard = memo(function PostCard({
 
   const media = post?.mediaFiles ?? [];
 
-  const commentCount = post._count.comments;
+  const commentCount = post?._count?.comments;
 
   const router = useRouter();
   const { width: screenWidth } = Dimensions.get("window");

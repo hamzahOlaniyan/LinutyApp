@@ -8,9 +8,10 @@ import { useAuthStore } from "@/store/useAuthStore";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 import { Image } from "expo-image";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 
+import ProductDetail from "@/components/Product/Detail";
 import ProductOptions from "@/components/Product/ProductOptions";
 import { ModalBottomSheet } from "@/components/ui/ModalBottomSheet";
 import {
@@ -21,7 +22,7 @@ import {
   ViewabilityConfig,
   ViewToken
 } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
 
 export default function ProductScreen() {
   const { me } = useAuthStore();
@@ -31,7 +32,8 @@ export default function ProductScreen() {
   const [product, setProduct] = useState<FeedProduct | null>(null);
 
   useEffect(() => {
-    if (data?.data) setProduct(data.data);
+    if (data?.data)
+      setProduct(Array.isArray(data.data) ? data.data[0] : data.data);
   }, [data]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,14 +57,13 @@ export default function ProductScreen() {
   const media = product?.media ?? [];
 
   const { width: screenWidth } = Dimensions.get("window");
-  const router = useRouter();
 
   const isOwner = me?.id === product?.seller.id;
   const bottomSheetRef = useRef<BottomSheet>(null);
   const handleOpenSheet = () => bottomSheetRef.current?.expand();
 
   return (
-    <View className="flex-1 bg-white">
+    <ScrollView className="flex-1 bg-white">
       <View>
         <TouchableOpacity onPress={handleOpenSheet} style={s.action}>
           <Icon name="threeDots" color="white" />
@@ -75,7 +76,6 @@ export default function ProductScreen() {
                   bottomSheetRef={bottomSheetRef}
                   isUserOwner={isOwner}
                   productId={productId}
-                  // type={"product"}
                 />
               }
             />
@@ -113,20 +113,10 @@ export default function ProductScreen() {
           ))}
         </View>
       </View>
-      <ScreenView>
-        <View className="bg-yellow-200">
-          <AppText>{product?.title}</AppText>
-          <AppText>{product?.price}</AppText>
-          <TouchableOpacity
-            onPress={() =>
-              router.push(`/(protected)/(tabs)/store/${product?.seller.id}`)
-            }
-          >
-            <AppText>see store </AppText>
-          </TouchableOpacity>
-        </View>
+      <ScreenView className="pb-10">
+        <ProductDetail item={product} />
       </ScreenView>
-    </View>
+    </ScrollView>
   );
 }
 
