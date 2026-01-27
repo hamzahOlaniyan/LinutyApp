@@ -3,20 +3,21 @@ import AppText from "@/components/ui/AppText";
 import Avatar from "@/components/ui/Avatar";
 import { appColors } from "@/constant/colors";
 import { toPng } from "@/constant/common";
-import { PostApi } from "@/hooks/usePostApi";
 import Icon from "@/icons";
 import moment from "moment";
 import React, { memo, useMemo } from "react";
 import { Pressable, View } from "react-native";
 
 export const ReplyRow = memo(function ReplyRow({
-  reply,
-  postId
+  reply
+  // postId,
+  // creator
 }: {
   reply: PostComment;
   postId: string | null;
+  creator?: string | null;
 }) {
-  const { data: creator } = PostApi.getPostCreator(postId ?? "");
+  // const { data: creator } = PostApi.getPostCreator(postId ?? "");
 
   const name = useMemo(
     () => (
@@ -28,7 +29,7 @@ export const ReplyRow = memo(function ReplyRow({
     [reply?.author.firstName, reply.author.lastName]
   );
 
-  const isCreator = reply?.author.id === creator?.profileId;
+  // const isCreator = reply?.author.id === creator;
 
   return (
     <View className="flex-1 flex-row gap-3 py-5">
@@ -38,11 +39,11 @@ export const ReplyRow = memo(function ReplyRow({
         <View>
           <View className="flex-1 flex-row items-center gap-2">
             {name}
-            {isCreator && (
+            {/* {isCreator && (
               <AppText variant={"xs"} className="font-Bold text-primary">
                 Creator
               </AppText>
-            )}
+            )} */}
           </View>
           <AppText variant={"small"} color={appColors.placeholder}>
             @{reply?.author.username}

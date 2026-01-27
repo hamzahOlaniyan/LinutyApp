@@ -3,15 +3,24 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { MediaFile, PostInput, PostResponse } from "../../types/supabaseTypes";
 import { useApiMutation, useApiQuery } from "./useApi";
+import { FeedEnvelope } from "./useFeedQuery";
 
 
 type CursorPage<T> = { data: T[]; nextCursor: string | null };
-type Post = { id: string };
+
+export type Post = { 
+  id: string, 
+  likeCount: number;
+  viewerHasLiked?: boolean };
 
 export type ReactionType = "LIKE" | "LOVE" | "LAUGH" | "ANGRY" | "SAD" | null;
 
 type ReactToPostParams = {
   type?: ReactionType; // default server-side is LIKE
+};
+
+type FeedWithPosts = {
+  posts: Post[];
 };
 
 export type MyReactionResponse = {
@@ -33,9 +42,14 @@ type ReactToPostResponse =
   }>;
 };
 
+type ReactionCtx = {
+  prevFeed?: unknown;
+  prevPost?: unknown;
+};
+
+
 
 export const PostApi =  {
-  
 
   useGetPostById (postId: string){
     const { session } = useAuthStore();
@@ -59,7 +73,7 @@ export const PostApi =  {
         onSuccess: res => {
           const newPost = res;
           // Put it at the top of the feed immediately
-          qc.setQueryData<CursorPage<Post>>(["/feed"], old => {
+          qc.setQueryData(["/feed"], (old:FeedEnvelope) => {
             if (!old) return { data: [newPost], nextCursor: null };
             return {
               ...old,
@@ -112,36 +126,76 @@ export const PostApi =  {
     return useApiQuery<MyReactionResponse>(`/post/${postId}/reactions/me`);
   },
 
-  addReaction(postId: string){
+  addReaction(postId: string) {
     const qc = useQueryClient();
-    return useApiMutation<ReactToPostResponse, ReactToPostParams>(
+    return useApiMutation<ReactToPostResponse, ReactToPostParams, ReactionCtx>(
       "post",
       `/post/${postId}/reactions`,
       {
-       onMutate: async (vars) => {
-         await qc.cancelQueries({ queryKey: [`/post/${postId}/reactions`, `/post/feed`,`/post/${postId}/reactions` ] });
+        onMutate: async () => {
+          // 1) stop outgoing fetches so we don't overwrite our optimistic update
+          await qc.cancelQueries({ queryKey: ["/feed"] });
+          await qc.cancelQueries({ queryKey: [`/post/${postId}`] });
 
-          const key = [`/post/${postId}/reactions/me`];
+          // 2) snapshot previous values (for rollback)
+          const prevFeed = qc.getQueryData<FeedEnvelope>(["/feed"]);
+          const prevPost = qc.getQueryData<FeedEnvelope>([`/post/${postId}`]);
 
-          const prev = qc.getQueryData<MyReactionResponse>(key);
+          // 3) optimistic update: toggle likeCount
+          const applyToggle = (p: Post |undefined):Post|undefined => {
+            if (!p) return p;
 
-          qc.setQueryData<MyReactionResponse>(key, {
-            liked: prev?.type === vars.type ? !prev?.liked : true,
-            type: vars.type && prev?.liked ? null : (vars.type ?? null),
+            // assume your API toggles LIKE
+            const alreadyLiked = !!p.viewerHasLiked; // add this field if you can
+            const nextLiked = !alreadyLiked;
+
+            return {
+              ...p,
+              viewerHasLiked: nextLiked,
+              likeCount: Math.max(0, (p.likeCount ?? 0) + (nextLiked ? 1 : -1)),
+            };
+          };
+
+          qc.setQueryData<Post>([`/post/${postId}`], (old) => applyToggle(old));
+
+          qc.setQueryData(["/feed"], (old:FeedWithPosts) => {
+            if (!old) return old;
+
+            if (Array.isArray(old?.posts)) {
+              return {
+                ...old,
+                posts: old.posts.map((p) => (p.id === postId ? applyToggle(p) : p)),
+              };
+            }
+
+            // if (Array.isArray(old?.pages)) {
+            //   return {
+            //     ...old,
+            //     pages: old.pages.map((page: any) => ({
+            //       ...page,
+            //       posts: (page.posts ?? []).map((p: any) => (p.id === postId ? applyToggle(p) : p)),
+            //     })),
+            //   };
+            // }
+
+            return old;
           });
 
-          return { prevMyReaction: prev };
+          return { prevFeed, prevPost };
         },
+
+        onError: (_err, _vars, ctx) => {
+          // rollback on failure
+          if (ctx?.prevFeed) qc.setQueryData(["/feed"], ctx.prevFeed);
+          if (ctx?.prevPost) qc.setQueryData([`/post/${postId}`], ctx.prevPost);
+        },
+
         onSettled: () => {
-          qc.invalidateQueries({ queryKey: ["/post/feed"] });
+          // re-sync with server truth
+          qc.invalidateQueries({ queryKey: ["/feed"] });
           qc.invalidateQueries({ queryKey: [`/post/${postId}`] });
           qc.invalidateQueries({ queryKey: [`/post/${postId}/reactions`] });
         },
-        invalidateKeys: [
-          "/post/feed", // if your feed shows counts
-          `/post/${postId}`, // post details screen
-          `/post/${postId}/reactions` // if you have a "who reacted" list
-        ]
       }
     );
   },

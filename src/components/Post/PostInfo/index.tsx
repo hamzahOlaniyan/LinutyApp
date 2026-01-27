@@ -11,13 +11,15 @@ type PostInfoType = {
   commentCount: number | undefined;
   reactions?: reactionsItem[];
   postId: string;
+  likeCount: number;
 };
 export default function PostInfo({
   commentCount,
   reactions,
-  postId
+  postId,
+  likeCount
 }: PostInfoType) {
-  const likeCount = reactions?.filter(l => l.type === "LIKE").length;
+  // const likeCount = reactions?.filter(l => l.type === "LIKE").length;
 
   const renderItem = useCallback(
     ({ item }: { item: reactionsItem }) => {

@@ -4,7 +4,7 @@ import { useApiQuery } from "./useApi";
 
 export const USER_PROFILE_KEY = "/feed";
 
-type FeedEnvelope = {
+export type FeedEnvelope = {
   data: FeedPost[];
   nextCursor: string | null;
 };

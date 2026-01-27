@@ -10,22 +10,31 @@ import React, { memo, useEffect, useMemo, useState } from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import AppText from "../../ui/AppText";
 import Avatar from "../../ui/Avatar";
-import { ReplyRow } from "../CommentRow";
+import { ReplyRow } from "../ReplyRow";
 
 dayjs.extend(relativeTime);
 
 export default memo(function CommentCard({
   comment,
   setReplyTo,
-  postId
+  postId,
+  postAuthor
 }: {
   comment: PostComment;
   setReplyTo?: (value: ReplyingTo) => void | null;
   postId?: string | null;
+  postAuthor: string;
 }) {
   const { data: commentReplies } = CommentApi.getReplies(comment?.id);
   const reactToComment = CommentApi.reactToComment(postId ?? "", comment?.id);
   const { data: myReaction } = CommentApi.getMyReaction(comment?.id);
+
+  // const { data: creator } = PostApi.getPostCreator(postId ?? "");
+  // const { data: creator } = PostApi.getPostCreator(postId ?? "");
+
+  // console.log({ creator });
+
+  // const isCreator = ;
 
   const [likes, setLikes] = useState<{ count: number; liked: boolean }>({
     count: Number(comment?.likeCount ?? 0),
@@ -77,7 +86,7 @@ export default memo(function CommentCard({
     () => (
       <AppText
         variant={"small"}
-        className="flex-1 font-SemiBold capitalize"
+        className="font-SemiBold capitalize"
       >{`${comment.author.firstName} ${comment.author.lastName}`}</AppText>
     ),
     [comment?.author.firstName, comment.author.lastName]
@@ -90,8 +99,17 @@ export default memo(function CommentCard({
         <View className="">
           <View className="gap-2">
             <View>
-              <View className="flex-row items-center justify-between gap-1 font-Medium">
-                {name}
+              <View className="flex-row items-center justify-between">
+                <View className="flex-1 flex-row items-center">
+                  <AppText>{name} · </AppText>
+                  <AppText
+                    variant={"xs"}
+                    className="top-[1.5px] font-Bold text-primary"
+                  >
+                    {postAuthor === comment?.author?.id} Creator
+                  </AppText>
+                </View>
+
                 <Pressable>
                   <Icon name="threeDots" color={appColors.icon} size={20} />
                 </Pressable>
@@ -170,7 +188,12 @@ export default memo(function CommentCard({
         )}
         {expanded &&
           replies?.map(reply => (
-            <ReplyRow key={reply.id} reply={reply} postId={postId ?? ""} />
+            <ReplyRow
+              key={reply.id}
+              reply={reply}
+              postId={postId ?? ""}
+              // creator={creator}
+            />
           ))}
       </View>
     </View>
