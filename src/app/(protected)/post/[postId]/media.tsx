@@ -55,9 +55,7 @@ export default function media() {
         keyExtractor={(item, index) => item.url || index.toString()}
         renderItem={({ item }) => {
           const aspectRatio =
-            item.width && item.height
-              ? (item.width / item.height) * 1.1
-              : 2 / 3;
+            item.width && item.height ? item.width / item.height : 2 / 3;
 
           return (
             <Image

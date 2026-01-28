@@ -99,6 +99,7 @@ const PostCard = memo(function PostCard({
               m?.height && m?.width ? m?.width / m?.height : 4.3;
             return (
               <TouchableOpacity
+                activeOpacity={0.8}
                 key={m.id}
                 onPress={() =>
                   router.push(`/(protected)/post/${post.id}/media`)
