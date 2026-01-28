@@ -1,4 +1,3 @@
-// import { ReplyingTo } from "@/app/(protected)/post/[postId]/comment";
 import { ReplyingTo } from "@/components/Post/type";
 import AppText from "@/components/ui/AppText";
 import Avatar from "@/components/ui/Avatar";
@@ -6,14 +5,9 @@ import { appColors } from "@/constant/colors";
 import { hp, wp } from "@/constant/common";
 import Icon from "@/icons";
 import { useAuthStore } from "@/store/useAuthStore";
+import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import React, { useState } from "react";
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  TextInput,
-  View
-} from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 export default function CommentInput({
   onSend,
@@ -28,7 +22,6 @@ export default function CommentInput({
 }) {
   const { me } = useAuthStore();
   const [text, setText] = useState("");
-  // const inputRef = useRef<TextInput>(null);
 
   // useEffect(() => {
   //   if (replyingTo) {
@@ -61,13 +54,19 @@ export default function CommentInput({
       ) : null}
       <View style={s.inputContainer}>
         <Avatar path={me?.avatarUrl} />
-        <TextInput
+        <BottomSheetTextInput
+          value={text}
+          onChangeText={setText}
+          placeholder="Write a comment…"
+          style={{ height: 44, backgroundColor: "yellow" }}
+        />
+        {/* <TextInput
           value={text}
           onChangeText={setText}
           placeholder="Write a comment…"
           multiline
           style={s.input}
-        />
+        /> */}
 
         <Pressable
           onPress={submit}

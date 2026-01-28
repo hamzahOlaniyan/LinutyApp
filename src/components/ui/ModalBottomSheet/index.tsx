@@ -41,6 +41,9 @@ export const ModalBottomSheet = forwardRef<ModalBottomSheetRef, Props>(
         enableDynamicSizing={false}
         enablePanDownToClose
         backdropComponent={renderBackdrop}
+        keyboardBehavior="interactive"
+        keyboardBlurBehavior="restore"
+        android_keyboardInputMode="adjustResize"
         handleIndicatorStyle={{
           width: 64,
           height: 4,
